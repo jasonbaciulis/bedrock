@@ -1,9 +1,9 @@
 {
-    "name": "my-vendor-name/leap",
+    "name": "jasonbaciulis/leap",
     "extra": {
         "statamic": {
             "name": "Leap",
-            "description": "Leap starter kit"
+            "description": "Statamic starter kit for developers"
         }
     }
 }
