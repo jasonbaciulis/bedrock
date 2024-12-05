@@ -1,4 +1,4 @@
-# [remarkable.dev](https://remarkable.dev)
+# [Leap demo](https://leap.remarkable.dev)
 
 ## Requirements
 
