@@ -1,0 +1,18 @@
+title: Banner
+data:
+  show: true
+  text:
+    -
+      type: paragraph
+      content:
+        -
+          type: text
+          marks:
+            -
+              type: bold
+          text: 'Big news!'
+        -
+          type: text
+          text: " We're excited to announce a brand new product. Check it out →"
+  link_url: '#'
+  cookie_expires: 7

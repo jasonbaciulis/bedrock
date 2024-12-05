@@ -1,0 +1,56 @@
+tree:
+  -
+    id: fe2d2a59-9774-418b-b56d-540b0ed2ca65
+    title: Product
+    children:
+      -
+        id: beb0ec14-bc6e-44d3-99a8-91a6ddc72372
+        title: Blocks
+        url: '#faqs'
+      -
+        id: d2af953f-3b02-4a34-af90-5d3c96218a6c
+        title: Components
+        url: '#components'
+      -
+        id: 519f57d4-f444-4d30-9f1b-413daa367b64
+        title: Styleguide
+        url: '#style-guide'
+  -
+    id: 522da2da-89bb-407f-a491-b12c03714125
+    title: Company
+    children:
+      -
+        id: de58fcc1-fe3f-4b89-855b-b96423b87c64
+        title: Terms
+        url: '#'
+      -
+        id: 95168561-8954-407f-b2c2-691d56231500
+        title: Privacy
+        url: '#'
+  -
+    id: 4a3e3ee2-331b-4fad-8293-af6ef3089cd9
+    title: Resources
+    children:
+      -
+        id: 59596fc1-dbbf-40bf-874c-289334b67bd4
+        title: About
+        url: '#'
+      -
+        id: 32bc32da-5c3d-43ea-82a7-f8ef2ce8f44d
+        title: Careers
+        url: '#'
+      -
+        id: 71c00076-7635-45a0-a880-c1efccc55d08
+        entry: 506c8e50-bc23-4c16-b691-c8aca71c1258
+  -
+    id: 6168f495-da0a-4563-9a1e-2e4630054508
+    title: Support
+    children:
+      -
+        id: 20c48043-51f3-47ef-965a-b58ee8fc97f3
+        title: Documentation
+        url: '#'
+      -
+        id: a41aa20a-e854-4d35-98ad-0c8de510ba02
+        title: 'Help Center'
+        url: '#'

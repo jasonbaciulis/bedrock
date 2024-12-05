@@ -1,0 +1,105 @@
+{{ if paginate.total_pages > 1 }}
+    <div class="{{ class }}">
+        {{ paginate }}
+            {{# Section that will be yielded in the <head> of documents for search engines. #}}
+            {{ section:pagination }}
+                {{ if prev_page }}
+                    <link rel="prev" href="{{ prev_page }}">
+                {{ /if }}
+                {{ if next_page }}
+                    <link rel="next" href="{{ next_page }}">
+                {{ /if }}
+            {{ /section:pagination }}
+
+            <nav class="flex justify-center items-center md:items-start gap-10">
+                {{ if prev_page }}
+                    <a href="{{ prev_page }}" class="btn size-12 rounded-full shrink-0">
+                        <span class="sr-only">Previous</span>
+                        {{ svg src="arrow-prev" class="size-4" }}
+                    </a>
+                {{ else }}
+                    <button class="btn size-12 rounded-full shrink-0" disabled>
+                        <span class="sr-only">Previous</span>
+                        {{ svg src="arrow-prev" class="size-4" }}
+                    </button>
+                {{ /if }}
+
+                <ul class="flex-wrap gap-1.5 hidden md:flex">
+                    {{ links:segments }}
+                        {{ first }}
+                            {{ if page == current_page }}
+                                <li>
+                                    <button class="btn btn--primary size-12 rounded-full pointer-events-none">
+                                        {{ page }}
+                                    </button>
+                                </li>
+                            {{ else }}
+                                <li>
+                                    <a href="{{ url }}" class="btn size-12 rounded-full content-lg">{{ page }}</a>
+                                </li>
+                            {{ /if }}
+                        {{ /first }}
+
+                        {{ if slider }}
+                            <li>
+                                <div class="content-lg size-12 flex items-center justify-center">…</div>
+                            </li>
+                        {{ /if }}
+
+                        {{ slider }}
+                            {{ if page === current_page }}
+                                <li>
+                                    <button class="btn btn--primary size-12 rounded-full pointer-events-none">
+                                        {{ page }}
+                                    </button>
+                                </li>
+                            {{ else }}
+                                <li>
+                                    <a href="{{ url }}" class="btn size-12 rounded-full content-lg">{{ page }}</a>
+                                </li>
+                            {{ /if }}
+                        {{ /slider }}
+
+                        {{ if slider || (!slider && last) }}
+                            <li>
+                                <div class="content-lg size-12 flex items-center justify-center">…</div>
+                            </li>
+                        {{ /if }}
+
+                        {{ last }}
+                            {{ if page === current_page }}
+                                <li>
+                                    <button class="btn btn--primary size-12 rounded-full pointer-events-none">
+                                        {{ page }}
+                                    </button>
+                                </li>
+                            {{ else }}
+                                <li>
+                                    <a href="{{ url }}" class="btn size-12 rounded-full content-lg">{{ page }}</a>
+                                </li>
+                            {{ /if }}
+                        {{ /last }}
+                    {{ /links:segments }}
+                </ul>
+
+                <p class="shrink-0 content-sm font-bold leading-none md:hidden">
+                    <span class="text-black">{{ current_page }}</span>
+                    <span class="text-gray">/</span>
+                    <span class="text-gray">{{ total_pages }}</span>
+                </p>
+
+                {{ if next_page }}
+                    <a href="{{ next_page }}" class="btn size-12 rounded-full shrink-0">
+                        <span class="sr-only">Next</span>
+                        {{ svg src="arrow-next" class="size-4" }}
+                    </a>
+                {{ else }}
+                    <button class="btn size-12 rounded-full shrink-0" disabled>
+                        <span class="sr-only">Next</span>
+                        {{ svg src="arrow-next" class="size-4" }}
+                    </button>
+                {{ /if }}
+            </nav>
+        {{ /paginate }}
+    </div>
+{{ /if }}

@@ -1,0 +1,39 @@
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        display: Newsletter
+        instructions: 'Configure email opt-in form that can be used inside the Newsletter block'
+        fields:
+          -
+            handle: title
+            field:
+              type: text
+              display: Title
+              localizable: true
+          -
+            handle: text
+            field: common.text_plain
+            config:
+              display: Text
+          -
+            handle: input_placeholder
+            field:
+              type: text
+              display: 'Input placeholder'
+              width: 50
+              localizable: true
+          -
+            handle: button_label
+            field:
+              type: text
+              display: 'Button label'
+              width: 50
+              localizable: true
+          -
+            handle: success_message
+            field:
+              type: text
+              display: 'Success message'
+              localizable: true

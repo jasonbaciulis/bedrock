@@ -1,0 +1,5 @@
+@layer utilities {
+  .fill-current-nested * {
+    @apply fill-current;
+  }
+}

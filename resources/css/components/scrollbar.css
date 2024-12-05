@@ -1,0 +1,18 @@
+@layer components {
+  .scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.gray.400') transparent;
+
+    &::-webkit-scrollbar {
+      @apply w-1 pr-1;
+    }
+
+    &::-webkit-scrollbar-track {
+      @apply rounded-full bg-transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      @apply rounded-full bg-gray-400;
+    }
+  }
+}

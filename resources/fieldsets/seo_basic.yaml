@@ -1,0 +1,20 @@
+title: 'SEO basic'
+fields:
+  -
+    handle: seo_title
+    field:
+      input_type: text
+      type: text
+      localizable: true
+      listable: hidden
+      display: 'Page title'
+      character_limit: 70
+      instructions: 'This entries title, defaults to title. Max 70 chars including the site name.'
+  -
+    handle: seo_description
+    field: common.text_plain
+    config:
+      listable: hidden
+      display: 'Meta description'
+      character_limit: 160
+      instructions: 'This entries meta description. Max 160 chars.'

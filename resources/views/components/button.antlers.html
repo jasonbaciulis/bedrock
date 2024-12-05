@@ -1,0 +1,23 @@
+{{ if label }}
+    <{{ as or 'a' }} {{ slot:attributes }} class="btn
+        {{ switch(
+            (button_type == 'primary') => 'btn--primary',
+            (button_type == 'secondary') => 'btn--secondary',
+            (button_type == 'text') => 'btn--text',
+        )}}
+        {{ class }}
+    "
+        {{ unless faux }}
+            {{ switch(
+                (link_type == 'entry') => 'href="{{ entry:url }}"',
+                (link_type == 'url') => 'href="{{ url }}"',
+                (link_type == 'email') => 'href="mailto:{{ email | obfuscate_email }}"',
+                (link_type == 'tel') => 'href="tel:{{ tel }}"',
+                (link_type == 'asset') => 'href="{{ asset }}" download',
+                (link_type == 'code') => 'href="" x-data @click.prevent="{{ code }}"',
+            )}}
+            {{ target_blank ?= 'rel="noopener" target="_blank"' }}
+        {{ /unless }}>
+        {{ label }}
+    </{{ as or 'a' }}>
+{{ /if }}

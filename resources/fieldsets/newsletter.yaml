@@ -1,0 +1,9 @@
+title: Newsletter
+fields:
+  -
+    handle: form
+    field:
+      type: section
+      display: Form
+      instructions: 'Form content is configured inside [Globals](/cp/globals/newsletter).'
+      hide_display: true

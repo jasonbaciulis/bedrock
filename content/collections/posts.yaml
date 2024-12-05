@@ -1,0 +1,19 @@
+title: Posts
+template: posts/show
+layout: layout
+taxonomies:
+  - categories
+revisions: false
+route: '/posts/{slug}'
+date: true
+sort_dir: desc
+date_behavior:
+  past: public
+  future: private
+preview_targets:
+  -
+    label: Entry
+    url: '{permalink}'
+structure:
+  root: false
+  max_depth: 1

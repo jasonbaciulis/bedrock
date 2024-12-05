@@ -1,0 +1,62 @@
+title: Article
+fields:
+  -
+    handle: article
+    field:
+      buttons:
+        - h2
+        - h3
+        - h4
+        - h5
+        - h6
+        - bold
+        - italic
+        - unorderedlist
+        - orderedlist
+        - quote
+        - removeformat
+        - anchor
+        - underline
+        - strikethrough
+        - code
+        - codeblock
+      toolbar_mode: floating
+      reading_time: true
+      type: bard
+      localizable: true
+      display: Article
+      replicator_preview: false
+      always_show_set_button: true
+      validate:
+        - required
+      container: assets
+      remove_empty_nodes: true
+      smart_typography: true
+      sets:
+        main:
+          display: Main
+          sets:
+            picture:
+              display: Picture
+              icon: media-image-picture-orientation
+              fields:
+                -
+                  import: picture
+            pull_quote:
+              display: 'Pull quote'
+              icon: text-formatting-quotation
+              fields:
+                -
+                  import: pull_quote
+            table:
+              display: Table
+              icon: layout-table-column-insert
+              fields:
+                -
+                  import: table
+            video:
+              display: Video
+              icon: social-youtube
+              fields:
+                -
+                  import: video

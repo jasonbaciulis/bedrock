@@ -1,0 +1,16 @@
+<section class="m-section">
+    <div class="container">
+        <h2 class="h2">{{ title }}</h2>
+
+        <div class="site-grid">
+            {{ collection from="team" }}
+                <div class="sm:col-span-6 xl:col-span-4">
+                    {{ partial:components/picture w="200" h="200" cover="true" }}
+                    <h3 class="h3 mt-4">{{ title }}</h3>
+                    <p class="text-sm">{{ position }}</p>
+                    <p class="mt-4">{{ bio }}</p>
+                </div>
+            {{ /collection }}
+        </div>
+    </div>
+</section>

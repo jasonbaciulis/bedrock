@@ -1,0 +1,18 @@
+title: 'Hero Home'
+fields:
+  -
+    handle: title
+    field: common.text_plain
+    config:
+      display: Title
+      instructions: 'You can use `shift+enter` to control line breaks on large screens'
+  -
+    handle: text
+    field: common.text_plain
+    config:
+      display: Text
+  -
+    handle: image
+    field: common.image
+  -
+    import: buttons

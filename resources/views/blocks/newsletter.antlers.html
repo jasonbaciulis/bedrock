@@ -1,0 +1,55 @@
+{{ once }}
+    {{ push:scripts }}
+        {{ vite src="resources/js/newsletter.js" }}
+    {{ /push:scripts }}
+{{ /once }}
+
+<div
+    x-cloak
+    x-show="!isSubscribed()"
+    x-data="newsletter({
+        route: '{{ route:newsletter }}',
+        siteName: '{{ site:name | underscored }}'
+    })"
+    class="m-section"
+>
+    <div class="container">
+        <div class="text-center max-w-xl mx-auto">
+            <h2 class="h2">{{ newsletter:title }}</h2>
+
+            {{ if newsletter:text }}
+                <p class="mt-6 text-lg text-pretty">{{ newsletter:text }}</p>
+            {{ /if }}
+        </div>
+
+        <form
+            x-ref="form"
+            x-show="!success"
+            @submit.prevent="submit()"
+            class="mt-10 mx-auto max-w-md"
+        >
+            <div class="flex flex-col md:flex-row gap-4">
+                <input type="text" name="fax_number" class="hidden" x-ref="honeypot" />
+                <input type="hidden" name="_token" value="{{ csrf_token }}">
+                <label for="{{ type }}-{{ count }}-email" class="sr-only">Email</label>
+                <input
+                    x-model="email"
+                    id="{{ type }}-{{ count }}-email"
+                    type="email"
+                    name="email"
+                    autocomplete="email"
+                    placeholder="{{ newsletter:input_placeholder }}"
+                    class="sm:flex-1"
+                    :disabled="sending"
+                >
+                {{ partial:components/form/fields/submit class="sm:w-auto shrink-0" :label="newsletter:button_label" }}
+            </div>
+
+            {{ partial:components/form/error handle="email" }}
+        </form>
+
+        <template x-if="success">
+            {{ partial:components/alert style="success" :text="newsletter:success_message" class="mx-auto max-w-md mt-10" }}
+        </template>
+    </div>
+</div>

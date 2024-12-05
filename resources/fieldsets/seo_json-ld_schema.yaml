@@ -1,0 +1,10 @@
+title: 'SEO JSON-ld schema'
+fields:
+  -
+    handle: schema_jsonld
+    field: common.text_plain
+    config:
+      listable: false
+      display: 'JSON-ld schema'
+      instructions: 'Custom JSON-ld objects. Will be wrapped in the appropriate script tag.'
+      width: 100

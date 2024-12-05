@@ -1,0 +1,7 @@
+img {
+  @apply italic;
+}
+
+svg {
+  @apply max-h-full;
+}

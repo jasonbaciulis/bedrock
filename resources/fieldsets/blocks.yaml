@@ -1,0 +1,78 @@
+title: Blocks
+fields:
+  -
+    handle: blocks
+    field:
+      type: replicator
+      localizable: true
+      collapse: true
+      listable: false
+      display: Blocks
+      instructions: 'Build your page by using various predefined content models.'
+      button_label: 'Add Block'
+      sets:
+        main:
+          display: Main
+          sets:
+            article:
+              display: Article
+              instructions: 'Long form content, can be expanded with picture, video, quotes or tables.'
+              icon: text-formatting-image-bottom
+              fields:
+                -
+                  import: article
+            blog:
+              display: Blog
+              icon: layout-three-columns
+              fields:
+                -
+                  import: blog
+            contact:
+              display: Contact
+              icon: phone-contact-phonebook
+              fields:
+                -
+                  import: contact
+            faqs:
+              display: FAQs
+              icon: alert-help-question
+              fields:
+                -
+                  import: faqs
+            hero_home:
+              display: 'Hero Home'
+              icon: align-object-top
+              fields:
+                -
+                  import: hero_home
+            newsletter:
+              display: Newsletter
+              icon: social-mail-send-email-message
+              fields:
+                -
+                  import: newsletter
+            search_results:
+              display: 'Search Results'
+              icon: search-magnifying-glass
+              fields:
+                -
+                  import: search_results
+            style_guide:
+              display: 'Style Guide'
+              instructions: 'Styles and components in one place.'
+              icon: edit-paint-palette
+              fields:
+                -
+                  import: style_guide
+            team:
+              display: Team
+              icon: user-multiple
+              fields:
+                -
+                  import: team
+            testimonials:
+              display: Testimonials
+              icon: text-formatting-quotation
+              fields:
+                -
+                  import: testimonials

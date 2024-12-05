@@ -1,0 +1,27 @@
+input,
+textarea {
+  @apply placeholder:text-gray-400;
+}
+
+textarea,
+[type='text'],
+[type='url'],
+[type='search'],
+[type='email'],
+[type='password'],
+[type='tel'] {
+  @apply block w-full rounded-lg border-0 px-4 py-2.5 text-sm/6 text-gray shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-primary;
+}
+
+select {
+  @apply w-full cursor-pointer truncate rounded-lg border-0 px-4 py-2.5 pr-10 text-sm/6 text-gray shadow-sm ring-1 ring-inset ring-gray-300 invalid:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-primary;
+}
+
+[type='checkbox'],
+[type='radio'] {
+  @apply size-4 rounded border-gray-300 text-gray shadow-sm focus:ring-gray;
+}
+
+[type='radio'] {
+  @apply rounded-full;
+}

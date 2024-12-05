@@ -1,0 +1,57 @@
+title: Testimonials
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: title
+            field:
+              type: text
+              required: true
+              validate:
+                - required
+          -
+            handle: quote
+            field: common.text_plain
+            config:
+              display: Quote
+          -
+            handle: avatar
+            field: common.image
+            config:
+              mode: list
+              display: Avatar
+              width: 33
+          -
+            handle: author
+            field:
+              display: Author
+              type: text
+              width: 33
+              always_save: false
+          -
+            handle: author_title
+            field:
+              display: 'Author title'
+              type: text
+              width: 33
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        fields:
+          -
+            handle: slug
+            field:
+              type: slug
+              localizable: true
+              validate: 'max:200'
+          -
+            handle: featured
+            field:
+              display: Featured
+              type: toggle
+              instructions: 'Used inside the Testimonials block to create a query with only featured entries'
+              always_save: false

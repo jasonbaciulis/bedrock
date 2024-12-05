@@ -1,0 +1,83 @@
+tree:
+  -
+    id: 00889306-aa09-49b8-b91b-e9e7a72ed8a9
+    title: Features
+    data:
+      two_col_flyout: true
+    children:
+      -
+        id: 5e2933f5-10f3-4043-b585-903be44517d6
+        title: Blocks
+        url: '#faqs'
+        data:
+          icon: square-3-stack-3d
+          description: 'Get the maximum flexibility when building pages'
+          badge: null
+      -
+        id: 2d0bb427-8acd-4dcb-870a-ab768b48a4ed
+        title: SEO
+        url: '#'
+        data:
+          icon: adjustments-horizontal
+          description: 'Full SEO settings without extra addons'
+      -
+        id: eb572299-0404-472d-8b5d-7f056b60ebc5
+        title: Components
+        url: '#components'
+        data:
+          icon: square-plus
+          description: 'Reusable Alpine.js components to speed up the dev'
+      -
+        id: 62075822-c793-4249-9b24-069076cea08b
+        title: Navigations
+        url: '#footer'
+        data:
+          icon: cursor-arrow-rays
+          description: 'Prebuilt header and footer navigations'
+      -
+        id: 4eb50211-ba7c-4e4c-89ca-05d6c1bdbb22
+        title: Globals
+        url: '#'
+        data:
+          icon: cog-6-tooth
+          description: 'Setup for commonly used global fields'
+      -
+        id: 7d075f6f-d08e-4412-98f7-17a4c02d1dd7
+        title: Styleguide
+        url: '#style-guide'
+        data:
+          icon: swatch
+          description: 'Test all your UI components in one place'
+          badge: New
+  -
+    id: db467f1c-3d5e-4e0b-9a3f-695611b0c614
+    title: Company
+    children:
+      -
+        id: c36169bf-64ea-4419-8bbb-cb3f873d5975
+        title: About
+        url: '#'
+      -
+        id: f837eb96-50bc-4acb-86fa-6cf0ce58a46c
+        entry: 506c8e50-bc23-4c16-b691-c8aca71c1258
+      -
+        id: 44d93252-4658-469c-a90d-143c1b7dd5f7
+        title: Careers
+        url: '#'
+  -
+    id: 59d402c8-e333-4357-9102-b2dc4861985f
+    title: Resources
+    url: /
+    children:
+      -
+        id: 70158ade-6909-4a46-bd7c-746a05f5757b
+        title: 'Help Center'
+        url: '#'
+      -
+        id: 84447889-54da-4ed9-9fe2-1de5aa5af3ba
+        title: Documentation
+        url: '#'
+  -
+    id: e839907d-05c4-4bde-9f27-174c7f610904
+    title: Pricing
+    url: '#'

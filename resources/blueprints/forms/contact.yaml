@@ -1,0 +1,194 @@
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        display: 'Personal information'
+        fields:
+          -
+            handle: first_name
+            field:
+              autocomplete: given-name
+              type: text
+              display: 'First name'
+              width: 50
+              validate:
+                - required
+                - string
+                - 'max:255'
+          -
+            handle: last_name
+            field:
+              autocomplete: family-name
+              type: text
+              display: 'Last name'
+              width: 50
+              validate:
+                - required
+                - string
+                - 'max:255'
+          -
+            handle: email
+            field:
+              input_type: email
+              autocomplete: email
+              type: text
+              display: Email
+              validate:
+                - required
+                - string
+                - 'email:dns,rfc'
+                - 'max:255'
+          -
+            handle: company
+            field:
+              type: text
+              display: Company
+              validate:
+                - sometimes
+                - string
+                - 'max:255'
+          -
+            handle: phone
+            field:
+              input_type: tel
+              placeholder: 'If you want us to call you'
+              autocomplete: tel
+              type: text
+              display: Phone
+              validate:
+                - sometimes
+                - string
+                - 'max:255'
+      -
+        display: 'Project information'
+        fields:
+          -
+            handle: services
+            field:
+              options:
+                -
+                  key: branding
+                  value: Branding
+                -
+                  key: design
+                  value: Design
+                -
+                  key: dev
+                  value: 'Statamic development'
+                -
+                  key: laravel
+                  value: 'Laravel development'
+              type: checkboxes
+              display: Services
+              width: 50
+              validate:
+                - required
+          -
+            handle: budget
+            field:
+              options:
+                -
+                  key: under_10k
+                  value: 'Less than 10K'
+                -
+                  key: 10k-25k
+                  value: '$10K – $25K'
+                -
+                  key: 25k-50k
+                  value: '$25K – $50K'
+                -
+                  key: over_50k
+                  value: $50K+
+              default: 10k-25k
+              type: radio
+              display: 'Your budget'
+              width: 50
+              validate:
+                - required
+                - string
+                - 'max:255'
+          -
+            handle: message
+            field:
+              placeholder: 'Describe your project, needs, and timeline'
+              character_limit: 500
+              type: textarea
+              display: Message
+              instructions: 'Max 500 characters'
+              validate:
+                - required
+                - string
+                - 'max:500'
+      -
+        display: 'Additional details'
+        fields:
+          -
+            handle: timezone
+            field:
+              dictionary: timezones
+              placeholder: 'Select your timezone'
+              max_items: 1
+              type: dictionary
+              display: Timezone
+              width: 66
+              validate:
+                - sometimes
+                - string
+                - 'max:255'
+          -
+            handle: current_website
+            field:
+              placeholder: 'If you already have a website'
+              autocomplete: url
+              type: text
+              display: 'Current website'
+              validate:
+                - sometimes
+                - active_url
+          -
+            handle: referral_source
+            field:
+              options:
+                -
+                  key: statamic_community
+                  value: 'Statamic community'
+                -
+                  key: google
+                  value: Google
+                -
+                  key: twitter
+                  value: Twitter
+                -
+                  key: linkedin
+                  value: LinkedIn
+                -
+                  key: referral
+                  value: Referral
+              type: select
+              display: 'How did you hear about us?'
+              width: 50
+              max_items: 1
+              searchable: false
+          -
+            handle: referrer
+            field:
+              type: text
+              display: Referrer
+              width: 50
+              validate:
+                - sometimes
+                - string
+                - 'max:255'
+              if:
+                referral_source: 'equals referral'
+              placeholder: "We'd love to know who was so kind"
+          -
+            handle: consent
+            field:
+              inline_label: 'By selecting this, you agree to our <a href="/privacy" target="_blank">privacy policy</a>.'
+              type: toggle
+              display: Consent
+              validate:
+                - required
+                - accepted

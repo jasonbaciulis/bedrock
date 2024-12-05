@@ -1,0 +1,36 @@
+title: 'SEO sitemap'
+fields:
+  -
+    handle: sitemap_change_frequency
+    field:
+      options:
+        always: Always
+        hourly: Hourly
+        daily: Daily
+        weekly: Weekly
+        monthly: Monthly
+        yearly: Yearly
+        never: Never
+      clearable: false
+      multiple: false
+      searchable: true
+      taggable: false
+      push_tags: false
+      cast_booleans: false
+      type: select
+      instructions: 'How often to instruct search engines to crawl.'
+      instructions_position: below
+      width: 50
+      default: weekly
+      listable: false
+      display: 'Change frequency'
+  -
+    handle: sitemap_priority
+    field:
+      type: text
+      display: Priority
+      default: 0.5
+      instructions: 'Valid values range from 0.0 to 1.0. This value does not affect how your pages are compared to pages on other sites, it only lets the search engines know which pages you deem most important for the crawlers.'
+      instructions_position: below
+      width: 50
+      listable: false

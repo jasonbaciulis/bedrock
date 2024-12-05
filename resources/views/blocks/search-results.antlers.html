@@ -1,0 +1,25 @@
+<section class="section-m">
+    <div class="container">
+        {{ search:results :limit="limit" paginate="true" on_each_side="1" as="search_results" }}
+            <div class="site-grid gap-y-8 xl:gap-y-12">
+                <div class="sm:col-span-12 max-w-md">
+                    {{ partial:components/search-form }}
+                </div>
+
+                {{ if no_results }}
+                    <div class="rounded-lg bg-yellow-100 sm:col-span-12 p-6">
+                        <p class="content-xl">{{ no_results_text }}</p>
+                    </div>
+                {{ /if }}
+
+                {{ search_results }}
+                    <div class="sm:col-span-12 md:col-span-6">
+                        {{ partial:partials/entry-posts }}
+                    </div>
+                {{ /search_results }}
+            </div>
+
+            {{ partial:components/pagination class="mt-12" }}
+        {{ /search:results }}
+    </div>
+</section>

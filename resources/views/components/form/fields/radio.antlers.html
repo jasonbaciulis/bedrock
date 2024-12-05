@@ -1,0 +1,32 @@
+<fieldset
+    :aria-invalid="hasError('{{ handle }}')"
+    {{ instructions ?= 'aria-describedby="{handle}-instructions"' }}
+>
+    <legend class="block text-sm/6 font-semibold text-gray">{{ display }}</legend>
+
+    {{ if field:instructions }}
+        <p id="{{ field:handle }}-instructions" class="mt-1 text-sm/6 text-gray-600">
+            {{ field:instructions }}
+        </p>
+    {{ /if }}
+
+    <div class="mt-4 space-y-4 text-sm/6 text-gray-600">
+        {{ foreach:options as="value|label" }}
+            <div class="flex gap-x-2.5">
+                <input
+                    x-model="{{ model }}"
+                    id="{{ value }}"
+                    type="radio"
+                    name="{{ handle }}"
+                    value="{{ value }}"
+                    class="mt-1"
+                    :class="{ 'has-error': hasError('{{ handle }}') }"
+                    @change="forgetError('{{ handle }}')"
+                >
+                <label for="{{ value }}">
+                    {{ label }}
+                </label>
+            </div>
+        {{ /foreach:options }}
+    </div>
+</fieldset>

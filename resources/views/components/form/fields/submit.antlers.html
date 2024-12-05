@@ -1,0 +1,10 @@
+<button
+    type="submit"
+    class="btn btn--primary w-full relative {{ class }}"
+    :disabled="sending"
+>
+    <span :class="{ 'invisible' : sending }">{{ label }}</span>
+    <span x-cloak x-show="sending" class="absolute inset-0 flex justify-center items-center">
+        {{ partial:elements/spinner }}
+    </span>
+</button>

@@ -1,0 +1,9 @@
+{
+    "name": "my-vendor-name/leap",
+    "extra": {
+        "statamic": {
+            "name": "Leap",
+            "description": "Leap starter kit"
+        }
+    }
+}

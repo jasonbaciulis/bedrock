@@ -1,0 +1,46 @@
+title: FAQs
+fields:
+  -
+    handle: title
+    field:
+      display: Title
+      type: text
+  -
+    handle: text
+    field: common.text_plain
+    config:
+      display: Text
+  -
+    handle: items
+    field:
+      collapse: true
+      display: Items
+      type: replicator
+      if:
+        block_type: 'equals collapsed'
+      button_label: 'Add Item'
+      sets:
+        main:
+          display: Main
+          sets:
+            item:
+              display: Item
+              hide: true
+              fields:
+                -
+                  handle: title
+                  field:
+                    display: Title
+                    type: text
+                -
+                  handle: text
+                  field: common.text_basic
+                  config:
+                    buttons:
+                      - bold
+                      - italic
+                      - unorderedlist
+                      - orderedlist
+                      - removeformat
+                      - anchor
+                    display: Text

@@ -1,0 +1,43 @@
+title: 'SEO open graph'
+fields:
+  -
+    handle: og_title
+    field:
+      input_type: text
+      type: text
+      localizable: true
+      listable: false
+      display: 'Social title'
+      instructions: 'This entries OG title, defaults to custom SEO title and title. Recommended max 70 chars.'
+      character_limit: 70
+  -
+    handle: og_description
+    field: common.text_plain
+    config:
+      listable: false
+      display: 'Social description'
+      instructions: 'This entries OG description, defaults to meta description. Recommended max 200 chars.'
+      character_limit: 200
+      width: 100
+  -
+    handle: og_image
+    field: common.image
+    config:
+      container: social_images
+      mode: grid
+      listable: false
+      display: 'Social image'
+      instructions: 'This entries OG image. Defaults to global site OG image. The recommended size is 1200px x 630px. The image will be focal cropped to this dimension.'
+      instructions_position: below
+      width: 50
+  -
+    handle: twitter_image
+    field: common.image
+    config:
+      container: social_images
+      mode: grid
+      listable: false
+      display: 'Twitter image'
+      instructions: 'This entries Twitter Summary with large image. Defaults to global site Twitter image. Images should have an aspect ratio of 2:1 with minimum dimensions of 1200 x 600px. This image will be focal cropped to this dimension.'
+      instructions_position: below
+      width: 50

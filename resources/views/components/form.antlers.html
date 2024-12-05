@@ -1,0 +1,57 @@
+{{ once }}
+    {{ push:scripts }}
+        <script src="/vendor/statamic/frontend/js/helpers.js" defer></script>
+        {{ vite src="resources/js/form.js" }}
+    {{ /push:scripts }}
+{{ /once }}
+
+{{#
+    Create the selected form and reference Alpine data in `form()`.
+    Prevent submitting with POST as we will submit with AJAX.
+#}}
+<div x-cloak x-data="form({ handle: {{ form:handle | to_js }} })">
+    <template x-if="success">
+        {{ partial:components/alert style="success" :text="success_message" class="mb-8" }}
+    </template>
+
+    {{ form:create
+        :in="form:handle"
+        id="form-{form:handle}"
+        csrf="false"
+        x-ref="form"
+        @submit.prevent="submit"
+        js="alpine:{form:handle}"
+    }}
+        <input type="hidden" name="_token" value="{{ csrf_token }}">
+        {{ partial:components/form/fields/honeypot model="{form:handle}.{honeypot}" }}
+
+        <div class="space-y-12 divide-y divide-gray-300">
+            {{ sections }}
+                <div class="{{ !first ?= 'pt-12' }}">
+                    {{ if display }}
+                        <h3 class="h6 mb-8">{{ display }}</h3>
+                    {{ /if }}
+
+                    <div class="grid md:grid-cols-12 gap-y-6 gap-x-8">
+                        {{ fields scope="field" }}
+                            {{ $field_container_class = switch(
+                                (width == '25') => 'md:col-span-3',
+                                (width == '33') => 'md:col-span-4',
+                                (width == '50') => 'md:col-span-6',
+                                (width == '66') => 'md:col-span-8',
+                                (width == '75') => 'md:col-span-9',
+                                () => 'md:col-span-full'
+                            )}}
+
+                            {{ partial:components/form/field :container_class="$field_container_class" }}
+                        {{ /fields }}
+                    </div>
+                </div>
+            {{ /sections }}
+        </div>
+
+        <div class="pt-8">
+            {{ partial:components/form/fields/submit :label="button_label" }}
+        </div>
+    {{ /form:create }}
+</div>

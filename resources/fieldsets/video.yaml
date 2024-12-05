@@ -1,0 +1,20 @@
+title: Video
+fields:
+  -
+    handle: youtube_url
+    field:
+      display: 'YouTube URL'
+      type: video
+      icon: video
+      listable: hidden
+      instructions_position: above
+      visibility: visible
+      always_save: false
+  -
+    handle: caption
+    field:
+      input_type: text
+      type: text
+      localizable: true
+      listable: hidden
+      display: Caption

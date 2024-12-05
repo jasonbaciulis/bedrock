@@ -1,0 +1,813 @@
+tabs:
+  page_titles:
+    display: 'Page meta'
+    sections:
+      -
+        display: Environments
+        instructions: 'When to noindex and nofollow by default.'
+        fields:
+          -
+            handle: noindex_local
+            field:
+              type: toggle
+              instructions_position: below
+              listable: false
+              display: Local
+              width: 33
+          -
+            handle: noindex_staging
+            field:
+              type: toggle
+              instructions_position: below
+              listable: false
+              display: Staging
+              width: 33
+          -
+            handle: noindex_production
+            field:
+              type: toggle
+              instructions_position: below
+              listable: false
+              display: Production
+              width: 33
+      -
+        display: Title
+        instructions: 'Website and page titles.'
+        fields:
+          -
+            handle: title_separator
+            field:
+              options:
+                ' | ': '|'
+                ' - ': '-'
+                ' / ': /
+                ' :: ': '::'
+                ' > ': '>'
+                ' ~ ': '~'
+              localizable: true
+              type: select
+              instructions: 'Select the character to separate the page title and site title.'
+              instructions_position: below
+              width: 33
+              display: Separator
+          -
+            handle: site_name
+            field:
+              type: text
+              localizable: true
+              display: 'Website title'
+              instructions: "The title for the website. Defaults to Laravel's App Name."
+              instructions_position: below
+              width: 66
+          -
+            handle: change_page_title
+            field:
+              add_row: 'Add collection default'
+              type: grid
+              localizable: true
+              display: 'Change collection title'
+              instructions: 'Select collections where you want to add something to be part of the page title. For example: _Entry title - **Collection title** - Site title_.'
+              fields:
+                -
+                  handle: collection
+                  field:
+                    max_items: 1
+                    mode: select
+                    display: Collection
+                    type: collections
+                    icon: collections
+                    instructions: 'The collection you want to change the title for.'
+                    width: 33
+                    listable: hidden
+                -
+                  handle: what_to_add
+                  field:
+                    options:
+                      custom_text: 'Custom text'
+                      collection_title: 'The collection title'
+                    multiple: false
+                    max_items: 1
+                    clearable: false
+                    searchable: false
+                    taggable: false
+                    push_tags: false
+                    cast_booleans: false
+                    display: 'What to add'
+                    type: select
+                    icon: select
+                    instructions: 'What to add.'
+                    width: 33
+                    listable: hidden
+                -
+                  handle: custom_text
+                  field:
+                    input_type: text
+                    antlers: false
+                    display: Text
+                    type: text
+                    icon: text
+                    instructions: 'The custom text.'
+                    width: 33
+                    listable: hidden
+                    if:
+                      what_to_add: 'equals custom_text'
+      -
+        display: Descriptions
+        instructions: "Set fallback data per collection to use as meta, OG and Twitter descriptions when users don't fill in those fields."
+        fields:
+          -
+            handle: collection_defaults
+            field:
+              mode: stacked
+              add_row: 'Add collection default'
+              display: 'Collection defaults'
+              type: grid
+              instructions: 'Set fallback meta descriptions for each collection.'
+              fields:
+                -
+                  handle: collection
+                  field:
+                    max_items: 1
+                    mode: select
+                    display: Collection
+                    type: collections
+                    icon: collections
+                    instructions: 'The collection for this fallback.'
+                    instructions_position: below
+                    width: 33
+                    listable: hidden
+                -
+                  handle: fallback
+                  field:
+                    options:
+                      field: 'Custom field'
+                      custom_text: 'Custom text'
+                      blocks: 'First text in Blocks'
+                    multiple: false
+                    max_items: 1
+                    clearable: false
+                    searchable: false
+                    taggable: false
+                    push_tags: false
+                    cast_booleans: false
+                    display: Fallback
+                    type: select
+                    icon: select
+                    instructions: 'The fallback type'
+                    instructions_position: below
+                    width: 33
+                    listable: hidden
+                -
+                  handle: field_handle
+                  field:
+                    input_type: text
+                    antlers: false
+                    display: 'Field handle'
+                    type: text
+                    icon: text
+                    instructions: 'The custom field handle.'
+                    instructions_position: below
+                    width: 33
+                    listable: hidden
+                    if:
+                      fallback: 'equals field'
+                -
+                  handle: custom_text
+                  field:
+                    character_limit: '160'
+                    antlers: false
+                    display: 'Custom text'
+                    type: textarea
+                    icon: textarea
+                    instructions: 'The custom text. Max 160 characters.'
+                    instructions_position: below
+                    width: 33
+                    listable: hidden
+                    if:
+                      fallback: 'equals custom_text'
+      -
+        display: Hreflang
+        instructions: 'Set for which sites in your multisite a hreflang tag should be generated.'
+        fields:
+          -
+            handle: hreflang_auto
+            field:
+              type: toggle
+              display: 'Auto hreflang tags'
+              instructions: 'Auto generate hreflang tags for all sites.'
+              width: 50
+  json-ld:
+    display: JSON-ld
+    sections:
+      -
+        display: 'Knowledge graph data'
+        instructions: 'JSON-LD Schema'
+        fields:
+          -
+            handle: json_ld_type
+            field:
+              options:
+                none: None
+                organization: Organization
+                person: Person
+                custom: Custom
+              default: none
+              localizable: true
+              type: button_group
+              instructions: 'The type of data to be added on each page.'
+              listable: false
+              display: Type
+          -
+            handle: organization_name
+            field:
+              type: text
+              localizable: true
+              display: 'Organization name'
+              width: 66
+              if:
+                json_ld_type: 'equals organization'
+              validate:
+                - 'required_if:json_ld_type,organization'
+          -
+            handle: organization_logo
+            field: common.image
+            config:
+              localizable: true
+              listable: hidden
+              display: 'Organization logo'
+              instructions: 'Minimum 112px x 112px, will be focal cropped to a square.'
+              instructions_position: below
+              width: 33
+              if:
+                json_ld_type: 'equals organization'
+          -
+            handle: person_name
+            field:
+              display: 'Person name'
+              width: 66
+              type: text
+              localizable: true
+              if:
+                json_ld_type: 'equals person'
+              validate:
+                - 'required_if:json_ld_type,person'
+          -
+            handle: json_ld
+            field:
+              type: textarea
+              instructions: 'Add custom JSON-LD to be included on each page. This can include stuff like business hours and contact data.'
+              localizable: true
+              listable: false
+              display: JSON-LD
+              if:
+                json_ld_type: 'equals custom'
+              validate:
+                - 'required_if:json_ld_type,custom'
+      -
+        display: Breadcrumbs
+        instructions: 'JSON-ld Breadcrumbs.'
+        fields:
+          -
+            handle: breadcrumbs
+            field:
+              type: toggle
+              instructions: 'Add JSON-ld breadcrumbs to each entry. Recommended when no visual breadcrumbs are rendered to the page.'
+              listable: false
+              localizable: true
+              display: Breadcrumbs
+  social:
+    display: 'Social Sharing'
+    sections:
+      -
+        display: Defaults
+        instructions: 'Default settings for Social Sharing.'
+        fields:
+          -
+            handle: og_image
+            field: common.image
+            config:
+              container: social_images
+              localizable: true
+              listable: hidden
+              display: 'Social image'
+              instructions: 'The default OG image. Can be overridden per entry. The recommended size is 1200px x 630px. This image will be focal cropped to this dimension.'
+              instructions_position: below
+              width: 50
+          -
+            handle: twitter_image
+            field: common.image
+            config:
+              container: social_images
+              localizable: true
+              listable: hidden
+              display: 'Twitter image'
+              instructions: 'The default Twitter image. Can be overridden per entry. Images should have an aspect ratio of 2:1 with minimum dimensions of 300x157. This image will be focal cropped to this dimension.'
+              instructions_position: below
+              width: 50
+          -
+            handle: twitter_handle
+            field:
+              display: 'Twitter handle'
+              width: 50
+              type: text
+              localizable: true
+              instructions: 'The Twitter user name that should be included with Twitter Card tags.'
+              instructions_position: below
+              prepend: '@'
+  sitemap:
+    display: Sitemap
+    sections:
+      -
+        display: Sitemap
+        instructions: 'Configure the sitemap.xml'
+        fields:
+          -
+            handle: sitemap_collections
+            field:
+              mode: select
+              type: collections
+              instructions: 'Select which collections to include in the sitemap.xml.'
+              default: pages
+              display: Collections
+  trackers:
+    display: Trackers
+    sections:
+      -
+        display: Environments
+        instructions: 'When to render tracker tags and the cookie consent.'
+        fields:
+          -
+            handle: trackers_local
+            field:
+              type: toggle
+              listable: false
+              display: Local
+              width: 33
+          -
+            handle: trackers_staging
+            field:
+              type: toggle
+              listable: false
+              display: Staging
+              width: 33
+          -
+            handle: trackers_production
+            field:
+              type: toggle
+              listable: false
+              display: Production
+              width: 33
+      -
+        display: 'Site verifications'
+        instructions: 'Configure site verifications.'
+        fields:
+          -
+            handle: use_google_site_verification
+            field:
+              type: toggle
+              instructions: 'Add a google-site-verification meta tag to your head.'
+              listable: false
+              display: 'Google site verification'
+          -
+            handle: google_site_verification
+            field:
+              type: text
+              width: 66
+              display: 'Verification key'
+              validate:
+                - 'required_if:use_google_site_verification,true'
+              if:
+                use_google_site_verification: 'equals true'
+      -
+        display: Analytics
+        instructions: 'Configure various Analytics Services.'
+        fields:
+          -
+            handle: use_fathom
+            field:
+              type: toggle
+              instructions: 'Add Fathom tracking code to your head.'
+              listable: false
+              display: Fathom
+              width: 50
+          -
+            handle: fathom_use_custom_domain
+            field:
+              type: toggle
+              instructions: 'Use a custom domain for your Fathom script.'
+              listable: false
+              width: 50
+              display: 'Custom domain'
+              if:
+                use_fathom: 'equals true'
+          -
+            handle: fathom
+            field:
+              width: 50
+              display: 'Site ID'
+              instructions: 'Only add the site ID.'
+              type: text
+              validate:
+                - 'required_if:use_fathom,true'
+              if:
+                use_fathom: 'equals true'
+          -
+            handle: fathom_custom_script_url
+            field:
+              width: 50
+              display: 'Custom domain'
+              instructions: 'Add the full script URL.'
+              input_type: url
+              type: text
+              validate:
+                - 'required_if:fathom_use_custom_domain,true'
+              if:
+                use_fathom: 'equals true'
+                fathom_use_custom_domain: 'equals true'
+          -
+            handle: use_cloudflare_web_analytics
+            field:
+              type: toggle
+              instructions: 'Add Cloudflare tracking code to your head.'
+              listable: false
+              display: 'Cloudflare Web Analytics'
+          -
+            handle: cloudflare_web_analytics
+            field:
+              width: 66
+              display: 'Beacon ID'
+              type: text
+              validate:
+                - 'required_if:use_cloudflare_web_analytics,true'
+              if:
+                use_cloudflare_web_analytics: 'equals true'
+      -
+        display: 'Cookie banner'
+        instructions: 'Configure Google trackers and scripts and optionally inject them after consent.'
+        fields:
+          -
+            handle: tracker_type
+            field:
+              options:
+                none: None
+                gtag: 'Google Analytics'
+                gtm: 'Google Tag Manager'
+              default: none
+              type: button_group
+              instructions: 'The type of Google Tracker you want added on each page.'
+              listable: false
+              display: 'Google Tracker type'
+          -
+            handle: google_analytics
+            field:
+              width: 25
+              display: 'Tracking ID'
+              type: text
+              instructions: "*Note: if you don't anonymize IP's you need cookie consent in the EU."
+              instructions_position: below
+              validate:
+                - 'required_if:tracker_type,gtag'
+              if:
+                tracker_type: 'equals gtag'
+          -
+            handle: anonymize_ip
+            field:
+              type: toggle
+              width: 25
+              listable: false
+              default: true
+              display: "Anonymize IP's"
+              instructions: 'Enable this to be exempt from needing cookie consent.'
+              instructions_position: below
+              if:
+                tracker_type: 'equals gtag'
+          -
+            handle: google_tag_manager
+            field:
+              type: text
+              width: 50
+              display: 'Tracking ID'
+              instructions_position: below
+              validate:
+                - 'required_if:tracker_type,gtm'
+              if:
+                tracker_type: 'equals gtm'
+          -
+            handle: use_cookie_banner
+            field:
+              type: toggle
+              instructions: 'Enable the cookie banner. Make sure you load all tracking scripts via GTM. Uses the consent api: https://developers.google.com/tag-manager/consent'
+              instructions_position: below
+              listable: false
+              display: 'Cookie banner'
+              width: 50
+              if:
+                tracker_type: 'not none'
+          -
+            handle: cookie
+            field:
+              type: group
+              display: 'Cookie banner'
+              if:
+                use_cookie_banner: 'equals true'
+                tracker_type: 'not none'
+              fields:
+                -
+                  handle: consent_revoke_before
+                  field:
+                    time_required: false
+                    earliest_date: '1900-01-01'
+                    display: 'Revoke consent before'
+                    instructions: 'Revoke all users consent before this date. Use this when you added new trackers to GTM and your privacy policy changed. The cookie bar will reappear.'
+                    instructions_position: below
+                    type: date
+                    width: 75
+                -
+                  handle: description
+                  field: common.text_basic
+                  config:
+                    display: Description
+                -
+                  handle: accept_label
+                  field:
+                    display: 'Accept label'
+                    type: text
+                    width: 50
+                    always_save: false
+                -
+                  handle: reject_label
+                  field:
+                    display: 'Reject label'
+                    type: text
+                    width: 50
+                    always_save: false
+                -
+                  handle: accept_selected_label
+                  field:
+                    display: 'Accept selected label'
+                    type: text
+                    width: 50
+                    always_save: false
+                -
+                  handle: settings_label
+                  field:
+                    display: 'Settings label'
+                    type: text
+                    width: 50
+                    always_save: false
+                -
+                  handle: reset_consent_label
+                  field:
+                    display: 'Reset consent label'
+                    type: text
+                    width: 66
+                    always_save: false
+                -
+                  handle: consent_types
+                  field:
+                    type: replicator
+                    display: 'Consent types'
+                    sets:
+                      new_set_group:
+                        display: 'New Set Group'
+                        sets:
+                          functional:
+                            display: Functional
+                            fields:
+                              -
+                                handle: label
+                                field:
+                                  type: text
+                                  display: Label
+                                  width: 25
+                                  default: Functional
+                              -
+                                handle: description
+                                field:
+                                  type: text
+                                  display: Description
+                                  width: 75
+                                  default: "First party cookies needed for the website to function. These can't be turned off."
+                              -
+                                handle: value
+                                field:
+                                  type: toggle
+                                  display: Value
+                                  default: true
+                                  width: 50
+                                  visibility: read_only
+                              -
+                                handle: consent_api
+                                field:
+                                  type: toggle
+                                  display: 'Consent API'
+                                  width: 50
+                                  visibility: read_only
+                              -
+                                handle: name
+                                field:
+                                  default: functionalCookies
+                                  type: text
+                                  display: Name
+                                  listable: false
+                                  visibility: read_only
+                                  width: 50
+                          analytics:
+                            display: Analytics
+                            fields:
+                              -
+                                handle: label
+                                field:
+                                  type: text
+                                  display: Label
+                                  width: 25
+                                  default: Analytics
+                              -
+                                handle: description
+                                field:
+                                  type: text
+                                  display: Description
+                                  width: 75
+                                  default: 'We use data collected by Google Analytics to make our site work better.'
+                              -
+                                handle: value
+                                field:
+                                  type: toggle
+                                  display: Value
+                                  width: 50
+                              -
+                                handle: consent_api
+                                field:
+                                  type: toggle
+                                  display: 'Consent API'
+                                  default: true
+                                  width: 50
+                                  visibility: read_only
+                              -
+                                handle: name
+                                field:
+                                  default: analyticsStorage
+                                  type: text
+                                  display: Name
+                                  listable: false
+                                  visibility: read_only
+                                  width: 50
+                              -
+                                handle: consent_api_handle
+                                field:
+                                  type: text
+                                  display: 'Consent API handle'
+                                  listable: false
+                                  visibility: read_only
+                                  default: analytics_storage
+                                  width: 50
+                          ad_storage:
+                            display: 'Ad storage'
+                            instructions: 'Only relevant if using GTM'
+                            fields:
+                              -
+                                handle: label
+                                field:
+                                  type: text
+                                  display: Label
+                                  width: 25
+                                  default: 'Ad storage'
+                              -
+                                handle: description
+                                field:
+                                  type: text
+                                  display: Description
+                                  width: 75
+                                  default: 'We use data collected by Google Analytics to make our site work better.'
+                              -
+                                handle: value
+                                field:
+                                  type: toggle
+                                  display: Value
+                                  width: 50
+                              -
+                                handle: consent_api
+                                field:
+                                  type: toggle
+                                  display: 'Consent API'
+                                  default: true
+                                  width: 50
+                                  visibility: read_only
+                              -
+                                handle: name
+                                field:
+                                  default: adStorage
+                                  type: text
+                                  display: Name
+                                  listable: false
+                                  visibility: read_only
+                                  width: 50
+                              -
+                                handle: consent_api_handle
+                                field:
+                                  type: text
+                                  display: 'Consent API handle'
+                                  listable: false
+                                  visibility: read_only
+                                  default: ad_storage
+                                  width: 50
+                          ad_user_data:
+                            display: 'Ad user data'
+                            instructions: 'Only relevant if using GTM'
+                            fields:
+                              -
+                                handle: label
+                                field:
+                                  type: text
+                                  display: Label
+                                  width: 25
+                                  default: 'Ad user data'
+                              -
+                                handle: description
+                                field:
+                                  type: text
+                                  display: Description
+                                  width: 75
+                                  default: 'We use data collected by Google Analytics to make our site work better.'
+                              -
+                                handle: value
+                                field:
+                                  type: toggle
+                                  display: Value
+                                  width: 50
+                              -
+                                handle: consent_api
+                                field:
+                                  type: toggle
+                                  display: 'Consent API'
+                                  default: true
+                                  width: 50
+                                  visibility: read_only
+                              -
+                                handle: name
+                                field:
+                                  default: adUserData
+                                  type: text
+                                  display: Name
+                                  listable: false
+                                  visibility: read_only
+                                  width: 50
+                              -
+                                handle: consent_api_handle
+                                field:
+                                  type: text
+                                  display: 'Consent API handle'
+                                  listable: false
+                                  visibility: read_only
+                                  default: ad_user_data
+                                  width: 50
+                          ad_personalization:
+                            display: 'Ad personalization'
+                            instructions: 'Only relevant if using GTM'
+                            fields:
+                              -
+                                handle: label
+                                field:
+                                  type: text
+                                  display: Label
+                                  width: 25
+                                  default: 'Ad personalization'
+                              -
+                                handle: description
+                                field:
+                                  type: text
+                                  display: Description
+                                  width: 75
+                                  default: 'We use data collected by Google Analytics to make our site work better.'
+                              -
+                                handle: value
+                                field:
+                                  type: toggle
+                                  display: Value
+                                  width: 50
+                              -
+                                handle: consent_api
+                                field:
+                                  type: toggle
+                                  display: 'Consent API'
+                                  default: true
+                                  width: 50
+                                  visibility: read_only
+                              -
+                                handle: name
+                                field:
+                                  default: adPersonalization
+                                  type: text
+                                  display: Name
+                                  listable: false
+                                  visibility: read_only
+                                  width: 50
+                              -
+                                handle: consent_api_handle
+                                field:
+                                  type: text
+                                  display: 'Consent API handle'
+                                  listable: false
+                                  visibility: read_only
+                                  default: ad_personalization
+                                  width: 50

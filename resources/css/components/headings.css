@@ -1,0 +1,33 @@
+@layer components {
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5 {
+    @apply font-semibold tracking-tight text-gray;
+  }
+
+  .h1 {
+    @apply text-5xl sm:text-6xl lg:text-7xl;
+  }
+
+  .h2 {
+    @apply text-4xl sm:text-5xl;
+  }
+
+  .h3 {
+    @apply text-3xl sm:text-4xl;
+  }
+
+  .h4 {
+    @apply text-2xl sm:text-3xl;
+  }
+
+  .h5 {
+    @apply text-xl sm:text-2xl;
+  }
+
+  .h6 {
+    @apply text-lg font-semibold text-gray sm:text-xl;
+  }
+}

@@ -1,0 +1,18 @@
+@layer components {
+  .tooltip {
+    @apply relative z-40;
+
+    &::before {
+      @apply invisible absolute -top-1 left-1/2 w-32 -translate-x-1/2 -translate-y-full rounded-lg bg-gray p-2.5 text-sm opacity-0 ring-1 ring-gray-300/10 transition content-[attr(data-tooltip)] sm:w-64;
+    }
+
+    &::after {
+      @apply invisible absolute -top-[9px] left-1/2 h-2.5 w-2.5 -translate-x-1/2 rotate-45 rounded-br-sm border-b border-r border-gray-300/10 bg-gray opacity-0 transition content-[''];
+    }
+  }
+
+  .tooltip:hover::before,
+  .tooltip:hover::after {
+    @apply visible opacity-100;
+  }
+}

@@ -1,0 +1,31 @@
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: icon
+            field: common.icon
+            config:
+              directory: resources/svg
+              width: 100
+              instructions: Optional
+              folder: heroicons-outline
+          -
+            handle: description
+            field:
+              display: Description
+              type: text
+          -
+            handle: badge
+            field:
+              display: Badge
+              type: text
+              instructions: 'Highlight menu item for example with a "New" badge'
+          -
+            handle: two_col_flyout
+            field:
+              display: 'Two column flyout'
+              type: toggle
+              instructions: 'Used only in top level nav items that have children'

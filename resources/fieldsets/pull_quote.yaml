@@ -1,0 +1,17 @@
+title: 'Pull quote'
+fields:
+  -
+    handle: quote
+    field:
+      type: textarea
+      localizable: true
+      listable: hidden
+      display: Quote
+  -
+    handle: author
+    field:
+      input_type: text
+      type: text
+      localizable: true
+      listable: hidden
+      display: Author

@@ -1,0 +1,5 @@
+<section class="section-m">
+    <div class="container">
+        <h2 class="h2">{{ name }}</h2>
+    </div>
+</section>

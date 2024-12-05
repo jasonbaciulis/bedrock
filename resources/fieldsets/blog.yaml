@@ -1,0 +1,80 @@
+title: Blog
+fields:
+  -
+    handle: block_type
+    field: common.select_single
+    config:
+      options:
+        3_column_cards: '3-column cards'
+        paginated: Paginated
+        carousel: Carousel
+      display: 'Block type'
+      width: 50
+      validate:
+        - required
+  -
+    handle: title
+    field:
+      input_type: text
+      antlers: false
+      display: Title
+      type: text
+      icon: text
+      listable: hidden
+      instructions_position: above
+      visibility: visible
+  -
+    handle: text
+    field: common.text_plain
+  -
+    handle: query
+    field:
+      options:
+        recent: Recent
+        featured: Featured
+        custom: Custom
+      multiple: false
+      max_items: 1
+      clearable: false
+      searchable: true
+      taggable: false
+      push_tags: false
+      cast_booleans: false
+      default: recent
+      display: Query
+      type: select
+      icon: select
+      width: 50
+      listable: hidden
+      instructions_position: above
+      visibility: visible
+      validate:
+        - required
+  -
+    handle: limit
+    field:
+      default: '3'
+      display: Limit
+      type: integer
+      icon: integer
+      width: 50
+      listable: hidden
+      instructions_position: above
+      visibility: visible
+      if:
+        query: 'not custom'
+  -
+    handle: entries
+    field:
+      mode: default
+      create: true
+      collections:
+        - posts
+      display: Entries
+      type: entries
+      icon: entries
+      listable: hidden
+      instructions_position: above
+      visibility: visible
+      if:
+        query: 'equals custom'

@@ -1,0 +1,40 @@
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        display: Banner
+        instructions: 'Announce new product releases, rebranding, or any other important stuff that warrants prime real estate on your website.'
+        fields:
+          -
+            handle: show
+            field:
+              display: Show
+              type: toggle
+              instructions: 'Displays banner sitewide at the very top of the page'
+          -
+            handle: text
+            field: common.text_basic
+            config:
+              display: Text
+              if:
+                show: 'equals true'
+          -
+            handle: link_url
+            field:
+              display: 'Link URL'
+              type: link
+              if:
+                show: 'equals true'
+          -
+            handle: cookie_expires
+            field:
+              input_type: number
+              default: '7'
+              display: 'Cookie expires'
+              type: text
+              instructions: 'After a user clicks dismiss button how many days to not show the banner'
+              if:
+                show: 'equals true'
+              width: 66
+              append: days

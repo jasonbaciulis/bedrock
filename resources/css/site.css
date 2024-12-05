@@ -1,0 +1,44 @@
+/*
+Instead of rellying 100% on TailwindCSS utility classes,
+for highly reusable UI elements we create BEM CSS components.
+We think this approach is faster and more maintainable and eliminates the
+need to create/import a bunch of Antlers partials with a single HTML tag.
+
+Also, we don't use tailwind.config.js to create components because
+we prefer to write CSS in CSS because that speeds up our workflow.
+
+Introduction to BEM:
+@see http://getbem.com/introduction/
+@see https://cssguidelin.es/#bem-like-naming
+
+CSS folder structure is based on ITCSS:
+@see https://www.xfive.co/blog/itcss-scalable-maintainable-css-architecture/
+*/
+
+/* Elements */
+@import 'tailwindcss/base';
+@import 'elements/images';
+@import 'elements/inputs';
+@import 'elements/links';
+@import 'elements/page';
+@import 'elements/typography';
+
+/* Objects */
+@import 'objects/layout';
+
+/* Components */
+@import 'tailwindcss/components';
+@import 'components/alert';
+@import 'components/badge';
+@import 'components/button';
+@import 'components/headings';
+@import 'components/misc';
+@import 'components/scrollbar';
+@import 'components/tooltip';
+@import 'components/typography';
+
+/* Utilities */
+@import 'tailwindcss/utilities';
+@import 'utilities/br-hidden';
+@import 'utilities/fill-current-nested';
+@import 'utilities/has-error';

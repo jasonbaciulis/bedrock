@@ -1,0 +1,32 @@
+{{ once }}
+    {{ push:scripts }}
+        {{ vite src="resources/css/glide.css" }}
+        {{ vite src="resources/js/glide.js" }}
+    {{ /push:scripts }}
+{{ /once }}
+
+<div
+    class="glide relative"
+    x-data
+    x-init="
+    new window.Glide($el, {
+        animationTimingFunc: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        {{ slot:glide }}
+    }).mount()
+    "
+>
+    <div class="glide__track relative" data-glide-el="track">
+        <ul class="glide__slides">
+            {{ slot }}
+        </ul>
+    </div>
+
+    <div class="glide__arrows absolute flex justify-between items-center inset-x-0 pointer-events-none {{ controls_class }}" data-glide-el="controls">
+        <button class="btn btn--arrow pointer-events-auto {{ left_btn_class }}" data-glide-dir="<" aria-label="Previous">
+            {{ svg src="chevron-left" class="size-5" }}
+        </button>
+        <button class="btn btn--arrow pointer-events-auto {{ right_btn_class }}" data-glide-dir=">" aria-label="Next">
+            {{ svg src="chevron-right" class="size-5" }}
+        </button>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+<section>
+    <div class="container">
+        {{ collection from="posts" paginate="true" limit="1" on_each_side="1" as="posts" }}
+            {{ posts }}
+                <article>
+                    <a href="{{ url }}">
+                        {{ title }}
+                    </a>
+                </article>
+            {{ /posts }}
+            {{ partial:components/pagination class="mt-10" }}
+        {{ /collection }}
+    </div>
+</section>

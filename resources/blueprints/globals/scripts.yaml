@@ -1,0 +1,37 @@
+sections:
+  head:
+    display: Head
+    fields:
+      -
+        handle: code_head
+        field:
+          theme: material
+          mode: htmlmixed
+          indent_type: tabs
+          indent_size: 4
+          key_map: default
+          line_numbers: true
+          line_wrapping: true
+          display: 'Head scripts'
+          instructions: 'Scripts placed right before the closing of head tag'
+          type: code
+          icon: code
+          listable: hidden
+  footer:
+    display: Footer
+    fields:
+      -
+        handle: code_footer
+        field:
+          theme: material
+          mode: htmlmixed
+          indent_type: tabs
+          indent_size: 4
+          key_map: default
+          line_numbers: true
+          line_wrapping: true
+          display: 'Footer scripts'
+          instructions: 'Scripts placed after the site JS, right before the closing of body tag'
+          type: code
+          icon: code
+          listable: hidden

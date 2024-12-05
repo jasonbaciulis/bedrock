@@ -1,0 +1,21 @@
+title: '{{ name }}'
+fields:
+  -
+    handle: title
+    field:
+      input_type: text
+      antlers: false
+      display: Title
+      type: text
+      icon: text
+      listable: hidden
+      instructions_position: above
+      visibility: visible
+  -
+    handle: text
+    field: common.text_plain
+    config:
+      display: Text
+  -
+    handle: image
+    field: common.image

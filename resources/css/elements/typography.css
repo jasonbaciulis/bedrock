@@ -1,0 +1,7 @@
+q {
+  quotes: '“ ”';
+}
+
+strong {
+  @apply font-bold;
+}

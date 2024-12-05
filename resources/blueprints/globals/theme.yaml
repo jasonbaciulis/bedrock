@@ -1,0 +1,48 @@
+tabs:
+  general:
+    display: General
+    sections:
+      -
+        fields:
+          -
+            handle: logo
+            field: common.image
+            config:
+              display: Logo
+      -
+        display: Search
+        fields:
+          -
+            handle: search_results
+            field: common.entry
+            config:
+              display: 'Search results'
+              instructions: 'Used inside the search form to point to a page that contains the "Search results" Block.'
+              collections:
+                - pages
+  header:
+    display: Header
+    sections:
+      -
+        fields:
+          -
+            import: buttons
+            prefix: header_
+  footer:
+    display: Footer
+    sections:
+      -
+        fields:
+          -
+            handle: about
+            field: common.text_plain
+            config:
+              display: About
+          -
+            handle: copyright_text
+            field:
+              default: 'All rights reserved.'
+              display: 'Copyright text'
+              type: text
+              instructions: 'Company name, registration, address, etc.'
+              width: 50

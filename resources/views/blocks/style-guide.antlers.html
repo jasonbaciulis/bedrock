@@ -1,0 +1,249 @@
+<section id="{{ type | slugify }}" class="container m-section">
+    <h2 class="h2 mb-28">Style guide</h2>
+    <div class="space-y-28">
+        <div>
+            <div class="border-b border-gray-300 mb-10">
+                <h3 class="h3 pb-6">Site grid</h3>
+            </div>
+            <div
+                class="site-grid"
+                x-data="{
+                    columnGap: 0,
+                    columnWidth: 0,
+                    calcGrid() {
+                        const styles = window.getComputedStyle($el);
+                        this.columnGap = parseInt(styles.gridColumnGap);
+                        const columnCount = styles.gridTemplateColumns.split(' ').length;
+                        this.columnWidth = ($el.clientWidth - (this.columnGap * (columnCount - 1))) / columnCount;
+                    }
+                }"
+                x-init="calcGrid()"
+                @resize.window="calcGrid()"
+            >
+                {{ loop times="12" }}
+                    <div class="relative bg-pink-50 h-40">
+                        {{ unless last }}
+                            <span
+                                class="hidden sm:block absolute -translate-y-1/2 top-1/2 left-full border-b border-dashed border-gray-400 text-[10px] font-mono text-gray-600 text-center"
+                                :style="`width:${columnGap}px`" x-text="`${columnGap}px`">
+
+                            </span>
+                        {{ /unless }}
+                        <span class="absolute top-full left-1/2 mt-2 -translate-x-1/2 text-[10px] font-mono text-gray-600" x-text="`${columnWidth.toFixed(1)}px`"></span>
+                    </div>
+                {{ /loop }}
+            </div>
+        </div>
+
+        <div>
+            <div class="border-b border-gray-300 mb-10">
+                <h3 class="h3 pb-6">Colors</h3>
+            </div>
+            <div class="space-y-10">
+                <div class="grid grid-cols-1 sm:grid-cols-11 gap-y-3 gap-x-2">
+                    {{ foreach
+                        :array="[
+                            'bg-primary-50',
+                            'bg-primary-100',
+                            'bg-primary-200',
+                            'bg-primary-300',
+                            'bg-primary-400',
+                            'bg-primary-500',
+                            'bg-primary-600',
+                            'bg-primary-700',
+                            'bg-primary-800',
+                            'bg-primary-900',
+                            'bg-primary-950',
+                        ]"
+                    }}
+                        <div class="relative flex">
+                            <div class="flex items-center gap-x-3 w-full sm:block sm:space-y-1.5">
+                                <div class="h-24 w-24 rounded sm:w-full {{ value }}"></div>
+                                <div class="px-0.5">
+                                    <div class="text-xs font-mono w-full text-gray-600">{{ value | replace('bg-', '') }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    {{ /foreach }}
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-11 gap-y-3 gap-x-2">
+                    {{ foreach
+                        :array="[
+                            'bg-gray-50',
+                            'bg-gray-100',
+                            'bg-gray-200',
+                            'bg-gray-300',
+                            'bg-gray-400',
+                            'bg-gray-500',
+                            'bg-gray-600',
+                            'bg-gray-700',
+                            'bg-gray-800',
+                            'bg-gray-900',
+                            'bg-gray-950',
+                        ]"
+                    }}
+                        <div class="relative flex">
+                            <div class="flex items-center gap-x-3 w-full sm:block sm:space-y-1.5">
+                                <div class="h-24 w-24 rounded sm:w-full {{ value }}"></div>
+                                <div class="px-0.5">
+                                    <div class="text-xs font-mono w-full text-gray-600">{{ value | replace('bg-', '') }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    {{ /foreach }}
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="border-b border-gray-300 mb-10">
+                <h3 class="h3 pb-6">Buttons</h3>
+            </div>
+            <div class="space-y-10">
+                <div class="flex items-center">
+                    <dt class="w-44 shrink-0 content-sm text-gray-600 font-mono leading-6">btn--primary</dt>
+                    <dd class="flex flex-col gap-6 items-center justify-start sm:flex-row sm:items-end">
+                        {{ partial:components/button button_type="primary" label="Get started" link_type="url" url="/" class="btn--sm" }}
+                        {{ partial:components/button button_type="primary" label="Get started" link_type="url" url="/" }}
+                        {{ partial:components/button button_type="primary" label="Get started" link_type="url" url="/" class="btn--lg" }}
+                    </dd>
+                </div>
+                <div class="flex items-center">
+                    <dt class="w-44 shrink-0 content-sm text-gray-600 font-mono leading-6">btn--secondary</dt>
+                    <dd class="flex flex-col gap-6 items-center justify-start sm:flex-row sm:items-end">
+                        {{ partial:components/button button_type="secondary" label="Get started" link_type="url" url="/" class="btn--sm" }}
+                        {{ partial:components/button button_type="secondary" label="Get started" link_type="url" url="/" }}
+                        {{ partial:components/button button_type="secondary" label="Get started" link_type="url" url="/" class="btn--lg" }}
+                    </dd>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="border-b border-gray-300 mb-10">
+                <h3 class="h3 pb-6">Headings</h3>
+            </div>
+            <div class="space-y-10">
+                <div class="flex items-center">
+                    <dt class="w-16 shrink-0 content-sm text-gray-600 font-mono leading-6">h1</dt>
+                    <dd class="h1 leading-tight truncate">The quick brown fox jumps over the lazy dog.</dd>
+                </div>
+                <div class="flex items-center">
+                    <dt class="w-16 shrink-0 content-sm text-gray-600 font-mono leading-6">h2</dt>
+                    <dd class="h2 leading-tight truncate">The quick brown fox jumps over the lazy dog.</dd>
+                </div>
+                <div class="flex items-center">
+                    <dt class="w-16 shrink-0 content-sm text-gray-600 font-mono leading-6">h3</dt>
+                    <dd class="h3 truncate">The quick brown fox jumps over the lazy dog.</dd>
+                </div>
+                <div class="flex items-center">
+                    <dt class="w-16 shrink-0 content-sm text-gray-600 font-mono leading-6">h4</dt>
+                    <dd class="h4 truncate">The quick brown fox jumps over the lazy dog.</dd>
+                </div>
+                <div class="flex items-center">
+                    <dt class="w-16 shrink-0 content-sm text-gray-600 font-mono leading-6">h5</dt>
+                    <dd class="h5 truncate">The quick brown fox jumps over the lazy dog.</dd>
+                </div>
+                <div class="flex items-center">
+                    <dt class="w-16 shrink-0 content-sm text-gray-600 font-mono leading-6">h6</dt>
+                    <dd class="h6 truncate">The quick brown fox jumps over the lazy dog.</dd>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="border-b border-gray-300 mb-10">
+                <h3 class="h3 pb-6">Typography</h3>
+            </div>
+            <div class="space-y-10">
+                <div class="flex items-center">
+                    <dt class="w-32 shrink-0 content-sm text-gray-600 font-mono leading-6">tagline</dt>
+                    <dd class="tagline text-primary truncate">The quick brown fox</dd>
+                </div>
+                <div class="flex items-center">
+                    <dt class="w-32 shrink-0 content-sm text-gray-600 font-mono leading-6">content-xl</dt>
+                    <dd class="content-xl truncate">The quick brown fox jumps over the lazy dog.</dd>
+                </div>
+                <div class="flex items-center">
+                    <dt class="w-32 shrink-0 content-sm text-gray-600 font-mono leading-6">content-lg</dt>
+                    <dd class="content-lg truncate">The quick brown fox jumps over the lazy dog.</dd>
+                </div>
+                <div class="flex items-center">
+                    <dt class="w-32 shrink-0 content-sm text-gray-600 font-mono leading-6">content</dt>
+                    <dd class="content truncate">The quick brown fox jumps over the lazy dog.</dd>
+                </div>
+                <div class="flex items-center">
+                    <dt class="w-32 shrink-0 content-sm text-gray-600 font-mono leading-6">content-sm</dt>
+                    <dd class="content-sm truncate">The quick brown fox jumps over the lazy dog.</dd>
+                </div>
+                <div class="flex items-center">
+                    <dt class="w-32 shrink-0 content-sm text-gray-600 font-mono leading-6">content-xs</dt>
+                    <dd class="content-xs truncate">The quick brown fox jumps over the lazy dog.</dd>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="border-b border-gray-300 mb-10">
+                <h3 id="components" class="h3 pb-6">Components</h3>
+            </div>
+            <div class="space-y-10">
+                <div class="flex items-center">
+                    <dt class="w-32 shrink-0 content-sm text-gray-600 font-mono leading-6">Modal</dt>
+                    <dd>
+                        {{ partial:components/modal trigger_button_class="btn--secondary btn--sm" }}
+                            {{ slot:trigger_button }}
+                                Open modal
+                            {{ /slot:trigger_button }}
+                            <p class="h5 mb-4">Modal title</p>
+                            <p>Modal content goes here</p>
+                        {{ /partial:components/modal }}
+                    </dd>
+                </div>
+                <div class="flex items-center">
+                    <dt class="w-32 shrink-0 content-sm text-gray-600 font-mono leading-6">Dropdown</dt>
+                    <dd>
+                        {{ partial:components/dropdown toggle_button_class="btn--secondary btn--sm gap-1" side="left" width="w-44" }}
+                            {{ slot:toggle_button }}
+                                Open dropdown
+                                {{ svg src="heroicons-mini/chevron-down" class="size-5 -mr-1 text-gray-400" }}
+                            {{ /slot:toggle_button }}
+                            <div class="py-1.5">
+                                {{ loop times="4" }}
+                                    <a href="#" class="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-100">
+                                        List item {{ count }}
+                                    </a>
+                                {{ /loop }}
+                            </div>
+                        {{ /partial:components/dropdown }}
+                    </dd>
+                </div>
+                <div class="flex items-center">
+                    <dt class="w-32 shrink-0 content-sm text-gray-600 font-mono leading-6">Tabs</dt>
+                    <dd x-data="{ activeTab: 1 }">
+                        <div class="flex gap-4">
+                            {{ loop times="3" }}
+                                {{ partial:components/tab }}
+                                    {{ slot:attributes }}
+                                        class="btn btn--sm"
+                                        :class="{ 'bg-gray-100': activeTab == {{ count }} }"
+                                    {{ /slot:attributes }}
+                                    Tab {{ count }}
+                                {{ /partial:components/tab }}
+                            {{ /loop }}
+                        </div>
+
+                        <div class="flex items-center justify-center w-full p-5 mt-2 text-gray-600 border rounded-md border-gray-200">
+                            {{ loop times="3" }}
+                                {{ partial:components/tab-panel }}
+                                    <p>The content shown for Tab {{ count }}</p>
+                                    <a href="#" class="btn btn--secondary btn--sm mt-4">Call to action</a>
+                                {{ /partial:components/tab-panel }}
+                            {{ /loop }}
+                        </div>
+                    </dd>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

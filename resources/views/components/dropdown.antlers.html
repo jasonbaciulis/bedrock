@@ -1,0 +1,59 @@
+{{ side = side or 'left' }}
+
+<div
+    class="relative {{ container_class }}"
+    x-data="{
+        open: false,
+        toggle() {
+            if (this.open) {
+                return this.close();
+            }
+            this.$refs.button.focus();
+            this.open = true;
+        },
+        close(focusAfter) {
+            if (! this.open) return;
+            this.open = false;
+            focusAfter && focusAfter.focus();
+        }
+    }"
+    @keydown.escape.prevent.stop="close($refs.button)"
+    @focusin.window="! $refs.panel.contains($event.target) && close()"
+    x-id="['dropdown-menu']"
+>
+    <button
+        x-ref="button"
+        class="btn {{ toggle_button_class }}"
+        @click="toggle()"
+        :aria-expanded="open"
+        :aria-controls="$id('dropdown-menu')"
+        x-id="['dropdown-button']"
+    >
+        {{ slot:toggle_button }}
+    </button>
+    <div
+        x-cloak
+        x-ref="panel"
+        x-show="open"
+        x-trap="open"
+        x-transition:enter="transition ease-out duration-100"
+        x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-75"
+        x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-95"
+        @click.outside="close($refs.button)"
+        :id="$id('dropdown-menu')"
+        class="absolute z-10 mt-2 rounded-md bg-white shadow-lg ring-1 ring-black/5
+            {{ width or 'w-56' }}
+            {{ switch(
+                (side == 'left') => 'left-0 origin-top-left',
+                (side == 'right') => 'right-0 origin-top-right',
+            )}}
+        "
+        :aria-labelledby="$id('dropdown-button')"
+        tabindex="-1"
+    >
+        {{ slot }}
+    </div>
+</div>

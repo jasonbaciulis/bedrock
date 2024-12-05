@@ -1,0 +1,25 @@
+@layer components {
+  .tagline {
+    @apply text-sm font-semibold uppercase tracking-wide sm:text-base;
+  }
+
+  .content-xl {
+    @apply text-xl sm:text-2xl;
+  }
+
+  .content-lg {
+    @apply text-lg sm:text-xl/8;
+  }
+
+  .content {
+    @apply text-base sm:text-lg;
+  }
+
+  .content-sm {
+    @apply text-sm sm:text-base;
+  }
+
+  .content-xs {
+    @apply text-xs sm:text-sm;
+  }
+}

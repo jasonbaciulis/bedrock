@@ -1,0 +1,46 @@
+title: Theme
+data:
+  logo: logos/logo-brand.svg
+  header_buttons:
+    -
+      id: 1wCZptZ7
+      button_label: 'Sign in'
+      link_type: url
+      target_blank: false
+      url: '#'
+      button_type: text
+      button:
+        label: 'Sign in'
+        show_controls: null
+        link_type: url
+        target_blank: false
+        entry: null
+        url: /
+        email: null
+        phone: null
+        asset: null
+        code: null
+        button_type: text
+      label: 'Sign in'
+    -
+      id: k0sBnlT1
+      button_label: 'Get started'
+      link_type: url
+      target_blank: false
+      url: '#faqs'
+      button_type: primary
+      button:
+        label: 'Get started'
+        show_controls: null
+        link_type: url
+        target_blank: false
+        entry: null
+        url: /
+        email: null
+        phone: null
+        asset: null
+        code: null
+        button_type: primary
+      label: 'Get started'
+  about: 'Leap provides everything you need to jump-start your Statamic project, then gets out of your way so you can build bespoke websites.'
+  copyright_text: 'Leap. All rights reserved.'

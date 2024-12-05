@@ -1,0 +1,38 @@
+<section id="{{ type | slugify }}" class="m-section">
+    <div class="container max-w-4xl">
+        <div class="text-center mb-20">
+            <h2 class="h2 max-w-xl mx-auto">{{ title }}</h2>
+
+            {{ if text }}
+                <p class="mt-6 text-lg text-pretty">{{ text }}</p>
+            {{ /if }}
+        </div>
+
+        <dl class="divide-y divide-gray-300 border-b border-gray-300">
+            {{ items }}
+                {{ partial:components/disclosure }}
+            {{ /items }}
+        </dl>
+    </div>
+</section>
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {{ if items }}
+                {{ items }}
+                    {
+                        "@type": "Question",
+                        "name": "{{ title }}",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "{{ text | add_slashes }}"
+                        }
+                    }{{ unless last }},{{ /unless }}
+                {{ /items }}
+            {{ /if }}
+        ]
+    }
+</script>

@@ -1,0 +1,17 @@
+@layer components {
+  .p-section {
+    @apply py-24 sm:py-32 lg:py-40;
+  }
+
+  .m-section {
+    @apply my-24 sm:my-32 lg:my-40;
+  }
+
+  .container {
+    @apply mx-auto w-full max-w-screen-xl px-6 md:px-8;
+  }
+
+  .site-grid {
+    @apply grid gap-6 sm:grid-cols-12 lg:gap-8;
+  }
+}

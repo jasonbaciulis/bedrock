@@ -1,0 +1,60 @@
+tabs:
+  general:
+    display: General
+    sections:
+      -
+        display: Universal
+        instructions: 'Configure universal meta tags.'
+        fields:
+          -
+            handle: disable_phone_detection
+            field:
+              display: 'Disable phone detection'
+              type: toggle
+              width: 33
+              instructions: 'Disables phone number detection.'
+          -
+            handle: disable_email_detection
+            field:
+              display: 'Disable email detection'
+              type: toggle
+              width: 33
+              instructions: 'Disables email address detection.'
+          -
+            handle: disable_address_detection
+            field:
+              display: 'Disable address detection'
+              type: toggle
+              width: 33
+              instructions: 'Disables address detection.'
+      -
+        display: Apple
+        instructions: 'Configure Apple specific meta tags.'
+        fields:
+          -
+            handle: apple_status_bar_black
+            field:
+              display: 'Apple status bar black'
+              type: toggle
+              width: 50
+              instructions: 'Can only be used when `Apple mobile web app` is enabled and forces a black status bar.'
+              if:
+                apple_mobile_web_app: 'equals true'
+          -
+            handle: apple_mobile_web_app
+            field:
+              display: 'Apple mobile web app'
+              type: toggle
+              width: 50
+              instructions: "Opens websites saved to the iOS springboard fullscreen in it's own Safari instance."
+      -
+        display: Android
+        instructions: 'Configure Android specific meta tags.'
+        fields:
+          -
+            handle: android_mobile_web_app
+            field:
+              display: 'Android mobile web app'
+              type: toggle
+              width: 50
+              instructions: "Opens websites saved to Android's homescreen in it's own Chrome instance."

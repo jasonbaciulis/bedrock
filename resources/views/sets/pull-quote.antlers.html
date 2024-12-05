@@ -1,0 +1,10 @@
+<figure class="my-0 not-prose">
+    <blockquote class="h2 italic leading-snug text-primary">
+        “{{ quote | widont | nl2br }}”
+    </blockquote>
+    {{ if author }}
+        <figcaption class="block mt-4 content-xs">
+            — {{ author }}
+        </figcaption>
+    {{ /if }}
+</figure>

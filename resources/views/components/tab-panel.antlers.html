@@ -1,0 +1,13 @@
+{{ $tab = name ?? count }}
+{{ $alpineVariable = alpine_variable ?? 'activeTab' }}
+
+<div
+    x-cloak
+    x-show="{{ $alpineVariable }} == '{{ $tab }}'"
+    id="tabpanel-{{ $tab }}"
+    aria-labelledby="tab-{{ $tab }}"
+    role="tabpanel"
+    {{ class ?= 'class="{class}"' }}
+>
+    {{ slot }}
+</div>
