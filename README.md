@@ -64,10 +64,9 @@ Sets provide a powerful content creation experience with unparalleled flexibilit
 Removes a set from the Article and all associated files.
 
 ## Production env file contents
+Dump your `.env` values here with sensitive data removed. The following is a production example that uses full static caching:
 
 ```env
-Dump your .env values here with sensitive data removed. The following is a production example that uses full static caching:
-
 APP_NAME=Statamic
 APP_ENV=production
 APP_KEY=
