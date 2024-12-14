@@ -7,9 +7,7 @@
 // More info: https://tailwindcss.com/docs/typography-plugin.
 //
 
-const plugin = require('tailwindcss/plugin')
-
-module.exports = {
+export default {
   theme: {
     extend: {
       typography: theme => ({

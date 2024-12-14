@@ -7,14 +7,14 @@
 // classes. Various aspects of the config are split inmultiple files.
 //
 
-module.exports = {
+import defaultConfig from 'tailwindcss/defaultConfig'
+import typographyConfig from './tailwind.config.typography.js'
+import presetConfig from './tailwind.config.preset.js'
+import siteConfig from './tailwind.config.site.js'
+
+export default {
   // The various configurable Tailwind configuration files.
-  presets: [
-    require('tailwindcss/defaultConfig'),
-    require('./tailwind.config.typography.js'),
-    require('./tailwind.config.preset.js'),
-    require('./tailwind.config.site.js'),
-  ],
+  presets: [defaultConfig, typographyConfig, presetConfig, siteConfig],
   mode: 'jit',
   // Configure Purge CSS.
   content: [
