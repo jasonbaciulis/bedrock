@@ -17,6 +17,7 @@ export default defineConfig(({ command, mode }) => {
           'resources/js/cookieBanner.js',
           'resources/js/newsletter.js',
           'resources/js/fetchEntries.js',
+          'resources/js/combobox.js',
 
           // Control Panel assets.
           // https://statamic.dev/extending/control-panel#adding-css-and-js-assets
