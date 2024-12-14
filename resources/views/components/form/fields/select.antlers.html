@@ -5,7 +5,7 @@
         x-model="{{ model }}"
         :class="{
             'has-error': hasError('{{ handle }}'),
-            'text-gray-600': !{{ model }}'
+            'text-gray-600': !{{ model }}
         }"
         id="{{ handle }}"
         name="{{ handle }}{{ multiple ?= "[]" }}"
