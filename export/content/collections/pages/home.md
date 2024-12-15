@@ -4,7 +4,7 @@ blueprint: pages
 title: Home
 template: default
 updated_by: 6d26d0a8-ff9c-4c3e-a25e-7e036508908c
-updated_at: 1732793366
+updated_at: 1734288717
 blocks:
   -
     id: ZbruxJDq
@@ -12,14 +12,14 @@ blocks:
     enabled: true
     title: 'Statamic starter kit for developers'
     text: 'Leap provides everything you need to jump-start your Statamic project, then gets out of your way so you can build bespoke websites.'
-    image: images/mohammad-rahmani-8qeb0fte9vw-unsplash.jpg
+    image: images/pixeltrue-support-1.svg
     buttons:
       -
         id: KdAsb0Ad
         label: 'Get started'
         link_type: url
         target_blank: false
-        url: /
+        url: 'https://statamic.com/starter-kits/jasonbaciulis/leap'
         button_type: primary
       -
         id: ALbCABEq
