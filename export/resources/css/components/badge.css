@@ -1,5 +1,5 @@
 @layer components {
   .badge {
-    @apply inline-flex h-5 items-center justify-center rounded-sm px-1.5;
+    @apply inline-flex items-center justify-center rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600;
   }
 }

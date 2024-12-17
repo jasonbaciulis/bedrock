@@ -4,7 +4,7 @@ blueprint: pages
 title: Home
 template: default
 updated_by: 6d26d0a8-ff9c-4c3e-a25e-7e036508908c
-updated_at: 1734288717
+updated_at: 1734437474
 blocks:
   -
     id: ZbruxJDq
@@ -185,6 +185,14 @@ blocks:
   -
     id: s343JCRf
     type: style_guide
+    enabled: true
+  -
+    id: m4seyrjx
+    title: 'Recent posts'
+    text: 'Some description for the blog'
+    query: latest
+    limit: 3
+    type: blog_excerpt
     enabled: true
 seo_noindex: false
 seo_nofollow: false

@@ -136,6 +136,7 @@ tabs:
                 - sometimes
                 - string
                 - 'max:255'
+              instructions: 'Dictionary (combobox) field demo. Very useful for selecting an item from large data set'
           -
             handle: current_website
             field:
@@ -170,6 +171,7 @@ tabs:
               width: 50
               max_items: 1
               searchable: false
+              instructions: 'Select Referral for conditional field demo.'
           -
             handle: referrer
             field:

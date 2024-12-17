@@ -1,0 +1,22 @@
+title: 'Blog Paginated'
+fields:
+  -
+    handle: title
+    field:
+      display: Title
+      type: text
+  -
+    handle: text
+    field: common.text_plain
+    config:
+      display: Text
+  -
+    handle: limit
+    field:
+      default: '9'
+      display: Limit
+      type: integer
+      width: 50
+      if:
+        query: 'not custom'
+      instructions: 'Entries per page'

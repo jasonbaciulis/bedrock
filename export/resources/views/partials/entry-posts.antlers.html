@@ -1,5 +1,21 @@
-<article>
-    <a href="{{ url }}" class="block">
-        {{ title }}
+<article class="{{ class }}">
+    <div class="aspect-video lg:aspect-[3/2] bg-gray-100 rounded-2xl ring-1 ring-gray-900/10 ring-inset">
+        {{ partial:components/picture w="672" h="378" cover="true" class="rounded-2xl" }}
+    </div>
+
+    <div class="mt-8 flex items-center gap-4">
+        <time datetime="{{ date | format('c') }}" class="text-xs text-gray-600">
+            {{ date | format('M j, Y') }}
+        </time>
+        {{ if categories }}
+            <span class="badge">{{ categories:title }}</span>
+        {{ /if }}
+    </div>
+
+    <a href="{{ url }}" class="block mt-3 group">
+        <h3 class="h5 text-pretty group-hover:text-gray-600">{{ title }}</h3>
+        <p class="mt-5 line-clamp-3 text-sm/6 text-gray-600">
+            {{ excerpt }}
+        </p>
     </a>
 </article>

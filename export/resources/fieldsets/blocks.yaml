@@ -21,12 +21,18 @@ fields:
               fields:
                 -
                   import: article
-            blog:
-              display: Blog
+            blog_excerpt:
+              display: 'Blog Excerpt'
               icon: layout-three-columns
               fields:
                 -
-                  import: blog
+                  import: blog_excerpt
+            blog_paginated:
+              display: 'Blog Paginated'
+              icon: layout-grid-dots
+              fields:
+                -
+                  import: blog_paginated
             contact:
               display: Contact
               icon: phone-contact-phonebook

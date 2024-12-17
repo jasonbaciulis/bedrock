@@ -13,14 +13,14 @@
 
             <nav class="flex justify-center items-center md:items-start gap-10">
                 {{ if prev_page }}
-                    <a href="{{ prev_page }}" class="btn size-12 rounded-full shrink-0">
+                    <a href="{{ prev_page }}" class="btn btn--secondary btn--round shrink-0">
                         <span class="sr-only">Previous</span>
-                        {{ svg src="arrow-prev" class="size-4" }}
+                        {{ svg src="heroicons-outline/chevron-left" class="size-6" }}
                     </a>
                 {{ else }}
-                    <button class="btn size-12 rounded-full shrink-0" disabled>
+                    <button class="btn btn--secondary btn--round shrink-0" disabled>
                         <span class="sr-only">Previous</span>
-                        {{ svg src="arrow-prev" class="size-4" }}
+                        {{ svg src="heroicons-outline/chevron-left" class="size-6" }}
                     </button>
                 {{ /if }}
 
@@ -29,74 +29,74 @@
                         {{ first }}
                             {{ if page == current_page }}
                                 <li>
-                                    <button class="btn btn--primary size-12 rounded-full pointer-events-none">
+                                    <button class="btn btn--primary btn--round pointer-events-none">
                                         {{ page }}
                                     </button>
                                 </li>
                             {{ else }}
                                 <li>
-                                    <a href="{{ url }}" class="btn size-12 rounded-full content-lg">{{ page }}</a>
+                                    <a href="{{ url }}" class="btn btn--secondary btn--round">{{ page }}</a>
                                 </li>
                             {{ /if }}
                         {{ /first }}
 
                         {{ if slider }}
                             <li>
-                                <div class="content-lg size-12 flex items-center justify-center">…</div>
+                                <div class="text-lg size-12 flex items-center justify-center">…</div>
                             </li>
                         {{ /if }}
 
                         {{ slider }}
                             {{ if page === current_page }}
                                 <li>
-                                    <button class="btn btn--primary size-12 rounded-full pointer-events-none">
+                                    <button class="btn btn--primary btn--round pointer-events-none">
                                         {{ page }}
                                     </button>
                                 </li>
                             {{ else }}
                                 <li>
-                                    <a href="{{ url }}" class="btn size-12 rounded-full content-lg">{{ page }}</a>
+                                    <a href="{{ url }}" class="btn btn--secondary btn--round">
+                                        {{ page }}
+                                    </a>
                                 </li>
                             {{ /if }}
                         {{ /slider }}
 
                         {{ if slider || (!slider && last) }}
                             <li>
-                                <div class="content-lg size-12 flex items-center justify-center">…</div>
+                                <div class="text-lg size-12 flex items-center justify-center">…</div>
                             </li>
                         {{ /if }}
 
                         {{ last }}
                             {{ if page === current_page }}
                                 <li>
-                                    <button class="btn btn--primary size-12 rounded-full pointer-events-none">
+                                    <button class="btn btn--primary btn--round pointer-events-none">
                                         {{ page }}
                                     </button>
                                 </li>
                             {{ else }}
                                 <li>
-                                    <a href="{{ url }}" class="btn size-12 rounded-full content-lg">{{ page }}</a>
+                                    <a href="{{ url }}" class="btn btn--secondary btn--round">{{ page }}</a>
                                 </li>
                             {{ /if }}
                         {{ /last }}
                     {{ /links:segments }}
                 </ul>
 
-                <p class="shrink-0 content-sm font-bold leading-none md:hidden">
-                    <span class="text-black">{{ current_page }}</span>
-                    <span class="text-gray">/</span>
-                    <span class="text-gray">{{ total_pages }}</span>
+                <p class="shrink-0 content-sm font-semibold leading-none md:hidden">
+                    {{ current_page }} of {{ total_pages }}
                 </p>
 
                 {{ if next_page }}
-                    <a href="{{ next_page }}" class="btn size-12 rounded-full shrink-0">
+                    <a href="{{ next_page }}" class="btn btn--secondary btn--round shrink-0">
                         <span class="sr-only">Next</span>
-                        {{ svg src="arrow-next" class="size-4" }}
+                        {{ svg src="heroicons-outline/chevron-right" class="size-6" }}
                     </a>
                 {{ else }}
-                    <button class="btn size-12 rounded-full shrink-0" disabled>
+                    <button class="btn btn--secondary btn--round shrink-0" disabled>
                         <span class="sr-only">Next</span>
-                        {{ svg src="arrow-next" class="size-4" }}
+                        {{ svg src="heroicons-outline/chevron-right" class="size-6" }}
                     </button>
                 {{ /if }}
             </nav>

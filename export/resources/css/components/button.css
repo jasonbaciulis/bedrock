@@ -16,7 +16,7 @@
   }
 
   .btn--round {
-    @apply size-12 rounded-full bg-gray-100 text-gray;
+    @apply size-12 rounded-full p-0 text-lg font-medium;
   }
 
   .btn--text {
