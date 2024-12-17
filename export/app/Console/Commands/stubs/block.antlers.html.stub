@@ -1,4 +1,4 @@
-<section class="section-m">
+<section id="{{ type | slugify }}" class="section-m">
     <div class="container">
         <h2 class="h2">{{ name }}</h2>
     </div>
