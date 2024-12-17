@@ -75,7 +75,7 @@ class DeleteSet extends Command
             return $this->error($e->getMessage());
         }
 
-        $this->info("Article set '{$this->set_name}' deleted.");
+        $this->info("Removed '{$this->set_name}' set.");
     }
 
     /**

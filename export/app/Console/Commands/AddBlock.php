@@ -73,17 +73,17 @@ class AddBlock extends Command
             $this->checkExistence('Fieldset', "resources/fieldsets/{$this->fieldset_name}.yaml");
             $this->checkExistence(
                 'Partial',
-                "resources/views/blocks/{$this->view_name}.antlers.html"
+                "resources/views/blocks/{$this->view_name}.antlers.html",
             );
 
             $this->createFieldset();
             $this->createPartial();
-            $this->updatePageBuilder();
+            $this->updateBlocks();
         } catch (\Exception $e) {
             return $this->error($e->getMessage());
         }
 
-        $this->info("Page builder block '{$this->block_name}' added.");
+        $this->info("Created '{$this->block_name}' block.");
     }
 
     /**
@@ -131,7 +131,7 @@ class AddBlock extends Command
      *
      * @return bool|null
      */
-    protected function updatePageBuilder()
+    protected function updateBlocks()
     {
         $fieldset = Yaml::parseFile(base_path('resources/fieldsets/blocks.yaml'));
         $newSet = [
@@ -150,7 +150,7 @@ class AddBlock extends Command
             array_keys($existingGroups),
             null,
             null,
-            false
+            false,
         );
 
         $groupSets = $existingGroups[$group];

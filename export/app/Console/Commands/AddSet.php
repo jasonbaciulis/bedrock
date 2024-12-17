@@ -66,7 +66,7 @@ class AddSet extends Command
             $this->checkExistence('Fieldset', "resources/fieldsets/{$this->fieldset_name}.yaml");
             $this->checkExistence(
                 'Partial',
-                "resources/views/sets/{$this->view_name}.antlers.html"
+                "resources/views/sets/{$this->view_name}.antlers.html",
             );
 
             $this->createFieldset();
@@ -76,7 +76,7 @@ class AddSet extends Command
             return $this->error($e->getMessage());
         }
 
-        $this->info("Article set '{$this->set_name}' added.");
+        $this->info("Created '{$this->set_name}' set.");
     }
 
     /**
@@ -141,7 +141,7 @@ class AddSet extends Command
             array_keys($existingGroups),
             null,
             null,
-            false
+            false,
         );
 
         $groupSets = $existingGroups[$group];
