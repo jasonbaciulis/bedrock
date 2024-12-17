@@ -69,12 +69,12 @@ class DeleteBlock extends Command
 
             $this->deleteFieldset();
             $this->deletePartial();
-            $this->updatePageBuilder();
+            $this->updateBlocks();
         } catch (\Exception $e) {
             return $this->error($e->getMessage());
         }
 
-        $this->info("Page builder block '{$this->block_name}' deleted.");
+        $this->info("Removed '{$this->block_name}' block.");
     }
 
     /**
@@ -115,18 +115,18 @@ class DeleteBlock extends Command
      *
      * @return bool|null
      */
-    protected function updatePageBuilder()
+    protected function updateBlocks()
     {
         $fieldsetPath = base_path('resources/fieldsets/blocks.yaml');
         $fieldset = Yaml::parseFile($fieldsetPath);
 
-        $existingGroups = Arr::get($fieldset, 'fields.0.field.sets', []);
+        $existingGroups = Arr::get($fieldset, 'fields.0.field.sets.main.sets', []);
 
         if (Arr::exists($existingGroups, $this->fieldset_name)) {
             Arr::forget($existingGroups, $this->fieldset_name);
         }
 
-        Arr::set($fieldset, 'fields.0.field.sets', $existingGroups);
+        Arr::set($fieldset, 'fields.0.field.sets.main.sets', $existingGroups);
 
         File::put($fieldsetPath, Yaml::dump($fieldset, 99, 2));
     }
