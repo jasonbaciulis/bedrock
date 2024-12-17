@@ -15,17 +15,20 @@ tabs:
           -
             handle: image
             field: common.image
+            config:
+              validate:
+                - required
+          -
+            handle: excerpt
+            field: common.text_plain
+            config:
+              display: Excerpt
           -
             handle: show_related_posts
             field:
-              default: false
               display: 'Related posts'
               type: toggle
-              icon: toggle
               width: 50
-              listable: hidden
-              instructions_position: above
-              visibility: visible
           -
             import: article
   seo:
@@ -71,6 +74,7 @@ tabs:
             field:
               type: slug
               localizable: true
+              validate: 'max:200'
           -
             handle: date
             field:
@@ -87,13 +91,9 @@ tabs:
                 - categories
               display: Categories
               mode: select
+              max_items: 1
           -
             handle: featured
             field:
-              default: false
               display: Featured
               type: toggle
-              icon: toggle
-              listable: hidden
-              instructions_position: above
-              visibility: visible
