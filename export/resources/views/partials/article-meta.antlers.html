@@ -1,0 +1,8 @@
+<div class="flex items-center gap-4 {{ class }}">
+  <time datetime="{{ date | format('c') }}" class="text-xs text-gray-600">
+      {{ date | format('M j, Y') }}
+  </time>
+  {{ if categories }}
+      <span class="badge">{{ categories:title }}</span>
+  {{ /if }}
+</div>

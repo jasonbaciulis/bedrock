@@ -3,14 +3,7 @@
         {{ partial:components/picture w="672" h="378" cover="true" class="rounded-2xl" }}
     </div>
 
-    <div class="mt-8 flex items-center gap-4">
-        <time datetime="{{ date | format('c') }}" class="text-xs text-gray-600">
-            {{ date | format('M j, Y') }}
-        </time>
-        {{ if categories }}
-            <span class="badge">{{ categories:title }}</span>
-        {{ /if }}
-    </div>
+    {{ partial:partials/article-meta class="mt-8" }}
 
     <a href="{{ url }}" class="block mt-3 group">
         <h3 class="h5 text-pretty group-hover:text-gray-600">{{ title }}</h3>
