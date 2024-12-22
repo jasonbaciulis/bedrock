@@ -29,6 +29,7 @@ tabs:
               display: 'Related posts'
               type: toggle
               width: 50
+              default: true
           -
             import: article
   seo:
