@@ -14,6 +14,4 @@ preview_targets:
   -
     label: Entry
     url: '{permalink}'
-structure:
-  root: false
-  max_depth: 1
+    refresh: true
