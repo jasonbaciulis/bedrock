@@ -1,12 +1,6 @@
 <section id="{{ type | slugify }}" class="m-section">
     <div class="container max-w-4xl">
-        <div class="text-center mb-20">
-            <h2 class="h2 max-w-xl mx-auto">{{ title }}</h2>
-
-            {{ if text }}
-                <p class="mt-6 text-lg text-pretty">{{ text }}</p>
-            {{ /if }}
-        </div>
+        {{ partial:partials/section-header }}
 
         <dl class="divide-y divide-gray-300 border-b border-gray-300">
             {{ items }}

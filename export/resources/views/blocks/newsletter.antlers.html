@@ -16,19 +16,13 @@
     class="m-section"
 >
     <div class="container">
-        <div class="text-center max-w-xl mx-auto">
-            <h2 class="h2">{{ newsletter:title }}</h2>
-
-            {{ if newsletter:text }}
-                <p class="mt-6 text-lg text-pretty">{{ newsletter:text }}</p>
-            {{ /if }}
-        </div>
+        {{ partial:partials/section-header :title="newsletter:title" :text="newsletter:text" margin="mb-10" }}
 
         <form
             x-ref="form"
             x-show="!success"
             @submit.prevent="submit()"
-            class="mt-10 mx-auto max-w-md"
+            class="mx-auto max-w-md"
         >
             <div class="flex flex-col md:flex-row gap-4">
                 <input type="text" name="fax_number" class="hidden" x-ref="honeypot" />

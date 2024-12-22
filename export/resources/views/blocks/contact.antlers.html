@@ -1,12 +1,6 @@
 <section class="section-m">
     <div class="container">
-        <div class="text-center max-w-xl mx-auto mb-20">
-            <h2 class="h2">{{ title }}</h2>
-
-            {{ if text }}
-                <p class="mt-6 text-lg text-pretty">{{ text }}</p>
-            {{ /if }}
-        </div>
+        {{ partial:partials/section-header }}
 
         <div class="mx-auto max-w-xl">
             {{ partial:components/form }}
