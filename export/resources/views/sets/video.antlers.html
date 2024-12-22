@@ -1,8 +1,10 @@
 <figure class="my-0 not-prose">
     <div class="relative aspect-video" x-data="{ playing: false }">
+        <div class="absolute inset-0 bg-gray/30"></div>
+
         <iframe
             x-ref="iframe"
-            class="absolute inset-0 w-full h-full"
+            class="absolute inset-0 size-full"
             data-src="{{ youtube_url | embed_url }}"
             loading="lazy"
             frameborder="0"
@@ -10,7 +12,7 @@
             allowfullscreen
         ></iframe>
 
-        <img src="https://img.youtube.com/vi/{{ youtube_id }}/maxresdefault.jpg" class="object-cover w-full h-full rounded-lg" loading="lazy" alt="YouTube thumbnail">
+        <img src="https://img.youtube.com/vi/{{ youtube_id }}/maxresdefault.jpg" class="object-cover size-full" loading="lazy" alt="YouTube thumbnail">
 
         {{# Load YouTube thumbnail first and only load an iframe when a user clicks play #}}
         <button
@@ -23,7 +25,7 @@
     </div>
 
     {{ if caption }}
-        <figcaption class="content-sm block mt-4">
+        <figcaption class="text-sm block mt-2">
             {{ caption }}
         </figcaption>
     {{ /if }}

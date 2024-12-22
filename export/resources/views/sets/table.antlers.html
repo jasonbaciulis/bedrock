@@ -1,28 +1,28 @@
-<div class="overflow-auto not-prose">
-    <table class="w-full bg-gray-50 border-collapse min-w-[580px] sm:min-w-none">
+<div class="overflow-x-auto not-prose">
+    <table class="min-w-full divide-y divide-gray-300 text-base">
         {{ table }}
             {{ if first && first_row_headers }}
                 <thead>
                     <tr>
                         {{ cells }}
-                            <th class="px-3 py-3 content-xs font-bold tracking-wider text-left text-white uppercase border-b xl:px-6 border-gray-300 bg-gray-300">{{ value }}</th>
+                            <th scope="col" class="py-3 text-left font-semibold text-gray px-3 sm:px-6 xl:px-8 {{ first ?= 'pl-0 sm:pl-0 xl:pl-0' }} {{ last ?= 'pr-0 sm:pr-0 xl:pr-0' }}">{{ value }}</th>
                         {{ /cells }}
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="divide-y divide-gray-200">
             {{ /if }}
 
             {{ if !first && first_row_headers || !first_row_headers }}
                 {{ if first }}
-                    <tbody>
+                    <tbody class="divide-y divide-gray-200">
                 {{ /if }}
 
                 <tr>
                     {{ cells }}
                         {{ if first && first_column_headers }}
-                            <th class="px-3 py-3 content-xs font-bold tracking-wider text-left text-white uppercase border-b xl:px-6 border-gray-300 bg-gray-300">{{ value }}</th>
+                            <th class="py-3 text-left text-primary">{{ value }}</th>
                         {{ else }}
-                            <td class="px-3 py-3 content-sm border-b xl:px-6 border-gray-300 text-gray-500">{{ value }}</td>
+                            <td class="py-3 px-3 sm:px-6 xl:px-8 {{ first ?= 'pl-0 sm:pl-0 xl:pl-0' }} {{ last ?= 'pr-0 sm:pr-0 xl:pr-0' }}">{{ value }}</td>
                         {{ /if }}
                     {{ /cells }}
                 </tr>
@@ -35,7 +35,7 @@
     </table>
 
     {{ if caption }}
-        <span class="content-sm block mt-2">
+        <span class="text-xs block pt-3 border-t border-gray-300 text-gray-500">
             {{ caption }}
         </span>
     {{ /if }}
