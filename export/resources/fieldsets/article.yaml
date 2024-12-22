@@ -32,6 +32,7 @@ fields:
       container: assets
       remove_empty_nodes: true
       smart_typography: true
+      collapse: true
       sets:
         main:
           display: Main
