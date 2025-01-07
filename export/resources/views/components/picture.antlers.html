@@ -5,7 +5,7 @@
                 <img
                     {{ if cover }}
                         class="object-cover size-full {{ class }}"
-                        style="object-position: {{ focus | background_position }}"
+                        style="object-position: {{ focus_css }}"
                     {{ else }}
                         class="{{ class }}"
                     {{ /if }}
@@ -27,7 +27,7 @@
                     {{ glide:url :width='w' :height='h' fit='crop_focal' dpr='2' }} 2x" type="{{ image.mime_type }}">
                 <img {{ if cover }}
                         class="object-cover size-full {{ class }}"
-                        style="object-position: {{ focus | background_position }}"
+                        style="object-position: {{ focus_css }}"
                     {{ else }}
                         class="{{ class }}"
                     {{ /if }}
@@ -54,7 +54,7 @@
                         {{ glide:url preset='lg' dpr='2' }} 2x" type="{{ image.mime_type }}">
                 <img {{ if cover }}
                         class="object-cover size-full {{ class }}"
-                        style="object-position: {{ focus | background_position }}"
+                        style="object-position: {{ focus_css }}"
                     {{ else }}
                         class="{{ class }}"
                     {{ /if }}
