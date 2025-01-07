@@ -4,15 +4,17 @@
     {{ /push:scripts }}
 {{ /once }}
 
-<section
-    id="{{ type | slugify }}"
-    class="m-section"
+<section id="{{ type | slugify }}" class="m-section">
+
+{{#
+    Example of using fetchEntries.js to fetch entries from a collection via Statamic REST API.
     x-data="fetchEntries({
         collection: 'testimonials',
         entriesPerPage: {{ limit }},
         sort: 'order',
     })"
->
+ #}}
+
     <div class="container">
         {{ partial:partials/section-header }}
 
@@ -31,17 +33,19 @@
                 </div>
             {{ /$entries }}
 
-            <template x-for="(entry, index) in entries">
+            {{# Example how to output entries returned from REST API request #}}
+            {{# <template x-for="(entry, index) in entries">
                 <div class="sm:col-span-6 lg:col-span-4">
                     {{ partial:partials/alpine/entry-testimonials }}
                 </div>
-            </template>
+            </template> #}}
         </div>
 
-        <div x-show="nextPage" class="text-center mt-16">
+        {{# Example of load more button when using REST API to fetch entries #}}
+        {{# <div x-show="nextPage" class="text-center mt-16">
             <button class="btn btn--secondary" @click="loadMore()" :disabled="loading">
                 Load more
             </button>
-        </div>
+        </div> #}}
     </div>
 </section>

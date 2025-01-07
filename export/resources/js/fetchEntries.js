@@ -1,5 +1,6 @@
-//
 // Requires enabling Statamic API in `config/statamic/api.php`
+// as well as enabling specific collection:
+// https://statamic.dev/rest-api#enable-resources
 //
 document.addEventListener('alpine:init', () => {
   Alpine.data('fetchEntries', ({ collection, entriesPerPage, sort, page }) => {
