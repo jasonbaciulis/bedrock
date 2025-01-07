@@ -20,6 +20,9 @@
                 />
             {{ elseif w && h }}
                 <source srcset="
+                    {{ glide:url :width='w' :height='h' fit='crop_focal' format='avif' }} 1x,
+                    {{ glide:url :width='w' :height='h' fit='crop_focal' format='avif' dpr='2' }} 2x" type="image/avif">
+                <source srcset="
                     {{ glide:url :width='w' :height='h' fit='crop_focal' format='webp' }} 1x,
                     {{ glide:url :width='w' :height='h' fit='crop_focal' format='webp' dpr='2' }} 2x" type="image/webp">
                 <source srcset="
