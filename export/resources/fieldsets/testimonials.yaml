@@ -1,28 +1,10 @@
 title: Testimonials
 fields:
   -
-    handle: block_type
-    field: common.select_single
-    config:
-      options:
-        2x2_grid: '2x2 grid'
-        3x2_grid: '3x2 grid'
-        3_column_masonry_grid: '3-column masonry grid'
-        simple_single: 'Simple single'
-      display: 'Block type'
-      width: 50
-      default: simple_single
-  -
     handle: title
     field:
-      input_type: text
-      antlers: false
       display: Title
       type: text
-      icon: text
-      listable: hidden
-      instructions_position: above
-      visibility: visible
   -
     handle: text
     field: common.text_plain
@@ -33,49 +15,28 @@ fields:
         latest: Latest
         featured: Featured
         custom: Custom
-      multiple: false
       max_items: 1
-      clearable: false
-      searchable: true
-      taggable: false
-      push_tags: false
-      cast_booleans: false
       default: latest
       display: Query
       type: select
-      icon: select
       width: 50
-      listable: hidden
-      instructions_position: above
-      visibility: visible
       validate:
         - required
   -
     handle: limit
     field:
-      default: '8'
+      default: 6
       display: Limit
       type: integer
-      icon: integer
       width: 50
-      listable: hidden
-      instructions_position: above
-      visibility: visible
       if:
         query: 'not custom'
   -
     handle: entries
     field:
-      mode: default
-      create: false
       collections:
         - testimonials
       display: Entries
       type: entries
-      icon: entries
-      listable: hidden
-      instructions_position: above
-      visibility: visible
       if:
         query: 'equals custom'
-      max_items: 8

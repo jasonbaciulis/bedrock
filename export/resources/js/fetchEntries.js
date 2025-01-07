@@ -2,12 +2,14 @@
 // Requires enabling Statamic API in `config/statamic/api.php`
 //
 document.addEventListener('alpine:init', () => {
-  Alpine.data('fetchEntries', settings => {
+  Alpine.data('fetchEntries', ({ collection, entriesPerPage, sort, page }) => {
     return {
-      ...settings,
+      collection,
+      entriesPerPage,
+      sort,
+      page: page ?? 1,
       loading: false,
       entries: [],
-      page: 1,
       nextPage: true,
 
       init() {
@@ -54,12 +56,13 @@ document.addEventListener('alpine:init', () => {
       buildEndpoint() {
         const baseEndpoint = `/api/collections/${this.collection}/entries?limit=${this.entriesPerPage}&page=${this.page}`
 
-        const filterParams = this.filtered && this.filters
-          ? Object.entries(this.filters)
-              .filter(([, { value }]) => value)
-              .map(([filter, { value, condition }]) => `&filter[${filter}:${condition}]=${value}`)
-              .join('')
-          : ''
+        const filterParams =
+          this.filtered && this.filters
+            ? Object.entries(this.filters)
+                .filter(([, { value }]) => value)
+                .map(([filter, { value, condition }]) => `&filter[${filter}:${condition}]=${value}`)
+                .join('')
+            : ''
 
         const sortParam = this.sort ? `&sort=${this.sort}` : ''
 
@@ -86,7 +89,7 @@ document.addEventListener('alpine:init', () => {
           }
 
           // to hide/show loadmore button
-          this.nextPage = !!json.links.next
+          this.nextPage = !!json.links?.next
         } catch (error) {
           this.loading = false
           console.error(error)

@@ -1,34 +1,47 @@
-<section class="m-section">
+{{ once }}
+    {{ push:scripts }}
+        {{ vite src="resources/js/fetchEntries.js" }}
+    {{ /push:scripts }}
+{{ /once }}
+
+<section
+    id="{{ type | slugify }}"
+    class="m-section"
+    x-data="fetchEntries({
+        collection: 'testimonials',
+        entriesPerPage: {{ limit }},
+        sort: 'order',
+    })"
+>
     <div class="container">
         {{ partial:partials/section-header }}
 
-        <div class="site-grid">
-            {{ if query === 'custom' }}
-                {{ $entries = entries }}
-            {{ elseif query === 'latest' }}
-                {{ $entries = {collection:testimonials :limit="limit" sort="date:desc"} }}
-            {{ elseif query === 'featured' }}
-                {{ $entries = {collection:testimonials :limit="limit" featured:is="true" sort="order"} }}
-            {{ /if }}
+        {{ if query === 'custom' }}
+            {{ $entries = entries }}
+        {{ elseif query === 'latest' }}
+            {{ $entries = {collection:testimonials :limit="limit" sort="date:desc"} }}
+        {{ elseif query === 'featured' }}
+            {{ $entries = {collection:testimonials :limit="limit" featured:is="true" sort="order"} }}
+        {{ /if }}
 
+        <div class="site-grid">
             {{ $entries }}
-                <div class="md:col-span-6">
-                    <blockquote>
-                        <p class="content-lg">
-                            “{{ quote }}”
-                        </p>
-                        <footer class="mt-8">
-                            <div class="flex items-start gap-x-4">
-                                {{ partial:elements/avatar :image="avatar" w="48" h="48" class="size-12" }}
-                                <div class="content-sm">
-                                    <p>{{ author }}</p>
-                                    <p class="text-gray-500">{{ author_title }}</p>
-                                </div>
-                            </div>
-                        </footer>
-                    </blockquote>
+                <div class="sm:col-span-6 lg:col-span-4">
+                    {{ partial:partials/entry-testimonials }}
                 </div>
             {{ /$entries }}
+
+            <template x-for="(entry, index) in entries">
+                <div class="sm:col-span-6 lg:col-span-4">
+                    {{ partial:partials/alpine/entry-testimonials }}
+                </div>
+            </template>
+        </div>
+
+        <div x-show="nextPage" class="text-center mt-16">
+            <button class="btn btn--secondary" @click="loadMore()" :disabled="loading">
+                Load more
+            </button>
         </div>
     </div>
 </section>

@@ -1,0 +1,14 @@
+<figure class="rounded-2xl bg-gray-50 p-8 text-sm/6">
+    <blockquote class="text-gray-900">
+        <p x-html="`“${entry.quote}”`"></p>
+    </blockquote>
+    <figcaption class="mt-6 flex items-center gap-x-4">
+        <div class="shrink-0 rounded-full overflow-hidden bg-gray-300 size-10">
+            <img :src="`${entry.avatar.url}`" :alt="`${entry.title}'s avatar`" loading="lazy" class="object-cover size-full">
+        </div>
+        <div>
+            <p class="font-semibold text-gray-900" x-text="entry.title"></p>
+            <p class="text-gray-600" x-text="entry.author_title"></p>
+        </div>
+    </figcaption>
+</figure>

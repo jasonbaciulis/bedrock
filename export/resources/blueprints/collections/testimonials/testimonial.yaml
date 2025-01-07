@@ -8,8 +8,24 @@ tabs:
           -
             handle: title
             field:
+              type: hidden
+              required: false
+          -
+            handle: first_name
+            field:
               type: text
-              required: true
+              display: 'First name'
+              width: 50
+              always_save: false
+              validate:
+                - required
+          -
+            handle: last_name
+            field:
+              type: text
+              display: 'Last name'
+              width: 50
+              always_save: false
               validate:
                 - required
           -
@@ -17,26 +33,24 @@ tabs:
             field: common.text_plain
             config:
               display: Quote
+              validate:
+                - required
           -
             handle: avatar
             field: common.image
             config:
               mode: list
               display: Avatar
-              width: 33
-          -
-            handle: author
-            field:
-              display: Author
-              type: text
-              width: 33
+              width: 50
+              validate:
+                - required
               always_save: false
           -
             handle: author_title
             field:
               display: 'Author title'
               type: text
-              width: 33
+              width: 50
   sidebar:
     display: Sidebar
     sections:

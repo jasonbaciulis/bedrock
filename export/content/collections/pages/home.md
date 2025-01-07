@@ -4,7 +4,7 @@ blueprint: pages
 title: Home
 template: default
 updated_by: 6d26d0a8-ff9c-4c3e-a25e-7e036508908c
-updated_at: 1734462803
+updated_at: 1736259715
 blocks:
   -
     id: ZbruxJDq
@@ -193,6 +193,14 @@ blocks:
     query: latest
     limit: 3
     type: blog_excerpt
+    enabled: true
+  -
+    id: m5mjha3w
+    title: 'Testimonials demo'
+    text: 'Click on "Load more" to load more Statamic collection entries. Under the hood a tiny and flexible JS script can handle loading entries from any collection.'
+    query: latest
+    limit: 6
+    type: testimonials
     enabled: true
 seo_noindex: false
 seo_nofollow: false

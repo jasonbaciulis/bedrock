@@ -1,0 +1,12 @@
+<figure class="rounded-2xl bg-gray-50 p-8 text-sm/6">
+    <blockquote class="text-gray-900">
+        <p>“{{ quote }}”</p>
+    </blockquote>
+    <figcaption class="mt-6 flex items-center gap-x-4">
+        {{ partial:elements/avatar :image="avatar" w="40" h="40" class="size-10" :name="title" }}
+        <div>
+            <p class="font-semibold text-gray-900">{{ title }}</p>
+            <p class="text-gray-600">{{ author_title }}</p>
+        </div>
+    </figcaption>
+</figure>
