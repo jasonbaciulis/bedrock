@@ -197,7 +197,7 @@ blocks:
   -
     id: m5mjha3w
     title: 'Testimonials demo'
-    text: 'Click on "Load more" to load more Statamic collection entries. Under the hood a tiny and flexible JS script can handle loading entries from any collection.'
+    text: 'Option to use a "Load more" button to load more entries. Under the hood a tiny and flexible JS script can handle loading entries from any collection.'
     query: latest
     limit: 6
     type: testimonials
