@@ -6,6 +6,7 @@ export_paths:
   - config/filesystems.php
   - config/app.php
   - config/queue.php
+  - config/statamic/api.php
   - config/statamic/assets.php
   - config/statamic/editions.php
   - config/statamic/git.php
