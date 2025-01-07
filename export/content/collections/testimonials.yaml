@@ -2,7 +2,6 @@ title: Testimonials
 template: default
 layout: layout
 revisions: false
-title_format: '{first_name} {last_name}'
 slugs: false
 sort_dir: asc
 date_behavior:
