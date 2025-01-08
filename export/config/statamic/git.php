@@ -104,7 +104,6 @@ return [
         resource_path('sites.yaml'),
         storage_path('forms'),
         public_path('assets'),
-        public_path('social_images'),
     ],
 
     /*
@@ -133,8 +132,9 @@ return [
     */
 
     'commands' => [
-        config('statamic.git.binary').' add {{ paths }}',
-        config('statamic.git.binary').' -c "user.name={{ name }}" -c "user.email={{ email }}" commit -m "{{ message }} [BOT]"',
+        config('statamic.git.binary') . ' add {{ paths }}',
+        config('statamic.git.binary') .
+        ' -c "user.name={{ name }}" -c "user.email={{ email }}" commit -m "{{ message }} [BOT]"',
     ],
 
     /*

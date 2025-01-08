@@ -286,7 +286,7 @@ tabs:
             handle: og_image
             field: common.image
             config:
-              container: social_images
+              container: assets
               localizable: true
               listable: hidden
               display: 'Social image'
@@ -297,7 +297,7 @@ tabs:
             handle: twitter_image
             field: common.image
             config:
-              container: social_images
+              container: assets
               localizable: true
               listable: hidden
               display: 'Twitter image'

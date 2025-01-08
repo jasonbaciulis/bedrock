@@ -23,7 +23,7 @@ fields:
     handle: og_image
     field: common.image
     config:
-      container: social_images
+      container: assets
       mode: grid
       listable: false
       display: 'Social image'
@@ -34,7 +34,7 @@ fields:
     handle: twitter_image
     field: common.image
     config:
-      container: social_images
+      container: assets
       mode: grid
       listable: false
       display: 'Twitter image'
