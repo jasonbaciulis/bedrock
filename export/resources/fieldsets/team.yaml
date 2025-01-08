@@ -3,27 +3,48 @@ fields:
   -
     handle: title
     field:
-      input_type: text
-      antlers: false
       display: Title
       type: text
-      icon: text
-      listable: hidden
-      instructions_position: above
-      visibility: visible
   -
     handle: text
     field: common.text_plain
+    config:
+      display: Text
+  -
+    handle: query
+    field:
+      options:
+        -
+          key: ordered
+          value: Ordered
+        -
+          key: featured
+          value: Featured
+        -
+          key: custom
+          value: Custom
+      max_items: 1
+      default: latest
+      display: Query
+      type: select
+      width: 50
+      validate:
+        - required
+  -
+    handle: limit
+    field:
+      default: 6
+      display: Limit
+      type: integer
+      width: 50
+      if:
+        query: 'not custom'
   -
     handle: entries
     field:
-      mode: default
-      create: true
       collections:
         - team
       display: Entries
       type: entries
-      icon: entries
-      listable: hidden
-      instructions_position: above
-      visibility: visible
+      if:
+        query: 'equals custom'

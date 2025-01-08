@@ -2,15 +2,25 @@
     <div class="container">
         {{ partial:partials/section-header }}
 
-        <div class="site-grid">
-            {{ collection from="team" }}
-                <div class="sm:col-span-6 xl:col-span-4">
-                    {{ partial:components/picture w="200" h="200" cover="true" }}
-                    <h3 class="h3 mt-4">{{ title }}</h3>
-                    <p class="text-sm">{{ position }}</p>
-                    <p class="mt-4">{{ bio }}</p>
+        {{ if query === 'custom' }}
+            {{ $entries = entries }}
+        {{ elseif query === 'ordered' }}
+            {{ $entries = {collection:team :limit="limit" sort="order"} }}
+        {{ elseif query === 'featured' }}
+            {{ $entries = {collection:team :limit="limit" featured:is="true" sort="order"} }}
+        {{ /if }}
+
+        <div class="site-grid gap-y-20">
+            {{ $entries }}
+                <div class="sm:col-span-6 lg:col-span-4">
+                    <div class="aspect-[3/2] rounded-2xl bg-gray-100 ring-1 ring-gray-900/10 ring-inset">
+                        {{ partial:components/picture w="384" h="256" cover="true" class="rounded-2xl" }}
+                    </div>
+                    <h3 class="h5 mt-6">{{ title }}</h3>
+                    <p class="text-gray-600">{{ position }}</p>
+                    <p class="mt-4 text-gray-600">{{ bio }}</p>
                 </div>
-            {{ /collection }}
+            {{ /$entries }}
         </div>
     </div>
 </section>

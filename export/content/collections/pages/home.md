@@ -4,7 +4,7 @@ blueprint: pages
 title: Home
 template: default
 updated_by: 6d26d0a8-ff9c-4c3e-a25e-7e036508908c
-updated_at: 1736259715
+updated_at: 1736271908
 blocks:
   -
     id: ZbruxJDq
@@ -185,6 +185,14 @@ blocks:
   -
     id: s343JCRf
     type: style_guide
+    enabled: true
+  -
+    id: m5mqwjtr
+    title: 'Our team'
+    text: "Made up team for this demo website"
+    query: ordered
+    limit: 6
+    type: team
     enabled: true
   -
     id: m4seyrjx

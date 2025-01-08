@@ -50,3 +50,10 @@ tabs:
               type: slug
               localizable: true
               validate: 'max:200'
+          -
+            handle: featured
+            field:
+              display: Featured
+              type: toggle
+              instructions: 'Used inside the Team block to create a query with only featured team members'
+              always_save: false
