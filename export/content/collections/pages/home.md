@@ -4,7 +4,7 @@ blueprint: pages
 title: Home
 template: default
 updated_by: 6d26d0a8-ff9c-4c3e-a25e-7e036508908c
-updated_at: 1736271908
+updated_at: 1736332441
 blocks:
   -
     id: ZbruxJDq
@@ -28,6 +28,53 @@ blocks:
         url: '#faqs'
         button_type: secondary
     image: images/mohammad-rahmani-8qeb0fte9vw-unsplash.jpg
+  -
+    id: m3e8vdlz
+    title: 'Project inquiry'
+    text: 'Demo contact form with sections and conditional fields.'
+    form: contact
+    type: contact
+    enabled: true
+    success_message: 'Thanks! We got your inquiry and will get back to you within 24 hours.'
+    button_label: 'Submit the inquiry'
+  -
+    id: m3h0yigt
+    type: newsletter
+    enabled: true
+  -
+    id: s343JCRf
+    type: style_guide
+    enabled: true
+  -
+    id: m5mqwjtr
+    title: 'Our team'
+    text: 'Made up team for this demo website'
+    query: ordered
+    limit: 6
+    type: team
+    enabled: true
+  -
+    id: m4seyrjx
+    title: 'Recent posts'
+    text: 'Some description for the blog'
+    query: latest
+    limit: 3
+    type: blog_excerpt
+    enabled: true
+  -
+    id: m5mjha3w
+    title: 'Testimonials demo'
+    text: 'Option to use a "Load more" button to load more entries. Under the hood a tiny and flexible JS script can handle loading entries from any collection.'
+    query: latest
+    limit: 6
+    type: testimonials
+    enabled: true
+  -
+    id: m5nrhfol
+    title: 'Search demo'
+    text: 'Search within posts collection'
+    type: search_form
+    enabled: true
   -
     id: UXTueUcZ
     block_type: collapsed
@@ -169,47 +216,6 @@ blocks:
                 text: 'We operate on a quantum schedule—updates both have and have not been made until you check the commit history.'
         type: item
         enabled: true
-  -
-    id: m3e8vdlz
-    title: 'Project inquiry'
-    text: 'Demo contact form with sections and conditional fields.'
-    form: contact
-    type: contact
-    enabled: true
-    success_message: 'Thanks! We got your inquiry and will get back to you within 24 hours.'
-    button_label: 'Submit the inquiry'
-  -
-    id: m3h0yigt
-    type: newsletter
-    enabled: true
-  -
-    id: s343JCRf
-    type: style_guide
-    enabled: true
-  -
-    id: m5mqwjtr
-    title: 'Our team'
-    text: "Made up team for this demo website"
-    query: ordered
-    limit: 6
-    type: team
-    enabled: true
-  -
-    id: m4seyrjx
-    title: 'Recent posts'
-    text: 'Some description for the blog'
-    query: latest
-    limit: 3
-    type: blog_excerpt
-    enabled: true
-  -
-    id: m5mjha3w
-    title: 'Testimonials demo'
-    text: 'Option to use a "Load more" button to load more entries. Under the hood a tiny and flexible JS script can handle loading entries from any collection.'
-    query: latest
-    limit: 6
-    type: testimonials
-    enabled: true
 seo_noindex: false
 seo_nofollow: false
 seo_canonical_type: entry

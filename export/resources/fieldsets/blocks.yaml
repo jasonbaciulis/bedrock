@@ -57,9 +57,15 @@ fields:
               fields:
                 -
                   import: newsletter
+            search_form:
+              display: 'Search form'
+              icon: search-magnifying-glass
+              fields:
+                -
+                  import: search_form
             search_results:
               display: 'Search Results'
-              icon: search-magnifying-glass
+              icon: text-formatting-image-bottom
               fields:
                 -
                   import: search_results

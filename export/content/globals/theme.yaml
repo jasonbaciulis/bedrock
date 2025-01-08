@@ -1,6 +1,7 @@
 title: Theme
 data:
   logo: logos/logo-brand.svg
+  search_results: d50dbcf7-2ed9-4a10-91c5-5b5557d694ea
   header_buttons:
     -
       id: 1wCZptZ7
@@ -35,7 +36,7 @@ data:
         link_type: url
         target_blank: false
         entry: null
-        url: https://statamic.com/starter-kits/jasonbaciulis/leap
+        url: 'https://statamic.com/starter-kits/jasonbaciulis/leap'
         email: null
         phone: null
         asset: null

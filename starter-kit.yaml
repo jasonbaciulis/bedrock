@@ -8,6 +8,7 @@ export_paths:
   - config/statamic/assets.php
   - config/statamic/editions.php
   - config/statamic/git.php
+  - config/statamic/search.php
   - content
   - public/assets
   - public/favicon

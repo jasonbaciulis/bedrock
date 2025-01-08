@@ -1,6 +1,11 @@
 title: 'Search results'
 fields:
   -
+    handle: title
+    field:
+      type: text
+      display: Title
+  -
     handle: no_results_text
     field: common.text_plain
     config:
@@ -8,13 +13,9 @@ fields:
   -
     handle: limit
     field:
-      default: '5'
+      default: 6
       display: Limit
       type: integer
-      icon: integer
       instructions: 'Entries per page'
       width: 50
-      listable: hidden
-      instructions_position: above
-      visibility: visible
       always_save: false
