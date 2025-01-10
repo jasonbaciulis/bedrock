@@ -6,18 +6,19 @@
     Params:
     - name: Defaults to `count`.
     - alpine_property: Alpine property of the parent component that controls the active tab. Defaults to `activeTab`.
+    - slot:attributes: Additional attributes for the tab panel passed via the named slot.
  #}}
 
-{{ $name = name or count }}
+{{ $tabName = name or count }}
 {{ $alpineProperty = alpine_property or 'activeTab' }}
 
 <button
-    id="tab-{{ $name }}"
+    id="tab-{{ $tabName }}"
     type="button"
     role="tab"
-    :aria-selected="{{ $alpineProperty }} == '{{ $name }}'"
-    aria-controls="tabpanel-{{ $name }}"
-    @click.prevent="{{ $alpineProperty }} = '{{ $name }}'"
+    :aria-selected="{{ $alpineProperty }} == '{{ $tabName }}'"
+    aria-controls="tabpanel-{{ $tabName }}"
+    @click.prevent="{{ $alpineProperty }} = '{{ $tabName }}'"
     {{ slot:attributes }}
 >
     {{ slot }}
