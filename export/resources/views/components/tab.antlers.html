@@ -1,13 +1,23 @@
-{{ $tab = name ?? count }}
-{{ $alpineVariable = alpine_variable ?? 'activeTab' }}
+{{#
+    This component is a child component used to create tab panels.
+    It needs to be used together with the `tab-panel` component and a parent Alpine component that has a property
+    that controls an active tab. E.g. x-data="{ activeTab: 0 }".
+
+    Params:
+    - name: Defaults to `count`.
+    - alpine_property: Alpine property of the parent component that controls the active tab. Defaults to `activeTab`.
+ #}}
+
+{{ $name = name or count }}
+{{ $alpineProperty = alpine_property or 'activeTab' }}
 
 <button
-    id="tab-{{ $tab }}"
+    id="tab-{{ $name }}"
     type="button"
     role="tab"
-    :aria-selected="{{ $alpineVariable }} == '{{ $tab }}'"
-    aria-controls="tabpanel-{{ $tab }}"
-    @click.prevent="{{ $alpineVariable }} = '{{ $tab }}'"
+    :aria-selected="{{ $alpineProperty }} == '{{ $name }}'"
+    aria-controls="tabpanel-{{ $name }}"
+    @click.prevent="{{ $alpineProperty }} = '{{ $name }}'"
     {{ slot:attributes }}
 >
     {{ slot }}

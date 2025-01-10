@@ -1,4 +1,16 @@
-{{ side = side or 'left' }}
+{{#
+    Dropdown component contains two slots. Named slot `slot:toggle_button` for the toggle button content and
+    the default slot for the modal content. More about slots in Antlers docs: https://statamic.dev/antlers#slots
+
+    Params:
+    - alignment: The dropdown's alignment relative to the toggle button. Options: `left`, `right`. Defaults to `left`.
+    - container_class: Additional classes to apply to the container.
+    - toggle_button_class: Additional classes to apply to the toggle button.
+    - width: The width of the dropdown. Defaults to `w-56`.
+ #}}
+
+{{ $alignment = alignment or 'left' }}
+{{ $width = width or 'w-56' }}
 
 <div
     class="relative {{ container_class }}"
@@ -44,11 +56,10 @@
         x-transition:leave-end="opacity-0 scale-95"
         @click.outside="close($refs.button)"
         :id="$id('dropdown-menu')"
-        class="absolute z-10 mt-2 rounded-md bg-white shadow-lg ring-1 ring-black/5
-            {{ width or 'w-56' }}
+        class="absolute z-10 mt-2 rounded-md bg-white shadow-lg ring-1 ring-black/5 {{ $width }}
             {{ switch(
-                (side == 'left') => 'left-0 origin-top-left',
-                (side == 'right') => 'right-0 origin-top-right',
+                ($alignment === 'left') => 'left-0 origin-top-left',
+                ($alignment === 'right') => 'right-0 origin-top-right',
             )}}
         "
         :aria-labelledby="$id('dropdown-button')"

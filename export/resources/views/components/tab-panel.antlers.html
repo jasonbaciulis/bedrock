@@ -1,13 +1,24 @@
-{{ $tab = name ?? count }}
-{{ $alpineVariable = alpine_variable ?? 'activeTab' }}
+{{#
+    This component is a child component used to create tab panels.
+    It needs to be used together with the `tab` component and a parent Alpine component that has a property
+    that controls an active tab. E.g. x-data="{ activeTab: 0 }".
+
+    Params:
+    - name: Defaults to `count`.
+    - alpine_property: Alpine property of the parent component that controls the active tab. Defaults to `activeTab`.
+    - class: Additional classes for the tab panel.
+ #}}
+
+{{ $name = name or count }}
+{{ $alpineProperty = alpine_property or 'activeTab' }}
 
 <div
     x-cloak
-    x-show="{{ $alpineVariable }} == '{{ $tab }}'"
-    id="tabpanel-{{ $tab }}"
-    aria-labelledby="tab-{{ $tab }}"
+    x-show="{{ $alpineProperty }} == '{{ $name }}'"
+    id="tabpanel-{{ $name }}"
+    aria-labelledby="tab-{{ $name }}"
     role="tabpanel"
-    {{ class ?= 'class="{class}"' }}
+    {{ class | attribute:class }}
 >
     {{ slot }}
 </div>

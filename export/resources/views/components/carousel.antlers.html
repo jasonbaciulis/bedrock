@@ -1,3 +1,14 @@
+{{#
+    Glide carousel docs: https://glidejs.com/docs/options/
+
+    Params:
+    - controls_class: Additional classes for the controls container.
+    - left_btn_class: Additional classes for the left button.
+    - right_btn_class: Additional classes for the right button.
+    - slot:config_properties: Slot for additional properties for the Glide config object.
+    - slot: Slot for the carousel slides.
+ #}}
+
 {{ once }}
     {{ push:scripts }}
         {{ vite src="resources/css/glide.css" }}
@@ -11,7 +22,7 @@
     x-init="
     new window.Glide($el, {
         animationTimingFunc: 'cubic-bezier(0.4, 0, 0.2, 1)',
-        {{ slot:glide }}
+        {{ slot:config_properties }}
     }).mount()
     "
 >
@@ -23,10 +34,10 @@
 
     <div class="glide__arrows absolute flex justify-between items-center inset-x-0 pointer-events-none {{ controls_class }}" data-glide-el="controls">
         <button class="btn btn--arrow pointer-events-auto {{ left_btn_class }}" data-glide-dir="<" aria-label="Previous">
-            {{ svg src="chevron-left" class="size-5" }}
+            {{ svg src="heroicons-outline/chevron-left" class="size-5" }}
         </button>
         <button class="btn btn--arrow pointer-events-auto {{ right_btn_class }}" data-glide-dir=">" aria-label="Next">
-            {{ svg src="chevron-right" class="size-5" }}
+            {{ svg src="heroicons-outline/chevron-right" class="size-5" }}
         </button>
     </div>
 </div>

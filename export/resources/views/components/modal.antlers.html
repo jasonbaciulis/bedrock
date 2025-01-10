@@ -1,4 +1,15 @@
-{{ size = size or 'md' }}
+{{#
+    Modal component contains two slots. Named slot `slot:trigger_button` for the trigger button content and
+    the default slot for the modal content. More about slots in Antlers docs: https://statamic.dev/antlers#slots
+
+    Params:
+    - name: Defaults to `modal`.
+    - size: The size of the modal. Options: `md`, `xl`. Defaults to `md`.
+    - container_class: Additional classes for the modal container.
+    - trigger_button_class: Additional classes for the trigger button.
+ #}}
+
+{{ $size = size or 'md' }}
 
 <div
     x-data="{
@@ -81,8 +92,8 @@
                         x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                         class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full
                         {{ switch(
-                          (size == 'md') => 'px-4 pt-5 pb-4 sm:p-6 sm:max-w-xl',
-                          (size == 'xl') => 'px-4 pt-5 pb-4 sm:p-6 sm:max-w-screen-xl md:p-12 xl:px-16 xl:py-20',
+                          ($size === 'md') => 'px-4 pt-5 pb-4 sm:p-6 sm:max-w-xl',
+                          ($size === 'xl') => 'px-4 pt-5 pb-4 sm:p-6 sm:max-w-screen-xl md:p-12 xl:px-16 xl:py-20',
                         )}}"
                         @click.outside="close($refs.button)"
                         :id="id"

@@ -1,3 +1,11 @@
+{{#
+    Params:
+    - style: The style of the alert. Options: `success`, `warning`, `error`.
+    - text: The text to display in the alert.
+    - dismissible: Boolean. Whether the alert can be dismissed.
+    - class: Additional classes to apply to the alert.
+ #}}
+
 <div class="alert
     {{ switch(
         (style === 'success') => 'alert--success',

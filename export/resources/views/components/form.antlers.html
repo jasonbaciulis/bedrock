@@ -1,3 +1,18 @@
+{{#
+    Component for outputting a Statamic form fields grouped in sections. A noteworthy thing is that we keep
+    the form fields components inside the views/components/form folder instead of publishing and customizing
+    a vendor folder like the docs suggest: https://statamic.dev/tags/form-create#prerendered-field-html
+    This gives us more control over the form fields and allows us to reuse the same form fields outside of
+    the Statamic form.
+
+    Docs:
+        https://statamic.dev/forms
+        https://statamic.dev/tags/form-create
+
+    Params:
+    - success_message: The message to display when the form is successfully submitted.
+#}}
+
 {{ once }}
     {{ push:scripts }}
         <script src="/vendor/statamic/frontend/js/helpers.js" defer></script>
@@ -5,10 +20,6 @@
     {{ /push:scripts }}
 {{ /once }}
 
-{{#
-    Create the selected form and reference Alpine data in `form()`.
-    Prevent submitting with POST as we will submit with AJAX.
-#}}
 <div x-cloak x-data="form({ handle: {{ form:handle | to_js }} })">
     <template x-if="success">
         {{ partial:components/alert style="success" :text="success_message" class="mb-8" }}

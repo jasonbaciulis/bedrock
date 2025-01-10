@@ -1,5 +1,12 @@
+{{#
+    Docs: https://statamic.dev/tags/collection#pagination
+
+    Params:
+    - class: Optional classes for the container.
+#}}
+
 {{ if paginate.total_pages > 1 }}
-    <div class="{{ class }}">
+    <div {{ class | attribute:class }}>
         {{ paginate }}
             {{# Section that will be yielded in the <head> of documents for search engines. #}}
             {{ section:pagination }}

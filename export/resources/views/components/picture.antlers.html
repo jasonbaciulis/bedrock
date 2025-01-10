@@ -1,3 +1,19 @@
+{{#
+    Lightweight picture component that uses Glide to generate images. It supports lazy loading and object-cover.
+    Notice that the component doesn't use sizes attribute, because in our view it's a waste of time.
+    Just pass the dimensions of the largest image size that needs rendered. Images are lazy loaded and saving a few kilobytes
+    on the initial load is not worth the extra complexity.
+
+    Docs: https://statamic.dev/tags/glide
+
+    Params:
+    - w: Width of the image.
+    - h: Height of the image.
+    - class: Additional classes for the image.
+    - cover: Whether to use object-cover. Defaults to `false`.
+    - not_lazy: Whether to disable lazy loading. Defaults to `false`.
+ #}}
+
 {{ if image }}
     <picture>
         {{ asset :url="image" }}
@@ -7,7 +23,7 @@
                         class="object-cover size-full {{ class }}"
                         style="object-position: {{ focus_css }}"
                     {{ else }}
-                        class="{{ class }}"
+                        {{ class | attribute:class }}
                     {{ /if }}
                     src="{{ url }}"
                     alt="{{ alt }}"
@@ -32,7 +48,7 @@
                         class="object-cover size-full {{ class }}"
                         style="object-position: {{ focus_css }}"
                     {{ else }}
-                        class="{{ class }}"
+                        {{ class | attribute:class }}
                     {{ /if }}
                     {{ glide :src="url" :width='w' :height='h' fit='crop_focal' }}
                         src="{{ url }}"
@@ -59,7 +75,7 @@
                         class="object-cover size-full {{ class }}"
                         style="object-position: {{ focus_css }}"
                     {{ else }}
-                        class="{{ class }}"
+                        {{ class | attribute:class }}
                     {{ /if }}
                     {{ glide :src="url" preset="lg" }}
                         src="{{ url }}"
