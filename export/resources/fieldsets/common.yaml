@@ -76,7 +76,7 @@ fields:
       toolbar_mode: fixed
       link_noopener: true
       link_noreferrer: false
-      container: files
+      container: assets
       target_blank: false
       reading_time: false
       fullscreen: true
