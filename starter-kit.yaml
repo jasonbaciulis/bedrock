@@ -4,7 +4,6 @@ export_paths:
   - app/Modifiers
   - app/Tags
   - config/app.php
-  - config/queue.php
   - config/statamic/assets.php
   - config/statamic/editions.php
   - config/statamic/git.php
@@ -30,5 +29,3 @@ export_paths:
   - tailwind.config.site.js
   - tailwind.config.typography.js
   - vite.config.js
-dependencies:
-  jonassiewertsen/statamic-jobs: ^1.5
