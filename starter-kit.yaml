@@ -14,6 +14,7 @@ export_paths:
   - resources/blueprints
   - resources/css
   - resources/fieldsets
+  - resources/forms
   - resources/js
   - resources/svg
   - resources/views
