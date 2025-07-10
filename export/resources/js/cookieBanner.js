@@ -1,6 +1,5 @@
 document.addEventListener('alpine:init', () => {
-  const env = process.env
-  const storageKey = env.VITE_APP_NAME.toLowerCase().replaceAll(' ', '_') + '_cookie_banner'
+  const storageKey = appName.toLowerCase().replaceAll(' ', '_') + '_cookie_banner'
 
   Alpine.store('cookieBanner', {
     data: Alpine.$persist(null).as(storageKey),
