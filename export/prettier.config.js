@@ -1,7 +1,6 @@
 export default {
   trailingComma: 'es5',
   trailingCommaPHP: true,
-  phpVersion: '8.2',
   printWidth: 100,
   tabWidth: 2,
   overrides: [
