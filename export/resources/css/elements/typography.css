@@ -1,7 +1,9 @@
-q {
-  quotes: '“ ”';
-}
+@layer components {
+  q {
+    quotes: '“ ”';
+  }
 
-strong {
-  @apply font-bold;
+  strong {
+    @apply font-bold;
+  }
 }

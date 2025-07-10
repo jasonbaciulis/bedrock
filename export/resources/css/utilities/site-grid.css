@@ -1,0 +1,3 @@
+@utility site-grid {
+  @apply grid gap-6 sm:grid-cols-12 lg:gap-8;
+}

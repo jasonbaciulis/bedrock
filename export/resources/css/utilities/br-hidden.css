@@ -1,13 +1,11 @@
-@layer utilities {
-  .br-hidden {
-    br {
-      display: none;
-    }
+@utility br-hidden {
+  br {
+    display: none;
   }
+}
 
-  .br-visible {
-    br {
-      display: block;
-    }
+@utility br-visible {
+  br {
+    display: block;
   }
 }

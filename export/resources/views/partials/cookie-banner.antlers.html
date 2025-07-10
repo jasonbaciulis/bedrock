@@ -68,7 +68,7 @@ The cookie banner component that is in `resources/views/partials/seo.antlers.htm
                         </template>
                     </div>
                     <div class="text-sm/6">
-                        <label :for="type.name" class="font-semibold text-gray" x-text="type.label"></label>
+                        <label :for="type.name" class="font-semibold text-gray" :class="{ 'cursor-not-allowed text-gray-500': !type.consent_api }" x-text="type.label"></label>
                         <p :id="`${type.name}-description`" class="text-gray-500 text-pretty" x-text="type.description"></p>
                     </div>
                 </div>

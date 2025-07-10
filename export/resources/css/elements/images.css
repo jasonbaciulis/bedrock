@@ -1,7 +1,9 @@
-img {
-  @apply italic;
-}
+@layer components {
+  img {
+    @apply italic;
+  }
 
-svg {
-  @apply max-h-full;
+  svg {
+    @apply max-h-full;
+  }
 }

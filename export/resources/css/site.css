@@ -4,9 +4,6 @@ for highly reusable UI elements we create BEM CSS components.
 We think this approach is faster and more maintainable and eliminates the
 need to create/import a bunch of Antlers partials with a single HTML tag.
 
-Also, we don't use tailwind.config.js to create components because
-we prefer to write CSS in CSS because that speeds up our workflow.
-
 Introduction to BEM:
 @see http://getbem.com/introduction/
 @see https://cssguidelin.es/#bem-like-naming
@@ -15,30 +12,34 @@ CSS folder structure is based on ITCSS:
 @see https://www.xfive.co/blog/itcss-scalable-maintainable-css-architecture/
 */
 
+/* Configs */
+@import 'tailwindcss';
+@import './config.css';
+@import './typography.css';
+
 /* Elements */
-@import 'tailwindcss/base';
-@import 'elements/images';
-@import 'elements/inputs';
-@import 'elements/links';
-@import 'elements/page';
-@import 'elements/typography';
+@import './elements/images.css';
+@import './elements/inputs.css';
+@import './elements/links.css';
+@import './elements/page.css';
+@import './elements/typography.css';
 
 /* Objects */
-@import 'objects/layout';
+@import './objects/layout.css';
 
 /* Components */
-@import 'tailwindcss/components';
-@import 'components/alert';
-@import 'components/badge';
-@import 'components/button';
-@import 'components/headings';
-@import 'components/misc';
-@import 'components/scrollbar';
-@import 'components/tooltip';
-@import 'components/typography';
+@import './components/alert.css';
+@import './components/badge.css';
+@import './components/button.css';
+@import './components/headings.css';
+@import './components/misc.css';
+@import './components/scrollbar.css';
+@import './components/tooltip.css';
+@import './components/typography.css';
 
 /* Utilities */
-@import 'tailwindcss/utilities';
-@import 'utilities/br-hidden';
-@import 'utilities/fill-current-nested';
-@import 'utilities/has-error';
+@import './utilities/br-hidden.css';
+@import './utilities/container.css';
+@import './utilities/fill-current-nested.css';
+@import './utilities/has-error.css';
+@import './utilities/site-grid.css';

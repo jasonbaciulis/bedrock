@@ -1,0 +1,136 @@
+@source '../../resources/views/**/*';
+@source '../../resources/js/**/*';
+@source '../../content/**/*.md';
+
+@plugin '@tailwindcss/forms';
+
+/*
+    Using inline theme to reference Tailwind color variables.
+    More info: https://tailwindcss.com/docs/theme#referencing-other-variables
+*/
+@theme inline {
+  /* Gray */
+  --color-gray: var(--color-gray-900);
+
+  /* Primary (using sky) */
+  --color-primary-50: var(--color-sky-50);
+  --color-primary-100: var(--color-sky-100);
+  --color-primary-200: var(--color-sky-200);
+  --color-primary-300: var(--color-sky-300);
+  --color-primary-400: var(--color-sky-400);
+  --color-primary-500: var(--color-sky-500);
+  --color-primary-600: var(--color-sky-600);
+  --color-primary-700: var(--color-sky-700);
+  --color-primary-800: var(--color-sky-800);
+  --color-primary-900: var(--color-sky-900);
+  --color-primary-950: var(--color-sky-950);
+  --color-primary: var(--color-sky-400);
+
+  /* Secondary (using indigo) */
+  --color-secondary-50: var(--color-indigo-50);
+  --color-secondary-100: var(--color-indigo-100);
+  --color-secondary-200: var(--color-indigo-200);
+  --color-secondary-300: var(--color-indigo-300);
+  --color-secondary-400: var(--color-indigo-400);
+  --color-secondary-500: var(--color-indigo-500);
+  --color-secondary-600: var(--color-indigo-600);
+  --color-secondary-700: var(--color-indigo-700);
+  --color-secondary-800: var(--color-indigo-800);
+  --color-secondary-900: var(--color-indigo-900);
+  --color-secondary-950: var(--color-indigo-950);
+  --color-secondary: var(--color-indigo-500);
+
+  /* Yellow (using amber) */
+  --color-yellow-50: var(--color-amber-50);
+  --color-yellow-100: var(--color-amber-100);
+  --color-yellow-200: var(--color-amber-200);
+  --color-yellow-300: var(--color-amber-300);
+  --color-yellow-400: var(--color-amber-400);
+  --color-yellow-500: var(--color-amber-500);
+  --color-yellow-600: var(--color-amber-600);
+  --color-yellow-700: var(--color-amber-700);
+  --color-yellow-800: var(--color-amber-800);
+  --color-yellow-900: var(--color-amber-900);
+  --color-yellow-950: var(--color-amber-950);
+  --color-yellow: var(--color-amber-500);
+
+  /* Green */
+  --color-green: var(--color-green-600);
+
+  /* Red */
+  --color-red: var(--color-red-600);
+}
+
+@theme {
+  --color-black: #000;
+  --color-white: #fff;
+
+  --color-current: currentColor;
+  --color-transparent: transparent;
+
+  /* Font families */
+  --font-sans: 'Mona Sans', ui-sans-serif, system-ui, sans-serif;
+
+  /* Font sizes */
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.25rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.5rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.75rem;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 2rem;
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: 1.2;
+  --text-4xl: 2.25rem;
+  --text-4xl--line-height: 1.2;
+  --text-5xl: 3rem;
+  --text-5xl--line-height: 1.2;
+  --text-6xl: 3.75rem;
+  --text-6xl--line-height: 1.2;
+  --text-7xl: 4.5rem;
+  --text-7xl--line-height: 1;
+  --text-8xl: 6rem;
+  --text-8xl--line-height: 1;
+  --text-9xl: 8rem;
+  --text-9xl--line-height: 1;
+
+  /* Font weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Spacing */
+  --spacing-em: 1em;
+
+  /* Transition properties */
+  --default-transition-duration: 150ms;
+  --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Animation */
+  --animate-shake: shake 0.2s ease-in-out 0s 2;
+
+  /* Z-index */
+  --z-index-behind: -1;
+
+  /* Ring color */
+  --ring-color: var(--color-primary);
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(0.5rem);
+  }
+  75% {
+    transform: translateX(-0.5rem);
+  }
+}

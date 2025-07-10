@@ -1,27 +1,41 @@
-input,
-textarea {
-  @apply placeholder:text-gray-400;
-}
+@layer components {
+  label {
+    @apply cursor-pointer select-none;
+  }
 
-textarea,
-[type='text'],
-[type='url'],
-[type='search'],
-[type='email'],
-[type='password'],
-[type='tel'] {
-  @apply block w-full rounded-lg border-0 px-4 py-2.5 text-sm/6 text-gray shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-primary;
-}
+  input,
+  textarea {
+    @apply placeholder:text-gray-400;
+  }
 
-select {
-  @apply w-full cursor-pointer truncate rounded-lg border-0 px-4 py-2.5 pr-10 text-sm/6 text-gray shadow-sm ring-1 ring-inset ring-gray-300 invalid:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-primary;
-}
+  textarea,
+  [type='text'],
+  [type='url'],
+  [type='search'],
+  [type='email'],
+  [type='password'],
+  [type='tel'] {
+    @apply text-gray focus:ring-primary block w-full rounded-lg border-0 px-4 py-2.5 text-sm/6 shadow-xs ring-1 ring-gray-300 ring-inset focus:ring-2 focus:ring-inset;
+  }
 
-[type='checkbox'],
-[type='radio'] {
-  @apply size-4 rounded border-gray-300 text-gray shadow-sm focus:ring-gray;
-}
+  select {
+    @apply text-gray focus:ring-primary w-full cursor-pointer truncate rounded-lg border-0 px-4 py-2.5 pr-10 text-sm/6 shadow-xs ring-1 ring-gray-300 ring-inset invalid:text-gray-500 focus:ring-2 focus:ring-inset;
+  }
 
-[type='radio'] {
-  @apply rounded-full;
+  [type='checkbox'],
+  [type='radio'] {
+    @apply text-gray focus-visible:ring-gray size-4 cursor-pointer rounded border border-gray-300 shadow-xs focus:ring-0 focus:ring-offset-0 focus-visible:ring-2 focus-visible:ring-offset-2;
+
+    &:checked {
+      @apply border-gray;
+    }
+
+    &:disabled {
+      @apply cursor-not-allowed opacity-50;
+    }
+  }
+
+  [type='radio'] {
+    @apply rounded-full;
+  }
 }

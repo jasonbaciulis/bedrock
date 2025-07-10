@@ -93,7 +93,7 @@
                         class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full
                         {{ switch(
                           ($size === 'md') => 'px-4 pt-5 pb-4 sm:p-6 sm:max-w-xl',
-                          ($size === 'xl') => 'px-4 pt-5 pb-4 sm:p-6 sm:max-w-screen-xl md:p-12 xl:px-16 xl:py-20',
+                          ($size === 'xl') => 'px-4 pt-5 pb-4 sm:p-6 sm:max-w-(--breakpoint-xl) md:p-12 xl:px-16 xl:py-20',
                         )}}"
                         @click.outside="close($refs.button)"
                         :id="id"

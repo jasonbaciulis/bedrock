@@ -38,7 +38,7 @@
 
         <div class="space-y-12 divide-y divide-gray-300">
             {{ sections }}
-                <div class="{{ !first ?= 'pt-12' }}">
+                <div class="{{ !last ?= 'pb-12' }}">
                     {{ if display }}
                         <h3 class="h6 mb-8">{{ display }}</h3>
                     {{ /if }}
