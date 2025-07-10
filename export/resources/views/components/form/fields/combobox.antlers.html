@@ -30,7 +30,7 @@
             autocorrect="off"
             spellcheck="false"
             {{ placeholder | attribute:placeholder }}
-            @input.debounce.100ms="searchItems"
+            @input.debounce.100ms="handleInput"
             @keydown.enter.stop.prevent="selectOption()"
             @keydown.arrow-up.prevent="navigate('previous')"
             @keydown.arrow-down.prevent="navigate('next')"

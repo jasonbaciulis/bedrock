@@ -63,13 +63,19 @@ document.addEventListener('alpine:init', () => {
       }
     },
 
+    handleInput() {
+      this.searchItems()
+      if (!this.searchIsEmpty()) {
+        this.listboxOpen = true
+      }
+    },
+
     searchItems() {
       const searchTerm = this.comboboxSearch.replace(/\*/g, '').toLowerCase()
       this.itemsFiltered = this.searchIsEmpty()
         ? this.items
         : this.items.filter(item => item.value.toLowerCase().includes(searchTerm))
       this.itemActive = this.itemsFiltered[0] || null
-      this.listboxOpen = !this.searchIsEmpty()
     },
 
     toggleListbox() {
