@@ -4,7 +4,6 @@ export_paths:
   - app/Modifiers
   - app/Tags
   - config/app.php
-  - config/statamic/assets.php
   - config/statamic/editions.php
   - config/statamic/git.php
   - config/statamic/search.php
@@ -21,7 +20,12 @@ export_paths:
   - routes/web.php
   - .env.example
   - .gitignore
+  - .cursorrules
   - package.json
   - prettier.config.js
   - README.md
+  - AGENTS.md
   - vite.config.js
+dependencies:
+  blade-ui-kit/blade-icons: ^1.8
+  mallardduck/blade-lucide-icons: ^1.23

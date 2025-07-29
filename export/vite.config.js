@@ -10,15 +10,16 @@ export default defineConfig(({ command, mode }) => {
       laravel({
         input: [
           'resources/css/site.css',
-          'resources/css/glide.css',
           'resources/css/fonts.css',
           'resources/js/site.js',
-          'resources/js/glide.js',
+          'resources/js/embla.js',
           'resources/js/form.js',
           'resources/js/cookieBanner.js',
           'resources/js/newsletter.js',
           'resources/js/fetchEntries.js',
           'resources/js/combobox.js',
+          'resources/js/lite-yt-embed.js',
+          'resources/css/lite-yt-embed.css',
 
           // Control Panel assets.
           // https://statamic.dev/extending/control-panel#adding-css-and-js-assets
