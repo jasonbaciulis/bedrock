@@ -18,7 +18,7 @@ Once you have started the Artisan development server, the website will be access
 - [Statamic](https://statamic.dev/) - Flat file Laravel CMS.
 - [Antlers](https://statamic.dev/new-antlers-parser) - Templating engine provided with Statamic.
 - [TailwindCSS](https://tailwindcss.com/docs/installation) - Utility-first CSS framework.
-- [AlpineJS](https://alpinejs.dev/start-here) - Rugged, minimal tool for composing behavior directly in your markup.
+- [Alpine.js](https://alpinejs.dev/start-here) - Rugged, minimal tool for composing behavior directly in your markup.
 - [Embla](https://www.embla-carousel.com) - A lightweight carousel library with fluid motion and great swipe precision.
 
 ## Views folder structure
