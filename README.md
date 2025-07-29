@@ -4,8 +4,8 @@ Leap provides everything you need to advance your project forward. Cut down your
 
 ## Features
 
+- **shadcn/ui style AlpineJS components**. 10+ shadcn/ui style, beautifully-designed, accessible components that will save a ton of time on every project.
 - **Blocks**. Blocks are based on [Replicator Fieldtype](https://statamic.dev/fieldtypes/replicator) and are like LEGO bricks that provide you the maximum flexibility when building pages. You can use CLI commands to quickly create or remove Blocks. Leap includes a few commonly used Blocks like FAQs and Form.
-- **Alpine components**. Prebuilt, plainly styled components like modals and tabs that save a ton of time on every project.
 - **SEO**. Full SEO settings without extra addon. Including cookie consent banner that works with GTM.
 - **Style guide.** A Block that’s very useful when starting projects. It’s more of an upgrade to your dev process that let’s you see all your small UI parts in one place before starting to build other Blocks and pages.
 
