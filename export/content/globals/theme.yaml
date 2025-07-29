@@ -9,7 +9,7 @@ data:
       link_type: url
       target_blank: false
       url: '#'
-      button_type: text
+      button_type: ghost
       button:
         label: 'Sign in'
         show_controls: null

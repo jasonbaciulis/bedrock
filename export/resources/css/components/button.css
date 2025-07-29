@@ -1,37 +1,49 @@
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-center text-sm font-semibold leading-5 text-gray transition focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed;
+    @apply focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive inline-flex shrink-0 items-center justify-center gap-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:ring-3 disabled:pointer-events-none disabled:opacity-50 has-[>svg]:px-3 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4;
   }
 
   .btn--primary {
-    @apply bg-primary px-6 py-3.5 text-primary-950 hover:bg-primary-500 active:bg-primary-500 disabled:bg-primary-200;
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 active:bg-primary/90 h-9 px-4 py-2 shadow-xs;
   }
 
   .btn--secondary {
-    @apply rounded-md bg-white px-6 py-3.5 text-gray ring-1 ring-inset ring-gray-300 hover:bg-gray-50 active:bg-gray-50;
+    @apply bg-secondary text-secondary-foreground hover:bg-secondary/80 h-9 px-4 py-2 shadow-xs;
   }
 
-  .btn--black {
-    @apply bg-gray px-6 py-3.5 text-white hover:bg-gray-700 focus-visible:outline-gray-900;
+  .btn--outline {
+    @apply bg-background hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 h-9 border px-4 py-2 shadow-xs;
+  }
+
+  .btn--link {
+    @apply text-neutral-900 underline-offset-4 hover:underline active:underline;
+  }
+
+  .btn--ghost {
+    @apply hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 h-9 px-4 py-2 text-neutral-900;
+  }
+
+  .btn--destructive {
+    @apply bg-destructive hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60 h-9 px-4 py-2 text-white shadow-xs;
   }
 
   .btn--round {
-    @apply size-12 rounded-full p-0 text-lg font-medium;
+    @apply w-9 rounded-full p-0;
   }
 
-  .btn--text {
-    @apply text-gray hover:text-primary-500 active:text-primary-600;
-  }
-
-  .btn--arrow {
-    @apply size-10 rounded-full bg-gray-100 text-gray hover:bg-white active:bg-white;
+  .btn--square {
+    @apply w-9 p-0;
   }
 
   .btn--sm {
-    @apply px-4 py-2.5 text-sm;
+    @apply h-8 gap-1.5 px-3 has-[>svg]:px-2.5;
   }
 
   .btn--lg {
-    @apply text-base sm:px-8 sm:py-4 sm:text-lg;
+    @apply h-10 px-6 has-[>svg]:px-4;
+  }
+
+  .btn--xl {
+    @apply h-12 px-8 has-[>svg]:px-4;
   }
 }

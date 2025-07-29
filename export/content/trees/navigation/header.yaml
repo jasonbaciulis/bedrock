@@ -3,7 +3,7 @@ tree:
     id: 00889306-aa09-49b8-b91b-e9e7a72ed8a9
     title: Features
     data:
-      two_col_flyout: true
+      two_col_menu: true
     children:
       -
         id: 5e2933f5-10f3-4043-b585-903be44517d6

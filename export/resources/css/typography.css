@@ -1,38 +1,25 @@
 @plugin '@tailwindcss/typography';
 
 @utility prose {
-  --tw-prose-body: var(--color-gray-700);
-  --tw-prose-headings: var(--color-gray);
+  --tw-prose-body: var(--color-neutral-800);
+  --tw-prose-headings: var(--color-neutral-950);
   --tw-prose-counters: var(--color-primary);
-  --tw-prose-bullets: var(--color-gray);
-  --tw-prose-quotes: var(--color-gray);
+  --tw-prose-bullets: var(--color-neutral-950);
+  --tw-prose-quotes: var(--color-neutral-950);
   --tw-prose-quote-borders: var(--color-primary);
-  --tw-prose-bold: var(--color-gray);
-  --tw-prose-links: var(--color-primary-500);
+  --tw-prose-bold: var(--color-neutral-950);
+  --tw-prose-links: var(--color-primary);
 }
 
 @layer utilities {
   .prose {
-    h1,
-    h2,
-    h3,
-    h4 {
-      color: var(--color-gray);
-    }
-
     ul > li p,
     ol > li p {
-      margin-top: 0 !important;
-      margin-bottom: 0 !important;
+      @apply !my-0;
     }
 
     a {
-      font-weight: 600;
-      text-decoration: none;
-
-      &:hover {
-        color: var(--color-primary-600);
-      }
+      @apply font-medium no-underline underline-offset-4 hover:underline;
     }
   }
 }

@@ -1,5 +1,13 @@
 @layer components {
   .badge {
-    @apply inline-flex items-center justify-center rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600;
+    @apply bg-primary text-primary-foreground inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent px-2 py-0.5 text-xs font-medium;
+  }
+
+  .badge--secondary {
+    @apply bg-secondary text-secondary-foreground;
+  }
+
+  .badge--outline {
+    @apply text-foreground bg-background border-border;
   }
 }

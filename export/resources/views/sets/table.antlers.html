@@ -5,7 +5,7 @@
                 <thead>
                     <tr>
                         {{ cells }}
-                            <th scope="col" class="py-3 text-left font-semibold text-gray px-3 sm:px-6 xl:px-8 {{ first ?= 'pl-0 sm:pl-0 xl:pl-0' }} {{ last ?= 'pr-0 sm:pr-0 xl:pr-0' }}">{{ value }}</th>
+                            <th scope="col" class="py-3 text-left font-semibold text-neutral-900 px-3 sm:px-6 xl:px-8 {{ first ?= 'pl-0 sm:pl-0 xl:pl-0' }} {{ last ?= 'pr-0 sm:pr-0 xl:pr-0' }}">{{ value }}</th>
                         {{ /cells }}
                     </tr>
                 </thead>
@@ -35,7 +35,7 @@
     </table>
 
     {{ if caption }}
-        <span class="text-xs block pt-3 border-t border-gray-300 text-gray-500">
+        <span class="text-xs block pt-3 border-t border-neutral-300 text-muted-foreground">
             {{ caption }}
         </span>
     {{ /if }}

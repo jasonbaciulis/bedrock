@@ -1,3 +1,0 @@
-@utility has-error {
-  @apply border-red-500 ring-red-300 placeholder:text-red-300 focus:ring-red-500;
-}

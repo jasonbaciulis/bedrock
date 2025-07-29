@@ -1,0 +1,8 @@
+<button
+    type="submit"
+    class="btn btn--primary w-full {{ class }}"
+    :disabled="sending"
+>
+    {{ icon:lucide-loader-circle class="animate-spin" x-show="sending" }}
+    {{ label }}
+</button>

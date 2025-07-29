@@ -1,18 +1,53 @@
 document.addEventListener('alpine:init', () => {
   Alpine.data('combobox', config => ({
     id: config.id || 'combobox',
-    emptyOptionsMessage: config.emptyOptionsMessage || 'No results match your search.',
     items: config.items,
+    value: config.value || null,
+    placeholder: config.placeholder || 'Select an option…',
+
     itemsFiltered: [],
+    itemsShown: [],
+    itemsLoaded: 10,
+
     itemActive: null,
     itemSelected: null,
     comboboxSearch: '',
     listboxOpen: false,
 
+    get buttonLabel() {
+      if (this.itemSelected) {
+        return this.itemSelected.value
+      }
+
+      return this.placeholder
+    },
+
     init() {
       this.initializeItems()
-      this.searchItems()
-      this.$watch('comboboxSearch', this.searchItems.bind(this)) // Bind 'this' to maintain context
+
+      if (this.value) {
+        this.itemSelected = this.items.find(item => item.key == this.value) || null
+      }
+
+      this.$watch('comboboxSearch', () => {
+        if (this.listboxOpen) {
+          this.searchItems()
+        }
+      })
+
+      this.$watch('listboxOpen', isOpen => {
+        if (isOpen) {
+          this.comboboxSearch = ''
+          this.$nextTick(() => {
+            this.searchItems()
+            this.$refs.comboboxInput.focus()
+            if (this.itemSelected) {
+              this.itemActive = this.itemSelected
+              this.scrollToActiveItem()
+            }
+          })
+        }
+      })
     },
 
     initializeItems() {
@@ -27,6 +62,11 @@ document.addEventListener('alpine:init', () => {
 
     convertItemsToArray() {
       this.items = Object.entries(this.items).map(([key, value]) => ({ key, value }))
+    },
+
+    loadMoreItems() {
+      this.itemsLoaded += 25
+      this.itemsShown = this.itemsFiltered.slice(0, this.itemsLoaded)
     },
 
     searchIsEmpty() {
@@ -46,52 +86,56 @@ document.addEventListener('alpine:init', () => {
     },
 
     navigate(direction) {
+      if (!this.listboxOpen) return
+
       const index = this.itemsFiltered.indexOf(this.itemActive)
-      const newIndex = direction === 'next' ? index + 1 : index - 1
-      if (newIndex >= 0 && newIndex < this.itemsFiltered.length) {
-        this.itemActive = this.itemsFiltered[newIndex]
-        this.scrollToActiveItem()
+      let newIndex = direction === 'next' ? index + 1 : index - 1
+
+      if (newIndex < 0) {
+        newIndex = this.itemsFiltered.length - 1
+      } else if (newIndex >= this.itemsFiltered.length) {
+        newIndex = 0
       }
+
+      this.itemActive = this.itemsFiltered[newIndex]
+      this.scrollToActiveItem()
     },
 
     scrollToActiveItem() {
-      const activeElement = document.getElementById(`${this.itemActive.key}-${this.id}`)
+      if (!this.itemActive) return
+      const activeElement = document.getElementById(`${this.id}-option-${this.itemActive.key}`)
+
       if (activeElement) {
-        const listbox = this.$refs.listbox
-        const offset = activeElement.offsetTop + activeElement.offsetHeight - listbox.offsetHeight
-        listbox.scrollTop = offset > 0 ? offset : 0
-      }
-    },
-
-    handleInput() {
-      this.searchItems()
-      if (!this.searchIsEmpty()) {
-        this.listboxOpen = true
-      }
-    },
-
-    searchItems() {
-      const searchTerm = this.comboboxSearch.replace(/\*/g, '').toLowerCase()
-      this.itemsFiltered = this.searchIsEmpty()
-        ? this.items
-        : this.items.filter(item => item.value.toLowerCase().includes(searchTerm))
-      this.itemActive = this.itemsFiltered[0] || null
-    },
-
-    toggleListbox() {
-      this.listboxOpen = !this.listboxOpen
-      if (this.listboxOpen) {
-        this.$nextTick(() => {
-          this.$refs.comboboxInput.focus()
-          this.scrollToActiveItem()
+        this.$refs.listbox.scroll({
+          top:
+            activeElement.offsetTop - this.$refs.listbox.offsetHeight + activeElement.offsetHeight,
         })
       }
     },
 
-    selectOption() {
-      if (this.itemActive) {
-        this.itemSelected = this.itemActive
-        this.comboboxSearch = this.itemSelected.value
+    searchItems() {
+      this.itemsFiltered = this.searchIsEmpty()
+        ? this.items
+        : this.items.filter(item =>
+            item.value.toLowerCase().includes(this.comboboxSearch.toLowerCase())
+          )
+
+      this.itemsShown = this.itemsFiltered.slice(0, this.itemsLoaded)
+
+      this.itemActive = this.itemsFiltered.includes(this.itemSelected)
+        ? this.itemSelected
+        : this.itemsFiltered[0] || null
+    },
+
+    toggleListbox() {
+      this.listboxOpen = !this.listboxOpen
+    },
+
+    selectOption(item = null) {
+      const selected = item || this.itemActive
+      if (selected) {
+        this.itemSelected = selected
+        this.value = selected.key
         this.closeListbox()
       }
     },

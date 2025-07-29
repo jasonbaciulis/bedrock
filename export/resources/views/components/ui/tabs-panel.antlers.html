@@ -1,0 +1,25 @@
+{{#
+    This component is a child component used to create tab panels.
+    It needs to be used together with the `tab-trigger` component and a parent Tabs component that has a property
+    that controls an active tab. E.g. x-data="{ activeTab: 0 }".
+
+    Params:
+    - name: Defaults to `count`.
+    - alpine_property: Alpine property of the parent component that controls the active tab. Defaults to `activeTab`.
+    - class: Additional classes for the tab panel.
+ #}}
+
+{{ $tabPanelName = name or count }}
+{{ $alpineProperty = alpine_property or 'activeTab' }}
+
+<div
+    x-cloak
+    x-show="{{ $alpineProperty }} == '{{ $tabPanelName }}'"
+    id="tabpanel-{{ $tabPanelName }}"
+    aria-labelledby="tab-{{ $tabPanelName }}"
+    role="tabpanel"
+    :tabindex="{{ $alpineProperty }} == '{{ $tabPanelName }}' ? 0 : -1"
+    {{ class | attribute:class }}
+>
+    {{ slot }}
+</div>

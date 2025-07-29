@@ -1,0 +1,30 @@
+<fieldset
+    :aria-invalid="hasError('{{ handle }}')"
+    {{ instructions ?= 'aria-describedby="{handle}-instructions"' }}
+>
+    <legend class="block text-base font-medium text-foreground select-none">{{ display }}</legend>
+
+    {{ if field:instructions }}
+        <p id="{{ field:handle }}-instructions" class="text-sm text-muted-foreground">
+            {{ field:instructions }}
+        </p>
+    {{ /if }}
+
+    <div class="mt-4 space-y-4">
+        {{ foreach:options as="value|label" }}
+            <div class="flex items-center gap-3">
+                <input
+                    x-model="{{ model }}"
+                    id="{{ value }}"
+                    type="checkbox"
+                    name="{{ handle }}[]"
+                    value="{{ value }}"
+                    @change="forgetError('{{ handle }}')"
+                >
+                <label for="{{ value }}" class="text-foreground">
+                    {{ label }}
+                </label>
+            </div>
+        {{ /foreach:options }}
+    </div>
+</fieldset>

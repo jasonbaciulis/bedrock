@@ -18,6 +18,7 @@ CSS folder structure is based on ITCSS:
 @import './typography.css';
 
 /* Elements */
+@import './elements/borders.css';
 @import './elements/images.css';
 @import './elements/inputs.css';
 @import './elements/links.css';
@@ -41,5 +42,4 @@ CSS folder structure is based on ITCSS:
 @import './utilities/br-hidden.css';
 @import './utilities/container.css';
 @import './utilities/fill-current-nested.css';
-@import './utilities/has-error.css';
 @import './utilities/site-grid.css';

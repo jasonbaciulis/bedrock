@@ -1,9 +1,9 @@
-{{ nav handle="bottom_footer" max_depth="1" select="title|url" as="links" }}
+{{ nav handle="bottom_footer" max_depth="1" select="title|url|is_external" as="links" }}
     <nav class="flex gap-8">
         {{ links }}
             <a
                 href="{{ url }}"
-                class="text-xs text-gray-600 hover:text-gray"
+                class="text-xs text-muted-foreground hover:text-foreground"
                 {{ if is_external }} target="_blank" rel="noopener nofollow" {{ /if }}
             >
                 {{ title }}

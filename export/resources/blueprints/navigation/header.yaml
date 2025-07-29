@@ -24,8 +24,8 @@ tabs:
               type: text
               instructions: 'Highlight menu item for example with a "New" badge'
           -
-            handle: two_col_flyout
+            handle: two_col_menu
             field:
-              display: 'Two column flyout'
+              display: 'Two column menu'
               type: toggle
               instructions: 'Used only in top level nav items that have children'

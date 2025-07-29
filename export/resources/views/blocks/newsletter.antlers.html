@@ -27,7 +27,7 @@
             @submit.prevent="submit()"
             class="mx-auto max-w-md"
         >
-            <div class="flex flex-col md:flex-row gap-4">
+            <div class="flex flex-col md:flex-row gap-3">
                 <input type="text" name="fax_number" class="hidden" x-ref="honeypot" />
                 <input type="hidden" name="_token" value="{{ csrf_token }}">
                 <label for="{{ type }}-{{ count }}-email" class="sr-only">Email</label>
@@ -41,14 +41,14 @@
                     class="sm:flex-1"
                     :disabled="sending"
                 >
-                {{ partial:components/form/fields/submit class="sm:w-auto shrink-0" :label="newsletter:button_label" }}
+                {{ partial:components/ui/form/fields/submit class="sm:w-auto shrink-0" :label="newsletter:button_label" }}
             </div>
 
-            {{ partial:components/form/error handle="email" }}
+            {{ partial:components/ui/form/error handle="email" }}
         </form>
 
         <template x-if="success">
-            {{ partial:components/alert style="success" :text="newsletter:success_message" class="mx-auto max-w-md mt-10" }}
+            {{ partial:components/ui/alert style="success" :title="newsletter:success_message" class="mx-auto max-w-md mt-10" }}
         </template>
     </div>
 </div>

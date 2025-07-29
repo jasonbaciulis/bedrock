@@ -22,7 +22,7 @@
 
 <div x-cloak x-data="form({ handle: {{ form:handle | to_js }} })">
     <template x-if="success">
-        {{ partial:components/alert style="success" :text="success_message" class="mb-8" }}
+        {{ partial:components/ui/alert style="success" :text="success_message" class="mb-8" }}
     </template>
 
     {{ form:create
@@ -34,7 +34,7 @@
         js="alpine:{form:handle}"
     }}
         <input type="hidden" name="_token" value="{{ csrf_token }}">
-        {{ partial:components/form/fields/honeypot model="{form:handle}.{honeypot}" }}
+        {{ partial:components/ui/form/fields/honeypot model="{form:handle}.{honeypot}" }}
 
         <div class="space-y-12 divide-y divide-gray-300">
             {{ sections }}
@@ -54,7 +54,7 @@
                                 () => 'md:col-span-full'
                             )}}
 
-                            {{ partial:components/form/field :container_class="$field_container_class" }}
+                            {{ partial:components/ui/form/field :container_class="$field_container_class" }}
                         {{ /fields }}
                     </div>
                 </div>
@@ -62,7 +62,7 @@
         </div>
 
         <div class="pt-8">
-            {{ partial:components/form/fields/submit :label="button_label" }}
+            {{ partial:components/ui/form/fields/submit :label="button_label" }}
         </div>
     {{ /form:create }}
 </div>

@@ -43,7 +43,8 @@
 
         {{# Example of load more button when using REST API to fetch entries #}}
         {{# <div x-show="nextPage" class="text-center mt-16">
-            <button class="btn btn--secondary" @click="loadMore()" :disabled="loading">
+            <button class="btn btn--outline" @click="loadMore()" :disabled="loading">
+                {{ icon:lucide-loader-circle class="animate-spin" x-show="loading" }}
                 Load more
             </button>
         </div> #}}

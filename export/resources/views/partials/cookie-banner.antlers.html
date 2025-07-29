@@ -11,10 +11,10 @@ The cookie banner component that is in `resources/views/partials/seo.antlers.htm
 <div
     x-cloak
     x-show="!$store.cookieBanner.getConsent()"
-    x-transition:enter="ease-out duration-300"
+    x-transition:enter="ease duration-200"
     x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
     x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-    x-transition:leave="ease-in duration-200"
+    x-transition:leave="ease duration-150"
     x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
     x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
     x-data="cookieBanner({
@@ -37,8 +37,8 @@ The cookie banner component that is in `resources/views/partials/seo.antlers.htm
     })"
     class="container max-w-xl fixed inset-x-0 bottom-0 pb-6 z-50"
 >
-    <div class="p-6 bg-white rounded-xl shadow-lg ring-1 ring-gray/10">
-        <div class="text-sm/6 text-gray prose prose-p:my-0 max-w-none">
+    <div class="p-6 bg-white rounded-[0.625rem] shadow-lg border transition-all">
+        <div class="text-sm/6 prose prose-p:my-0 max-w-none">
             {{ seo:cookie:description }}
         </div>
 
@@ -68,8 +68,8 @@ The cookie banner component that is in `resources/views/partials/seo.antlers.htm
                         </template>
                     </div>
                     <div class="text-sm/6">
-                        <label :for="type.name" class="font-semibold text-gray" :class="{ 'cursor-not-allowed text-gray-500': !type.consent_api }" x-text="type.label"></label>
-                        <p :id="`${type.name}-description`" class="text-gray-500 text-pretty" x-text="type.description"></p>
+                        <label :for="type.name" class="text-neutral-900" :class="{ 'cursor-not-allowed text-muted-foreground': !type.consent_api }" x-text="type.label"></label>
+                        <p :id="`${type.name}-description`" class="text-muted-foreground text-pretty" x-text="type.description"></p>
                     </div>
                 </div>
             </template>
@@ -81,7 +81,7 @@ The cookie banner component that is in `resources/views/partials/seo.antlers.htm
                 x-show="!settingsOpen"
                 @click="$store.cookieBanner.acceptAll()"
                 type="button"
-                class="btn btn--black btn--sm flex-1 sm:flex-none"
+                class="btn btn--primary flex-1 sm:flex-none"
             >
                 {{ seo:cookie:accept_label }}
             </button>
@@ -91,7 +91,7 @@ The cookie banner component that is in `resources/views/partials/seo.antlers.htm
                 x-show="settingsOpen"
                 @click="$store.cookieBanner.saveConsent()"
                 type="button"
-                class="btn btn--black btn--sm flex-1 sm:flex-none"
+                class="btn btn--primary flex-1 sm:flex-none"
             >
                 {{ seo:cookie:accept_selected_label }}
             </button>
@@ -100,7 +100,7 @@ The cookie banner component that is in `resources/views/partials/seo.antlers.htm
             <button
                 @click="$store.cookieBanner.rejectAll()"
                 type="button"
-                class="btn btn--secondary btn--sm flex-1 sm:flex-none"
+                class="btn btn--secondary flex-1 sm:flex-none"
             >
                 {{ seo:cookie:reject_label }}
             </button>
@@ -109,7 +109,7 @@ The cookie banner component that is in `resources/views/partials/seo.antlers.htm
             <button
                 @click="settingsOpen = !settingsOpen"
                 type="button"
-                class="btn btn--secondary btn--sm flex-1 sm:flex-none"
+                class="btn btn--secondary flex-1 sm:flex-none"
             >
                 {{ seo:cookie:settings_label }}
             </button>
@@ -126,7 +126,7 @@ The cookie banner component that is in `resources/views/partials/seo.antlers.htm
             x-data
             href="#"
             @click.prevent="$store.cookieBanner.revokeConsent()"
-            class="text-xs text-gray-600 hover:text-gray"
+            class="text-xs text-muted-foreground hover:text-foreground"
         >
             {{ seo:cookie:reset_consent_label }}
         </a>

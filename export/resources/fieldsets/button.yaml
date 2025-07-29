@@ -139,8 +139,17 @@ fields:
           key: secondary
           value: Secondary
         -
-          key: text
-          value: Text
+          key: link
+          value: Link
+        -
+          key: ghost
+          value: Ghost
+        -
+          key: outline
+          value: Outline
+        -
+          key: destructive
+          value: Destructive
       type: button_group
       localizable: true
       default: primary

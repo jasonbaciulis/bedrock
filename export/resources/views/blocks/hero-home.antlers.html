@@ -2,11 +2,11 @@
     <div class="container site-grid gap-y-16 items-center">
         <div class="col-span-full md:col-span-6 max-w-lg">
             <h1 class="h1 br-hidden sm:br-visible">{{ title | nl2br }}</h1>
-            <p class="content-lg mt-8 text-pretty text-gray-600">{{ text }}</p>
-            {{ partial:components/buttons container_class="mt-10" class="btn--lg" }}
+            <p class="content-lg mt-8 text-pretty text-muted-foreground">{{ text }}</p>
+            {{ partial:components/buttons container_class="mt-10" class="btn--xl" }}
         </div>
         <div class="col-span-full md:col-span-6 aspect-4/3">
-            {{ partial:components/picture w="592" h="444" class="rounded-3xl" }}
+            {{ partial:components/ui/picture w="592" h="444" class="rounded-3xl" }}
         </div>
     </div>
 </section>

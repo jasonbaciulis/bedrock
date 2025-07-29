@@ -1,0 +1,21 @@
+<template x-if="{{ show_field }}">
+    <div class="{{ container_class }} {{ input_type === 'hidden' ?= 'hidden' }}">
+
+        {{ $fields_without_labels = ['toggle', 'radio', 'checkboxes'] }}
+        {{ unless $fields_without_labels | contains(type) || input_type === 'hidden' }}
+            {{ partial:components/ui/form/label }}
+        {{ /unless }}
+
+        <div>
+            {{ partial src="components/ui/form/fields/{type}" model="{form:handle}.{handle}" }}
+
+            {{ if field:instructions && !($fields_without_labels | contains(type)) }}
+                <p id="{{ field:handle }}-instructions" class="mt-2 text-sm text-muted-foreground">
+                    {{ field:instructions }}
+                </p>
+            {{ /if }}
+
+            {{ partial:components/ui/form/error }}
+        </div>
+    </div>
+</template>

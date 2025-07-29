@@ -4,5 +4,5 @@
 }
 
 .no-scroll {
-  @apply h-full overflow-hidden;
+  @apply h-full overflow-hidden pr-[var(--scrollbar-width)];
 }

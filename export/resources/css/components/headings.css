@@ -4,7 +4,7 @@
   .h3,
   .h4,
   .h5 {
-    @apply font-semibold tracking-tight text-gray;
+    @apply font-semibold tracking-tight text-neutral-950;
   }
 
   .h1 {
@@ -28,6 +28,6 @@
   }
 
   .h6 {
-    @apply text-lg font-semibold text-gray sm:text-xl;
+    @apply text-lg font-semibold text-neutral-950 sm:text-xl;
   }
 }

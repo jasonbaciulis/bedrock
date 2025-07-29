@@ -10,35 +10,7 @@
 */
 @theme inline {
   /* Gray */
-  --color-gray: var(--color-gray-900);
-
-  /* Primary (using sky) */
-  --color-primary-50: var(--color-sky-50);
-  --color-primary-100: var(--color-sky-100);
-  --color-primary-200: var(--color-sky-200);
-  --color-primary-300: var(--color-sky-300);
-  --color-primary-400: var(--color-sky-400);
-  --color-primary-500: var(--color-sky-500);
-  --color-primary-600: var(--color-sky-600);
-  --color-primary-700: var(--color-sky-700);
-  --color-primary-800: var(--color-sky-800);
-  --color-primary-900: var(--color-sky-900);
-  --color-primary-950: var(--color-sky-950);
-  --color-primary: var(--color-sky-400);
-
-  /* Secondary (using indigo) */
-  --color-secondary-50: var(--color-indigo-50);
-  --color-secondary-100: var(--color-indigo-100);
-  --color-secondary-200: var(--color-indigo-200);
-  --color-secondary-300: var(--color-indigo-300);
-  --color-secondary-400: var(--color-indigo-400);
-  --color-secondary-500: var(--color-indigo-500);
-  --color-secondary-600: var(--color-indigo-600);
-  --color-secondary-700: var(--color-indigo-700);
-  --color-secondary-800: var(--color-indigo-800);
-  --color-secondary-900: var(--color-indigo-900);
-  --color-secondary-950: var(--color-indigo-950);
-  --color-secondary: var(--color-indigo-500);
+  --color-gray: var(--color-neutral-900);
 
   /* Yellow (using amber) */
   --color-yellow-50: var(--color-amber-50);
@@ -59,6 +31,33 @@
 
   /* Red */
   --color-red: var(--color-red-600);
+
+  /*
+    Shadcn/ui colors
+    https://ui.shadcn.com/docs/theming#list-of-variables
+  */
+
+  --color-background: var(--color-white);
+  --color-foreground: var(--color-neutral-950);
+  --color-primary: oklch(0.205 0 0);
+  --color-primary-foreground: oklch(0.985 0 0);
+  --color-secondary: oklch(0.97 0 0);
+  --color-secondary-foreground: oklch(0.205 0 0);
+  --color-muted: oklch(0.97 0 0);
+  --color-muted-foreground: oklch(0.556 0 0);
+  --color-accent: oklch(0.97 0 0);
+  --color-accent-foreground: oklch(0.205 0 0);
+  --color-destructive: oklch(0.577 0.245 27.325);
+
+  --color-border: oklch(0.922 0 0);
+  --color-input: oklch(0.922 0 0);
+  --color-ring: oklch(0.708 0 0);
+  --color-popover: var(--color-white);
+  --color-popover-foreground: var(--color-neutral-950);
+  --color-card: var(--color-white);
+  --color-card-foreground: var(--color-neutral-950);
+  --color-selection: var(--color-neutral-950);
+  --color-selection-foreground: var(--color-white);
 }
 
 @theme {
