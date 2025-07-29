@@ -12,7 +12,4 @@ fields:
     config:
       display: Text
   -
-    handle: image
-    field: common.image
-  -
     import: buttons

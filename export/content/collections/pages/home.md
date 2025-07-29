@@ -4,14 +4,14 @@ blueprint: pages
 title: Home
 template: default
 updated_by: 6d26d0a8-ff9c-4c3e-a25e-7e036508908c
-updated_at: 1736332441
+updated_at: 1753800573
 blocks:
   -
     id: ZbruxJDq
     type: hero_home
     enabled: true
-    title: 'Statamic starter kit for developers'
-    text: 'Leap provides everything you need to jump-start your Statamic project, then gets out of your way so you can build bespoke websites.'
+    title: 'The Foundation for your Statamic projects'
+    text: 'Features shadcn/ui style Alpine.js components that you can customize, extend, and build on. Plus page builder and complete SEO setup.'
     buttons:
       -
         id: KdAsb0Ad
@@ -22,12 +22,11 @@ blocks:
         button_type: primary
       -
         id: ALbCABEq
-        label: 'Learn more'
+        label: 'View components'
         link_type: url
         target_blank: false
-        url: '#faqs'
-        button_type: secondary
-    image: images/mohammad-rahmani-8qeb0fte9vw-unsplash.jpg
+        url: '#components'
+        button_type: ghost
   -
     id: m3e8vdlz
     title: 'Project inquiry'

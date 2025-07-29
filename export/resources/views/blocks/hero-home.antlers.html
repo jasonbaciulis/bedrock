@@ -1,12 +1,7 @@
-<section class="py-20">
-    <div class="container site-grid gap-y-16 items-center">
-        <div class="col-span-full md:col-span-6 max-w-lg">
-            <h1 class="h1 br-hidden sm:br-visible">{{ title | nl2br }}</h1>
-            <p class="content-lg mt-8 text-pretty text-muted-foreground">{{ text }}</p>
-            {{ partial:components/buttons container_class="mt-10" class="btn--xl" }}
-        </div>
-        <div class="col-span-full md:col-span-6 aspect-4/3">
-            {{ partial:components/ui/picture w="592" h="444" class="rounded-3xl" }}
-        </div>
+<section class="py-8 md:py-16 lg:py-20">
+    <div class="container flex flex-col items-center gap-4 text-center xl:gap-6">
+        <h1 class="h1 text-balance">{{ title }}</h1>
+        <p class="content-lg max-w-3xl text-balance text-muted-foreground">{{ text }}</p>
+        {{ partial:components/buttons container_class="gap-x-3" class="btn--xl" }}
     </div>
 </section>
