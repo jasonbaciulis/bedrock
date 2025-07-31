@@ -32,6 +32,7 @@ CSS folder structure is based on ITCSS:
 @import './components/alert.css';
 @import './components/badge.css';
 @import './components/button.css';
+@import './components/card.css';
 @import './components/headings.css';
 @import './components/misc.css';
 @import './components/scrollbar.css';
