@@ -1,0 +1,218 @@
+name: Validate Configuration
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run validation weekly to catch dependency issues
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+jobs:
+  validate-starter-kit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: dom, curl, libxml, mbstring, zip, yaml
+
+      - name: Validate composer.json
+        run: |
+          echo "Validating composer.json..."
+          composer validate --no-check-all --strict
+          echo "✓ composer.json is valid"
+
+      - name: Validate starter-kit.yaml format
+        run: |
+          echo "Validating starter-kit.yaml format..."
+          php -r "
+          \$config = yaml_parse_file('starter-kit.yaml');
+          if (\$config === false) {
+            echo '❌ Invalid starter-kit.yaml format';
+            exit(1);
+          }
+
+          // Check required fields
+          if (!isset(\$config['export_paths']) || !is_array(\$config['export_paths'])) {
+            echo '❌ Missing or invalid export_paths in starter-kit.yaml';
+            exit(1);
+          }
+
+          if (isset(\$config['dependencies']) && !is_array(\$config['dependencies'])) {
+            echo '❌ Invalid dependencies format in starter-kit.yaml';
+            exit(1);
+          }
+
+          echo '✓ starter-kit.yaml format is valid';
+          echo 'Export paths: ' . count(\$config['export_paths']);
+          if (isset(\$config['dependencies'])) {
+            echo 'Dependencies: ' . count(\$config['dependencies']);
+          }
+          "
+
+      - name: Validate export paths exist
+        run: |
+          echo "Validating export paths..."
+          MISSING_PATHS=0
+
+          while IFS= read -r path; do
+            if [[ "$path" =~ ^[[:space:]]*-[[:space:]]*(.+)$ ]]; then
+              export_path="${BASH_REMATCH[1]}"
+              if [ ! -e "export/$export_path" ]; then
+                echo "❌ Export path missing: export/$export_path"
+                MISSING_PATHS=$((MISSING_PATHS + 1))
+              else
+                echo "✓ Export path exists: export/$export_path"
+              fi
+            fi
+          done < <(grep "^  - " starter-kit.yaml)
+
+          if [ $MISSING_PATHS -gt 0 ]; then
+            echo ""
+            echo "❌ Found $MISSING_PATHS missing export paths"
+            exit 1
+          fi
+
+          echo ""
+          echo "✓ All export paths exist"
+
+      - name: Validate PHP files syntax
+        run: |
+          echo "Validating PHP file syntax..."
+
+          # Check main post-install script
+          php -l StarterKitPostInstall.php
+          echo "✓ StarterKitPostInstall.php syntax is valid"
+
+          # Check all PHP files in export directory
+          find export -name "*.php" -type f | while read -r php_file; do
+            if php -l "$php_file" >/dev/null 2>&1; then
+              echo "✓ $php_file syntax is valid"
+            else
+              echo "❌ $php_file has syntax errors"
+              php -l "$php_file"
+              exit 1
+            fi
+          done
+
+      - name: Check for common issues
+        run: |
+          echo "Checking for common issues..."
+
+          # Check for .env.example in export
+          if [ ! -f "export/.env.example" ]; then
+            echo "⚠️  Warning: No .env.example found in export directory"
+          else
+            echo "✓ .env.example exists"
+          fi
+
+          # Check for package.json
+          if [ ! -f "export/package.json" ]; then
+            echo "⚠️  Warning: No package.json found in export directory"
+          else
+            echo "✓ package.json exists"
+
+            # Validate package.json
+            cd export
+            npm install --dry-run >/dev/null 2>&1 && echo "✓ package.json dependencies are resolvable" || echo "⚠️  Warning: Some package.json dependencies may have issues"
+            cd ..
+          fi
+
+          # Check for vite.config.js
+          if [ ! -f "export/vite.config.js" ]; then
+            echo "⚠️  Warning: No vite.config.js found in export directory"
+          else
+            echo "✓ vite.config.js exists"
+          fi
+
+          # Check directory structure
+          REQUIRED_DIRS=("resources/views" "resources/css" "resources/js" "content" "config")
+          for dir in "${REQUIRED_DIRS[@]}"; do
+            if [ -d "export/$dir" ]; then
+              echo "✓ Required directory exists: $dir"
+            else
+              echo "⚠️  Warning: Recommended directory missing: $dir"
+            fi
+          done
+
+  validate-dependencies:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: dom, curl, libxml, mbstring, zip, yaml
+
+      - name: Check dependency availability
+        run: |
+          echo "Checking dependency availability..."
+
+          # Extract dependencies from starter-kit.yaml
+          php -r "
+          \$config = yaml_parse_file('starter-kit.yaml');
+          if (isset(\$config['dependencies']) && is_array(\$config['dependencies'])) {
+            foreach (\$config['dependencies'] as \$package => \$version) {
+              echo \$package . ':' . \$version . PHP_EOL;
+            }
+          }
+          " > dependencies.txt
+
+          if [ -s dependencies.txt ]; then
+            echo "Found dependencies to validate:"
+            cat dependencies.txt
+
+            # Create a temporary composer.json to test dependencies
+            cat > temp-composer.json << 'EOF'
+          {
+            "require": {
+            }
+          }
+          EOF
+
+            # Add each dependency and test if it's resolvable
+            while IFS=':' read -r package version; do
+              if [ -n "$package" ] && [ -n "$version" ]; then
+                echo "Testing dependency: $package:$version"
+
+                # Create test composer.json with this dependency
+                php -r "
+                \$composer = json_decode(file_get_contents('temp-composer.json'), true);
+                \$composer['require']['$package'] = '$version';
+                file_put_contents('temp-composer.json', json_encode(\$composer, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+                "
+
+                # Test if composer can resolve it
+                if composer validate temp-composer.json --no-check-all >/dev/null 2>&1; then
+                  echo "✓ $package:$version is valid"
+                else
+                  echo "❌ $package:$version validation failed"
+                fi
+              fi
+            done < dependencies.txt
+
+            # Clean up
+            rm -f temp-composer.json dependencies.txt
+          else
+            echo "No dependencies defined in starter-kit.yaml"
+          fi
+
+      - name: Summary
+        run: |
+          echo ""
+          echo "🎉 Validation completed!"
+          echo ""
+          echo "Your starter kit is ready for:"
+          echo "  statamic new my-site jasonbaciulis/bedrock"

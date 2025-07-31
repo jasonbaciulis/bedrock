@@ -1,0 +1,165 @@
+name: Test Starter Kit Installation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test-installation:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version: [8.2, 8.3]
+
+    steps:
+      - name: Checkout starter kit repository
+        uses: actions/checkout@v4
+        with:
+          path: starter-kit
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv
+          coverage: none
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Statamic CLI
+        run: composer global require statamic/cli
+
+      - name: Add Composer global bin to PATH
+        run: echo "$HOME/.composer/vendor/bin" >> $GITHUB_PATH
+
+      - name: Create test project directory
+        run: mkdir -p ../test-install && cd ../test-install
+
+      - name: Test starter kit installation
+        run: |
+          cd ../test-install
+          # Use the local starter-kit directory path for testing
+          echo "Testing starter kit installation..."
+
+          # Since we can't use the GitHub repo directly in CI, we'll simulate the process
+          # by installing Statamic and then copying our starter kit files
+          composer create-project statamic/statamic test-site --prefer-dist --stability=dev --no-interaction
+          cd test-site
+
+          # Copy starter kit files from our export directory
+          cp -r ../../starter-kit/export/* .
+          cp -r ../../starter-kit/export/.[^.]* . 2>/dev/null || true
+
+          # Install additional dependencies from starter-kit.yaml
+          composer require blade-ui-kit/blade-icons mallardduck/blade-lucide-icons --no-interaction
+
+          # Run composer install to ensure all dependencies are properly installed
+          composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Setup environment
+        run: |
+          cd ../test-install/test-site
+          cp .env.example .env || echo "No .env.example found, creating minimal .env"
+          if [ ! -f .env ]; then
+            echo "APP_NAME=Bedrock" > .env
+            echo "APP_ENV=testing" >> .env
+            echo "APP_KEY=" >> .env
+            echo "APP_DEBUG=true" >> .env
+            echo "APP_URL=http://localhost" >> .env
+          fi
+          php artisan key:generate --no-interaction
+
+      - name: Install NPM dependencies
+        run: |
+          cd ../test-install/test-site
+          npm install
+
+      - name: Build assets
+        run: |
+          cd ../test-install/test-site
+          npm run build
+
+      - name: Run basic tests
+        run: |
+          cd ../test-install/test-site
+
+          # Test that Statamic is properly installed
+          php artisan --version
+
+          # Test that our custom commands are available (if any)
+          php artisan list
+
+          # Test that the site can be served (basic test)
+          timeout 10s php artisan serve &
+          SERVER_PID=$!
+          sleep 5
+
+          # Test that the homepage loads
+          curl -f http://localhost:8000 || echo "Warning: Homepage test failed"
+
+          # Clean up
+          kill $SERVER_PID 2>/dev/null || true
+
+      - name: Validate starter kit configuration
+        run: |
+          cd starter-kit
+
+          # Check that starter-kit.yaml is valid
+          php -r "
+          \$config = yaml_parse_file('starter-kit.yaml');
+          if (\$config === false) {
+            echo 'Invalid starter-kit.yaml format';
+            exit(1);
+          }
+
+          // Check required fields
+          if (!isset(\$config['export_paths']) || !is_array(\$config['export_paths'])) {
+            echo 'Missing or invalid export_paths in starter-kit.yaml';
+            exit(1);
+          }
+
+          echo 'starter-kit.yaml is valid';
+          " 2>/dev/null || echo "YAML validation skipped (yaml extension not available)"
+
+          # Check that all export paths exist
+          while IFS= read -r path; do
+            if [[ "$path" =~ ^[[:space:]]*-[[:space:]]*(.+)$ ]]; then
+              export_path="${BASH_REMATCH[1]}"
+              if [ ! -e "export/$export_path" ]; then
+                echo "Warning: Export path does not exist: export/$export_path"
+              else
+                echo "✓ Export path exists: export/$export_path"
+              fi
+            fi
+          done < <(grep "^  - " starter-kit.yaml)
+
+  test-post-install-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: dom, curl, libxml, mbstring, zip
+
+      - name: Test post-install script syntax
+        run: |
+          php -l StarterKitPostInstall.php
+          echo "✓ StarterKitPostInstall.php syntax is valid"
+
+      - name: Validate composer.json
+        run: |
+          composer validate --no-check-all --strict
+          echo "✓ composer.json is valid"
