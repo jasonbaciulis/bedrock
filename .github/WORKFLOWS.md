@@ -4,24 +4,7 @@ This repository includes comprehensive GitHub Actions workflows to ensure the Be
 
 ## Workflows Overview
 
-### 1. Validate Configuration (`validate.yml`)
-
-**Triggers:**
-- Push to `main` branch
-- Pull requests to `main` branch
-- Weekly schedule (Sundays at midnight)
-- Manual workflow dispatch
-
-**Purpose:** Validates starter kit configuration and dependencies.
-
-**What it validates:**
-- `starter-kit.yaml` format and content
-- All export paths exist in the repository
-- PHP file syntax validation
-- Dependency availability checks
-- Common configuration issues
-
-### 2. Test Live Installation (`test-live-installation.yml`)
+### 1. Test Live Installation (`test-live-installation.yml`)
 
 **Triggers:**
 - New releases are published
