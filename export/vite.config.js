@@ -14,7 +14,7 @@ export default defineConfig(({ command, mode }) => {
           'resources/js/site.js',
           'resources/js/embla.js',
           'resources/js/form.js',
-          'resources/js/cookieBanner.js',
+          'resources/js/cookieDialog.js',
           'resources/js/newsletter.js',
           'resources/js/fetchEntries.js',
           'resources/js/combobox.js',
