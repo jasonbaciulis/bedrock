@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="46" height="40"><svg width="46" height="40" viewBox="0 0 46 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M3 28C16.3333 6.66667 29.6667 6.66667 43 28" stroke="#38BDF8" stroke-width="5" stroke-linecap="round"></path>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="26"><svg width="64" height="26" viewBox="0 0 64 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="8" width="48" height="6" rx="3" fill="#0a0a0a"></rect>
+<rect y="14" width="64" height="12" rx="6" fill="#0a0a0a"></rect>
 </svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
-@media (prefers-color-scheme: dark) { :root { filter: none; } }
+@media (prefers-color-scheme: dark) { :root { filter: invert(100%); } }
 </style></svg>

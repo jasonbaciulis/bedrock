@@ -1,4 +1,4 @@
-# [Leap demo](https://leap.remarkable.dev)
+# [Bedrock demo](https://bedrock.remarkable.dev)
 
 ## Requirements
 
@@ -27,8 +27,7 @@ resources/views/
 ├── blocks/                      # Page building blocks (Replicator fields)
 ├── components/                  # Project specific reusable components
 │   └── ui/                      # Highly-reusable shadcn/ui style Alpine.js components
-│       └── form/                # Form-specific components
-│           └── fields/          # Individual form field types (custom Statamic form fields will require a snake_case view here)
+│       └── fields/              # Form field types (custom Statamic form fields will require a snake_case view file here)
 ├── partials/                    # Template partials and fragments (things that aren't really reusable go here)
 │   └── alpine/                  # Alpine.js specific partials (e.g. if using Statamic REST API to load more entries)
 ├── posts/                       # Posts collection templates

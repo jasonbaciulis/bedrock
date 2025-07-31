@@ -1,6 +1,6 @@
 {
-  "name": "Leap - Statamic starter kit",
-  "short_name": "Leap",
+  "name": "Bedrock Statamic starter-kit",
+  "short_name": "Bedrock",
   "icons": [
     {
       "src": "/favicon/web-app-manifest-192x192.png",

@@ -36,12 +36,12 @@ data:
         link_type: url
         target_blank: false
         entry: null
-        url: 'https://statamic.com/starter-kits/jasonbaciulis/leap'
+        url: 'https://statamic.com/starter-kits/jasonbaciulis/bedrock'
         email: null
         phone: null
         asset: null
         code: null
         button_type: primary
       label: 'Get started'
-  about: 'Leap provides everything you need to jump-start your Statamic project, then gets out of your way so you can build bespoke websites.'
-  copyright_text: 'Leap. All rights reserved.'
+  about: 'Features shadcn/ui style Alpine.js components that you can customize, extend, and build on. Plus page builder and complete SEO setup.'
+  copyright_text: 'Bedrock. All rights reserved.'
