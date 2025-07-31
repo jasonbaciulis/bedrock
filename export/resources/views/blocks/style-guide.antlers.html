@@ -253,7 +253,7 @@
                                 </div>
                                 <div>
                                     <label for="link" class="sr-only">Link</label>
-                                    <input type="text" id="link" class="input" readonly value="https://leap.remarkable.dev" />
+                                    <input type="text" id="link" class="input" readonly value="https://bedrock.remarkable.dev" />
                                 </div>
                                 <div>
                                     <button class="btn btn--secondary" @click="close()">Close</button>
@@ -302,9 +302,11 @@
                         {{ slot:tabs-panels }}
                             {{ loop times="3" }}
                                 {{ partial:components/ui/tabs-panel class="flex-1 outline-none" }}
-                                    <div class="bg-card text-card-foreground rounded-xl border p-6 shadow-sm">
+                                    <div class="card">
                                         <p>The content shown for Tab {{ count }}</p>
-                                        <a href="#" class="btn btn--outline mt-6">Call to action</a>
+                                        <div>
+                                            <a href="#" class="btn btn--outline">Call to action</a>
+                                        </div>
                                     </div>
                                 {{ /partial:components/ui/tabs-panel }}
                             {{ /loop }}
@@ -324,7 +326,7 @@
                                 {{ loop times="5" }}
                                     {{ partial:components/ui/carousel-slide }}
                                         <div class="p-1">
-                                            <div class="bg-card text-card-foreground rounded-xl border shadow-sm flex aspect-square items-center justify-center p-6">
+                                            <div class="card aspect-square items-center justify-center">
                                                 <span class="text-4xl font-semibold">{{ count }}</span>
                                             </div>
                                         </div>

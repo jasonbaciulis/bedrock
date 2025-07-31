@@ -41,10 +41,10 @@
                     class="sm:flex-1"
                     :disabled="sending"
                 >
-                {{ partial:components/ui/form/fields/submit class="sm:w-auto shrink-0" :label="newsletter:button_label" }}
+                {{ partial:components/ui/form/submit class="sm:w-auto shrink-0" :label="newsletter:button_label" }}
             </div>
 
-            {{ partial:components/ui/form/error handle="email" }}
+            {{ partial:components/ui/input-error handle="email" }}
         </form>
 
         <template x-if="success">

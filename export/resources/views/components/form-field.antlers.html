@@ -3,11 +3,11 @@
 
         {{ $fields_without_labels = ['toggle', 'radio', 'checkboxes'] }}
         {{ unless $fields_without_labels | contains(type) || input_type === 'hidden' }}
-            {{ partial:components/ui/form/label }}
+            {{ partial:components/ui/label }}
         {{ /unless }}
 
         <div>
-            {{ partial src="components/ui/form/fields/{type}" model="{form:handle}.{handle}" }}
+            {{ partial src="components/ui/form/{type}" model="{form:handle}.{handle}" }}
 
             {{ if field:instructions && !($fields_without_labels | contains(type)) }}
                 <p id="{{ field:handle }}-instructions" class="mt-2 text-sm text-muted-foreground">
@@ -15,7 +15,7 @@
                 </p>
             {{ /if }}
 
-            {{ partial:components/ui/form/error }}
+            {{ partial:components/ui/input-error }}
         </div>
     </div>
 </template>
