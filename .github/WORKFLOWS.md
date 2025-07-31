@@ -32,7 +32,6 @@ This repository includes comprehensive GitHub Actions workflows to ensure the Be
 **Purpose:** Validates starter kit configuration and dependencies.
 
 **What it validates:**
-- `composer.json` structure and syntax
 - `starter-kit.yaml` format and content
 - All export paths exist in the repository
 - PHP file syntax validation

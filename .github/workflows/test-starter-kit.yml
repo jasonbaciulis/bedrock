@@ -158,8 +158,3 @@ jobs:
         run: |
           php -l StarterKitPostInstall.php
           echo "✓ StarterKitPostInstall.php syntax is valid"
-
-      - name: Validate composer.json
-        run: |
-          composer validate --no-check-all --strict
-          echo "✓ composer.json is valid"

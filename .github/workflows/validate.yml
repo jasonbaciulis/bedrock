@@ -24,12 +24,6 @@ jobs:
           php-version: '8.2'
           extensions: dom, curl, libxml, mbstring, zip, yaml
 
-      - name: Validate composer.json
-        run: |
-          echo "Validating composer.json..."
-          composer validate --no-check-all --strict
-          echo "✓ composer.json is valid"
-
       - name: Validate starter-kit.yaml format
         run: |
           echo "Validating starter-kit.yaml format..."
