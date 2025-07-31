@@ -1,7 +1,7 @@
 document.addEventListener('alpine:init', () => {
-  const storageKey = appName.toLowerCase().replaceAll(' ', '_') + '_cookie_banner'
+  const storageKey = appName.toLowerCase().replaceAll(' ', '_') + '_cookie_dialog'
 
-  Alpine.store('cookieBanner', {
+  Alpine.store('cookieDialog', {
     data: Alpine.$persist(null).as(storageKey),
 
     setData(consentData) {
@@ -61,35 +61,35 @@ document.addEventListener('alpine:init', () => {
     },
   })
 
-  Alpine.data('cookieBanner', settings => {
+  Alpine.data('cookieDialog', settings => {
     return {
       consentData: settings.consentData,
       consentRevokeBefore: settings.consentRevokeBefore,
-      data: Alpine.store('cookieBanner').data,
+      data: Alpine.store('cookieDialog').data,
       settingsOpen: false,
 
       init() {
         if (this.data === null) {
-          Alpine.store('cookieBanner').setData(this.consentData)
-          this.data = Alpine.store('cookieBanner').data
+          Alpine.store('cookieDialog').setData(this.consentData)
+          this.data = Alpine.store('cookieDialog').data
         }
 
-        if (Alpine.store('cookieBanner').getConsentDate() < this.consentRevokeBefore) {
-          Alpine.store('cookieBanner').invalidate(this.consentData)
+        if (Alpine.store('cookieDialog').getConsentDate() < this.consentRevokeBefore) {
+          Alpine.store('cookieDialog').invalidate(this.consentData)
         }
 
         if (
-          Alpine.store('cookieBanner').useConsentAPI() &&
-          Alpine.store('cookieBanner').getConsent()
+          Alpine.store('cookieDialog').useConsentAPI() &&
+          Alpine.store('cookieDialog').getConsent()
         ) {
-          gtag('consent', 'update', Alpine.store('cookieBanner').getConsentAPIValues())
+          gtag('consent', 'update', Alpine.store('cookieDialog').getConsentAPIValues())
         }
 
-        if (Alpine.store('cookieBanner').useConsentAPI()) {
+        if (Alpine.store('cookieDialog').useConsentAPI()) {
           this.$watch(
             'data.consent',
             value =>
-              value && gtag('consent', 'update', Alpine.store('cookieBanner').getConsentAPIValues())
+              value && gtag('consent', 'update', Alpine.store('cookieDialog').getConsentAPIValues())
           )
         }
       },

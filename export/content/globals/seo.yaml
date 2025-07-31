@@ -16,8 +16,9 @@ data:
   use_cloudflare_web_analytics: false
   tracker_type: gtm
   google_tag_manager: G-90000000
-  use_cookie_banner: true
+  use_cookie_dialog: true
   cookie:
+    title: 'Cookie Settings'
     description:
       -
         type: paragraph

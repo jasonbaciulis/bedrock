@@ -176,7 +176,7 @@
         <script async src="https://www.googletagmanager.com/gtag/js?id={{ seo:google_analytics }}"></script>
         <script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('set', new Date());gtag('config', '{{ seo:google_analytics }}' {{ if seo:anonymize_ip }}, {'anonymize_ip': true}{{ /if }});</script>
     {{ /if }}
-    {{ if seo:use_cookie_banner }}
+    {{ if seo:use_cookie_dialog }}
         <script>
             gtag('consent', 'default', {
                 'analytics_storage': 'denied',
@@ -193,8 +193,8 @@
         {{ if seo:tracker_type == 'gtm' }}
             <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ seo:google_tag_manager }}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         {{ /if }}
-        {{ if seo:use_cookie_banner }}
-            {{ partial:partials/cookie-banner }}
+        {{ if seo:use_cookie_dialog }}
+            {{ partial:partials/cookie-dialog }}
         {{ /if }}
     {{ /section:seo_body }}
 

@@ -442,7 +442,7 @@ tabs:
               if:
                 use_cloudflare_web_analytics: 'equals true'
       -
-        display: 'Cookie banner'
+        display: 'Cookie dialog'
         instructions: 'Configure Google trackers and scripts and optionally inject them after consent.'
         fields:
           -
@@ -493,13 +493,13 @@ tabs:
               if:
                 tracker_type: 'equals gtm'
           -
-            handle: use_cookie_banner
+            handle: use_cookie_dialog
             field:
               type: toggle
-              instructions: 'Enable the cookie banner. Make sure you load all tracking scripts via GTM. Uses the consent api: https://developers.google.com/tag-manager/consent'
+              instructions: 'Enable the cookie consent dialog. Make sure you load all tracking scripts via GTM. Uses the consent api: https://developers.google.com/tag-manager/consent'
               instructions_position: below
               listable: false
-              display: 'Cookie banner'
+              display: 'Cookie consent'
               width: 50
               if:
                 tracker_type: 'not none'
@@ -507,9 +507,9 @@ tabs:
             handle: cookie
             field:
               type: group
-              display: 'Cookie banner'
+              display: 'Cookie dialog'
               if:
-                use_cookie_banner: 'equals true'
+                use_cookie_dialog: 'equals true'
                 tracker_type: 'not none'
               fields:
                 -
@@ -522,6 +522,12 @@ tabs:
                     instructions_position: below
                     type: date
                     width: 75
+                -
+                  handle: title
+                  field:
+                    display: Title
+                    type: text
+                    always_save: false
                 -
                   handle: description
                   field: common.text_basic
