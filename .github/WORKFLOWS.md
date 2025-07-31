@@ -4,24 +4,7 @@ This repository includes comprehensive GitHub Actions workflows to ensure the Be
 
 ## Workflows Overview
 
-### 1. Test Starter Kit Installation (`test-starter-kit.yml`)
-
-**Triggers:**
-- Push to `main` branch
-- Pull requests to `main` branch
-- Manual workflow dispatch
-
-**Purpose:** Tests the starter kit installation process and validates configuration.
-
-**What it tests:**
-- Simulates `statamic new` installation process
-- Tests PHP 8.2 and 8.3 compatibility
-- Validates asset compilation (npm run build)
-- Checks PHP syntax in all files
-- Validates `starter-kit.yaml` configuration
-- Ensures all export paths exist
-
-### 2. Validate Configuration (`validate.yml`)
+### 1. Validate Configuration (`validate.yml`)
 
 **Triggers:**
 - Push to `main` branch
@@ -38,7 +21,7 @@ This repository includes comprehensive GitHub Actions workflows to ensure the Be
 - Dependency availability checks
 - Common configuration issues
 
-### 3. Test Live Installation (`test-live-installation.yml`)
+### 2. Test Live Installation (`test-live-installation.yml`)
 
 **Triggers:**
 - New releases are published
@@ -73,13 +56,6 @@ You can manually trigger any workflow using GitHub's workflow dispatch feature:
 4. Fill in any required parameters
 
 ## Monitoring
-
-### Status Badges
-
-Status badges showing the current state of key workflows:
-
-- ![Test Starter Kit](https://github.com/jasonbaciulis/bedrock/actions/workflows/test-starter-kit.yml/badge.svg)
-- ![Validate Configuration](https://github.com/jasonbaciulis/bedrock/actions/workflows/validate.yml/badge.svg)
 
 ### Notifications
 
