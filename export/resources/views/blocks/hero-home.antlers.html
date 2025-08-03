@@ -12,8 +12,8 @@
         {{ partial:components/buttons container_class="gap-x-3" class="btn--xl" }}
     </div>
 
-    <div id="components" class="container max-w-screen-2xl site-grid pt-16 md:pt-24 lg:pt-32 items-start">
-        <div class="col-span-full lg:col-span-6 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+    <div id="components" class="container max-w-screen-2xl site-grid pt-16 md:pt-24 lg:pt-32 gap-6 xl:gap-8 items-start">
+        <div class="col-span-full xl:col-span-6 grid grid-cols-1 md:grid-cols-2 gap-6 xl:gap-8">
             <div class="space-y-6 lg:space-y-8">
                 {{# Contact Form #}}
                 <div class="col-span-full md:col-span-6 lg:col-span-3">
@@ -107,7 +107,7 @@
                                     {{ loop times="5" }}
                                         {{ partial:components/ui/carousel-slide }}
                                             <div class="p-1">
-                                                <div class="card aspect-square items-center justify-center">
+                                                <div class="card aspect-square lg:aspect-3/2 xl:aspect-square items-center justify-center">
                                                     <span class="text-4xl font-semibold">{{ count }}</span>
                                                 </div>
                                             </div>
@@ -179,9 +179,9 @@
             </div>
         </div>
 
-        <div class="col-span-full md:col-span-6 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        <div class="col-span-full xl:col-span-6 grid grid-cols-1 md:grid-cols-2 gap-6 xl:gap-8">
             {{# Tabs #}}
-            <div class="col-span-full md:col-span-6">
+            <div class="xl:col-span-full">
                 {{ $services_tabs = [
                     [
                         'title' => 'AI agents',
@@ -207,7 +207,7 @@
 
                 {{ partial:components/ui/tabs }}
                     {{ slot:tabs-list }}
-                        {{ partial:components/ui/tabs-list }}
+                        {{ partial:components/ui/tabs-list class="bg-muted text-muted-foreground flex min-h-9 w-fit items-center justify-center rounded-lg p-[3px] outline-none flex-wrap" }}
                             {{ $services_tabs }}
                                 {{ partial:components/ui/tabs-trigger }}
                                     {{ slot:attributes }}
@@ -241,7 +241,7 @@
             </div>
 
             {{# Interactive Components and FAQs #}}
-            <div class="col-span-full md:col-span-6 space-y-6 lg:space-y-8">
+            <div class="xl:col-span-full space-y-6 lg:space-y-8">
                 {{# Collapsible FAQ #}}
                 <div class="card shadow-none">
                     <div class="card__header">
@@ -361,7 +361,7 @@
                     <nav class="flex justify-center items-center gap-1">
                         <button class="btn btn--ghost shrink-0">
                             {{ icon:lucide-chevron-left class="size-4" }}
-                            <span class="sr-only md:not-sr-only">Previous</span>
+                            <span class="sr-only lg:not-sr-only">Previous</span>
                         </button>
 
                         <div class="flex gap-1">
@@ -375,7 +375,7 @@
                         </div>
 
                         <button class="btn btn--ghost shrink-0">
-                            <span class="sr-only md:not-sr-only">Next</span>
+                            <span class="sr-only lg:not-sr-only">Next</span>
                             {{ icon:lucide-chevron-right class="size-4" }}
                         </button>
                     </nav>
