@@ -46,8 +46,8 @@ jobs:
           # Test the actual installation command that users will run
           echo "Testing: statamic new bedrock-test jasonbaciulis/bedrock"
 
-          # Use --accept-defaults to avoid CLI prompts
-          statamic new bedrock-test jasonbaciulis/bedrock --accept-defaults
+          # Use --no-interaction to avoid CLI prompts
+          statamic new bedrock-test jasonbaciulis/bedrock --no-interaction
 
           echo "✓ Starter kit installation completed"
 
