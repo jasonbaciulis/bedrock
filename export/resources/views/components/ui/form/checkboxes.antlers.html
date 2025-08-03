@@ -2,7 +2,7 @@
     :aria-invalid="hasError('{{ handle }}')"
     {{ instructions ?= 'aria-describedby="{handle}-instructions"' }}
 >
-    <legend class="block text-base font-medium text-foreground select-none">{{ display }}</legend>
+    <legend class="block font-medium text-foreground select-none text-sm">{{ display }}</legend>
 
     {{ if field:instructions }}
         <p id="{{ field:handle }}-instructions" class="text-sm text-muted-foreground">
@@ -10,7 +10,7 @@
         </p>
     {{ /if }}
 
-    <div class="mt-4 space-y-4">
+    <div class="mt-3 space-y-4">
         {{ foreach:options as="value|label" }}
             <div class="flex items-center gap-3">
                 <input
@@ -21,7 +21,7 @@
                     value="{{ value }}"
                     @change="forgetError('{{ handle }}')"
                 >
-                <label for="{{ value }}" class="text-foreground">
+                <label for="{{ value }}" class="text-foreground font-normal">
                     {{ label }}
                 </label>
             </div>
