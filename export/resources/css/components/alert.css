@@ -11,21 +11,21 @@
     @apply size-4 shrink-0 translate-y-0.5;
   }
 
-  .alert--success {
-    /* .alert__content {} */
+  /* .alert--success {
+    .alert__content {}
 
     .alert__icon {
       @apply text-green-400;
     }
-  }
+  } */
 
-  .alert--warning {
-    /* .alert__content {} */
+  /* .alert--warning {
+    .alert__content {}
 
     .alert__icon {
       @apply text-yellow-400;
     }
-  }
+  } */
 
   .alert--error {
     .alert__content {
