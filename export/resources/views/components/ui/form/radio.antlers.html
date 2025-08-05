@@ -19,6 +19,7 @@
                     type="radio"
                     name="{{ handle }}"
                     value="{{ value }}"
+                    :aria-invalid="hasError('{{ handle }}')"
                     @change="forgetError('{{ handle }}')"
                 >
                 <label for="{{ value }}" class="font-normal">

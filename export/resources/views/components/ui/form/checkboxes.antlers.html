@@ -19,6 +19,7 @@
                     type="checkbox"
                     name="{{ handle }}[]"
                     value="{{ value }}"
+                    :aria-invalid="hasError('{{ handle }}')"
                     @change="forgetError('{{ handle }}')"
                 >
                 <label for="{{ value }}" class="text-foreground font-normal">
