@@ -1,0 +1,14 @@
+<input
+    x-model="{{ model }}"
+    id="{{ handle }}"
+    name="{{ handle }}{{ if max_files !== 1 }}[]{{ /if }}"
+    type="file"
+    {{ max_files !== 1 ?= 'multiple' }}
+    :aria-invalid="hasError('{{ handle }}')"
+    {{ if instructions }}
+        :aria-describedby="hasError('{{ handle }}') ? '{{ handle }}-error' : '{{ handle }}-instructions'"
+    {{ else }}
+        :aria-describedby="hasError('{{ handle }}') ? '{{ handle }}-error' : undefined"
+    {{ /if }}
+    @change="forgetError('{{ handle }}')"
+/>
