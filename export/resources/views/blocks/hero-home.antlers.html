@@ -24,16 +24,16 @@
                         </div>
                         <div class="flex flex-col gap-4 flex-1">
                             <div class="grid gap-3">
-                                {{ partial:components/ui/label handle="contact_name" display="Name" }}
-                                {{ partial:components/ui/form/text handle="contact_name" placeholder="Your full name" }}
+                                {{ partial:components/ui/label id="contact_name" display="Name" }}
+                                {{ partial:components/ui/form/text handle="contact_name" id="contact_name" placeholder="Your full name" }}
                             </div>
                             <div class="grid gap-3">
-                                {{ partial:components/ui/label handle="contact_email" display="Email" }}
-                                {{ partial:components/ui/form/text handle="contact_email" placeholder="your@email.com" }}
+                                {{ partial:components/ui/label id="contact_email" display="Email" }}
+                                {{ partial:components/ui/form/text handle="contact_email" id="contact_email" autocomplete="email" placeholder="your@email.com" }}
                             </div>
                             <div class="grid gap-3">
-                                {{ partial:components/ui/label handle="contact_message" display="Message" }}
-                                {{ partial:components/ui/form/textarea handle="contact_message" class="min-h-24" placeholder="Tell us about your project…" }}
+                                {{ partial:components/ui/label id="contact_message" display="Message" }}
+                                {{ partial:components/ui/form/textarea handle="contact_message" id="contact_message" class="min-h-24" placeholder="Tell us about your project…" }}
                             </div>
                             <div class="flex justify-end">
                                 <button class="btn btn--primary">Submit</button>
@@ -59,17 +59,17 @@
                         </div>
                         <div class="flex flex-col gap-4 flex-1">
                             <div class="grid gap-3">
-                                {{ partial:components/ui/label handle="newsletter_email" display="Email Address" }}
-                                {{ partial:components/ui/form/text model="email" handle="newsletter_email" placeholder="your@email.com" }}
+                                {{ partial:components/ui/label id="newsletter_email" display="Email Address" }}
+                                {{ partial:components/ui/form/text model="email" handle="email" id="newsletter_email" autocomplete="email" placeholder="your@email.com" }}
                             </div>
                             <div class="grid gap-3">
-                                {{ partial:components/ui/label handle="frequency" display="Frequency" }}
+                                {{ partial:components/ui/label id="frequency" display="Frequency" }}
                                 {{ $frequency_options = [
                                     'daily' => 'Daily updates',
                                     'weekly' => 'Weekly digest',
                                     'monthly' => 'Monthly newsletter'
                                 ] }}
-                                {{ partial:components/ui/form/select model="frequency" handle="frequency" :options="$frequency_options" }}
+                                {{ partial:components/ui/form/select model="frequency" handle="frequency" id="frequency" :options="$frequency_options" }}
                             </div>
                             <div class="grid gap-3">
                                 {{ $topics_options = [
@@ -77,7 +77,7 @@
                                     'development' => 'Development news',
                                     'marketing' => 'Marketing insights'
                                 ] }}
-                                {{ partial:components/ui/form/checkboxes model="topics" handle="topics" display="Topics" :options="$topics_options" }}
+                                {{ partial:components/ui/form/checkboxes model="topics" handle="topics" id="topics" display="Topics" :options="$topics_options" }}
                             </div>
                             <div class="flex justify-end">
                                 <button class="btn btn--primary">Subscribe</button>
@@ -144,10 +144,10 @@
                                         'dark' => 'Dark mode',
                                         'system' => 'System default'
                                     ] }}
-                                    {{ partial:components/ui/form/radio handle="theme" model="theme" display="Theme" :options="$theme_options" }}
+                                    {{ partial:components/ui/form/radio id="theme" handle="theme" model="theme" display="Theme" :options="$theme_options" }}
                                 </div>
                                 <div class="grid gap-3">
-                                    {{ partial:components/ui/label handle="language" display="Language" }}
+                                    {{ partial:components/ui/label id="language" display="Language" }}
                                     {{ $language_options = [
                                         'en' => 'English',
                                         'es' => 'Spanish',
@@ -161,10 +161,10 @@
                                         'ko' => 'Korean',
                                         'ar' => 'Arabic',
                                     ] }}
-                                    {{ partial:components/ui/form/combobox handle="language" model="language" :options="$language_options" placeholder="Select language…" }}
+                                    {{ partial:components/ui/form/combobox id="language" handle="language" model="language" :options="$language_options" placeholder="Select language…" }}
                                 </div>
                                 <div class="grid gap-3">
-                                    {{ partial:components/ui/form/toggle model="notifications" handle="notifications" inline_label="Notifications" }}
+                                    {{ partial:components/ui/form/toggle model="notifications" handle="notifications" id="notifications" inline_label="Notifications" }}
                                 </div>
                             </div>
                             <button class="btn btn--outline w-full">Save preferences</button>
