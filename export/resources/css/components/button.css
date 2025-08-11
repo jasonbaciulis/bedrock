@@ -37,6 +37,11 @@
 
   .btn--sm {
     @apply h-8 gap-1.5 px-3 has-[>svg]:px-2.5;
+
+    &.btn--round,
+    &.btn--square {
+      @apply w-8;
+    }
   }
 
   .btn--lg {
