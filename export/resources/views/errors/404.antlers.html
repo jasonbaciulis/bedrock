@@ -1,8 +1,3 @@
-{{# Redirect if current_url is in the Redirects global. #}}
-{{ redirects:redirects | where('url_old', {current_uri}) }}
-    {{ redirect to="{entry:url}" response="{response}" }}
-{{ /redirects:redirects }}
-
 <main id="content">
     <section class="m-section">
         <div class="container site-grid">
