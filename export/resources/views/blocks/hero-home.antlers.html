@@ -23,15 +23,15 @@
                             <p class="text-muted-foreground text-sm">Get in touch and we'll respond within 24 hours.</p>
                         </div>
                         <div class="flex flex-col gap-4 flex-1">
-                            <div>
+                            <div class="grid gap-3">
                                 {{ partial:components/ui/label handle="contact_name" display="Name" }}
                                 {{ partial:components/ui/form/text handle="contact_name" placeholder="Your full name" }}
                             </div>
-                            <div>
+                            <div class="grid gap-3">
                                 {{ partial:components/ui/label handle="contact_email" display="Email" }}
                                 {{ partial:components/ui/form/text handle="contact_email" placeholder="your@email.com" }}
                             </div>
-                            <div>
+                            <div class="grid gap-3">
                                 {{ partial:components/ui/label handle="contact_message" display="Message" }}
                                 {{ partial:components/ui/form/textarea handle="contact_message" class="min-h-24" placeholder="Tell us about your project…" }}
                             </div>
@@ -58,11 +58,11 @@
                             <p class="text-muted-foreground text-sm">Stay updated with our latest insights and tips.</p>
                         </div>
                         <div class="flex flex-col gap-4 flex-1">
-                            <div>
+                            <div class="grid gap-3">
                                 {{ partial:components/ui/label handle="newsletter_email" display="Email Address" }}
                                 {{ partial:components/ui/form/text model="email" handle="newsletter_email" placeholder="your@email.com" }}
                             </div>
-                            <div>
+                            <div class="grid gap-3">
                                 {{ partial:components/ui/label handle="frequency" display="Frequency" }}
                                 {{ $frequency_options = [
                                     'daily' => 'Daily updates',
@@ -71,7 +71,7 @@
                                 ] }}
                                 {{ partial:components/ui/form/select model="frequency" handle="frequency" :options="$frequency_options" }}
                             </div>
-                            <div>
+                            <div class="grid gap-3">
                                 {{ $topics_options = [
                                     'design' => 'Design tips',
                                     'development' => 'Development news',
@@ -137,8 +137,8 @@
                             <p class="text-muted-foreground text-sm">Customize your experience.</p>
                         </div>
                         <div class="flex flex-col gap-6 flex-1">
-                            <div class="space-y-4">
-                                <div>
+                            <div class="grid gap-6">
+                                <div class="grid gap-3">
                                     {{ $theme_options = [
                                         'light' => 'Light mode',
                                         'dark' => 'Dark mode',
@@ -146,7 +146,7 @@
                                     ] }}
                                     {{ partial:components/ui/form/radio handle="theme" model="theme" display="Theme" :options="$theme_options" }}
                                 </div>
-                                <div>
+                                <div class="grid gap-3">
                                     {{ partial:components/ui/label handle="language" display="Language" }}
                                     {{ $language_options = [
                                         'en' => 'English',
@@ -163,7 +163,7 @@
                                     ] }}
                                     {{ partial:components/ui/form/combobox handle="language" model="language" :options="$language_options" placeholder="Select language…" }}
                                 </div>
-                                <div>
+                                <div class="grid gap-3">
                                     {{ partial:components/ui/form/toggle model="notifications" handle="notifications" inline_label="Notifications" }}
                                 </div>
                             </div>
