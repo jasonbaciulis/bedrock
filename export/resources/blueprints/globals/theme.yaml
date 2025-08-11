@@ -40,9 +40,8 @@ tabs:
               display: About
           -
             handle: copyright_text
-            field:
-              default: 'All rights reserved.'
+            field: common.text_basic
+            config:
               display: 'Copyright text'
-              type: text
-              instructions: 'Company name, registration, address, etc.'
-              width: 50
+              instructions: 'Company name, registration, address, etc. You can use `:copyright_year` placeholder string to automatically replace it with a copy symbol and a current year.'
+              default: 'All rights reserved.'

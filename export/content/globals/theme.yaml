@@ -44,4 +44,24 @@ data:
         button_type: primary
       label: 'Get started'
   about: 'Features shadcn/ui style Alpine.js components that you can customize, extend, and build on. Plus page builder and complete SEO setup.'
-  copyright_text: 'Bedrock. All rights reserved.'
+  copyright_text:
+    -
+      type: paragraph
+      content:
+        -
+          type: text
+          text: ':copyright_year Bedrock. Built by '
+        -
+          type: text
+          marks:
+            -
+              type: link
+              attrs:
+                href: 'https://remarkable.dev'
+                rel: noopener
+                target: _blank
+                title: null
+          text: 'Jason Baciulis'
+        -
+          type: text
+          text: .

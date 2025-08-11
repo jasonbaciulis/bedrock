@@ -22,9 +22,9 @@
                 <div class="space-y-8 flex-row-reverse items-center lg:space-y-0 lg:flex lg:gap-x-16">
                     {{ partial:partials/nav-bottom-footer }}
 
-                    <p class="text-xs text-muted-foreground">
-                        &copy; {{ now | format('Y') }} {{ theme:copyright_text }}
-                    </p>
+                    <div class="text-xs text-muted-foreground prose">
+                        {{ theme:copyright_text | replace(':copyright_year', "&copy; {now|format('Y')}") }}
+                    </div>
                 </div>
             </div>
         </div>
