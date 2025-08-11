@@ -1,9 +1,9 @@
 <fieldset
     :aria-invalid="hasError('{{ handle }}')"
     {{ if instructions }}
-        :aria-describedby="hasError('{{ handle }}') ? '{{ handle }}-error' : '{{ handle }}-instructions'"
+        :aria-describedby="hasError('{{ handle }}') ? '{{ id }}-error' : '{{ id }}-instructions'"
     {{ else }}
-        :aria-describedby="hasError('{{ handle }}') ? '{{ handle }}-error' : undefined"
+        :aria-describedby="hasError('{{ handle }}') ? '{{ id }}-error' : undefined"
     {{ /if }}
 >
     <legend class="block font-medium text-foreground select-none text-sm">{{ display }}</legend>

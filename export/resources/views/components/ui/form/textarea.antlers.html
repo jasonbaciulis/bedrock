@@ -1,6 +1,6 @@
 <textarea
     x-model="{{ model }}"
-    id="{{ handle }}"
+    id="{{ id }}"
     name="{{ handle }}"
     rows="5"
     {{ class | attribute:class }}
@@ -8,9 +8,9 @@
     {{ character_limit | attribute:maxlength }}
     :aria-invalid="hasError('{{ handle }}')"
     {{ if instructions }}
-        :aria-describedby="hasError('{{ handle }}') ? '{{ handle }}-error' : '{{ handle }}-instructions'"
+        :aria-describedby="hasError('{{ handle }}') ? '{{ id }}-error' : '{{ id }}-instructions'"
     {{ else }}
-        :aria-describedby="hasError('{{ handle }}') ? '{{ handle }}-error' : undefined"
+        :aria-describedby="hasError('{{ handle }}') ? '{{ id }}-error' : undefined"
     {{ /if }}
     @change="forgetError('{{ handle }}')"
 ></textarea>

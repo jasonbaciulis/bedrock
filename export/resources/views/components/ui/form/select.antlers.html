@@ -6,13 +6,13 @@
         :class="{
             'text-muted-foreground': !{{ model }}
         }"
-        id="{{ handle }}"
+        id="{{ id }}"
         name="{{ handle }}{{ multiple ?= "[]" }}"
         :aria-invalid="hasError('{{ handle }}')"
         {{ if instructions }}
-            :aria-describedby="hasError('{{ handle }}') ? '{{ handle }}-error' : '{{ handle }}-instructions'"
+            :aria-describedby="hasError('{{ handle }}') ? '{{ id }}-error' : '{{ id }}-instructions'"
         {{ else }}
-            :aria-describedby="hasError('{{ handle }}') ? '{{ handle }}-error' : undefined"
+            :aria-describedby="hasError('{{ handle }}') ? '{{ id }}-error' : undefined"
         {{ /if }}
         {{ multiple | attribute:multiple }}
         @change="forgetError('{{ handle }}')"
@@ -22,8 +22,8 @@
                 Select {{ handle | deslugify }}…
             </option>
         {{ /unless }}
-        {{ foreach:options as="value|label" }}
-            <option value="{{ value }}">
+        {{ foreach:options as="option|label" }}
+            <option value="{{ option }}">
                 {{ label }}
             </option>
         {{ /foreach:options }}

@@ -1,4 +1,4 @@
 {{# Display error when there is a validation error with the name field. #}}
 <template x-if="errors.{{ handle }}">
-    <p id="{{ handle }}-error" class="text-destructive text-sm" x-text="errors.{{ handle }}"></p>
+    <p id="{{ id }}-error" class="text-destructive text-sm" x-text="errors.{{ handle }}"></p>
 </template>
