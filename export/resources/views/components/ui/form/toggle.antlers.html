@@ -12,6 +12,7 @@
 >
     <button
         x-ref="switch"
+        id="{{ id }}"
         type="button"
         class="peer focus-visible:border-ring focus-visible:ring-ring/50 inline-flex h-[1.15rem] w-8 shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visible:ring-3 disabled:cursor-not-allowed disabled:opacity-50"
         :class="{ 'bg-primary': on, 'bg-input dark:bg-input/80': !on }"
@@ -36,10 +37,10 @@
     <label
         class="text-sm/none text-foreground prose"
         id="{{ id }}-label"
-        @click="toggle()"
+        for="{{ id }}"
     >
         {{ inline_label }}
     </label>
 
-    <input aria-hidden="true" tabindex="-1" type="checkbox" value="on" :checked="on" class="sr-only">
+    <input name="{{ handle }}" aria-hidden="true" tabindex="-1" type="checkbox" value="on" :checked="on" class="sr-only">
 </div>
