@@ -3,6 +3,7 @@ document.addEventListener('alpine:init', () => {
     id: config.id || 'combobox',
     items: config.items,
     value: config.value || null,
+    setModel: config.setModel || null,
     placeholder: config.placeholder || 'Select an option…',
 
     itemsFiltered: [],
@@ -136,6 +137,9 @@ document.addEventListener('alpine:init', () => {
       if (selected) {
         this.itemSelected = selected
         this.value = selected.key
+        if (typeof this.setModel === 'function') {
+          this.setModel(this.value)
+        }
         this.closeListbox()
       }
     },

@@ -6,9 +6,10 @@
 
 <div
     x-data="combobox({
-        id: '{{ handle }}',
+        id: {{ id | to_js }},
         items: {{ options | to_js }},
-        value: '{{ old_value ?? value }}',
+        setModel: v => {{ model }} = v,
+        value: {{ model }},
         placeholder: '{{ placeholder ?? 'Select a value…' }}'
     })"
     @keydown.escape.stop.prevent="closeListbox()"
@@ -18,7 +19,7 @@
     <input type="hidden" name="{{ handle }}" x-model="value">
 
     <button
-        id="{{ handle }}"
+        id="{{ id }}"
         @click="toggleListbox()"
         type="button"
         role="combobox"
