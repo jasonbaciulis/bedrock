@@ -7,6 +7,10 @@
     {{ placeholder | attribute:placeholder }}
     {{ character_limit | attribute:maxlength }}
     :aria-invalid="hasError('{{ handle }}')"
-    {{ instructions ?= 'aria-describedby="{handle}-instructions"' }}
+    {{ if instructions }}
+        :aria-describedby="hasError('{{ handle }}') ? '{{ handle }}-error' : '{{ handle }}-instructions'"
+    {{ else }}
+        :aria-describedby="hasError('{{ handle }}') ? '{{ handle }}-error' : undefined"
+    {{ /if }}
     @change="forgetError('{{ handle }}')"
->{{ old }}</textarea>
+></textarea>

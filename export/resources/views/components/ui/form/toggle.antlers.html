@@ -17,6 +17,11 @@
         :class="{ 'bg-primary': on, 'bg-input dark:bg-input/80': !on }"
         role="switch"
         aria-labelledby="{{ handle }}"
+        {{ if instructions }}
+            :aria-describedby="hasError('{{ handle }}') ? '{{ handle }}-error' : '{{ handle }}-instructions'"
+        {{ else }}
+            :aria-describedby="hasError('{{ handle }}') ? '{{ handle }}-error' : undefined"
+        {{ /if }}
         :aria-checked="on.toString()"
         @click="toggle()"
     >

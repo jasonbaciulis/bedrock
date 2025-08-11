@@ -12,7 +12,11 @@
         type="{{ input_type ?? 'text' }}"
         {{ placeholder | attribute:placeholder }}
         :aria-invalid="hasError('{{ handle }}')"
-        {{ instructions ?= 'aria-describedby="{handle}-instructions"' }}
+        {{ if instructions }}
+            :aria-describedby="hasError('{{ handle }}') ? '{{ handle }}-error' : '{{ handle }}-instructions'"
+        {{ else }}
+            :aria-describedby="hasError('{{ handle }}') ? '{{ handle }}-error' : undefined"
+        {{ /if }}
         {{ character_limit | attribute:maxlength }}
         {{ old | attribute:value }}
         {{ autocomplete | attribute:autocomplete }}

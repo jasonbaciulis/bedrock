@@ -1,28 +1,30 @@
 <fieldset
     :aria-invalid="hasError('{{ handle }}')"
-    {{ instructions ?= 'aria-describedby="{handle}-instructions"' }}
+    {{ if instructions }}
+        :aria-describedby="hasError('{{ handle }}') ? '{{ handle }}-error' : '{{ handle }}-instructions'"
+    {{ else }}
+        :aria-describedby="hasError('{{ handle }}') ? '{{ handle }}-error' : undefined"
+    {{ /if }}
 >
     <legend class="block font-medium text-foreground select-none text-sm">{{ display }}</legend>
 
     {{ if field:instructions }}
-        <p id="{{ field:handle }}-instructions" class="text-sm text-muted-foreground">
-            {{ field:instructions }}
-        </p>
+        {{ partial:components/ui/input-instructions }}
     {{ /if }}
 
     <div class="mt-3 space-y-4">
-        {{ foreach:options as="value|label" }}
+        {{ foreach:options as="option|label" }}
             <div class="flex items-center gap-3">
                 <input
                     x-model="{{ model }}"
-                    id="{{ value }}"
+                    id="{{ id }}-{{ option | slugify }}-option"
                     type="checkbox"
                     name="{{ handle }}[]"
-                    value="{{ value }}"
+                    value="{{ option }}"
                     :aria-invalid="hasError('{{ handle }}')"
                     @change="forgetError('{{ handle }}')"
                 >
-                <label for="{{ value }}" class="text-foreground font-normal">
+                <label for="{{ id }}-{{ option | slugify }}-option" class="text-foreground font-normal">
                     {{ label }}
                 </label>
             </div>

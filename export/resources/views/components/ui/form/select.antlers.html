@@ -9,7 +9,11 @@
         id="{{ handle }}"
         name="{{ handle }}{{ multiple ?= "[]" }}"
         :aria-invalid="hasError('{{ handle }}')"
-        {{ instructions ?= 'aria-describedby="{handle}-instructions"' }}
+        {{ if instructions }}
+            :aria-describedby="hasError('{{ handle }}') ? '{{ handle }}-error' : '{{ handle }}-instructions'"
+        {{ else }}
+            :aria-describedby="hasError('{{ handle }}') ? '{{ handle }}-error' : undefined"
+        {{ /if }}
         {{ multiple | attribute:multiple }}
         @change="forgetError('{{ handle }}')"
     >
