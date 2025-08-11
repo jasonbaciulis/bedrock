@@ -3,11 +3,6 @@ data:
   disable_phone_detection: false
   disable_email_detection: false
   disable_address_detection: false
-  use_theme_color: false
-  theme_color: '#FFFFFF'
+  theme_color: '#171717'
   apple_mobile_web_app: false
-  apple_status_bar_black: false
   android_mobile_web_app: false
-  use_favicons: false
-  safari_color: '#000000'
-  ios_color: '#FFFFFF'

@@ -27,6 +27,17 @@ tabs:
               type: toggle
               width: 33
               instructions: 'Disables address detection.'
+          -
+            handle: theme_color
+            field:
+              display: 'Theme color'
+              type: color
+              swatches:
+                - '#171717'
+                - '#f5f5f5'
+              default: '#171717'
+              width: 33
+              instructions: 'The theme color for the browser bar.'
       -
         display: Apple
         instructions: 'Configure Apple specific meta tags.'

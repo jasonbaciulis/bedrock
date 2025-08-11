@@ -16,6 +16,9 @@
 {{ if browser_appearance:android_mobile_web_app }}
     <meta name="mobile-web-app-capable" content="yes">
 {{ /if }}
+{{ if browser_appearance:theme_color }}
+    <meta name="theme-color" content="{{ browser_appearance:theme_color }}">
+{{ /if }}
 
 {{#
     Generate favicons here:
