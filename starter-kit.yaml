@@ -1,5 +1,6 @@
 export_paths:
   - app/Console/Commands
+  - app/Fieldtypes
   - app/Http/Controllers/NewsletterController.php
   - app/Modifiers
   - app/Tags

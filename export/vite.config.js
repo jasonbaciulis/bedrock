@@ -18,6 +18,7 @@ export default defineConfig(({ command, mode }) => {
           'resources/js/newsletter.js',
           'resources/js/fetchEntries.js',
           'resources/js/combobox.js',
+          'resources/js/components/stepper.js',
           'resources/js/lite-yt-embed.js',
           'resources/css/lite-yt-embed.css',
 

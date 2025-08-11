@@ -1,0 +1,57 @@
+{{ once }}
+    {{ push:scripts }}
+        {{ vite src="resources/js/components/stepper.js" }}
+    {{ /push:scripts }}
+{{ /once }}
+
+<div
+    class="flex items-center flex-wrap gap-y-3 gap-x-6"
+    x-data="stepper({{ min ?? 0 }}, {{ max ?? 9999 }}, {{ step ?? 1 }})"
+>
+    {{ partial:components/ui/label }}
+
+    <div class="flex items-center gap-x-2">
+        <button
+            type="button"
+            class="btn btn--outline btn--sm btn--round shrink-0"
+            @click="decrement()"
+            :disabled="isAtMin()"
+        >
+            {{ icon:lucide-minus }}
+            <span class="sr-only">Decrease quantity</span>
+        </button>
+
+        {{ if show_input }}
+            <input
+                x-ref="input"
+                x-model.number="{{ model }}"
+                x-modelable.number="count"
+                x-mask="{{ max }}"
+                class="w-10 px-0 text-center"
+                id="{{ handle }}"
+                name="{{ handle }}"
+                type="text"
+                :aria-invalid="hasError('{{ handle }}')"
+                {{ if instructions }}
+                    :aria-describedby="hasError('{{ handle }}') ? '{{ handle }}-error' : '{{ handle }}-instructions'"
+                {{ else }}
+                    :aria-describedby="hasError('{{ handle }}') ? '{{ handle }}-error' : undefined"
+                {{ /if }}
+                @input="handleInput"
+                @change="forgetError('{{ handle }}')"
+            />
+        {{ else }}
+            <span class="text-lg/none font-semibold text-center w-9 tabular-nums" x-text="count"></span>
+        {{ /if }}
+
+        <button
+            type="button"
+            class="btn btn--outline btn--sm btn--round shrink-0"
+            @click="increment()"
+            :disabled="isAtMax"
+        >
+            {{ icon:lucide-plus }}
+            <span class="sr-only">Increase quantity</span>
+        </button>
+    </div>
+</div>
