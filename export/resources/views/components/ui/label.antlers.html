@@ -1,6 +1,6 @@
 <label
     id="{{ handle }}-label"
-    class="block mb-3 {{ color or 'text-foreground' }}"
+    class="block {{ color or 'text-foreground' }} {{ hide_display ?= 'sr-only' }}"
     for="{{ handle }}"
 >
     {{ display }}
