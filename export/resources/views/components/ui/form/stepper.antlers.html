@@ -1,6 +1,6 @@
 {{ once }}
     {{ push:scripts }}
-        {{ vite src="resources/js/components/stepper.js" }}
+        {{ vite src="resources/js/stepper.js" }}
     {{ /push:scripts }}
 {{ /once }}
 
@@ -10,48 +10,57 @@
 >
     {{ partial:components/ui/label }}
 
-    <div class="flex items-center gap-x-2">
+    <div class="flex items-center gap-x-1">
         <button
             type="button"
             class="btn btn--outline btn--sm btn--round shrink-0"
-            @click="decrement()"
-            :disabled="isAtMin()"
+            @click="decrement"
+            tabindex="-1"
+            aria-label="Decrement"
+            aria-controls="{{ handle }}"
+            :disabled="isAtMin"
+            :aria-disabled="isAtMin"
         >
             {{ icon:lucide-minus }}
-            <span class="sr-only">Decrease quantity</span>
         </button>
 
         {{ if show_input }}
             <input
                 x-ref="input"
-                x-model.number="{{ model }}"
-                x-modelable.number="count"
-                x-mask="{{ max }}"
-                class="w-10 px-0 text-center"
-                id="{{ handle }}"
+                x-model="{{ model }}"
+                x-modelable="count"
+                class="size-8 px-0 text-center border-none shadow-none [-moz-appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-inner-spin-button]:m-0"
+                id="{{ id }}"
                 name="{{ handle }}"
-                type="text"
+                type="number"
+                :min="min"
+                :max="max"
+                :step="step"
+                aria-labelledby="{{ id }}-label"
                 :aria-invalid="hasError('{{ handle }}')"
                 {{ if instructions }}
-                    :aria-describedby="hasError('{{ handle }}') ? '{{ handle }}-error' : '{{ handle }}-instructions'"
+                    :aria-describedby="hasError('{{ handle }}') ? '{{ id }}-error' : '{{ id }}-instructions'"
                 {{ else }}
-                    :aria-describedby="hasError('{{ handle }}') ? '{{ handle }}-error' : undefined"
+                    :aria-describedby="hasError('{{ handle }}') ? '{{ id }}-error' : undefined"
                 {{ /if }}
                 @input="handleInput"
                 @change="forgetError('{{ handle }}')"
             />
         {{ else }}
-            <span class="text-lg/none font-semibold text-center w-9 tabular-nums" x-text="count"></span>
+            <span class="text-lg/none font-semibold text-center w-8 tabular-nums" x-text="count"></span>
         {{ /if }}
 
         <button
             type="button"
             class="btn btn--outline btn--sm btn--round shrink-0"
-            @click="increment()"
+            @click="increment"
+            tabindex="-1"
+            aria-label="Increment"
+            aria-controls="{{ handle }}"
             :disabled="isAtMax"
+            :aria-disabled="isAtMax"
         >
             {{ icon:lucide-plus }}
-            <span class="sr-only">Increase quantity</span>
         </button>
     </div>
 </div>

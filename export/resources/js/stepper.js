@@ -34,7 +34,14 @@ document.addEventListener('alpine:init', () => {
     },
 
     handleInput(event) {
-      this.count = parseInt(event.target.value) || 0
+      const count = parseInt(event.target.value) || 0
+      if (count >= this.max) {
+        event.target.value = this.max
+      } else if (count <= this.min) {
+        event.target.value = this.min
+      } else {
+        this.count = count
+      }
     },
   }))
 })
