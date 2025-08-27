@@ -8,7 +8,7 @@
         @foreach ($buttons as $button)
             <x-ui.button
                 :size="$size"
-                :button_type="$button->button_type"
+                :variant="$button->variant"
                 :link_type="$button->link_type"
                 :url="$button->url"
                 :entry="$button->entry"

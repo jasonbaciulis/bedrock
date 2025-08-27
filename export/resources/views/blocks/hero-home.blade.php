@@ -267,12 +267,7 @@
                                     />
                                 </div>
                             </div>
-                            <x-ui.button
-                                class="w-full"
-                                button_type="outline"
-                                type="button"
-                                as="button"
-                            >
+                            <x-ui.button class="w-full" variant="outline" type="button" as="button">
                                 Save preferences
                             </x-ui.button>
                         </div>
@@ -345,7 +340,7 @@
                                     </ul>
                                     <div>
                                         <x-ui.button
-                                            button_type="outline"
+                                            variant="outline"
                                             size="sm"
                                             type="button"
                                             as="button"
@@ -449,7 +444,7 @@
                                             value="https://bedrock.remarkable.dev"
                                         />
                                         <x-ui.button
-                                            button_type="outline"
+                                            variant="outline"
                                             as="button"
                                             type="button"
                                             x-on:click="navigator.clipboard.writeText('https://bedrock.remarkable.dev')"
@@ -459,7 +454,7 @@
                                     </div>
                                     <div>
                                         <x-ui.button
-                                            button_type="secondary"
+                                            variant="secondary"
                                             as="button"
                                             type="button"
                                             x-on:click="close()"

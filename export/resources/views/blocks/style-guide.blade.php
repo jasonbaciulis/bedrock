@@ -115,27 +115,27 @@
                         class="flex flex-col items-start justify-start gap-6 md:flex-row md:items-end"
                     >
                         <x-ui.button
-                            button_type="primary"
+                            variant="primary"
                             label="Get started"
                             link_type="url"
                             url="/"
                             size="sm"
                         />
                         <x-ui.button
-                            button_type="primary"
+                            variant="primary"
                             label="Get started"
                             link_type="url"
                             url="/"
                         />
                         <x-ui.button
-                            button_type="primary"
+                            variant="primary"
                             label="Get started"
                             link_type="url"
                             url="/"
                             size="lg"
                         />
                         <x-ui.button
-                            button_type="primary"
+                            variant="primary"
                             label="Get started"
                             link_type="url"
                             url="/"
@@ -153,27 +153,27 @@
                         class="flex flex-col items-start justify-start gap-6 md:flex-row md:items-end"
                     >
                         <x-ui.button
-                            button_type="secondary"
+                            variant="secondary"
                             label="Get started"
                             link_type="url"
                             url="/"
                             size="sm"
                         />
                         <x-ui.button
-                            button_type="secondary"
+                            variant="secondary"
                             label="Get started"
                             link_type="url"
                             url="/"
                         />
                         <x-ui.button
-                            button_type="secondary"
+                            variant="secondary"
                             label="Get started"
                             link_type="url"
                             url="/"
                             size="lg"
                         />
                         <x-ui.button
-                            button_type="secondary"
+                            variant="secondary"
                             label="Get started"
                             link_type="url"
                             url="/"
@@ -191,27 +191,27 @@
                         class="flex flex-col items-start justify-start gap-6 md:flex-row md:items-end"
                     >
                         <x-ui.button
-                            button_type="outline"
+                            variant="outline"
                             label="Get started"
                             link_type="url"
                             url="/"
                             size="sm"
                         />
                         <x-ui.button
-                            button_type="outline"
+                            variant="outline"
                             label="Get started"
                             link_type="url"
                             url="/"
                         />
                         <x-ui.button
-                            button_type="outline"
+                            variant="outline"
                             label="Get started"
                             link_type="url"
                             url="/"
                             size="lg"
                         />
                         <x-ui.button
-                            button_type="outline"
+                            variant="outline"
                             label="Get started"
                             link_type="url"
                             url="/"
@@ -229,27 +229,27 @@
                         class="flex flex-col items-start justify-start gap-6 md:flex-row md:items-end"
                     >
                         <x-ui.button
-                            button_type="destructive"
+                            variant="destructive"
                             label="Get started"
                             link_type="url"
                             url="/"
                             size="sm"
                         />
                         <x-ui.button
-                            button_type="destructive"
+                            variant="destructive"
                             label="Get started"
                             link_type="url"
                             url="/"
                         />
                         <x-ui.button
-                            button_type="destructive"
+                            variant="destructive"
                             label="Get started"
                             link_type="url"
                             url="/"
                             size="lg"
                         />
                         <x-ui.button
-                            button_type="destructive"
+                            variant="destructive"
                             label="Get started"
                             link_type="url"
                             url="/"
@@ -267,27 +267,22 @@
                         class="flex flex-col items-start justify-start gap-6 md:flex-row md:items-end"
                     >
                         <x-ui.button
-                            button_type="ghost"
+                            variant="ghost"
                             label="Get started"
                             link_type="url"
                             url="/"
                             size="sm"
                         />
+                        <x-ui.button variant="ghost" label="Get started" link_type="url" url="/" />
                         <x-ui.button
-                            button_type="ghost"
-                            label="Get started"
-                            link_type="url"
-                            url="/"
-                        />
-                        <x-ui.button
-                            button_type="ghost"
+                            variant="ghost"
                             label="Get started"
                             link_type="url"
                             url="/"
                             size="lg"
                         />
                         <x-ui.button
-                            button_type="ghost"
+                            variant="ghost"
                             label="Get started"
                             link_type="url"
                             url="/"
@@ -304,12 +299,7 @@
                     <dd
                         class="flex flex-col items-start justify-start gap-6 md:flex-row md:items-end"
                     >
-                        <x-ui.button
-                            button_type="link"
-                            label="Get started"
-                            link_type="url"
-                            url="/"
-                        />
+                        <x-ui.button variant="link" label="Get started" link_type="url" url="/" />
                     </dd>
                 </div>
             </div>

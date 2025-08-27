@@ -129,7 +129,7 @@ fields:
         link_type: code
         show_controls: 'equals true'
   -
-    handle: button_type
+    handle: variant
     field:
       options:
         -

@@ -60,7 +60,7 @@
                         <div class="flex flex-col-reverse gap-y-6 py-6">
                             @foreach ($theme->header_buttons as $button)
                                 <x-ui.button
-                                    :button_type="$button->button_type"
+                                    :variant="$button->variant"
                                     :link_type="$button->link_type"
                                     :url="$button->url"
                                     :entry="$button->entry"

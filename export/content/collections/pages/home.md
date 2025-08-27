@@ -19,14 +19,14 @@ blocks:
         link_type: url
         target_blank: false
         url: 'https://statamic.com/starter-kits/jasonbaciulis/bedrock'
-        button_type: primary
+        variant: primary
       -
         id: ALbCABEq
         label: 'View components'
         link_type: url
         target_blank: false
         url: '#components'
-        button_type: ghost
+        variant: ghost
   -
     id: m3e8vdlz
     title: 'Project inquiry'

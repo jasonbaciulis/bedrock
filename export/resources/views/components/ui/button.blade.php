@@ -1,7 +1,7 @@
 @props([
     'label' => null,
     'as' => 'a', // The HTML element to render as a button
-    'button_type' => 'primary',
+    'variant' => 'primary',
     'size' => 'md',
     'link_type' => 'url', // Options: `entry`, `url`, `email`, `tel`, `asset`, `code`
     'url' => null,
@@ -18,30 +18,30 @@
         {{
             $attributes->class([
                 'btn',
-                'btn--primary' => $button_type == 'primary',
-                'btn--secondary' => $button_type == 'secondary',
-                'btn--link' => $button_type == 'link',
-                'btn--ghost' => $button_type == 'ghost',
-                'btn--outline' => $button_type == 'outline',
-                'btn--destructive' => $button_type == 'destructive',
+                'btn--primary' => $variant == 'primary',
+                'btn--secondary' => $variant == 'secondary',
+                'btn--link' => $variant == 'link',
+                'btn--ghost' => $variant == 'ghost',
+                'btn--outline' => $variant == 'outline',
+                'btn--destructive' => $variant == 'destructive',
                 'btn--sm' => $size === 'sm',
                 'btn--lg' => $size === 'lg',
                 'btn--xl' => $size === 'xl',
             ])
         }}
-        @if ($as === 'a')
-            @if ($link_type == 'entry')
+        @if ($as === "a")
+            @if ($link_type == "entry")
                 href="{{ $entry->url }}"
-            @elseif ($link_type == 'url')
+            @elseif ($link_type == "url")
                 href="{{ $url }}"
-            @elseif ($link_type == 'email')
+            @elseif ($link_type == "email")
                 href="mailto:{{ Statamic::modify($email)->obfuscateEmail() }}"
-            @elseif ($link_type == 'phone')
+            @elseif ($link_type == "phone")
                 href="tel:{{ $phone }}"
-            @elseif ($link_type == 'asset')
+            @elseif ($link_type == "asset")
                 href="{{ $asset }}"
                 download
-            @elseif ($link_type == 'code')
+            @elseif ($link_type == "code")
                 href=""
                 x-data
                 x-on:click.prevent="{!! $code !!}"
