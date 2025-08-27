@@ -1,6 +1,6 @@
 @layer components {
   .tagline {
-    @apply text-sm font-semibold uppercase tracking-wide sm:text-base;
+    @apply text-sm font-semibold tracking-wide uppercase sm:text-base;
   }
 
   .content-xl {
