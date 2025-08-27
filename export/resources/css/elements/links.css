@@ -1,7 +1,7 @@
 @layer components {
   a,
   button {
-    @apply focus-visible:outline-primary transition focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2;
+    @apply focus-visible:border-ring focus-visible:ring-ring/50 rounded-lg transition focus:outline-none focus-visible:ring-3;
   }
 
   button {
