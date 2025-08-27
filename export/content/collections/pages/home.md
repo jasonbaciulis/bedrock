@@ -4,7 +4,7 @@ blueprint: pages
 title: Home
 template: default
 updated_by: 6d26d0a8-ff9c-4c3e-a25e-7e036508908c
-updated_at: 1753803065
+updated_at: 1755852380
 blocks:
   -
     id: ZbruxJDq
@@ -35,7 +35,7 @@ blocks:
     type: contact
     enabled: true
     success_message: 'Thanks! We got your inquiry and will get back to you within 24 hours.'
-    button_label: 'Submit the inquiry'
+    submit_label: 'Submit the inquiry'
   -
     id: m3h0yigt
     type: newsletter
