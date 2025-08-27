@@ -3,14 +3,8 @@ fields:
   -
     handle: title
     field:
-      input_type: text
-      antlers: false
       display: Title
       type: text
-      icon: text
-      listable: hidden
-      instructions_position: above
-      visibility: visible
   -
     handle: text
     field: common.text_plain
@@ -21,21 +15,11 @@ fields:
         latest: Latest
         featured: Featured
         custom: Custom
-      multiple: false
       max_items: 1
-      clearable: false
-      searchable: true
-      taggable: false
-      push_tags: false
-      cast_booleans: false
       default: latest
       display: Query
       type: select
-      icon: select
       width: 50
-      listable: hidden
-      instructions_position: above
-      visibility: visible
       validate:
         - required
   -
@@ -44,25 +28,15 @@ fields:
       default: '3'
       display: Limit
       type: integer
-      icon: integer
       width: 50
-      listable: hidden
-      instructions_position: above
-      visibility: visible
       if:
         query: 'not custom'
   -
     handle: entries
     field:
-      mode: default
-      create: true
       collections:
         - posts
       display: Entries
       type: entries
-      icon: entries
-      listable: hidden
-      instructions_position: above
-      visibility: visible
       if:
         query: 'equals custom'

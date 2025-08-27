@@ -3,16 +3,12 @@ fields:
   -
     handle: buttons
     field:
+      mode: stacked
+      add_row: 'Add button'
+      type: grid
+      localizable: true
+      display: Buttons
+      replicator_preview: false
       fields:
         -
           import: button
-      mode: stacked
-      add_row: 'Add button'
-      reorderable: true
-      type: grid
-      localizable: true
-      listable: hidden
-      display: Buttons
-      replicator_preview: false
-      instructions_position: above
-      visibility: visible

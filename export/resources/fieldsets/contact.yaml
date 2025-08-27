@@ -17,10 +17,10 @@ fields:
       type: form
       display: Form
   -
-    handle: button_label
+    handle: submit_label
     field:
       type: text
-      display: 'Button label'
+      display: 'Submit label'
   -
     handle: success_message
     field: common.text_plain

@@ -4,19 +4,15 @@ fields:
     handle: image
     field:
       container: assets
-      restrict: false
-      allow_uploads: true
       max_files: 1
       type: assets
       mode: grid
       localizable: true
-      listable: hidden
       display: Image
   -
     handle: entry
     field:
       max_items: 1
-      mode: default
       type: entries
       localizable: true
       listable: false
@@ -35,32 +31,15 @@ fields:
         - orderedlist
         - removeformat
         - anchor
-      save_html: false
-      toolbar_mode: fixed
       link_noopener: true
-      link_noreferrer: false
       container: assets
-      target_blank: false
-      reading_time: false
-      fullscreen: true
-      allow_source: true
       type: bard
       replicator_preview: false
       localizable: true
-      listable: hidden
       display: 'Text rich'
-      instructions_position: above
-      visibility: visible
       always_save: false
-      previews: true
-      enable_input_rules: true
-      enable_paste_rules: true
-      antlers: false
       remove_empty_nodes: trim
-      collapse: false
       smart_typography: true
-      inline: false
-      hide_display: false
   -
     handle: text_basic
     field:
@@ -72,59 +51,28 @@ fields:
         - orderedlist
         - removeformat
         - anchor
-      save_html: false
-      toolbar_mode: fixed
       link_noopener: true
-      link_noreferrer: false
       container: assets
-      target_blank: false
-      reading_time: false
-      fullscreen: true
-      allow_source: true
       type: bard
       replicator_preview: false
       localizable: true
-      listable: hidden
       display: 'Text basic'
-      instructions_position: above
-      visibility: visible
       always_save: false
-      previews: true
-      enable_input_rules: true
-      enable_paste_rules: true
-      antlers: false
       remove_empty_nodes: trim
-      collapse: false
       smart_typography: true
-      inline: false
-      hide_display: false
   -
     handle: text_plain
     field:
       type: textarea
       localizable: true
-      listable: hidden
       display: 'Text plain'
-      instructions_position: above
-      visibility: visible
-      antlers: false
-      hide_display: false
   -
     handle: select_single
     field:
       display: 'Select single'
       type: select
-      icon: select
-      listable: hidden
-      instructions_position: above
-      visibility: visible
-      multiple: false
       max_items: 1
-      clearable: false
       searchable: false
-      taggable: false
-      push_tags: false
-      cast_booleans: false
   -
     handle: color_theme
     field:
@@ -136,25 +84,11 @@ fields:
       default: purple
       display: 'Color theme'
       type: select
-      icon: select
-      listable: hidden
-      instructions_position: above
-      visibility: visible
-      multiple: false
       max_items: 1
-      clearable: false
       searchable: false
-      taggable: false
-      push_tags: false
-      cast_booleans: false
   -
     handle: icon
     field:
       directory: resources/svg
       type: icon
       display: Icon
-      icon: icon_picker
-      listable: hidden
-      instructions_position: above
-      visibility: visible
-      hide_display: false

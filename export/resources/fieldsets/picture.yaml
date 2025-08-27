@@ -1,4 +1,4 @@
-title: 'Picture'
+title: Picture
 fields:
   -
     handle: image
@@ -6,8 +6,6 @@ fields:
   -
     handle: caption
     field:
-      input_type: text
       type: text
       localizable: true
-      listable: hidden
       display: Caption

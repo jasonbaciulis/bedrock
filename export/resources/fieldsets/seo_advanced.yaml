@@ -6,7 +6,6 @@ fields:
       type: toggle
       instructions: 'Instruct crawlers not to index this entry, also excludes it from the sitemap.xml.'
       instructions_position: below
-      listable: hidden
       width: 50
       display: No-index
   -
@@ -15,24 +14,28 @@ fields:
       type: toggle
       instructions: 'Instruct crawlers not to follow links on this page.'
       instructions_position: below
-      listable: hidden
       width: 50
       display: No-follow
   -
     handle: seo_canonical_type
     field:
       options:
-        entry: 'Current entry'
-        current: 'Current domain'
-        external: 'External domain'
-      display: 'Canonical URL'
+        -
+          key: entry
+          value: 'Current entry'
+        -
+          key: domain
+          value: 'Current domain'
+        -
+          key: external
+          value: 'External domain'
+      display: 'Canonical type'
       type: button_group
       default: entry
-      icon: button_group
       instructions: 'Where should the canonical URL for this entry point to.'
       listable: false
   -
-    handle: seo_canonical_current
+    handle: seo_canonical_domain
     field: common.entry
     config:
       localizable: true
@@ -41,16 +44,15 @@ fields:
       width: 66
       instructions: 'If this is an entry with duplicate content. Enter the original URL for this content.'
       validate:
-        - 'required_if:seo_canonical_type,current'
+        - 'required_if:seo_canonical_type,domain'
       if:
-        seo_canonical_type: 'equals current'
+        seo_canonical_type: 'equals domain'
   -
     handle: seo_canonical_external
     field:
       input_type: url
       display: 'Canonical URL'
       type: text
-      icon: text
       listable: false
       validate:
         - 'required_if:seo_canonical_type,external'

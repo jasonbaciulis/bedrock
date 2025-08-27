@@ -3,10 +3,8 @@ fields:
   -
     handle: seo_title
     field:
-      input_type: text
       type: text
       localizable: true
-      listable: hidden
       display: 'Page title'
       character_limit: 70
       instructions: 'This entries title, defaults to title. Max 70 chars including the site name.'

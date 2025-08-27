@@ -3,7 +3,6 @@ fields:
   -
     handle: og_title
     field:
-      input_type: text
       type: text
       localizable: true
       listable: false

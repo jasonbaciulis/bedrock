@@ -11,12 +11,6 @@ fields:
         monthly: Monthly
         yearly: Yearly
         never: Never
-      clearable: false
-      multiple: false
-      searchable: true
-      taggable: false
-      push_tags: false
-      cast_booleans: false
       type: select
       instructions: 'How often to instruct search engines to crawl.'
       instructions_position: below
