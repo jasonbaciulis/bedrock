@@ -30,7 +30,7 @@ class YoutubeId extends Tags
         $pattern =
             '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i';
 
-        $youtubeUrl = $this->context->get('youtube_url')->value();
+        $youtubeUrl = $this->params->get('youtube_url');
 
         if (empty($youtubeUrl)) {
             return false;

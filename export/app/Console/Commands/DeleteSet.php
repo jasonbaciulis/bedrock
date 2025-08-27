@@ -63,10 +63,7 @@ class DeleteSet extends Command
 
         try {
             $this->checkExistence('Fieldset', "resources/fieldsets/{$this->fieldset_name}.yaml");
-            $this->checkExistence(
-                'Partial',
-                "resources/views/sets/{$this->view_name}.antlers.html",
-            );
+            $this->checkExistence('Partial', "resources/views/sets/{$this->view_name}.blade.php");
 
             $this->deleteFieldset();
             $this->deletePartial();
@@ -107,7 +104,7 @@ class DeleteSet extends Command
      */
     protected function deletePartial()
     {
-        File::delete(base_path("resources/views/sets/{$this->view_name}.antlers.html"));
+        File::delete(base_path("resources/views/sets/{$this->view_name}.blade.php"));
     }
 
     /**

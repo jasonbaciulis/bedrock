@@ -1,5 +1,0 @@
-<section id="{{ type | slugify }}" class="m-section">
-    <div class="container">
-        <h2 class="h2">{{ name }}</h2>
-    </div>
-</section>

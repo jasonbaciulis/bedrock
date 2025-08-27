@@ -2,7 +2,7 @@
 Instead of rellying 100% on TailwindCSS utility classes,
 for highly reusable UI elements we create BEM CSS components.
 We think this approach is faster and more maintainable and eliminates the
-need to create/import a bunch of Antlers partials with a single HTML tag.
+need to create/import a bunch of tiny Blade components with a single HTML tag.
 
 Introduction to BEM:
 @see http://getbem.com/introduction/

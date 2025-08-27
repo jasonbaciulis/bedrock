@@ -7,7 +7,7 @@ This file provides context and guidelines for AI assistants working with this St
 **Bedrock** is a Statamic starter-kit that demonstrates a Statamic CMS built on Laravel with a flat-file architecture. This is a sophisticated CMS project with custom CLI tooling and a component-based architecture.
 
 - **Demo Site**: https://bedrock.remarkable.dev
-- **Primary Tech Stack**: Statamic (Laravel CMS), Antlers templating, TailwindCSS, AlpineJS
+- **Primary Tech Stack**: Statamic (Laravel CMS), Blade templating, TailwindCSS, AlpineJS
 - **Architecture Pattern**: Component-based with modular blocks and sets
 - **Content Strategy**: Flat-file CMS with YAML front matter and Markdown content
 
@@ -20,7 +20,7 @@ This file provides context and guidelines for AI assistants working with this St
 - **Custom CLI Commands**: `php please make:block`, `php please make:set`, etc.
 
 ### Templating & Frontend
-- **Antlers**: Statamic's templating engine (similar to Twig/Blade)
+- **Blade**: Laravel templating engine
 - **TailwindCSS**: Utility-first CSS framework
 - **AlpineJS**: JavaScript framework for interactive components
 - **Embla Carousel**: Lightweight carousel library
@@ -43,7 +43,7 @@ php please delete:block        # Removes block and all associated files
 ```
 
 **Block Naming Convention:**
-- Files: `kebab-case` (e.g., `blog-excerpt.antlers.html`)
+- Files: `kebab-case` (e.g., `blog-excerpt.blade.php`)
 - Fieldsets: `snake_case` (e.g., `blog_excerpt.yaml`)
 
 ### 2. Sets System (Content Composition)
@@ -81,7 +81,7 @@ resources/views/
 ## Development Guidelines
 
 ### File Naming Conventions
-- **Antlers Templates**: `kebab-case.antlers.html`
+- **Blade Templates**: `kebab-case.blade.php`
 - **YAML Files**: `snake_case.yaml` or `kebab-case.yaml`
 - **PHP Classes**: `PascalCase.php`
 - **CSS Files**: `kebab-case.css`
@@ -94,7 +94,7 @@ When creating page-building blocks:
 1. Use the CLI: `php please make:block`
 2. Follow the existing block structure in `resources/views/blocks/`
 3. Keep blocks focused and reusable
-4. Include proper Antlers conditionals for optional fields
+4. Include proper Blade conditionals for optional fields
 
 #### 2. Creating UI Components
 For reusable UI components:
@@ -130,20 +130,17 @@ content/
 - Follow existing field group patterns
 - Include proper field instructions and validation
 
-#### Antlers Template Patterns
-```antlers
-{{# Conditional rendering #}}
-{{ if field_name }}
-    <div>{{ field_name }}</div>
-{{ /if }}
+#### Blade Template Patterns
+```blade
+{{-- Conditional rendering --}}
+@isset($field_name)
+    <div>{!! $field_name !!}</div>
+@endisset
 
-{{# Collection loops #}}
-{{ collection:posts limit="5" }}
-    <article>{{ title }}</article>
-{{ /collection:posts }}
-
-{{# Partials inclusion #}}
-{{ partial:components/ui/button :content="button_text" }}
+{{-- Using Statamic tags --}}
+<s:collection from="posts" limit="5">
+    <article>{!! $title !!}</article>
+</s:collection>
 ```
 
 ## CLI Commands & Workflows
@@ -177,7 +174,7 @@ php please delete:set       # Remove set
 ## Common Patterns & Best Practices
 
 ### 1. Working with Collections
-- Use collection tags in Antlers templates
+- Use collection tags in Blade templates
 - Leverage Statamic's built-in filtering and pagination
 - Follow REST-like URL patterns for collection routes
 
@@ -204,8 +201,8 @@ php please delete:set       # Remove set
 - Leverage Statamic's helper methods and facades
 - Keep controller methods thin, use services for business logic
 
-### Antlers Templates
-- Use consistent indentation (2 spaces)
+### Blade Templates
+- Use consistent indentation (4 spaces)
 - Keep logic minimal in templates
 - Use partials for reusable template fragments
 - Include comments for complex conditional logic
@@ -221,14 +218,14 @@ php please delete:set       # Remove set
 - Use `x-data` for component state
 - Follow Alpine.js naming conventions
 - Avoid complex logic in Alpine directives
-- If the component uses more than a few methods, create a separate JS file and load conditionally when component is used. Check for example inside `resources/views/components/ui/form/combobox.antlers.html`
+- If the component uses more than a few methods, create a separate JS file and load conditionally when component is used. Check for example inside `resources/views/components/ui/form/combobox.blade.php`
 
 ## Troubleshooting & Common Issues
 
 ### Statamic-Specific
 - **Cache Issues**: Run `php please stache:warm` after content changes
 - **Asset Issues**: Check asset container configuration in `content/assets/`
-- **Template Errors**: Verify Antlers syntax and field names
+- **Template Errors**: Verify Blade syntax and Statamic data
 - **Collection Issues**: Check collection configuration in `content/collections/`
 
 ### Development Environment
@@ -248,7 +245,6 @@ php please delete:set       # Remove set
 ## Helpful Resources
 
 - [Statamic Documentation](https://statamic.dev/)
-- [Antlers Template Language](https://statamic.dev/antlers)
 - [Statamic Fieldtypes](https://statamic.dev/fieldtypes)
 - [Laravel Documentation](https://laravel.com/docs) (underlying framework)
 - [TailwindCSS Documentation](https://tailwindcss.com/)

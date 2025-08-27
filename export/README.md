@@ -16,7 +16,6 @@ Once you have started the Artisan development server, the website will be access
 
 ## Tools, libraries and addons used in the project
 - [Statamic](https://statamic.dev/) - Flat file Laravel CMS.
-- [Antlers](https://statamic.dev/new-antlers-parser) - Templating engine provided with Statamic.
 - [TailwindCSS](https://tailwindcss.com/docs/installation) - Utility-first CSS framework.
 - [Alpine.js](https://alpinejs.dev/start-here) - Rugged, minimal tool for composing behavior directly in your markup.
 - [Embla](https://www.embla-carousel.com) - A lightweight carousel library with fluid motion and great swipe precision.
@@ -51,7 +50,7 @@ Blocks are like LEGO bricks that provide you the maximum flexibility when buildi
 
 - Adds a set to the Blocks field in `resources/fieldsets/blocks.yaml`.
 - Creates a fieldset for a block in `resources/fieldsets/{file_name}.yaml`.
-- Creates a partial with default markup in `resources/views/blocks/{file-name}.antlers.html`.
+- Creates a view with default markup in `resources/views/blocks/{file-name}.blade.php`.
 
 #### Remove
 `php please delete:block`
@@ -66,7 +65,7 @@ Sets provide a powerful content creation experience with unparalleled flexibilit
 
 - Adds a set to the Article in `resources/fieldsets/article.yaml`.
 - Creates a fieldset for a set in `resources/fieldsets/{file_name}.yaml`.
-- Creates a set partial with default markup in `resources/views/sets/{file-name}.antlers.html`.
+- Creates a set view with default markup in `resources/views/sets/{file-name}.blade.php`.
 
 #### Remove
 `php please delete:set`

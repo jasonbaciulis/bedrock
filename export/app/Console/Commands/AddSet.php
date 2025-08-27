@@ -64,10 +64,7 @@ class AddSet extends Command
 
         try {
             $this->checkExistence('Fieldset', "resources/fieldsets/{$this->fieldset_name}.yaml");
-            $this->checkExistence(
-                'Partial',
-                "resources/views/sets/{$this->view_name}.antlers.html",
-            );
+            $this->checkExistence('Partial', "resources/views/sets/{$this->view_name}.blade.php");
 
             $this->createFieldset();
             $this->createPartial();
@@ -111,10 +108,10 @@ class AddSet extends Command
      */
     protected function createPartial()
     {
-        $stub = File::get(__DIR__ . '/stubs/set.antlers.html.stub');
+        $stub = File::get(__DIR__ . '/stubs/set.blade.php.stub');
         $contents = Str::of($stub)->replace('{{ name }}', $this->set_name);
 
-        File::put(base_path("resources/views/sets/{$this->view_name}.antlers.html"), $contents);
+        File::put(base_path("resources/views/sets/{$this->view_name}.blade.php"), $contents);
     }
 
     /**
@@ -141,7 +138,7 @@ class AddSet extends Command
             array_keys($existingGroups),
             null,
             null,
-            false,
+            false
         );
 
         $groupSets = $existingGroups[$group];

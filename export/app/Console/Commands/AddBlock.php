@@ -71,10 +71,7 @@ class AddBlock extends Command
 
         try {
             $this->checkExistence('Fieldset', "resources/fieldsets/{$this->fieldset_name}.yaml");
-            $this->checkExistence(
-                'Partial',
-                "resources/views/blocks/{$this->view_name}.antlers.html",
-            );
+            $this->checkExistence('Partial', "resources/views/blocks/{$this->view_name}.blade.php");
 
             $this->createFieldset();
             $this->createPartial();
@@ -118,12 +115,12 @@ class AddBlock extends Command
      */
     protected function createPartial()
     {
-        $stub = File::get(__DIR__ . '/stubs/block.antlers.html.stub');
+        $stub = File::get(__DIR__ . '/stubs/block.blade.php.stub');
         $contents = Str::of($stub)
             ->replace('{{ name }}', $this->block_name)
             ->replace('{{ filename }}', $this->view_name);
 
-        File::put(base_path("resources/views/blocks/{$this->view_name}.antlers.html"), $contents);
+        File::put(base_path("resources/views/blocks/{$this->view_name}.blade.php"), $contents);
     }
 
     /**
@@ -150,7 +147,7 @@ class AddBlock extends Command
             array_keys($existingGroups),
             null,
             null,
-            false,
+            false
         );
 
         $groupSets = $existingGroups[$group];

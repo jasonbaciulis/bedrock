@@ -1,0 +1,3 @@
+<div class="not-prose">
+    <h2>🔧<br>{{ $name }}</h2>
+</div>

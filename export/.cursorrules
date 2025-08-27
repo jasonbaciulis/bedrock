@@ -1,7 +1,7 @@
 # Cursor Rules for Statamic CMS Project
 
 ## Project Context
-This is a Statamic CMS project (Laravel-based flat-file CMS) with Antlers templating, TailwindCSS, and AlpineJS.
+This is a Statamic CMS project (Laravel-based flat-file CMS) with Blade templating, TailwindCSS, and AlpineJS.
 
 ## Key Rules
 
@@ -11,7 +11,7 @@ This is a Statamic CMS project (Laravel-based flat-file CMS) with Antlers templa
 - Use `php please delete:block` and `php please delete:set` for removal
 
 ### File Naming Conventions
-- Antlers templates: `kebab-case.antlers.html`
+- Blade templates: `kebab-case.blade.php`
 - YAML fieldsets: `snake_case.yaml`
 - PHP classes: `PascalCase.php`
 - CSS/JS: `kebab-case.css`, `camelCase.js`
@@ -23,7 +23,7 @@ This is a Statamic CMS project (Laravel-based flat-file CMS) with Antlers templa
 - Partials go in `resources/views/partials/`
 
 ### Statamic Patterns
-- Use Antlers syntax: `{{ field_name }}`, `{{ if condition }}`, `{{ collection:posts }}`
+- Use Antlers Blade components syntax: `<s:collection from="pages" limit="2" sort="title:desc">{!! $title !!}</s:collection>`
 - Reference existing fieldsets in `resources/fieldsets/`
 - Content files are in `content/collections/`
 - Always consider flat-file structure (no database)
@@ -47,7 +47,7 @@ This is a Statamic CMS project (Laravel-based flat-file CMS) with Antlers templa
 
 ### Code Quality
 - Follow PSR-12 for PHP
-- Keep Antlers templates minimal and readable
+- Keep Blade templates minimal and readable
 - Use partials for reusable template fragments
 - Prefer composition over inheritance
 
