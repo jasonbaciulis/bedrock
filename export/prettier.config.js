@@ -10,6 +10,13 @@ export default {
         tabWidth: 4,
       },
     },
+    {
+      files: ['*.blade.php'],
+      options: {
+        tabWidth: 4,
+        parser: 'blade',
+      },
+    },
   ],
   semi: false,
   singleQuote: true,
@@ -17,5 +24,5 @@ export default {
   bracketSpacing: true,
   jsxBracketSameLine: false,
   arrowParens: 'avoid',
-  plugins: ['@prettier/plugin-php', 'prettier-plugin-tailwindcss'],
+  plugins: ['@prettier/plugin-php', 'prettier-plugin-tailwindcss', 'prettier-plugin-blade'],
 }
