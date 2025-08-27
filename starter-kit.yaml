@@ -2,9 +2,11 @@ export_paths:
   - app/Console/Commands
   - app/Fieldtypes
   - app/Http/Controllers/NewsletterController.php
+  - app/Http/Requests/NewsletterRequest.php
   - app/Modifiers
+  - app/Providers/AppServiceProvider.php
   - app/Tags
-  - config/app.php
+  - app/View/Components
   - config/statamic/editions.php
   - config/statamic/git.php
   - config/statamic/search.php
@@ -31,3 +33,5 @@ export_paths:
 dependencies:
   blade-ui-kit/blade-icons: ^1.8
   mallardduck/blade-lucide-icons: ^1.23
+dependencies_dev:
+  laravel/boost: ^1.0
