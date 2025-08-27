@@ -3,8 +3,21 @@ data:
   noindex_local: true
   noindex_staging: true
   noindex_production: false
+  title_separator: '|'
+  collection_defaults:
+    -
+      id: mes72nhz
+      collection: posts
+      fallback: field
+      field_handle: article
+    -
+      id: mes95n0i
+      collection: pages
+      fallback: blocks
   hreflang_auto: false
-  json_ld_type: none
+  json_ld_type: organization
+  organization_name: Bedrock
+  organization_logo: logos/logo-brand.svg
   breadcrumbs: false
   sitemap_collections:
     - pages

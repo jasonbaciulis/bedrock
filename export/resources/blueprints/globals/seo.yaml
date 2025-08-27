@@ -50,67 +50,16 @@ tabs:
               instructions_position: below
               width: 33
               display: Separator
+              default: '|'
           -
             handle: site_name
             field:
               type: text
               localizable: true
               display: 'Website title'
-              instructions: "The title for the website. Defaults to Laravel's App Name."
+              instructions: "The title for the website. Defaults to Laravel `app.name`."
               instructions_position: below
               width: 66
-          -
-            handle: change_page_title
-            field:
-              add_row: 'Add collection default'
-              type: grid
-              localizable: true
-              display: 'Change collection title'
-              instructions: 'Select collections where you want to add something to be part of the page title. For example: _Entry title - **Collection title** - Site title_.'
-              fields:
-                -
-                  handle: collection
-                  field:
-                    max_items: 1
-                    mode: select
-                    display: Collection
-                    type: collections
-                    icon: collections
-                    instructions: 'The collection you want to change the title for.'
-                    width: 33
-                    listable: hidden
-                -
-                  handle: what_to_add
-                  field:
-                    options:
-                      custom_text: 'Custom text'
-                      collection_title: 'The collection title'
-                    multiple: false
-                    max_items: 1
-                    clearable: false
-                    searchable: false
-                    taggable: false
-                    push_tags: false
-                    cast_booleans: false
-                    display: 'What to add'
-                    type: select
-                    icon: select
-                    instructions: 'What to add.'
-                    width: 33
-                    listable: hidden
-                -
-                  handle: custom_text
-                  field:
-                    input_type: text
-                    antlers: false
-                    display: Text
-                    type: text
-                    icon: text
-                    instructions: 'The custom text.'
-                    width: 33
-                    listable: hidden
-                    if:
-                      what_to_add: 'equals custom_text'
       -
         display: Descriptions
         instructions: "Set fallback data per collection to use as meta, OG and Twitter descriptions when users don't fill in those fields."
@@ -187,7 +136,7 @@ tabs:
                       fallback: 'equals custom_text'
       -
         display: Hreflang
-        instructions: 'Set for which sites in your multisite a hreflang tag should be generated.'
+        instructions: 'This will generate a hreflang tag for each site in your sites config.'
         fields:
           -
             handle: hreflang_auto
@@ -233,8 +182,8 @@ tabs:
             field: common.image
             config:
               localizable: true
-              listable: hidden
               display: 'Organization logo'
+              listable: hidden
               instructions: 'Minimum 112px x 112px, will be focal cropped to a square.'
               instructions_position: below
               width: 33
@@ -288,8 +237,8 @@ tabs:
             config:
               container: assets
               localizable: true
-              listable: hidden
               display: 'Social image'
+              listable: hidden
               instructions: 'The default OG image. Can be overridden per entry. The recommended size is 1200px x 630px. This image will be focal cropped to this dimension.'
               instructions_position: below
               width: 50
@@ -299,8 +248,8 @@ tabs:
             config:
               container: assets
               localizable: true
-              listable: hidden
               display: 'Twitter image'
+              listable: hidden
               instructions: 'The default Twitter image. Can be overridden per entry. Images should have an aspect ratio of 2:1 with minimum dimensions of 300x157. This image will be focal cropped to this dimension.'
               instructions_position: below
               width: 50
