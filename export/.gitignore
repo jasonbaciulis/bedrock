@@ -18,6 +18,7 @@ yarn-error.log
 .DS_Store
 /.idea
 /.vscode
+/.cursor
 # Comment the following lines if you don't compile your assets on the server:
 /public/build/
 /public/css/
