@@ -10,7 +10,7 @@
     @elseif ($fallback === 'custom_text')
         {!! $item['custom_text'] !!}
     @elseif ($fallback === 'blocks')
-        @if ($first_block = Arr::first($page->blocks)->all())
+        @if ($first_block = Arr::first($page->blocks)?->all())
             @isset($first_block['text'])
                 {!! Statamic::modify($first_block['text'])->stripTags()->trim()->safeTruncate([160, '…']) !!}
             @endisset
