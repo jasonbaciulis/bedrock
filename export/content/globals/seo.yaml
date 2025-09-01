@@ -19,6 +19,7 @@ data:
   organization_name: Bedrock
   organization_logo: logos/logo-brand.svg
   breadcrumbs: false
+  twitter_handle: jasonbaciulis
   sitemap_collections:
     - pages
   trackers_local: true
