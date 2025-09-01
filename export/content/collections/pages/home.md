@@ -4,11 +4,11 @@ blueprint: pages
 title: Home
 template: default
 updated_by: 6d26d0a8-ff9c-4c3e-a25e-7e036508908c
-updated_at: 1755852380
+updated_at: 1756634033
 blocks:
   -
     id: ZbruxJDq
-    type: hero_home
+    type: hero_demo
     enabled: true
     title: 'The Foundation for your Statamic projects'
     text: 'shadcn/ui style Alpine.js components that you can customize, extend, and build on. Plus page builder and complete SEO setup.'
@@ -28,6 +28,10 @@ blocks:
         url: '#components'
         variant: ghost
   -
+    id: s343JCRf
+    type: style_guide
+    enabled: true
+  -
     id: m3e8vdlz
     title: 'Project inquiry'
     text: 'Demo contact form with sections and conditional fields.'
@@ -37,14 +41,6 @@ blocks:
     success_message: 'Thanks! We got your inquiry and will get back to you within 24 hours.'
     submit_label: 'Submit the inquiry'
   -
-    id: m3h0yigt
-    type: newsletter
-    enabled: true
-  -
-    id: s343JCRf
-    type: style_guide
-    enabled: true
-  -
     id: m5mqwjtr
     title: 'Our team'
     text: 'Made up team for this demo website'
@@ -53,12 +49,10 @@ blocks:
     type: team
     enabled: true
   -
-    id: m4seyrjx
-    title: 'Recent posts'
-    text: 'Some description for the blog'
-    query: latest
-    limit: 3
-    type: blog_excerpt
+    id: m5nrhfol
+    title: 'Search demo'
+    text: 'Search within posts collection'
+    type: search_form
     enabled: true
   -
     id: m5mjha3w
@@ -69,10 +63,16 @@ blocks:
     type: testimonials
     enabled: true
   -
-    id: m5nrhfol
-    title: 'Search demo'
-    text: 'Search within posts collection'
-    type: search_form
+    id: m3h0yigt
+    type: newsletter
+    enabled: true
+  -
+    id: m4seyrjx
+    title: 'Recent posts'
+    text: 'Some description for the blog'
+    query: latest
+    limit: 3
+    type: blog_excerpt
     enabled: true
   -
     id: UXTueUcZ
@@ -90,7 +90,7 @@ blocks:
             content:
               -
                 type: text
-                text: 'Think of it as the "Hello World" of Statamic, but with more bells, whistles, and hidden Easter eggs you''ll probably never find.'
+                text: 'My goal is to make this the go-to Statamic starter kit for Laravel devs. It’s Blade-first (not Antlers), includes reusable Alpine.js components that cover ~90% of projects, and ships with block/set scaffolding commands to speed up your process.'
         type: item
         enabled: true
       -
@@ -102,7 +102,21 @@ blocks:
             content:
               -
                 type: text
-                text: "Sure is! It's written in invisible ink. Or you can check the official "
+                text: 'There is no separate docs site but you can check '
+              -
+                type: text
+                marks:
+                  -
+                    type: link
+                    attrs:
+                      href: 'https://github.com/jasonbaciulis/bedrock/blob/main/export/README.md'
+                      rel: noopener
+                      target: _blank
+                      title: null
+                text: README.md
+              -
+                type: text
+                text: ' and the code is pretty well commented with relevant links to officials '
               -
                 type: text
                 marks:
@@ -116,7 +130,7 @@ blocks:
                 text: 'Statamic docs'
               -
                 type: text
-                text: '—whichever you find first.'
+                text: .
         type: item
         enabled: true
       -
@@ -128,7 +142,7 @@ blocks:
             content:
               -
                 type: text
-                text: 'Absolutely! If by "production" you mean your local environment where you''re the only user. Otherwise, proceed with the usual developer optimism.'
+                text: 'Absolutely! I use it for all client projects and actively maintain it.'
         type: item
         enabled: true
       -
@@ -140,7 +154,21 @@ blocks:
             content:
               -
                 type: text
-                text: 'Report them on GitHub, and we''ll address them faster than you can say "cache cleared." Or, you know, turn it off and on again.'
+                text: 'Report them on '
+              -
+                type: text
+                marks:
+                  -
+                    type: link
+                    attrs:
+                      href: 'https://github.com/jasonbaciulis/bedrock/issues'
+                      rel: noopener
+                      target: _blank
+                      title: null
+                text: GitHub
+              -
+                type: text
+                text: ', and I''ll address them faster than you can say "cache cleared." Or, you know, turn it off and on again.'
         type: item
         enabled: true
       -
@@ -152,7 +180,21 @@ blocks:
             content:
               -
                 type: text
-                text: 'We welcome pull requests, bug reports, and dad jokes. Bonus points if you include all three.'
+                text: 'I welcome pull requests, bug reports or suggestions. Let me know what you think on '
+              -
+                type: text
+                marks:
+                  -
+                    type: link
+                    attrs:
+                      href: 'https://github.com/jasonbaciulis/bedrock/discussions'
+                      rel: noopener
+                      target: _blank
+                      title: null
+                text: 'GitHub discussions'
+              -
+                type: text
+                text: .
         type: item
         enabled: true
       -
@@ -164,7 +206,7 @@ blocks:
             content:
               -
                 type: text
-                text: "Yes, they're located somewhere between the TODO comments and the commented-out console logs."
+                text: 'Yes, some heaver parts of code like Block/Set scaffolding commands have tests.'
         type: item
         enabled: true
       -
@@ -176,7 +218,7 @@ blocks:
             content:
               -
                 type: text
-                text: 'Absolutely. Using this starter kit adds +10 to your Stack Overflow reputation. Disclaimer: This is not legally binding.'
+                text: 'Absolutely. You can learn how to fully utilize what Statamic has to offer and reduce your build time.'
         type: item
         enabled: true
       -
@@ -188,7 +230,7 @@ blocks:
             content:
               -
                 type: text
-                text: 'Our code is dark mode by default. Light mode was deprecated after too many developers complained about the glare.'
+                text: 'The code is dark mode by default. Light mode was deprecated after too many developers complained about the glare.'
         type: item
         enabled: true
       -
@@ -200,7 +242,7 @@ blocks:
             content:
               -
                 type: text
-                text: "Of course! This kit is as flexible as your code after a three-coffee streak. Just don't blame us if it becomes self-aware."
+                text: "Of course! This kit is as flexible as your code after a three-coffee streak. Just don't blame me if it becomes self-aware."
         type: item
         enabled: true
       -
@@ -212,7 +254,21 @@ blocks:
             content:
               -
                 type: text
-                text: 'We operate on a quantum schedule—updates both have and have not been made until you check the commit history.'
+                text: 'Bedrock operates on a quantum schedule—updates both have and have not been made until you check the commit history. On a more serious note, I’m constantly refining Bedrock—just look at the '
+              -
+                type: text
+                marks:
+                  -
+                    type: link
+                    attrs:
+                      href: 'https://github.com/jasonbaciulis/bedrock/releases'
+                      rel: noopener
+                      target: _blank
+                      title: null
+                text: 'release history'
+              -
+                type: text
+                text: .
         type: item
         enabled: true
 seo_noindex: false
@@ -222,4 +278,6 @@ sitemap_change_frequency: weekly
 sitemap_priority: 0.5
 seo_title: 'The Foundation for Statamic projects'
 seo_description: 'Features shadcn/ui style Alpine.js components that you can customize, extend, and build on. Plus a page builder with CLI tools and complete SEO setup'
+og_image: images/bedrock-screenshot-social.png
+twitter_image: images/bedrock-screenshot-social.png
 ---
