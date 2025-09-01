@@ -21,9 +21,9 @@
                 x-init="calcGrid()"
                 x-on:resize.window="calcGrid()"
             >
-                @for ($i = 0; $i < 12; $i++)
+                @for ($i = 1; $i <= 12; $i++)
                     <div class="relative h-40 bg-pink-50">
-                        @unless ($loop->last)
+                        @unless ($i === 12)
                             <span
                                 class="text-muted-foreground absolute top-1/2 left-full hidden -translate-y-1/2 border-b border-dashed border-gray-400 text-center font-mono text-[10px] sm:block"
                                 x-bind:style="`width:${columnGap}px`"
@@ -363,9 +363,12 @@
                         badge
                     </dt>
                     <dd class="flex gap-3">
-                        <span class="badge">Brown</span>
-                        <span class="badge badge--secondary">Brown</span>
-                        <span class="badge badge--outline">Brown</span>
+                        <x-ui.badge variant="primary">Primary</x-ui.badge>
+                        <x-ui.badge variant="secondary" as="a" href="/">
+                            Secondary
+                            <x-lucide-arrow-right />
+                        </x-ui.badge>
+                        <x-ui.badge variant="outline">Outline</x-ui.badge>
                     </dd>
                 </div>
                 <div class="flex items-center">
