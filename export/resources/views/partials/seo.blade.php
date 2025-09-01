@@ -89,12 +89,17 @@
         @if ($seo->json_ld_type->value() === 'custom')
             <script type="application/ld+json" id="schema">{!! $seo->json_ld !!}</script>
         @elseif ($schemaData)
-            <script type="application/ld+json" id="schema">@json($schemaData, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)</script>
+            <script type="application/ld+json" id="schema-{{ $seo->json_ld_type->value() }}">
+                @json($schemaData, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)
+            </script>
         @endif
     @endif
     @isset($page->schema_jsonld)
         <script type="application/ld+json" id="schema-page">{!! $page->schema_jsonld !!}</script>
     @endisset
+
+    {{-- Add JSON-LD coming from other places like FAQs --}}
+    @yield('json_ld')
 
     {{-- Breadcrumbs JSON-ld --}}
     @if ($seo->breadcrumbs && !empty($segment_1))
@@ -147,7 +152,7 @@
         @endif
         <s:glide src="{{ $twitter_image }}" width="1200" height="600" fit="crop_focal" absolute="true">
             <meta name="twitter:image" content="{{ $url }}">
-            <meta name="twitter:image:alt" content="{{ $alt }}">
+            <meta name="twitter:image:alt" content="{{ $alt ?? '' }}">
         </s:glide>
     @endif
 @elseif ($response_code !== 200)
