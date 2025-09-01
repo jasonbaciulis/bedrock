@@ -57,7 +57,7 @@ tabs:
               type: text
               localizable: true
               display: 'Website title'
-              instructions: "The title for the website. Defaults to Laravel `app.name`."
+              instructions: 'The title for the website. Defaults to Laravel `app.name`.'
               instructions_position: below
               width: 66
       -
@@ -250,7 +250,7 @@ tabs:
               localizable: true
               display: 'Twitter image'
               listable: hidden
-              instructions: 'The default Twitter image. Can be overridden per entry. Images should have an aspect ratio of 2:1 with minimum dimensions of 300x157. This image will be focal cropped to this dimension.'
+              instructions: 'The default Twitter image. Can be overridden per entry. Images should have an aspect ratio of 2:1 with minimum dimensions of 1200 x 600px. This image will be focal cropped to this dimension.'
               instructions_position: below
               width: 50
           -
