@@ -112,14 +112,6 @@ tabs:
                 - string
                 - 'max:255'
           -
-            handle: pages
-            field:
-              type: stepper
-              display: Pages
-              validate:
-                - integer
-                - 'max:99'
-          -
             handle: message
             field:
               placeholder: 'Describe your project, needs, and timeline'
@@ -147,7 +139,7 @@ tabs:
                 - sometimes
                 - string
                 - 'max:255'
-              instructions: 'Dictionary (combobox) field demo. Very useful for selecting an item from large data set'
+              instructions: 'Dictionary (combobox) field. Very useful for selecting an item from a large data set'
           -
             handle: current_website
             field:
