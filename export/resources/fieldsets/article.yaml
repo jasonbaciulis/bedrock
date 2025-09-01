@@ -20,6 +20,9 @@ fields:
         - strikethrough
         - code
         - codeblock
+        - small
+        - superscript
+        - subscript
       toolbar_mode: floating
       reading_time: true
       type: bard
@@ -33,16 +36,13 @@ fields:
       remove_empty_nodes: true
       smart_typography: true
       collapse: true
+      word_count: true
       sets:
-        main:
-          display: Main
+        text_layout:
+          display: 'Text & Layout'
+          instructions: 'Callouts, tables, lists, grids, etc.'
+          icon: text-formatting-initial-letter
           sets:
-            picture:
-              display: Picture
-              icon: media-image-picture-orientation
-              fields:
-                -
-                  import: picture
             pull_quote:
               display: 'Pull quote'
               icon: text-formatting-quotation
@@ -55,9 +55,42 @@ fields:
               fields:
                 -
                   import: table
+        media:
+          display: Media
+          instructions: 'Images, videos, audio, etc.'
+          icon: media-image-picture-gallery
+          sets:
+            picture:
+              display: Picture
+              icon: media-image-picture-orientation
+              fields:
+                -
+                  import: picture
             video:
               display: Video
               icon: social-youtube
               fields:
                 -
                   import: video
+        interactive:
+          display: Interactive
+          instructions: 'Calculators, quizzes, widgets, etc.'
+          icon: direction-buttons
+          sets:
+            faqs:
+              display: FAQs
+              icon: alert-help-question
+              fields:
+                -
+                  import: faqs
+        conversion:
+          display: Conversion
+          instructions: 'CTAs & forms that capture leads'
+          icon: money-graph-bar-increase
+          sets:
+            buttons:
+              display: Buttons
+              icon: link
+              fields:
+                -
+                  import: buttons
