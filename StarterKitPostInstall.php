@@ -1,12 +1,12 @@
 <?php
 
-use function Laravel\Prompts\confirm;
+use function Laravel\Prompts\{confirm, info};
 
 class StarterKitPostInstall
 {
     public function handle($console)
     {
-        $console->line('Thanks for installing Bedrock starter kit!');
+        info('Thanks for installing Bedrock starter kit!');
 
         $this->starRepo();
     }
