@@ -1,9 +1,17 @@
 @layer components {
   .card {
-    @apply bg-card text-card-foreground flex flex-col gap-6 rounded-xl border p-6 shadow-sm;
+    @apply bg-card text-card-foreground flex flex-col gap-5 rounded-xl border p-6 shadow-sm;
   }
 
   .card__header {
     @apply flex flex-col gap-1.5;
+  }
+
+  .card__content {
+    @apply flex flex-1 flex-col gap-5;
+  }
+
+  .card__footer {
+    @apply flex items-center;
   }
 }
