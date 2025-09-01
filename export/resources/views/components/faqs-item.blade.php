@@ -1,6 +1,6 @@
 @props(['title', 'text'])
 
-<x-ui.collapsible class="group">
+<x-ui.collapsible {{ $attributes->merge(['class' => 'group']) }}>
     <x-slot:trigger
         class="flex w-full items-center justify-between gap-x-6 py-6 text-left underline-offset-4 hover:underline"
     >
