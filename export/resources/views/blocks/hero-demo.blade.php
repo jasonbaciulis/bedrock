@@ -287,7 +287,7 @@
 
         <div class="col-span-full grid grid-cols-1 gap-4 md:grid-cols-2 xl:col-span-6">
             {{-- Tabs --}}
-            <div class="xl:col-span-full">
+            <div class="grid gap-4 xl:col-span-full xl:grid-cols-2">
                 @php
                     $services_tabs = [
                         (object) [
@@ -296,17 +296,12 @@
                             'features' => ['Automated workflows', 'Data analysis', 'Customer service'],
                         ],
                         (object) [
-                            'title' => 'Membership platforms',
-                            'description' => 'Create a membership platform for your business.',
-                            'features' => ['Membership management', 'Payment processing', 'User management'],
-                        ],
-                        (object) [
                             'title' => 'Web apps',
                             'description' => 'Build apps for your business.',
                             'features' => ['Filament dashboards', 'SPA apps with Inertia and Vue/React', 'Laravel apps'],
                         ],
                         (object) [
-                            'title' => 'Marketing websites',
+                            'title' => 'Websites',
                             'description' => 'Build high-converting websites.',
                             'features' => ['Beautiful design', 'Lightning-fast loading', 'SEO-friendly'],
                         ],
@@ -315,7 +310,7 @@
 
                 <x-ui.tabs>
                     <x-slot:list
-                        class="bg-muted text-muted-foreground flex min-h-9 w-fit flex-wrap items-center justify-center rounded-lg p-[3px] outline-none"
+                        class="bg-muted text-muted-foreground flex min-h-9 w-full items-center justify-center rounded-lg p-[3px] outline-none"
                     >
                         @foreach ($services_tabs as $tab)
                             <x-ui.tabs.trigger
@@ -330,29 +325,79 @@
 
                     <x-slot:panels>
                         @foreach ($services_tabs as $tab)
-                            <x-ui.tabs.panel :name="$loop->iteration" class="flex-1 outline-none">
-                                <div class="card shadow-none">
+                            <x-ui.tabs.panel
+                                :name="$loop->iteration"
+                                class="card h-full justify-between shadow-none"
+                            >
+                                <div class="card__content">
                                     <p class="text-sm">{{ $tab->description }}</p>
                                     <ul class="list-inside list-disc space-y-1 text-sm">
                                         @foreach ($tab->features as $feature)
                                             <li>{{ $feature }}</li>
                                         @endforeach
                                     </ul>
-                                    <div>
-                                        <x-ui.button
-                                            variant="outline"
-                                            size="sm"
-                                            type="button"
-                                            as="button"
-                                        >
-                                            Learn more
-                                        </x-ui.button>
-                                    </div>
+                                </div>
+                                <div class="card__footer">
+                                    <x-ui.button
+                                        variant="outline"
+                                        size="sm"
+                                        type="button"
+                                        as="button"
+                                    >
+                                        Learn more
+                                    </x-ui.button>
                                 </div>
                             </x-ui.tabs.panel>
                         @endforeach
                     </x-slot>
                 </x-ui.tabs>
+
+                <div x-data="{ form: { steps: 5000 } }">
+                    <div class="card shadow-none">
+                        <div class="card__header">
+                            <p class="leading-none font-semibold">Move goal</p>
+                            <p class="text-muted-foreground text-sm">
+                                Set your daily activity goal.
+                            </p>
+                        </div>
+                        <div class="flex flex-1 flex-col items-center gap-4">
+                            <x-ui.form.stepper
+                                model="form.steps"
+                                handle="steps"
+                                id="steps"
+                                display="Steps"
+                                :hide_display="true"
+                                :show_input="false"
+                                :step="100"
+                                :max="30000"
+                                class="flex flex-col px-4 text-4xl font-bold tracking-tighter"
+                            >
+                                <label
+                                    for="steps"
+                                    class="text-muted-foreground text-xs font-normal tracking-normal uppercase"
+                                >
+                                    Steps/day
+                                </label>
+                            </x-ui.form.stepper>
+
+                            <div class="flex w-full items-end gap-2">
+                                @foreach (['h-16', 'h-12', 'h-8', 'h-6', 'h-4', 'h-8', 'h-10', 'h-12', 'h-14', 'h-16'] as $item)
+                                    <div class="bg-foreground {{ $item }} flex-1 rounded-md"></div>
+                                @endforeach
+                            </div>
+                        </div>
+                        <div>
+                            <x-ui.button
+                                variant="secondary"
+                                type="button"
+                                as="button"
+                                class="w-full"
+                            >
+                                Set Goal
+                            </x-ui.button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             {{-- Interactive Components and FAQs --}}
