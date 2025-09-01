@@ -9,6 +9,7 @@
     'instructions',
     'show_input' => true,
     'hide_display' => false,
+    'container_class' => 'flex flex-wrap items-center gap-x-6 gap-y-3',
 ])
 
 @once
@@ -17,11 +18,10 @@
     @endpush
 @endonce
 
-<div
-    class="flex flex-wrap items-center gap-x-6 gap-y-3"
-    x-data="stepper({{ $min }}, {{ $max }}, {{ $step }})"
->
-    <x-ui.label :$display :$id :$hide_display />
+<div class="{{ $container_class }}" x-data="stepper({{ $min }}, {{ $max }}, {{ $step }})">
+    @unless ($slot->hasActualContent())
+        <x-ui.label :$display :$id :$hide_display />
+    @endunless
 
     <div class="flex items-center gap-x-1">
         <button
@@ -60,11 +60,18 @@
                 x-on:change="form.validate('{{ $handle }}')"
                 {{ $attributes }}
             />
-        @else
-            <span
-                class="w-8 text-center text-lg/none font-semibold tabular-nums"
-                x-text="count"
-            ></span>
+        @elseif ($slot->hasActualContent())
+            <input type="hidden" name="{{ $handle }}" value="{{ $model }}" />
+            <div {{ $attributes->class(['text-center']) }}>
+                <output
+                    x-model="{{ $model }}"
+                    x-modelable="count"
+                    id="{{ $id }}"
+                    aria-labelledby="{{ $id }}-label"
+                    class="tabular-nums"
+                ></output>
+                {{ $slot }}
+            </div>
         @endif
 
         <button
