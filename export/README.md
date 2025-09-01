@@ -10,7 +10,9 @@ Before running Statamic, you should ensure that your local machine has PHP and [
 1. Install composer dependencies: `composer install`
 2. Install NPM dependencies: `npm install`
 3. Create a Statamic user: `php please make:user`
-4. Start Laravel's local dev server, npm run dev, start queue: `composer run dev`
+4. Next, install the MCP server and coding guidelines: `php artisan boost:install`
+5. Start Laravel's local dev server, npm run dev, start queue: `composer run dev`
+6. Clear demo content: `php artisan bedrock:demo:clear`
 
 Once you have started the Artisan development server, the website will be accessible in your web browser at [http://localhost:8000](http://localhost:8000). Head to [http://localhost:8000/cp](http://localhost:8000/cp) and use your email address and password to sign into the Statamic control panel.
 
@@ -19,6 +21,9 @@ Once you have started the Artisan development server, the website will be access
 - [TailwindCSS](https://tailwindcss.com/docs/installation) - Utility-first CSS framework.
 - [Alpine.js](https://alpinejs.dev/start-here) - Rugged, minimal tool for composing behavior directly in your markup.
 - [Embla](https://www.embla-carousel.com) - A lightweight carousel library with fluid motion and great swipe precision.
+- [Laravel Precognition](https://laravel.com/docs/12.x/precognition#using-alpine) - provides "live" validation for form fields.
+- [Laravel Boost](https://github.com/laravel/boost) - Accelerates AI-assisted development by providing the essential context that AI needs to generate high-quality, Laravel-specific code.
+- [Blade Icons](https://blade-ui-kit.com/blade-icons) - Easily add SVG icons in your Laravel Blade views from icon sets like Heroicons or Lucide.
 
 ## Views folder structure
 ```
@@ -26,9 +31,8 @@ resources/views/
 ├── blocks/                      # Page building blocks (Replicator fields)
 ├── components/                  # Project specific reusable components
 │   └── ui/                      # Highly-reusable shadcn/ui style Alpine.js components
-│       └── fields/              # Form field types (custom Statamic form fields will require a snake_case view file here)
+│       └── form/                # Form field types (custom Statamic form fields will require a snake_case view file here)
 ├── partials/                    # Template partials and fragments (things that aren't really reusable go here)
-│   └── alpine/                  # Alpine.js specific partials (e.g. if using Statamic REST API to load more entries)
 ├── posts/                       # Posts collection templates
 ├── sets/                        # Content sets for Article Block
 ├── sitemap/                     # Sitemap templates
@@ -45,14 +49,14 @@ There is a nice list of custom scripts available in the command line to make a d
 ### Blocks
 Blocks are like LEGO bricks that provide you the maximum flexibility when building pages. Blocks are based on [Replicator Fieldtype](https://statamic.dev/fieldtypes/replicator).
 
-#### Add
+#### Make
 `php please make:block`
 
 - Adds a set to the Blocks field in `resources/fieldsets/blocks.yaml`.
 - Creates a fieldset for a block in `resources/fieldsets/{file_name}.yaml`.
 - Creates a view with default markup in `resources/views/blocks/{file-name}.blade.php`.
 
-#### Remove
+#### Delete
 `php please delete:block`
 
 Removes a set from the Blocks field and all associated files.
@@ -60,14 +64,14 @@ Removes a set from the Blocks field and all associated files.
 ### Sets
 Sets provide a powerful content creation experience with unparalleled flexibility for building entries i.e., Blog posts. Sets live in the the Article field which is based on [Bard Fieldtype](https://statamic.dev/fieldtypes/bard).
 
-#### Add
+#### Make
 `php please make:set`
 
 - Adds a set to the Article in `resources/fieldsets/article.yaml`.
 - Creates a fieldset for a set in `resources/fieldsets/{file_name}.yaml`.
 - Creates a set view with default markup in `resources/views/sets/{file-name}.blade.php`.
 
-#### Remove
+#### Delete
 `php please delete:set`
 
 Removes a set from the Article and all associated files.
