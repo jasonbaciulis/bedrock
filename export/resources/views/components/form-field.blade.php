@@ -1,8 +1,8 @@
 <template x-if="{!! $show_field !!}">
     <div
-        {{ $attributes->class(['grid content-start gap-3', 'hidden' => ($input_type ?? null) === 'hidden', $container_class]) }}
+        {{ $attributes->class(['grid content-start gap-3', 'hidden' => ($input_type ?? null) === 'hidden', $containerClass()]) }}
     >
-        @unless (in_array($type, $fields_without_labels) || ($input_type ?? null) === 'hidden')
+        @unless (in_array($type, $fieldsWithoutLabels()) || ($input_type ?? null) === 'hidden')
             <x-ui.label :$id :$display :hide_display="$hide_display ?? false" />
         @endunless
 
@@ -14,7 +14,7 @@
                 
             @endcomponent
 
-            @if ($instructions && ! in_array($type, $fields_without_labels))
+            @if ($instructions && ! in_array($type, $fieldsWithoutLabels()))
                 <x-ui.input-instructions :$instructions :$id />
             @endif
 

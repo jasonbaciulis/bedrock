@@ -13,12 +13,12 @@ class FormField extends Component
      */
     public function __construct(public array $field) {}
 
-    protected function fieldsWithoutLabels(): array
+    public function fieldsWithoutLabels(): array
     {
         return ['toggle', 'radio', 'checkboxes', 'stepper'];
     }
 
-    protected function containerClass(): string
+    public function containerClass(): string
     {
         $width = (int) ($this->field['width'] ?? 100);
         return match ($width) {
@@ -36,14 +36,6 @@ class FormField extends Component
      */
     public function render(): View|Closure|string
     {
-        return view(
-            'components.form-field',
-            collect($this->field)
-                ->merge([
-                    'fields_without_labels' => $this->fieldsWithoutLabels(),
-                    'container_class' => $this->containerClass(),
-                ])
-                ->toArray()
-        );
+        return view('components.form-field', [...$this->field]);
     }
 }
