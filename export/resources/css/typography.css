@@ -11,7 +11,7 @@
   --tw-prose-links: var(--color-primary);
 }
 
-@layer utilities {
+@layer components {
   .prose {
     ul > li p,
     ol > li p {
