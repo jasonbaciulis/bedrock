@@ -9,7 +9,14 @@
         @include('partials.browser-appearance')
 
         <s:vite src="resources/css/site.css" />
-        {{-- Async load fonts --}}
+
+        {{--
+            Async-load fonts:
+            1) Preload fonts.css (rel="preload" as="style") so it starts downloading early without applying.
+            2) Load again with media="print", then switch to media="all" onload to avoid render blocking.
+            With font-display: swap in fonts.css, fallback text paints immediately; the webfont swaps in when ready.
+        --}}
+        <s:vite src="resources/css/fonts.css" attr:style:rel="preload" attr:style:as="style" />
         <s:vite
             src="resources/css/fonts.css"
             attr:style:media="print"
