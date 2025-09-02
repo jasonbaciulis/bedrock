@@ -46,7 +46,11 @@
         <span class="sr-only">Toggle {{ Str::headline($handle) }}</span>
     </button>
 
-    <label class="text-foreground prose text-sm/none" id="{{ $id }}-label" for="{{ $id }}">
+    <label
+        class="text-foreground prose prose-a:underline prose-a:hover:no-underline text-sm/none"
+        id="{{ $id }}-label"
+        for="{{ $id }}"
+    >
         {!! $inline_label !!}
     </label>
 
