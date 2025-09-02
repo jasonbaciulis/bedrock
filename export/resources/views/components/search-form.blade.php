@@ -26,10 +26,16 @@
             autocomplete="off"
             spellcheck="false"
         />
-        <button class="btn absolute inset-y-0 left-0 px-4" type="submit">
+        <button class="btn absolute inset-y-0 left-0 px-4" type="submit" aria-label="Search">
             <x-lucide-search class="opacity-50" />
         </button>
-        <button x-cloak x-show="search" class="btn absolute inset-y-0 right-0 px-4" type="reset">
+        <button
+            x-cloak
+            x-show="search"
+            class="btn absolute inset-y-0 right-0 px-4"
+            type="reset"
+            aria-label="Clear search"
+        >
             <x-lucide-x class="opacity-50" />
         </button>
     </div>
