@@ -34,7 +34,11 @@
             class="mx-auto grid max-w-md gap-2"
         >
             <div class="flex flex-col gap-3 md:flex-row">
-                <x-ui.form.honeypot model="form.honeypot" handle="fax_number" />
+                <x-ui.form.honeypot
+                    model="form.honeypot"
+                    handle="fax_number"
+                    :form-handle="$block->type"
+                />
                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
 
                 <x-ui.label

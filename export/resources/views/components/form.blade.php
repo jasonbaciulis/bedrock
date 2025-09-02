@@ -60,7 +60,11 @@
         </template>
 
         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-        <x-ui.form.honeypot model="form.{{ $form->honeypot }}" handle="{{ $form->honeypot }}" />
+        <x-ui.form.honeypot
+            model="form.{{ $form->honeypot }}"
+            :handle="$form->honeypot"
+            :form-handle="$form->handle"
+        />
 
         <div class="space-y-12 divide-y divide-gray-300">
             @foreach ($sections as $section)
