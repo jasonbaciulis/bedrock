@@ -104,7 +104,7 @@
             <div class="mb-10 border-b border-gray-300">
                 <h3 class="h3 pb-6">Buttons</h3>
             </div>
-            <div class="space-y-10">
+            <dl class="space-y-10">
                 <div class="flex flex-col gap-y-6 md:flex-row md:items-end">
                     <dt
                         class="content-sm text-muted-foreground shrink-0 font-mono leading-6 md:w-44"
@@ -302,14 +302,14 @@
                         <x-ui.button variant="link" label="Get started" link_type="url" url="/" />
                     </dd>
                 </div>
-            </div>
+            </dl>
         </div>
 
         <div>
             <div class="mb-10 border-b border-gray-300">
                 <h3 class="h3 pb-6">Headings</h3>
             </div>
-            <div class="space-y-10">
+            <dl class="space-y-10">
                 <div class="flex items-center">
                     <dt class="content-sm text-muted-foreground w-16 shrink-0 font-mono leading-6">
                         h1
@@ -350,14 +350,14 @@
                     </dt>
                     <dd class="h6 truncate">The quick brown fox jumps over the lazy dog.</dd>
                 </div>
-            </div>
+            </dl>
         </div>
 
         <div>
             <div class="mb-10 border-b border-gray-300">
                 <h3 class="h3 pb-6">Typography</h3>
             </div>
-            <div class="space-y-10">
+            <dl class="space-y-10">
                 <div class="flex items-center">
                     <dt class="content-sm text-muted-foreground w-32 shrink-0 font-mono leading-6">
                         badge
@@ -415,7 +415,7 @@
                         The quick brown fox jumps over the lazy dog.
                     </dd>
                 </div>
-            </div>
+            </dl>
         </div>
     </div>
 </section>

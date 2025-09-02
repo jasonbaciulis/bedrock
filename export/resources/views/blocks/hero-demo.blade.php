@@ -428,7 +428,7 @@
                         ];
                     @endphp
 
-                    <div class="space-y-2">
+                    <dl class="space-y-2">
                         @foreach ($faqs as $faq)
                             <x-ui.collapsible>
                                 <x-slot:trigger
@@ -445,7 +445,7 @@
                                 </x-slot>
                             </x-ui.collapsible>
                         @endforeach
-                    </div>
+                    </dl>
                 </div>
 
                 {{-- Dialog and Dropdown --}}
