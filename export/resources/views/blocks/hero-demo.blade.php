@@ -547,7 +547,7 @@
 
                             <x-slot:content>
                                 @foreach ($actions as $action)
-                                    <x-ui.dropdown.item href="javascript:void(0)">
+                                    <x-ui.dropdown.item href="/" x-on:click.prevent="close()">
                                         {{ svg($action->icon) }}
                                         {!! $action->label !!}
                                     </x-ui.dropdown.item>
