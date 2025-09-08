@@ -82,7 +82,7 @@ fields:
               icon: alert-help-question
               fields:
                 -
-                  import: faqs
+                  import: faqs_set
         conversion:
           display: Conversion
           instructions: 'CTAs & forms that capture leads'

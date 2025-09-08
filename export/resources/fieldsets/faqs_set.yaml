@@ -1,0 +1,33 @@
+title: 'FAQs set'
+fields:
+  -
+    handle: items
+    field:
+      button_label: 'Add Item'
+      type: replicator
+      display: Items
+      sets:
+        new_set_group:
+          display: 'New Set Group'
+          sets:
+            item:
+              display: Item
+              hide: true
+              fields:
+                -
+                  handle: title
+                  field:
+                    type: text
+                    display: Title
+                -
+                  handle: text
+                  field: common.text_basic
+                  config:
+                    buttons:
+                      - bold
+                      - italic
+                      - underline
+                      - unorderedlist
+                      - orderedlist
+                      - anchor
+                    display: Text
