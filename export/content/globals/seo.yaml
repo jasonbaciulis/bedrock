@@ -29,7 +29,7 @@ data:
   use_fathom: false
   use_cloudflare_web_analytics: false
   tracker_type: gtm
-  google_tag_manager: G-90000000
+  google_tag_manager: G-9Q1RFFQP1R
   use_cookie_dialog: true
   cookie:
     title: 'Cookie Settings'
