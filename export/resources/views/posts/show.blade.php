@@ -20,7 +20,7 @@
             </div>
         </div>
 
-        @include('blocks.article', ['article' => $page->article])
+        @include('blocks.article', ['block' => $page])
 
         @if ($page->show_related_posts)
             @include('partials.related-posts')
