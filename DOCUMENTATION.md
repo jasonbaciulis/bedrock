@@ -213,5 +213,5 @@ npm run build
 {SITE_PHP} artisan statamic:static:clear
 {SITE_PHP} artisan statamic:static:warm --queue
 
-echo "🚀 Website deployed!"
+echo "Website deployed!"
 ```
