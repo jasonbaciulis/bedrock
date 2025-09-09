@@ -11,7 +11,7 @@ Features shadcn/ui style Alpine.js components that you can customize, extend, an
 - **SEO**. Full SEO settings without extra addon. Including cookie consent dialog that works with GTM.
 - **Style guide.** A Block that’s very useful when starting projects. It’s more of an upgrade to your dev process that let’s you see all your small UI parts in one place before starting to build other Blocks and pages.
 
-## **Installation**
+## Installation
 
 Using the [Statamic CLI](https://github.com/statamic/cli) tool run the following command:
 
@@ -19,6 +19,9 @@ Using the [Statamic CLI](https://github.com/statamic/cli) tool run the following
 statamic new {sitename} jasonbaciulis/bedrock
 ```
 
-## **Contributing**
+## Documentation
+You can find [docs on GitHub](https://github.com/jasonbaciulis/bedrock/blob/main/DOCUMENTATION.md).
+
+## Contributing
 
 If you found a bug or have some ideas how to make Bedrock even better, please [create an issue](https://github.com/jasonbaciulis/bedrock/issues/new) or submit a PR on GitHub.
