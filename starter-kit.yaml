@@ -27,7 +27,6 @@ export_paths:
   - .cursorrules
   - package.json
   - prettier.config.js
-  - AGENTS.md
   - CLAUDE.md
   - vite.config.js
 dependencies:
