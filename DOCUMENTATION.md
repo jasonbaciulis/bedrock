@@ -2,17 +2,22 @@
 
 ## Requirements
 
-Before running Statamic, you should ensure that your local machine has PHP and [Composer](https://getcomposer.org/) installed. If you are developing on macOS, PHP and Composer can be installed via [Homebrew](https://brew.sh/). In addition, we recommend [installing Node and NPM](https://nodejs.org/en/).
+Before running Statamic, you should ensure that your local machine has PHP and [Composer](https://getcomposer.org/) installed. If you are developing on macOS, PHP and Composer can be installed via [Homebrew](https://brew.sh/). In addition, I recommend [installing Node and NPM](https://nodejs.org/en/).
 
+## Installation
 
-## Installation instructions
+Using the [Statamic CLI](https://github.com/statamic/cli) tool run the following command:
 
-1. Install composer dependencies: `composer install`
+```bash
+statamic new project_name jasonbaciulis/bedrock
+```
+
+1. Navigate to the installed project folder: `cd project_name`
 2. Install NPM dependencies: `npm install`
 3. Create a Statamic user: `php please make:user`
-4. Next, install the MCP server and coding guidelines: `php artisan boost:install`
+4. (Optional) install the MCP server and AI coding guidelines: `php artisan boost:install`
 5. Start Laravel's local dev server, npm run dev, start queue: `composer run dev`
-6. Clear demo content: `php artisan bedrock:demo:clear`
+6. (Optional) Clear demo content: `php artisan bedrock:demo:clear`
 
 Once you have started the Artisan development server, the website will be accessible in your web browser at [http://localhost:8000](http://localhost:8000). Head to [http://localhost:8000/cp](http://localhost:8000/cp) and use your email address and password to sign into the Statamic control panel.
 
