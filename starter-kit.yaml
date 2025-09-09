@@ -29,7 +29,6 @@ export_paths:
   - prettier.config.js
   - AGENTS.md
   - CLAUDE.md
-  - DOCUMENTATION.md
   - vite.config.js
 dependencies:
   blade-ui-kit/blade-icons: ^1.8
