@@ -1,144 +1,83 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guidance for AI coding agents working in this repository. Follow these conventions to keep changes consistent, safe, and easy to maintain.
+
+Scope: This file applies to the entire repository.
 
 ## Project Overview
+- Stack: Laravel 12 (PHP 8.2+), Statamic 5 (flat‑file CMS), Blade, Tailwind CSS 4, Alpine.js, Vite.
+- Demo: https://bedrock.remarkable.dev
+- Content is file‑based under `content/`; no database by default.
 
-**Bedrock** is a Statamic starter-kit that demonstrates a Statamic CMS built on Laravel with a flat-file architecture. This is a sophisticated CMS project with custom CLI tooling and a component-based architecture.
+## Local Setup
+1. `composer install`
+2. `npm install`
+3. Create a Statamic user: `php please make:user`
+4. Optional AI tooling: `php artisan boost:install`
+5. Start dev environment: `composer run dev` (serves Laravel, runs queue, logs, and Vite)
+6. Optional: Clear demo content: `php artisan bedrock:clear`
 
-- **Demo Site**: https://bedrock.remarkable.dev
-- **Primary Tech Stack**: Statamic (Laravel CMS), Blade templating, TailwindCSS, AlpineJS
-- **Architecture**: Component-based with modular blocks and sets system
-- **Content Strategy**: Flat-file CMS with YAML front matter and Markdown content
+App runs at `http://localhost:8000` and the Statamic Control Panel at `/cp`.
 
 ## Essential Commands
+- Dev server: `php artisan serve`
+- Queue worker: `php artisan queue:listen`
+- Vite dev/build: `npm run dev`, `npm run build`
+- Tests: `php artisan test` or `composer test`
+- Cache control: `php artisan cache:clear`, `php artisan config:clear`, `php artisan route:clear`
+- Statamic content cache: `php please stache:warm`
+- Static cache: `php please static:clear`, `php please static:warm --queue`
 
-### Development Environment
-```bash
-# Start full development environment (server + queue + logs + vite)
-composer run dev
+## Project Structure (key paths)
+- `app/` Laravel application code (commands, HTTP, support classes)
+- `resources/views/`
+  - `blocks/` Page building blocks (Replicator)
+  - `components/` Reusable components (UI in `components/ui/`)
+  - `sets/` Bard Article sets
+  - Also: `partials/`, `posts/`, `sitemap/`, `errors/`
+- `resources/fieldsets/` Field definitions (`blocks.yaml`, `article.yaml`, and individual fieldsets)
+- `content/` Flat‑file content (collections, taxonomies, navigation, globals)
+- `tests/` Pest tests (`Feature/`, `Unit/`)
 
-# Individual components
-php artisan serve              # Laravel development server
-php artisan queue:listen       # Queue worker
-npm run dev                    # Vite development build
-npm run build                  # Production build
+## Scaffolding Blocks & Sets
+Always prefer CLI generators over hand‑creating files:
+- Make block: `php please make:bedrock-block`
+- Delete block: `php please delete:bedrock-block`
+- Make set: `php please make:bedrock-set`
+- Delete set: `php please delete:bedrock-set`
 
-# User management
-php please make:user           # Create Statamic admin user
-```
+These commands will create fieldsets, Blade templates, and update the parent YAML definitions.
 
-### Testing & Code Quality
-```bash
-# Run tests
-php artisan test               # Run all tests
-composer test                  # Alternative test command
+## Conventions
+- Naming
+  - Blade views: `kebab-case.blade.php`
+  - Fieldset YAML: `snake_case.yaml`
+  - PHP classes: `PascalCase.php`; methods/variables: `camelCase`
+- Styling
+  - Tailwind CSS v4 with utilities-first approach; extract repeated patterns into components where practical.
+  - Import Tailwind v4 via `@import "tailwindcss";` in CSS (not `@tailwind …`).
+  - Avoid deprecated utilities; e.g., use `text-ellipsis` instead of `overflow-ellipsis`, `shrink`/`grow` instead of `flex-shrink`/`flex-grow`.
+- JavaScript
+  - Use Alpine.js for interactivity; keep `x-data` focused per component and avoid large, shared global state. Complex logic goes in separate JS files in `resources/js/`. Load JS conditionally where needed using: `@once` and `@push('scripts')` directives.
 
-# Code formatting
-./vendor/bin/pint              # Fix PHP code style with Laravel Pint
-```
+- Boundaries
+  - Reuse existing components and patterns; match neighboring file style and structure.
+  - Do not introduce new top‑level directories or change dependencies without explicit approval.
+  - Keep changes minimal and scoped; avoid unrelated refactors.
 
-### Content & Cache Management
-```bash
-# Content cache
-php please stache:warm         # Warm Statamic content cache
-php please static:clear        # Clear static cache
-php please static:warm --queue # Generate static pages (queue)
+## Statamic Tips
+- Content lives under `content/` and is committed to git.
+- After modifying content/fieldsets, warm caches if needed: `php please stache:warm`.
+- Production uses full static caching; validate static warming paths with `php please static:warm --queue` when relevant.
 
-# Clear caches
-php artisan cache:clear
-php artisan config:clear
-php artisan route:clear
-```
+## Blade & Statamic Patterns
+Examples you can follow in templates:
 
-### Custom CLI Commands (Blocks & Sets)
-```bash
-# Block management (page building components)
-php please make:block          # Create new block with fieldset and template
-php please delete:block        # Remove block and all associated files
-
-# Set management (content composition for articles)
-php please make:set            # Create new set with fieldset and template
-php please delete:set          # Remove set and all associated files
-```
-
-## Architecture & File Structure
-
-### Component Hierarchy
-```
-resources/views/
-├── blocks/                    # Page building blocks (Replicator fields)
-├── components/               # Project-specific reusable components
-│   └── ui/                   # shadcn/ui style Alpine.js components
-│       └── form/             # Form-specific components
-├── partials/                 # Template fragments (low reusability)
-├── posts/                    # Posts collection templates
-├── sets/                     # Content sets for Article blocks (Bard fieldtype)
-├── sitemap/                  # Sitemap templates
-└── errors/                   # Error page templates
-```
-
-### Content Structure (Flat-file)
-```
-content/
-├── collections/              # Content collections
-│   ├── pages/               # Static pages
-│   ├── posts/               # Blog posts
-│   ├── team/                # Team members
-│   └── testimonials/        # Customer testimonials
-├── globals/                 # Global content (site settings)
-├── navigation/              # Navigation menus
-└── taxonomies/              # Categories, tags
-```
-
-### Configuration Files
-```
-resources/fieldsets/         # Field definitions for content types
-resources/fieldsets/blocks.yaml    # Block definitions
-resources/fieldsets/article.yaml   # Article field with sets
-resources/css/config.css            # Custom Tailwind config
-resources/css/typography.css        # Prose class customization
-```
-
-## Development Patterns
-
-### Creating Components
-
-**Always use CLI commands** for blocks and sets instead of manual file creation:
-
-```bash
-# For page building blocks
-php please make:block
-
-# For article content sets
-php please make:set
-```
-
-These commands automatically:
-- Create fieldset YAML files
-- Generate Blade templates with proper structure
-- Add definitions to parent fieldsets (blocks.yaml or article.yaml)
-
-### File Naming Conventions
-- **Blade templates**: `kebab-case.blade.php`
-- **YAML fieldsets**: `snake_case.yaml`
-- **PHP classes**: `PascalCase.php`
-- **CSS/JS files**: `kebab-case.css`, `camelCase.js`
-
-### Statamic Blade Patterns
 ```blade
 {{-- Conditional rendering --}}
 @isset($field_name)
     <div>{!! $field_name !!}</div>
 @endisset
-
-{{-- Collection loops --}}
-<s:collection from="posts" limit="5" sort="date:desc">
-    <article>
-        <h2>{!! $title !!}</h2>
-        <p>{!! $excerpt !!}</p>
-    </article>
-</s:collection>
 
 {{-- Replicator blocks --}}
 @isset($blocks)
@@ -148,62 +87,12 @@ These commands automatically:
 @endisset
 ```
 
-### Styling Guidelines
-- **Primary**: TailwindCSS utility classes
-- **Custom styles**: Use `@apply` directives in component CSS files
-- **Mobile-first**: Always design responsively
-- **Configuration**: Extend in `resources/css/config.css`
+## Performance & SEO
+- Marketing‑site context: prioritize accessibility, semantic HTML, and good Core Web Vitals.
+- Leverage Statamic image transforms and caching for performance.
 
-### JavaScript Guidelines
-- **AlpineJS**: Primary framework for interactivity
-- Keep `x-data` simple and focused on component state
-- Complex logic goes in separate JS files in `resources/js/`
-- Load JS conditionally when components are used
-
-## Important Notes
-
-### Flat-file Architecture
-- **No database**: All content stored in files under `content/`
-- **Content changes**: Require `php please stache:warm` to update cache
-- **Version control**: Content files are committed to git
-
-### Static Generation Support
-- Supports full static site generation via `statamic/ssg`
-- Test in both dynamic and static modes
-- Production uses `STATAMIC_STATIC_CACHING_STRATEGY=full`
-
-### Development Workflow
-1. Start with `composer run dev` for full development stack
-2. Use CLI commands for creating blocks/sets
-3. Test changes in both development and static modes
-4. Run `php please stache:warm` after content modifications
-5. Use `./vendor/bin/pint` for PHP code formatting
-
-### Performance Considerations
-- This is a marketing website (consider SEO)
-- Full static caching enabled in production
-- Image optimization through Statamic's asset pipeline
-- Mobile-first responsive design patterns
-
-## Key Dependencies
-
-### PHP/Laravel
-- **Laravel 12** (latest framework version)
-- **Statamic CMS 5** (flat-file CMS)
-- **Laravel Pint** (PHP code formatting)
-- **Pest PHP** (testing framework)
-
-### JavaScript/CSS
-- **TailwindCSS 4** (utility-first CSS)
-- **AlpineJS 3** (reactive JavaScript framework)
-- **Vite** (build tool)
-- **Embla Carousel** (carousel component)
-- **Laravel Precognition** (live form validation)
-
-### Development Tools
-- **Laravel Boost** (AI development context)
-- **Prettier** (code formatting with Blade support)
-- **Laravel Debugbar** (development debugging)
+## References
+- `package/DOCUMENTATION.md` — starter kit documentation
 
 ===
 

@@ -27,7 +27,7 @@ export_paths:
   - .cursorrules
   - package.json
   - prettier.config.js
-  - CLAUDE.md
+  - AGENTS.md
   - vite.config.js
 dependencies:
   blade-ui-kit/blade-icons: ^1.8

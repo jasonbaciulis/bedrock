@@ -6,9 +6,9 @@ This is a Statamic CMS project (Laravel-based flat-file CMS) with Blade templati
 ## Key Rules
 
 ### Always Use CLI Commands
-- Use `php please make:block` for new blocks, never create manually
-- Use `php please make:set` for new sets, never create manually
-- Use `php please delete:block` and `php please delete:set` for removal
+- Use `php please make:bedrock-block` for new blocks, never create manually
+- Use `php please make:bedrock-set` for new sets, never create manually
+- Use `php please delete:bedrock-block` and `php please delete:bedrock-set` for removal
 
 ### File Naming Conventions
 - Blade templates: `kebab-case.blade.php`
