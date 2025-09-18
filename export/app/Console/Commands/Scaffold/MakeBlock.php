@@ -7,11 +7,14 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Statamic\Facades\Config;
 use App\Support\Yaml\BlocksYaml;
+use App\Console\Commands\Scaffold\Concerns\ManagesFieldsetFiles;
 use function Laravel\Prompts\{select, suggest, text, info};
 
 class MakeBlock extends Command
 {
-    protected $signature = 'make:block
+    use ManagesFieldsetFiles;
+
+    protected $signature = 'make:bedrock-block
         {group? : The group handle (e.g. hero)}
         {name? : The block display name}
         {--instructions= : Editor instructions}
@@ -57,7 +60,7 @@ class MakeBlock extends Command
         $fieldset = Str::slug($name, '_', $locale);
 
         try {
-            $this->assertWritable($fieldset, $view, (bool) $this->option('force'));
+            $this->assertFilesWritable($fieldset, $view, (bool) $this->option('force'), 'blocks');
             $this->createFieldset($fieldset, $name);
             $this->createPartial($view, $name);
             $this->updateBlocksFieldset($group, $fieldset, $name, $instructions);
@@ -68,18 +71,6 @@ class MakeBlock extends Command
 
         info("Created '{$name}' block in '{$groups[$group]}' group.");
         return self::SUCCESS;
-    }
-
-    private function assertWritable(string $fieldset, string $view, bool $force): void
-    {
-        $fieldsetPath = base_path("resources/fieldsets/{$fieldset}.yaml");
-        $viewPath = base_path("resources/views/blocks/{$view}.blade.php");
-
-        foreach ([$fieldsetPath, $viewPath] as $path) {
-            if ($this->files->exists($path) && !$force) {
-                throw new \RuntimeException("File exists: {$path} (use --force to overwrite)");
-            }
-        }
     }
 
     private function createFieldset(string $fieldset, string $name): void

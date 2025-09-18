@@ -71,6 +71,17 @@ class GroupedSetsYaml
         $this->write($data);
     }
 
+    /**
+     * Get the raw set configuration for a given group and set handle.
+     */
+    public function getSet(string $groupHandle, string $setHandle): ?array
+    {
+        $data = $this->read();
+        $root = $this->groupsRoot($data);
+
+        return $root[$groupHandle]['sets'][$setHandle] ?? null;
+    }
+
     private function groupsRoot(array $data): array
     {
         $index = $this->groupFieldIndexOrFail($data);

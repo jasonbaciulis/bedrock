@@ -7,11 +7,14 @@ use Statamic\Facades\Config;
 use Illuminate\Console\Command;
 use App\Support\Yaml\ArticleYaml;
 use Illuminate\Filesystem\Filesystem;
+use App\Console\Commands\Scaffold\Concerns\ManagesFieldsetFiles;
 use function Laravel\Prompts\{select, text, info};
 
 class MakeSet extends Command
 {
-    protected $signature = 'make:set
+    use ManagesFieldsetFiles;
+
+    protected $signature = 'make:bedrock-set
         {group? : Group handle in Article}
         {name?  : Set display name}
         {--instructions= : Editor instructions}
@@ -57,7 +60,7 @@ class MakeSet extends Command
         $fieldset = Str::slug($name, '_', $locale);
 
         try {
-            $this->assertWritable($fieldset, $view, (bool) $this->option('force'));
+            $this->assertFilesWritable($fieldset, $view, (bool) $this->option('force'), 'sets');
             $this->createFieldset($fieldset, $name);
             $this->createPartial($view, $name);
             $this->updateArticleFieldset($group, $fieldset, $name, $instructions);
@@ -68,18 +71,6 @@ class MakeSet extends Command
 
         info("Created '{$name}' set in '{$groups[$group]}' group.");
         return self::SUCCESS;
-    }
-
-    private function assertWritable(string $fieldset, string $view, bool $force): void
-    {
-        $fieldsetPath = base_path("resources/fieldsets/{$fieldset}.yaml");
-        $viewPath = base_path("resources/views/sets/{$view}.blade.php");
-
-        foreach ([$fieldsetPath, $viewPath] as $path) {
-            if ($this->files->exists($path) && !$force) {
-                throw new \RuntimeException("File exists: {$path} (use --force to overwrite)");
-            }
-        }
     }
 
     private function createFieldset(string $fieldset, string $name): void

@@ -10,20 +10,20 @@ use Illuminate\Console\Command;
 use Statamic\Facades\GlobalVariables;
 use Statamic\Facades\Entry as EntryFacade;
 
-use function Laravel\Prompts\{confirm, info, warning};
-use Illuminate\Support\Collection as SupportCollection;
+use function Laravel\Prompts\{confirm, info};
+use Statamic\Facades\Asset;
 
 class ClearDemoContent extends Command
 {
     /**
      * The name and signature of the console command.
      */
-    protected $signature = 'bedrock:demo:clear {--force : Run without confirmation}';
+    protected $signature = 'bedrock:clear {--force : Run without confirmation}';
 
     /**
      * The console command description.
      */
-    protected $description = 'Clear demo content (entries, nav items, taxonomy terms, globals) while preserving the home page.';
+    protected $description = 'Clear demo content (entries, nav items, taxonomy terms, globals, assets) while preserving the home page and logos.';
 
     public function handle(): int
     {
@@ -41,13 +41,8 @@ class ClearDemoContent extends Command
         }
 
         $home = $this->findHomeEntry();
-        if (!$home) {
-            warning(
-                "Home page entry (collection 'pages', slug 'home') was not found. All entries will be deleted."
-            );
-        }
 
-        $this->deleteEntriesExceptHome($home?->id());
+        $this->deleteEntries($home?->id());
         if ($home) {
             $this->cleanHomeEntryFields($home);
         }
@@ -60,47 +55,25 @@ class ClearDemoContent extends Command
             'social_media',
             'theme',
         ]);
-
-        // TODO: delete assets except logos
+        $this->deleteAssets();
 
         info('Demo content cleared.');
 
         return self::SUCCESS;
     }
 
-    private function findHomeEntry(): ?\Statamic\Entries\Entry
+    private function findHomeEntry(): ?Entry
     {
-        // Prefer simple scan to keep static analysis happy without relying on QueryBuilder types.
         return EntryFacade::whereCollection('pages')
             ->filter(fn($entry) => $entry->slug() === 'home')
             ->first();
     }
 
-    private function deleteEntriesExceptHome(?string $homeId): void
+    private function deleteEntries(?string $homeId): void
     {
-        $allEntries = EntryFacade::all();
-
-        $toDelete = $allEntries->reject(function ($entry) use ($homeId) {
-            if (!$homeId) {
-                return false;
-            }
-
-            // Keep the home entry
-            if ($entry->id() === $homeId) {
-                return true;
-            }
-
-            return false;
-        });
-
-        /** @var \Statamic\Entries\Entry $entry */
-        foreach ($toDelete as $entry) {
-            try {
-                $entry->delete();
-            } catch (\Throwable $e) {
-                // Continue even if a single entry fails to delete.
-            }
-        }
+        EntryFacade::all()
+            ->reject(fn($entry) => $entry->id() === $homeId) // Keep the home page
+            ->each(fn($entry) => $entry->delete());
 
         info('Deleted all entries except home page.');
     }
@@ -121,32 +94,18 @@ class ClearDemoContent extends Command
 
     private function clearAllNavigationTrees(): void
     {
-        $navs = Nav::all();
-        $sites = Site::all()->map->handle();
-
-        foreach ($navs as $nav) {
-            foreach ($sites as $site) {
-                $tree = $nav->in($site);
-                if ($tree) {
-                    $tree->tree([])->save();
-                }
-            }
-        }
+        Nav::all()->each(
+            fn($nav) => Site::all()
+                ->map->handle()
+                ->each(fn($site) => $nav->in($site)->tree([])->save())
+        );
 
         info('Cleared all navigation trees.');
     }
 
     private function deleteAllCategoryTerms(): void
     {
-        $terms = Term::whereTaxonomy('categories');
-
-        foreach ($terms as $term) {
-            try {
-                $term->delete();
-            } catch (\Throwable $e) {
-                // Continue even if a single term fails to delete.
-            }
-        }
+        Term::whereTaxonomy('categories')->each(fn($term) => $term->delete());
 
         info("Deleted 'categories' taxonomy terms.");
     }
@@ -157,17 +116,21 @@ class ClearDemoContent extends Command
     private function deleteSelectedGlobalVariables(array $handles): void
     {
         foreach ($handles as $handle) {
-            /** @var SupportCollection $variables */
-            $variables = GlobalVariables::whereSet($handle);
-            foreach ($variables as $vars) {
-                try {
-                    $vars->delete();
-                } catch (\Throwable $e) {
-                    // Continue even if a single variables file fails to delete.
-                }
-            }
-
-            info("Deleted global variables for set '{$handle}'.");
+            GlobalVariables::whereSet($handle)->each(fn($vars) => $vars->delete());
         }
+
+        info('Deleted global variables for sets: ' . implode(', ', $handles));
+    }
+
+    /**
+     * Delete all assets except those in the logos folder.
+     */
+    private function deleteAssets(): void
+    {
+        Asset::whereContainer('assets')
+            ->reject(fn($asset) => $asset->folder() === 'logos')
+            ->each(fn($asset) => $asset->delete());
+
+        info('Deleted demo assets (preserved logos).');
     }
 }
