@@ -44,7 +44,7 @@ fields:
           icon: text-formatting-initial-letter
           sets:
             pull_quote:
-              display: 'Pull quote'
+              display: 'Pull Quote'
               icon: text-formatting-quotation
               fields:
                 -
