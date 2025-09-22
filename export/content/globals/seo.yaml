@@ -58,7 +58,7 @@ data:
     reject_label: 'Reject all'
     accept_selected_label: 'Accept selected'
     settings_label: Customize
-    reset_consent_label: 'Reset consent'
+    reset_consent_label: 'Consent'
     consent_types:
       -
         id: m35sftnr
