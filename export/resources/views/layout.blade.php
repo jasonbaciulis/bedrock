@@ -23,6 +23,7 @@
             attr:style:onload="this.media='all'"
         />
 
+        {{-- Scripts global --}}
         {!! $scripts->code_head !!}
     </head>
     <body
@@ -31,19 +32,21 @@
         @include('partials.skip-to-content')
         @yield('seo_body')
 
-        @if ($banner->show)
-            @include('components.ui.banner')
-        @endif
+        {{-- Banner global --}}
+        <x-ui.banner :$banner />
 
         @include('partials.header')
         @yield('body')
         @include('partials.footer')
 
+        {{-- Control panel toolbar --}}
+        <x-cp-toolbar />
+
         {{-- Push scripts when various components are added --}}
         @stack('scripts')
         <s:vite src="resources/js/site.js" />
 
-        {{-- Scripts --}}
+        {{-- Scripts global --}}
         {!! $scripts->code_footer !!}
     </body>
 </html>
