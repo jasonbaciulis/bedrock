@@ -16,7 +16,7 @@
                     <x-logo :logo="$theme->logo" class="inline-flex h-8 w-40" />
                     <button
                         type="button"
-                        class="btn btn--ghost btn--square"
+                        class="btn btn--ghost btn--square -my-2 -mr-2"
                         x-on:click="mobileNavOpen = false"
                         aria-label="Close menu"
                     >
