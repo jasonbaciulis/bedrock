@@ -20,6 +20,7 @@ export default defineConfig(({ command, mode }) => {
           'resources/js/components/newsletter.js',
           'resources/js/components/combobox.js',
           'resources/js/components/stepper.js',
+          'resources/js/components/toaster.js',
 
           // Control Panel assets.
           // https://statamic.dev/extending/control-panel#adding-css-and-js-assets

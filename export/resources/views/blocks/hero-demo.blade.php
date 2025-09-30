@@ -581,6 +581,56 @@
                         </button>
                     </nav>
                 </div>
+
+                <div class="card flex flex-row items-center justify-between shadow-none">
+                    <div class="card__header">
+                        <p class="leading-none font-semibold">Toaster</p>
+                        <p class="text-muted-foreground text-sm">A toaster component.</p>
+                    </div>
+
+                    <div class="flex flex-wrap gap-3">
+                        <x-ui.button
+                            x-data
+                            type="button"
+                            variant="outline"
+                            as="button"
+                            x-on:click="$dispatch('toast', { message: 'Saved!', description: 'Anyone with a link can now view this file.', type: 'success', dismissible: true })"
+                            label="Success"
+                        />
+                        <x-ui.button
+                            x-data
+                            type="button"
+                            variant="outline"
+                            as="button"
+                            x-on:click="$dispatch('toast', { message: 'There was an error!', type: 'error' })"
+                            label="Error"
+                        />
+                        <x-ui.button
+                            x-data
+                            type="button"
+                            variant="outline"
+                            as="button"
+                            x-on:click="$dispatch('toast', { message: 'This is a warning', type: 'warning' })"
+                            label="Warning"
+                        />
+                        <x-ui.button
+                            x-data
+                            type="button"
+                            variant="outline"
+                            as="button"
+                            x-on:click="$dispatch('toast', { message: 'This is an info message', type: 'info' })"
+                            label="Info"
+                        />
+                        <x-ui.button
+                            x-data
+                            type="button"
+                            variant="outline"
+                            as="button"
+                            x-on:click="$dispatch('toast', { message: 'This is a default toast' })"
+                            label="Default"
+                        />
+                    </div>
+                </div>
             </div>
         </div>
     </div>

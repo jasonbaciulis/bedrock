@@ -42,6 +42,9 @@
         {{-- Control panel toolbar --}}
         <x-cp-toolbar />
 
+        {{-- Notifications --}}
+        <x-ui.toaster />
+
         {{-- Push scripts when various components are added --}}
         @stack('scripts')
         <s:vite src="resources/js/site.js" />
