@@ -8,10 +8,8 @@ tabs:
             handle: icon
             field: common.icon
             config:
-              directory: resources/svg
               width: 100
               instructions: Optional
-              folder: heroicons-outline
           -
             handle: description
             field:

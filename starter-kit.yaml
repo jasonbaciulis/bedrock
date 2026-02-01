@@ -33,4 +33,4 @@ dependencies:
   blade-ui-kit/blade-icons: ^1.8
   mallardduck/blade-lucide-icons: ^1.23
 dependencies_dev:
-  laravel/boost: ^1.0
+  laravel/boost: ^2.0

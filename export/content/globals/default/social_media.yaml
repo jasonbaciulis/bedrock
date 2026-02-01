@@ -1,0 +1,32 @@
+platforms:
+  -
+    id: m32jlzlr
+    url: JasonBaciulis
+    prefix: 'https://x.com/'
+    type: x
+    enabled: true
+  -
+    id: 1pQqfxOP
+    handle: in/jasonbaciulis/
+    prefix: 'https://www.linkedin.com/'
+    type: linkedin
+    enabled: true
+    url: in/jasonbaciulis
+  -
+    id: m32k08y1
+    url: JasonBaciulis
+    prefix: 'https://www.github.com/'
+    type: github
+    enabled: true
+  -
+    id: m32k0hix
+    url: statamic
+    prefix: 'https://www.youtube.com/'
+    type: youtube
+    enabled: true
+  -
+    id: m32kbi2g
+    url: jason@remarkable.dev
+    prefix: 'mailto:'
+    type: email
+    enabled: true

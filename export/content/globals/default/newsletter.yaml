@@ -1,0 +1,5 @@
+title: 'Sign up for our newsletter'
+text: 'This is where you make your best pitch on why anyone should subscribe.'
+input_placeholder: 'Enter your email'
+button_label: Subscribe
+success_message: "Congrats, you're in!"

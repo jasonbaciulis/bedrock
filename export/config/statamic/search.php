@@ -25,7 +25,7 @@ return [
     'indexes' => [
         'default' => [
             'driver' => 'local',
-            'searchables' => 'all',
+            'searchables' => 'content',
             'fields' => ['title'],
         ],
 

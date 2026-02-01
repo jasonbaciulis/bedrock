@@ -1,0 +1,39 @@
+logo: logos/logo-brand.svg
+search_results: d50dbcf7-2ed9-4a10-91c5-5b5557d694ea
+header_buttons:
+  -
+    id: 1wCZptZ7
+    link_type: url
+    target_blank: false
+    url: '#'
+    variant: ghost
+    label: 'Sign in'
+  -
+    id: k0sBnlT1
+    link_type: url
+    target_blank: false
+    url: '#faqs'
+    variant: primary
+    label: 'Get started'
+about: 'Features shadcn/ui style Alpine.js components that you can customize, extend, and build on. Plus page builder and complete SEO setup.'
+copyright_text:
+  -
+    type: paragraph
+    content:
+      -
+        type: text
+        text: ':copyright_year Bedrock. Built by '
+      -
+        type: text
+        marks:
+          -
+            type: link
+            attrs:
+              href: 'https://remarkable.dev'
+              rel: noopener
+              target: _blank
+              title: null
+        text: 'Jason Baciulis'
+      -
+        type: text
+        text: .

@@ -89,6 +89,6 @@ fields:
   -
     handle: icon
     field:
-      directory: resources/svg
+      set: heroicons
       type: icon
       display: Icon

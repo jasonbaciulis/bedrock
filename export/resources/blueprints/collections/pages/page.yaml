@@ -59,12 +59,3 @@ tabs:
               localizable: true
               validate: 'max:200'
               show_regenerate: true
-          -
-            handle: parent
-            field:
-              type: entries
-              collections:
-                - pages
-              max_items: 1
-              listable: false
-              localizable: true

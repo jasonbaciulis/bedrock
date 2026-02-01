@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Statamic\Statamic;
+use Statamic\Facades\Icon;
 use Statamic\Facades\Preference;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,6 +24,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->configureStatamicVite();
         $this->configureStatamicPreference();
+        $this->registerStatamicIcons();
     }
 
     private function configureStatamicVite(): void
@@ -66,5 +68,10 @@ class AppServiceProvider extends ServiceProvider
                 ],
             ]
         );
+    }
+
+    private function registerStatamicIcons(): void
+    {
+        Icon::register('heroicons', base_path('resources/svg/heroicons-outline'));
     }
 }

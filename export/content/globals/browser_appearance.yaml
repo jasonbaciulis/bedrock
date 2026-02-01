@@ -1,8 +1,1 @@
 title: 'Browser appearance'
-data:
-  disable_phone_detection: false
-  disable_email_detection: false
-  disable_address_detection: false
-  theme_color: '#171717'
-  apple_mobile_web_app: false
-  android_mobile_web_app: false
