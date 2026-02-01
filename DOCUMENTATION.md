@@ -19,7 +19,8 @@ statamic new project_name jasonbaciulis/bedrock
 5. Start Laravel's local dev server, npm run dev, start queue: `composer run dev`
 6. (Optional) Clear demo content: `php artisan bedrock:clear`
 
-Once you have started the Artisan development server, the website will be accessible in your web browser at [http://localhost:8000](http://localhost:8000). Head to [http://localhost:8000/cp](http://localhost:8000/cp) and use your email address and password to sign into the Statamic control panel.
+Recommended to use [Herd](https://laravel.com/docs/12.x/installation#installation-using-herd) for local dev.
+Once you have started the development server with `composer run dev`, the website will be accessible in your web browser at [https://bedrock.test](https://bedrock.test). Head to [https://bedrock.test/cp](https://bedrock.test/cp) and use your email address and password to sign into the Statamic control panel.
 
 ## Tools, libraries and addons used in the project
 - [Statamic](https://statamic.dev/) - Flat file Laravel CMS.
