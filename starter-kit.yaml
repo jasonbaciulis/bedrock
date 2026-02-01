@@ -24,10 +24,13 @@ export_paths:
   - routes/web.php
   - .env.example
   - .gitignore
-  - .cursorrules
   - package.json
   - prettier.config.js
   - AGENTS.md
+  - CLAUDE.md
+  - .claude
+  - .cursor
+  - .gemini
   - vite.config.js
 dependencies:
   blade-ui-kit/blade-icons: ^1.8
