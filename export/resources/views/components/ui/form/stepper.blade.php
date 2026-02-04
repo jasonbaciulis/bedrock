@@ -45,17 +45,14 @@
                 id="{{ $id }}"
                 class="size-8 border-none px-0 text-center shadow-none [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
                 name="{{ $handle }}"
+                inputmode="numeric"
                 type="number"
                 x-bind:min="min"
                 x-bind:max="max"
                 x-bind:step="step"
                 aria-labelledby="{{ $id }}-label"
                 x-bind:aria-invalid="form.invalid('{{ $handle }}')"
-                @isset($instructions)
-                    x-bind:aria-describedby="form.invalid('{{ $handle }}') ? '{{ $id }}-error' : '{{ $id }}-instructions'"
-                @else
-                    x-bind:aria-describedby="form.invalid('{{ $handle }}') ? '{{ $id }}-error' : false"
-                @endisset
+                x-bind:aria-describedby="form.invalid('{{ $handle }}') ? '{{ $id }}-error' : {{ isset($instructions) ? "'{$id}-instructions'" : 'false' }}"
                 x-on:input="handleInput"
                 x-on:change="form.validate('{{ $handle }}')"
                 {{ $attributes }}
