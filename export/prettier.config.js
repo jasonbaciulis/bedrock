@@ -22,7 +22,6 @@ export default {
   singleQuote: true,
   jsxSingleQuote: false,
   bracketSpacing: true,
-  jsxBracketSameLine: false,
   arrowParens: 'avoid',
   plugins: ['@prettier/plugin-php', 'prettier-plugin-tailwindcss', 'prettier-plugin-blade'],
 }
