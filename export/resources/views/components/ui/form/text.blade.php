@@ -21,25 +21,17 @@
 
     <input
         x-model="{{ $model }}"
-        {{
-            $attributes
-                ->class(['pl-10' => $prepend, 'pr-10' => $append])
-                ->merge([
-                    'maxlength' => $character_limit,
-                    'autocomplete' => $autocomplete,
-                    'readonly' => $visibility === 'read_only' ? 'readonly' : null,
-                    'placeholder' => $placeholder,
-                ])
-        }}
+        {{ $attributes->class(['pl-10' => $prepend, 'pr-10' => $append])->merge([
+            'maxlength' => $character_limit,
+            'autocomplete' => $autocomplete,
+            'readonly' => $visibility === 'read_only' ? 'readonly' : null,
+            'placeholder' => $placeholder,
+        ]) }}
         id="{{ $id }}"
         name="{{ $handle }}"
         type="{{ $input_type }}"
         x-bind:aria-invalid="form.invalid('{{ $handle }}')"
-        @isset($instructions)
-            x-bind:aria-describedby="form.invalid('{{ $handle }}') ? '{{ $id }}-error' : '{{ $id }}-instructions'"
-        @else
-            x-bind:aria-describedby="form.invalid('{{ $handle }}') ? '{{ $id }}-error' : false"
-        @endisset
+        x-bind:aria-describedby="form.invalid('{{ $handle }}') ? '{{ $id }}-error' : {{ isset($instructions) ? "'{$id}-instructions'" : 'false' }}"
         x-on:change="form.validate('{{ $handle }}')"
     />
     @isset($append)

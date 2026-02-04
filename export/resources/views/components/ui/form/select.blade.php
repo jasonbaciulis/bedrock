@@ -17,19 +17,13 @@
         x-bind:class="{
             'text-muted-foreground': ! {{ $model }},
         }"
-        {{
-            $attributes->merge([
-                'multiple' => $multiple,
-            ])
-        }}
+        {{ $attributes->merge([
+            'multiple' => $multiple,
+        ]) }}
         id="{{ $id }}"
         name="{{ $handle }}{{ $multiple ? '[]' : '' }}"
         x-bind:aria-invalid="form.invalid('{{ $handle }}')"
-        @isset($instructions)
-            x-bind:aria-describedby="form.invalid('{{ $handle }}') ? '{{ $id }}-error' : '{{ $id }}-instructions'"
-        @else
-            x-bind:aria-describedby="form.invalid('{{ $handle }}') ? '{{ $id }}-error' : false"
-        @endisset
+        x-bind:aria-describedby="form.invalid('{{ $handle }}') ? '{{ $id }}-error' : {{ isset($instructions) ? "'{$id}-instructions'" : 'false' }}"
         x-on:change="form.validate('{{ $handle }}')"
     >
         @unless ($multiple)

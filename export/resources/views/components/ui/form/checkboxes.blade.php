@@ -10,11 +10,7 @@
 <fieldset
     {{ $attributes }}
     x-bind:aria-invalid="form.invalid('{{ $handle }}')"
-    @isset($instructions)
-        x-bind:aria-describedby="form.invalid('{{ $handle }}') ? '{{ $id }}-error' : '{{ $id }}-instructions'"
-    @else
-        x-bind:aria-describedby="form.invalid('{{ $handle }}') ? '{{ $id }}-error' : false"
-    @endisset
+    x-bind:aria-describedby="form.invalid('{{ $handle }}') ? '{{ $id }}-error' : {{ isset($instructions) ? "'{$id}-instructions'" : 'false' }}"
 >
     <legend class="text-foreground block text-sm font-medium select-none">{!! $display !!}</legend>
 

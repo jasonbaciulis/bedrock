@@ -11,20 +11,14 @@
 
 <textarea
     x-model="{{ $model }}"
-    {{
-        $attributes->merge([
-            'placeholder' => $placeholder,
-            'maxlength' => $character_limit,
-        ])
-    }}
+    {{ $attributes->merge([
+        'placeholder' => $placeholder,
+        'maxlength' => $character_limit,
+    ]) }}
     id="{{ $id }}"
     name="{{ $handle }}"
     rows="{{ $rows }}"
     x-bind:aria-invalid="form.invalid('{{ $handle }}')"
-    @isset($instructions)
-        x-bind:aria-describedby="form.invalid('{{ $handle }}') ? '{{ $id }}-error' : '{{ $id }}-instructions'"
-    @else
-        x-bind:aria-describedby="form.invalid('{{ $handle }}') ? '{{ $id }}-error' : false"
-    @endisset
+    x-bind:aria-describedby="form.invalid('{{ $handle }}') ? '{{ $id }}-error' : {{ isset($instructions) ? "'{$id}-instructions'" : 'false' }}"
     x-on:change="form.validate('{{ $handle }}')"
 ></textarea>
