@@ -9,14 +9,12 @@ fetchpriority: ''
 ---
 
 {{#
-    Lightweight picture component that uses Glide to generate images. It supports lazy loading and object-cover.
-    Notice that the component doesn't use sizes attribute, because in my opinion it's a waste of time.
-    Just pass the dimensions of the largest image size that needs rendered. Images are lazy loaded and saving a few kilobytes
-    on the initial load is not worth the extra complexity.
-
-    Docs: https://statamic.dev/tags/glide
+    Lightweight picture component that uses Glide to generate images. It supports lazy loading and
+    object-cover. Notice that the component doesn't use sizes attribute, because in my opinion it's a
+    waste of time. Just pass the dimensions of the largest image size that needs rendered. Images are
+    lazy loaded and saving a few kilobytes on the initial load is not worth the extra complexity. Docs:
+    https://statamic.dev/tags/glide
 #}}
-
 {{ if view:image }}
     <s:asset :url="view:image">
         <picture>

@@ -33,13 +33,13 @@
                     x-transition:leave-start="translate-y-0 opacity-100"
                     x-transition:leave-end="translate-y-1 opacity-0"
                     @click.outside="subnavOpen = false"
-                    class="absolute z-10 mt-5 w-screen transform {{ ['left-1/2 flex max-w-max -translate-x-1/2 px-4' => two_col_menu, 'left-1/2 max-w-xs -translate-x-1/2 px-2' => !two_col_menu] | classes }}"
+                    class="{{ ['left-1/2 flex max-w-max -translate-x-1/2 px-4' => two_col_menu, 'left-1/2 max-w-xs -translate-x-1/2 px-2' => !two_col_menu] | classes }} absolute z-10 mt-5 w-screen transform"
                 >
                     <div
                         class="flex-auto overflow-hidden rounded-lg border bg-white text-sm/6 shadow lg:max-w-3xl"
                     >
                         <div
-                            class="relative grid grid-cols-1 gap-x-5 gap-y-1 p-3 {{ two_col_menu ?= 'lg:grid-cols-2' }}"
+                            class="{{ two_col_menu ?= 'lg:grid-cols-2' }} relative grid grid-cols-1 gap-x-5 gap-y-1 p-3"
                         >
                             {{ children scope="child" }}
                                 <s:partial:partials.nav-header-item

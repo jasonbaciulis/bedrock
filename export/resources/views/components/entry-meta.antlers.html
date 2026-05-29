@@ -4,7 +4,7 @@ category: ''
 class: ''
 ---
 
-<div class="flex items-center gap-4 {{ view:class }}">
+<div class="{{ view:class }} flex items-center gap-4">
     <time datetime="{{ view:date | format('c') }}" class="text-muted-foreground text-xs">
         {{ view:date | format('M j, Y') }}
     </time>

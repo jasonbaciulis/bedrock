@@ -7,7 +7,7 @@ class: 'text-foreground'
 
 <label
     id="{{ view:id }}-label"
-    class="block {{ view:class }} {{ view:hide_display ?= 'sr-only' }}"
+    class="{{ view:class }} {{ view:hide_display ?= 'sr-only' }} block"
     for="{{ view:id }}"
 >
     {{ view:display }}

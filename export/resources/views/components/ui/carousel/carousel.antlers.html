@@ -6,8 +6,7 @@ content_class: ''
 ---
 
 {{#
-    Carousel component similar to shadcn/ui carousel
-    Uses Embla Carousel with Alpine.js state management
+    Carousel component similar to shadcn/ui carousel Uses Embla Carousel with Alpine.js state management
     Available options: https://www.embla-carousel.com/api/options/
 #}}
 
@@ -16,9 +15,8 @@ content_class: ''
         <s:vite src="resources/js/embla.js" />
     {{ /push:scripts }}
 {{ /once }}
-
 <div
-    class="relative outline-none {{ view:class }}"
+    class="{{ view:class }} relative outline-none"
     role="region"
     aria-roledescription="carousel"
     x-data="{
@@ -61,7 +59,7 @@ content_class: ''
 >
     <div x-ref="viewport" class="overflow-hidden">
         <div
-            class="flex {{ view:content_class }}"
+            class="{{ view:content_class }} flex"
             :class="{
                 '-ml-4': orientation === 'horizontal',
                 '-mt-4 flex-col': orientation === 'vertical',

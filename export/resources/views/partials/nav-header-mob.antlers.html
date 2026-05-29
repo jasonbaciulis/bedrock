@@ -5,7 +5,14 @@
     as="items"
 >
     {{# Mobile menu #}}
-    <div x-cloak x-show="mobileNavOpen" x-trap.noscroll="mobileNavOpen" class="lg:hidden" role="dialog" aria-modal="true">
+    <div
+        x-cloak
+        x-show="mobileNavOpen"
+        x-trap.noscroll="mobileNavOpen"
+        class="lg:hidden"
+        role="dialog"
+        aria-modal="true"
+    >
         {{# Background backdrop #}}
         <div x-cloak x-show="mobileNavOpen" class="fixed inset-0 z-10"></div>
         <div

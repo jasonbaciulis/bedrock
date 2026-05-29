@@ -2,15 +2,17 @@
 
 namespace App\Console\Commands\Scaffold;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Statamic\Facades\Entry;
-use Illuminate\Console\Command;
-use App\Support\Yaml\ArticleYaml;
-use Illuminate\Filesystem\Filesystem;
 use App\Console\Commands\Scaffold\Concerns\ManagesFieldsetFiles;
 use App\Console\Commands\Scaffold\Concerns\UpdatesEntryContent;
-use function Laravel\Prompts\{select, confirm, info, warning};
+use App\Support\Yaml\ArticleYaml;
+use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
+use Statamic\Facades\Entry;
+
+use function Laravel\Prompts\confirm;
+use function Laravel\Prompts\info;
+use function Laravel\Prompts\select;
+use function Laravel\Prompts\warning;
 
 class DeleteSet extends Command
 {
@@ -36,6 +38,7 @@ class DeleteSet extends Command
         $groups = $this->article->groups();
         if (empty($groups)) {
             warning('No groups found in article.yaml.');
+
             return self::FAILURE;
         }
 
@@ -50,6 +53,7 @@ class DeleteSet extends Command
         $sets = $this->article->sets($group);
         if (empty($sets)) {
             info("The '{$groups[$group]}' group has no sets.");
+
             return self::SUCCESS;
         }
 
@@ -69,7 +73,7 @@ class DeleteSet extends Command
         }
 
         if (
-            !confirm(
+            ! confirm(
                 label: "Delete '{$setLabel}' from '{$groups[$group]}' group?",
                 hint: (bool) $this->option('keep-files')
                     ? 'Only remove from article.yaml (files will be kept).'
@@ -78,13 +82,14 @@ class DeleteSet extends Command
             )
         ) {
             info('Aborted.');
+
             return self::SUCCESS;
         }
 
         try {
             $this->article->removeSet($group, $fieldset);
 
-            if (!(bool) $this->option('keep-files')) {
+            if (! (bool) $this->option('keep-files')) {
                 $this->deleteFilesFor(
                     fieldset: $fieldset,
                     force: (bool) $this->option('force'),
@@ -100,10 +105,12 @@ class DeleteSet extends Command
             }
         } catch (\Throwable $e) {
             $this->error($e->getMessage());
+
             return self::FAILURE;
         }
 
         info("Removed '{$setLabel}' set.");
+
         return self::SUCCESS;
     }
 
@@ -117,7 +124,7 @@ class DeleteSet extends Command
                 }
 
                 return $article->contains(static function ($node) use ($fieldset): bool {
-                    if (!is_array($node) || ($node['type'] ?? null) !== 'set') {
+                    if (! is_array($node) || ($node['type'] ?? null) !== 'set') {
                         return false;
                     }
 

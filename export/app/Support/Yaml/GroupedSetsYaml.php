@@ -28,7 +28,7 @@ class GroupedSetsYaml
         $data = $this->read();
         $root = $this->groupsRoot($data);
 
-        if (!array_key_exists($groupHandle, $root)) {
+        if (! array_key_exists($groupHandle, $root)) {
             throw new \RuntimeException("Group '{$groupHandle}' not found in {$this->path}.");
         }
 
@@ -40,13 +40,13 @@ class GroupedSetsYaml
         $data = $this->read();
         $root = $this->groupsRoot($data);
 
-        if (!isset($root[$groupHandle])) {
+        if (! isset($root[$groupHandle])) {
             throw new \RuntimeException("Group '{$groupHandle}' not found.");
         }
 
         $sets = collect(Arr::get($root[$groupHandle], 'sets', []))
             ->put($setHandle, $set)
-            ->pipe(fn($collection) => $this->sortKeysNaturally($collection->all()));
+            ->pipe(fn ($collection) => $this->sortKeysNaturally($collection->all()));
 
         $data = $this->updateGroupSets($data, $groupHandle, $sets);
 
@@ -58,13 +58,13 @@ class GroupedSetsYaml
         $data = $this->read();
         $root = $this->groupsRoot($data);
 
-        if (!isset($root[$groupHandle]['sets'][$setHandle])) {
+        if (! isset($root[$groupHandle]['sets'][$setHandle])) {
             throw new \RuntimeException("Set '{$setHandle}' not found in group '{$groupHandle}'.");
         }
 
         $sets = collect($root[$groupHandle]['sets'] ?? [])
             ->except($setHandle)
-            ->pipe(fn($collection) => $this->sortKeysNaturally($collection->all()));
+            ->pipe(fn ($collection) => $this->sortKeysNaturally($collection->all()));
 
         $data = $this->updateGroupSets($data, $groupHandle, $sets);
 
@@ -100,7 +100,7 @@ class GroupedSetsYaml
 
     private function groupFieldIndexOrFail(array $data): int
     {
-        if (!isset($data['fields']) || !is_array($data['fields'])) {
+        if (! isset($data['fields']) || ! is_array($data['fields'])) {
             throw new \RuntimeException(
                 "Invalid YAML structure in {$this->path}: missing 'fields'."
             );
@@ -120,7 +120,7 @@ class GroupedSetsYaml
     private function sortKeysNaturally(array $items): array
     {
         return collect($items)
-            ->sortKeysUsing(static fn(string $a, string $b): int => strnatcasecmp($a, $b))
+            ->sortKeysUsing(static fn (string $a, string $b): int => strnatcasecmp($a, $b))
             ->all();
     }
 
@@ -128,7 +128,7 @@ class GroupedSetsYaml
     {
         return collect($items)
             ->mapWithKeys(
-                fn(array $config, string $handle) => [
+                fn (array $config, string $handle) => [
                     $handle => (string) ($config['display'] ?? Stringy::humanize($handle)),
                 ]
             )
@@ -137,16 +137,15 @@ class GroupedSetsYaml
 
     private function read(): array
     {
-        $full = base_path($this->path);
-        if (!$this->files->exists($full)) {
+        if (! $this->files->exists($this->path)) {
             throw new \RuntimeException("Missing fieldset file: {$this->path}");
         }
 
-        return YAML::file($full)->parse() ?? [];
+        return YAML::file($this->path)->parse();
     }
 
     private function write(array $data): void
     {
-        $this->files->put(base_path($this->path), YAML::dump($data));
+        $this->files->put($this->path, YAML::dump($data));
     }
 }

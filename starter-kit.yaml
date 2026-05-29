@@ -8,6 +8,7 @@ export_paths:
   - app/Support/Yaml
   - config/statamic/git.php
   - config/statamic/search.php
+  - config/statamic/bedrock.php
   - content
   - public/assets
   - public/favicon
@@ -23,12 +24,14 @@ export_paths:
   - .env.example
   - .gitignore
   - package.json
+  - phpstan.neon
   - prettier.config.js
   - CLAUDE.md
   - .claude
   - .ai
   - .github/workflows/ci.yml
   - vite.config.js
+  - tests
 dependencies:
   blade-ui-kit/blade-icons: ^1.8
   mallardduck/blade-lucide-icons: ^1.23
@@ -36,4 +39,6 @@ dependencies_dev:
   cboxdk/statamic-mcp: ^2.5
   larastan/larastan: ^3.9
   laravel/boost: ^2.0
+  pestphp/pest: ^4.0
+  pestphp/pest-plugin-laravel: ^4.0
   phpstan/phpstan: ^2.1

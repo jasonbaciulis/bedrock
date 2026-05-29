@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NewsletterController;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
+use Illuminate\Support\Facades\Route;
 
 // Route for handling newsletter subscriptions.
 Route::post('/newsletter', NewsletterController::class)

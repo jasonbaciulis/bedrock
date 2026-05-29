@@ -25,7 +25,7 @@ content_class: ''
     @keydown.escape.prevent.stop="close($refs.button)"
     @focusin.window="!$refs.panel.contains($event.target) && close()"
     x-id="['dropdown-menu']"
-    class="relative {{ view:class }}"
+    class="{{ view:class }} relative"
 >
     <button
         x-ref="button"
@@ -52,7 +52,7 @@ content_class: ''
         :id="$id('dropdown-menu')"
         :aria-labelledby="$id('dropdown-button')"
         tabindex="-1"
-        class="bg-popover text-popover-foreground absolute z-10 mt-1 max-h-60 overflow-x-hidden overflow-y-auto rounded-lg border p-1 shadow-md {{ ['left-0 origin-top-left' => view:alignment == 'left', 'right-0 origin-top-right' => view:alignment == 'right'] | classes }} {{ view:width }} {{ view:content_class }}"
+        class="bg-popover text-popover-foreground {{ ['left-0 origin-top-left' => view:alignment == 'left', 'right-0 origin-top-right' => view:alignment == 'right'] | classes }} {{ view:width }} {{ view:content_class }} absolute z-10 mt-1 max-h-60 overflow-x-hidden overflow-y-auto rounded-lg border p-1 shadow-md"
     >
         {{ slot:content }}
     </div>

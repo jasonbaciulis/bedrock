@@ -9,7 +9,11 @@ use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Statamic\Facades\Config;
-use function Laravel\Prompts\{confirm, info, select, text};
+
+use function Laravel\Prompts\confirm;
+use function Laravel\Prompts\info;
+use function Laravel\Prompts\select;
+use function Laravel\Prompts\text;
 
 class RenameSet extends Command
 {
@@ -36,6 +40,7 @@ class RenameSet extends Command
         $groups = $this->article->groups();
         if (empty($groups)) {
             $this->error('No groups found in article.yaml.');
+
             return self::FAILURE;
         }
 
@@ -47,6 +52,7 @@ class RenameSet extends Command
         $sets = $this->article->sets($currentGroup);
         if (empty($sets)) {
             info("The '{$groups[$currentGroup]}' group has no sets.");
+
             return self::SUCCESS;
         }
 
@@ -71,7 +77,7 @@ class RenameSet extends Command
         // 3) Optionally choose a new group to move to (skip prompt if args provided)
         $targetGroup = $currentGroup;
         $hasArgs = $this->argument('group') && $this->argument('current_name');
-        if (!$hasArgs && confirm('Move this set to a different group?', default: false)) {
+        if (! $hasArgs && confirm('Move this set to a different group?', default: false)) {
             $targetGroup = select(label: 'Select the new group', options: $groups, required: true);
         }
 
@@ -87,12 +93,13 @@ class RenameSet extends Command
             $currentName = $this->article->sets($currentGroup)[$currentHandle] ?? null;
 
             if (
-                !$this->option('force') &&
-                !confirm(
+                ! $this->option('force') &&
+                ! confirm(
                     "Rename set '{$currentName}' to '{$newName}'? This will update all content entries."
                 )
             ) {
                 $this->info('Rename cancelled.');
+
                 return self::SUCCESS;
             }
 
@@ -115,10 +122,12 @@ class RenameSet extends Command
             }
         } catch (\Throwable $e) {
             $this->error($e->getMessage());
+
             return self::FAILURE;
         }
 
         info("Successfully renamed set '{$currentName}' to '{$newName}'");
+
         return self::SUCCESS;
     }
 

@@ -9,7 +9,6 @@ class: ''
         <s:vite src="resources/js/components/combobox.js" />
     {{ /push:scripts }}
 {{ /once }}
-
 <div
     x-data="combobox({
                 id: '{{ id }}',
@@ -20,7 +19,7 @@ class: ''
     x-model="{{ view:model }}"
     @keydown.escape.stop.prevent="closeListbox()"
     @change="form.validate('{{ handle }}')"
-    class="relative {{ view:class }}"
+    class="{{ view:class }} relative"
 >
     <input type="hidden" name="{{ handle }}" x-model="value" />
 

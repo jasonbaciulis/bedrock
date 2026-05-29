@@ -3,7 +3,7 @@ class: ''
 ---
 
 <ul
-    class="flex items-center gap-4 {{ view:class }}"
+    class="{{ view:class }} flex items-center gap-4"
     x-data="{
         popupWindow: (url, windowName, win, w, h) => {
             const y = win.top.outerHeight / 2 + win.top.screenY - h / 2

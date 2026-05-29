@@ -2,14 +2,18 @@
 
 namespace App\Console\Commands\Scaffold;
 
+use App\Console\Commands\Scaffold\Concerns\ManagesFieldsetFiles;
+use App\Console\Commands\Scaffold\Concerns\UpdatesEntryContent;
 use App\Support\Yaml\BlocksYaml;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Statamic\Facades\Config;
-use App\Console\Commands\Scaffold\Concerns\UpdatesEntryContent;
-use App\Console\Commands\Scaffold\Concerns\ManagesFieldsetFiles;
-use function Laravel\Prompts\{confirm, info, select, text};
+
+use function Laravel\Prompts\confirm;
+use function Laravel\Prompts\info;
+use function Laravel\Prompts\select;
+use function Laravel\Prompts\text;
 
 class RenameBlock extends Command
 {
@@ -36,6 +40,7 @@ class RenameBlock extends Command
         $groups = $this->blocks->groups();
         if (empty($groups)) {
             $this->error('No groups found in blocks.yaml.');
+
             return self::FAILURE;
         }
 
@@ -47,6 +52,7 @@ class RenameBlock extends Command
         $sets = $this->blocks->sets($currentGroup);
         if (empty($sets)) {
             info("The '{$groups[$currentGroup]}' group has no blocks.");
+
             return self::SUCCESS;
         }
 
@@ -71,7 +77,7 @@ class RenameBlock extends Command
         // 3) Optionally choose a new group to move to (skip prompt if args provided)
         $targetGroup = $currentGroup;
         $hasArgs = $this->argument('group') && $this->argument('current_name');
-        if (!$hasArgs && confirm('Move this block to a different group?', default: false)) {
+        if (! $hasArgs && confirm('Move this block to a different group?', default: false)) {
             $targetGroup = select(label: 'Select the new group', options: $groups, required: true);
         }
 
@@ -87,8 +93,8 @@ class RenameBlock extends Command
             $currentName = $this->blocks->sets($currentGroup)[$currentHandle] ?? null;
 
             if (
-                !$this->option('force') &&
-                !confirm(
+                ! $this->option('force') &&
+                ! confirm(
                     "Rename block '{$currentName}' to '{$newName}'? This will update all content entries."
                 )
             ) {

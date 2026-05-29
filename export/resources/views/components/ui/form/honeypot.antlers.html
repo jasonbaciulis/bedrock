@@ -5,7 +5,9 @@ form_handle: ''
 ---
 
 <div class="hidden">
-    <label for="{{ view:form_handle }}-{{ view:handle }}-field">{{ view:handle | deslugify | title }}</label>
+    <label for="{{ view:form_handle }}-{{ view:handle }}-field">
+        {{ view:handle | deslugify | title }}
+    </label>
     <input
         x-model="{{ view:model }}"
         id="{{ view:form_handle }}-{{ view:handle }}-field"

@@ -10,7 +10,7 @@ class: ''
         role="alert"
         aria-live="polite"
         aria-atomic="true"
-        class="text-destructive text-sm {{ view:class }}"
-        x-text="form.errors.{{ view:handle }}">
-    </p>
+        class="text-destructive {{ view:class }} text-sm"
+        x-text="form.errors.{{ view:handle }}"
+    ></p>
 </template>

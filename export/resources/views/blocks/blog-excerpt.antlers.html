@@ -1,7 +1,6 @@
 <section id="{{ type | slugify }}" class="m-section">
     <div class="container">
         <s:partial:components.section-header :title="title" :text="text" />
-
         {{ if query == 'custom' }}
             {{ blog_posts = entries }}
         {{ elseif query == 'latest' }}
@@ -9,7 +8,6 @@
         {{ elseif query == 'featured' }}
             {{ blog_posts = {collection:posts :limit="limit" featured="true" sort="order"} }}
         {{ /if }}
-
         <div class="site-grid mx-auto max-w-2xl gap-y-20 lg:max-w-none">
             {{ blog_posts }}
                 <s:partial:components.entry-posts

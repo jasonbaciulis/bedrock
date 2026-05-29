@@ -1,12 +1,12 @@
 ---
 fields_without_label:
-  - radio
-  - toggle
-  - checkboxes
-  - stepper
+  - 'radio'
+  - 'toggle'
+  - 'checkboxes'
+  - 'stepper'
 fields_without_error:
-  - section
-  - spacer
+  - 'section'
+  - 'spacer'
 ---
 
 {{#
@@ -15,7 +15,6 @@ fields_without_error:
     field variables in scope: type, handle, id, display, instructions, input_type, width, show_field,
     options, etc.
 #}}
-
 {{ if type === 'hidden_input' }}
     <input
         type="hidden"
@@ -29,22 +28,27 @@ fields_without_error:
             class="{{ ['md:col-span-3' => width == '25', 'md:col-span-4' => width == '33', 'md:col-span-6' => width == '50', 'md:col-span-8' => width == '66', 'md:col-span-9' => width == '75', 'md:col-span-12' => width == '100'] | classes }} grid content-start gap-3"
         >
             {{ unless view:fields_without_label | contains(type) }}
-                <s:partial:components.ui.label :display="display" :id="id" :hide_display="hide_display" />
+                <s:partial:components.ui.label
+                    :display="display"
+                    :id="id"
+                    :hide_display="hide_display"
+                />
             {{ /unless }}
-
             <div class="grid gap-2">
                 {{ show_instructions = instructions && !(view:fields_without_label | contains(type)) }}
-
                 {{ if show_instructions && instructions_position === 'above' }}
-                    <s:partial:components.ui.input-instructions :instructions="instructions" :id="id" />
+                    <s:partial:components.ui.input-instructions
+                        :instructions="instructions"
+                        :id="id"
+                    />
                 {{ /if }}
-
                 <s:partial src="components.ui.form.{type}" model="form.{handle}" />
-
                 {{ if show_instructions && instructions_position === 'below' }}
-                    <s:partial:components.ui.input-instructions :instructions="instructions" :id="id" />
+                    <s:partial:components.ui.input-instructions
+                        :instructions="instructions"
+                        :id="id"
+                    />
                 {{ /if }}
-
                 {{ unless view:fields_without_error | contains(type) }}
                     <s:partial:components.ui.input-error :handle="handle" :id="id" />
                 {{ /unless }}

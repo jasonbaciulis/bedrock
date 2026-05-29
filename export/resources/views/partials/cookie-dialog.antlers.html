@@ -1,6 +1,6 @@
 {{#
-    Added in `resources/views/partials/seo.antlers.html` and rendered via the
-    {{ section:seo_body }} that the layout yields after opening <body>.
+    Added in `resources/views/partials/seo.antlers.html` and rendered via the `{{ section:seo_body }}`
+    tag that the layout yields after opening `body` tag.
 #}}
 
 {{ once }}
@@ -8,7 +8,6 @@
         <s:vite src="resources/js/components/cookieDialog.js" />
     {{ /push:scripts }}
 {{ /once }}
-
 <div
     x-cloak
     x-show="!$store.cookieDialog.getConsent()"
@@ -35,7 +34,7 @@
             {{ /if }}
         }
     })"
-    class="container fixed inset-x-0 bottom-0 z-50 max-w-xl pb-6"
+    class="fixed inset-x-0 bottom-0 z-50 container max-w-xl pb-6"
 >
     <div class="card shadow-lg transition-all">
         <div class="space-y-1.5">

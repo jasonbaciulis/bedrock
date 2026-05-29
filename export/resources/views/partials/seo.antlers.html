@@ -1,8 +1,8 @@
 {{ if response_code == 200 }}
     {{# Page title #}}
     <title>
-        {{ yield:seo_title }}
-        {{ seo_title ? seo_title : title }} {{ seo:title_separator }} {{ seo:site_name ? seo:site_name : config:app:name }}
+        {{ yield:seo_title }} {{ seo_title ? seo_title : title }}
+        {{ seo:title_separator }} {{ seo:site_name ? seo:site_name : config:app:name }}
     </title>
 
     {{# Page description #}}
@@ -11,13 +11,8 @@
     {{ elseif seo:collection_defaults }}
         <meta name="description" content="{{ partial:partials/fallback-description }}" />
     {{ /if }}
-
     {{# No index and no follow #}}
-    {{ if
-        (environment == 'local' && !seo:noindex_local) ||
-        (environment == 'staging' && !seo:noindex_staging) ||
-        (environment == 'production' && !seo:noindex_production)
-    }}
+    {{ if (environment == 'local' && !seo:noindex_local) || (environment == 'staging' && !seo:noindex_staging) || (environment == 'production' && !seo:noindex_production) }}
         {{ if seo_noindex && seo_nofollow }}
             <meta name="robots" content="noindex, nofollow" />
         {{ elseif seo_nofollow }}
@@ -28,10 +23,10 @@
     {{ else }}
         <meta name="robots" content="noindex, nofollow" />
     {{ /if }}
-
     {{# hreflang tags #}}
     {{ if seo:hreflang_auto }}
-        {{ if !seo_noindex && seo_canonical_type == 'entry' && current_full_url == permalink }}
+        {{ if !seo_noindex && seo_canonical_type == 'entry'
+ && current_full_url == permalink }}
             <s:locales all="false">
                 <link
                     rel="alternate"
@@ -41,21 +36,21 @@
             </s:locales>
         {{ /if }}
     {{ /if }}
-
     {{# Canonical URL #}}
     {{ unless seo_noindex }}
         {{ if seo_canonical_type == 'entry' }}
             <link rel="canonical" href="{{ permalink }}" />
         {{ elseif seo_canonical_type == 'domain' }}
-            <link rel="canonical" href="{{ config:app:url | trim('/') }}{{ seo_canonical_domain:url }}" />
+            <link
+                rel="canonical"
+                href="{{ config:app:url | trim('/') }}{{ seo_canonical_domain:url }}"
+            />
         {{ elseif seo_canonical_type == 'external' }}
             <link rel="canonical" href="{{ seo_canonical_external }}" />
         {{ /if }}
     {{ /unless }}
-
     {{# Auto add pagination links when using components/ui/pagination/pagination.antlers.html. #}}
     {{ yield:pagination }}
-
     {{# Knowledge graph JSON-ld #}}
     {{ if seo:json_ld_type && seo:json_ld_type != 'none' }}
         {{ if seo:json_ld_type == 'organization' }}
@@ -83,14 +78,11 @@
             <script type="application/ld+json" id="schema">{{ seo:json_ld }}</script>
         {{ /if }}
     {{ /if }}
-
     {{ if schema_jsonld }}
         <script type="application/ld+json" id="schema-page">{{ schema_jsonld }}</script>
     {{ /if }}
-
     {{# Add JSON-LD coming from other places like FAQs #}}
     {{ yield:json_ld }}
-
     {{# Breadcrumbs JSON-ld #}}
     {{ if seo:breadcrumbs && segment_1 }}
         <script type="application/ld+json" id="schema-breadcrumbs">
@@ -110,55 +102,82 @@
             }
         </script>
     {{ /if }}
-
     {{# Open Graph #}}
-    <meta property="og:site_name" content="{{ seo:site_name ? seo:site_name : config:app:name }}" />
+    <meta
+        property="og:site_name"
+        content="{{ seo:site_name ? seo:site_name : config:app:name }}"
+    />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="{{ site:locale }}" />
-    <meta property="og:title" content="{{ og_title ? og_title : (seo_title ? seo_title : title) }}" />
+    <meta
+        property="og:title"
+        content="{{ og_title ? og_title : (seo_title ? seo_title : title) }}"
+    />
     {{ if og_description || seo_description }}
-        <meta property="og:description" content="{{ og_description ? og_description : seo_description }}" />
+        <meta
+            property="og:description"
+            content="{{ og_description ? og_description : seo_description }}"
+        />
     {{ elseif seo:collection_defaults }}
         <meta property="og:description" content="{{ partial:partials/fallback-description }}" />
     {{ /if }}
     {{ if og_image }}
-        <meta property="og:image" content="{{ glide:og_image width='1200' height='630' fit='crop_focal' absolute='true' }}" />
+        <meta
+            property="og:image"
+            content="{{ glide:og_image width='1200' height='630' fit='crop_focal' absolute='true' }}"
+        />
     {{ elseif seo:og_image }}
-        <meta property="og:image" content="{{ glide:seo:og_image width='1200' height='630' fit='crop_focal' absolute='true' }}" />
+        <meta
+            property="og:image"
+            content="{{ glide:seo:og_image width='1200' height='630' fit='crop_focal' absolute='true' }}"
+        />
     {{ /if }}
-
     {{# Twitter #}}
     {{ if twitter_image || seo:twitter_image }}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="{{ seo:twitter_handle | ensure_left('@') }}" />
-        <meta name="twitter:title" content="{{ og_title ? og_title : (seo_title ? seo_title : title) }}" />
+        <meta
+            name="twitter:title"
+            content="{{ og_title ? og_title : (seo_title ? seo_title : title) }}"
+        />
         {{ if og_description || seo_description }}
-            <meta name="twitter:description" content="{{ og_description ? og_description : seo_description }}" />
+            <meta
+                name="twitter:description"
+                content="{{ og_description ? og_description : seo_description }}"
+            />
         {{ elseif seo:collection_defaults }}
-            <meta name="twitter:description" content="{{ partial:partials/fallback-description }}" />
+            <meta
+                name="twitter:description"
+                content="{{ partial:partials/fallback-description }}"
+            />
         {{ /if }}
         {{ if twitter_image }}
-            <meta name="twitter:image" content="{{ glide:twitter_image width='1200' height='600' fit='crop_focal' absolute='true' }}" />
+            <meta
+                name="twitter:image"
+                content="{{ glide:twitter_image width='1200' height='600' fit='crop_focal' absolute='true' }}"
+            />
             {{ asset url="{twitter_image}" }}
-                {{ if alt }}<meta name="twitter:image:alt" content="{{ alt }}" />{{ /if }}
+                {{ if alt }}
+                    <meta name="twitter:image:alt" content="{{ alt }}" />
+                {{ /if }}
             {{ /asset }}
         {{ elseif seo:twitter_image }}
-            <meta name="twitter:image" content="{{ glide:seo:twitter_image width='1200' height='600' fit='crop_focal' absolute='true' }}" />
+            <meta
+                name="twitter:image"
+                content="{{ glide:seo:twitter_image width='1200' height='600' fit='crop_focal' absolute='true' }}"
+            />
             {{ asset url="{seo:twitter_image}" }}
-                {{ if alt }}<meta name="twitter:image:alt" content="{{ alt }}" />{{ /if }}
+                {{ if alt }}
+                    <meta name="twitter:image:alt" content="{{ alt }}" />
+                {{ /if }}
             {{ /asset }}
         {{ /if }}
     {{ /if }}
 {{ else }}
     <title>{{ response_code }} | {{ config:app:name }}</title>
 {{ /if }}
-
 {{# Trackers #}}
-{{ if
-    (environment == 'local' && seo:trackers_local) ||
-    (environment == 'staging' && seo:trackers_staging) ||
-    (environment == 'production' && seo:trackers_production)
-}}
+{{ if (environment == 'local' && seo:trackers_local) || (environment == 'staging' && seo:trackers_staging) || (environment == 'production' && seo:trackers_production) }}
     {{ if seo:tracker_type == 'gtm' }}
         <script>
             ;(function (w, d, s, l, i) {
@@ -192,27 +211,30 @@
             })
         </script>
     {{ /if }}
-
     {{# Yield this section in all your layouts after opening the <body> #}}
     {{ section:seo_body }}
         {{ if seo:tracker_type == 'gtm' }}
-            <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ seo:google_tag_manager }}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+            <noscript>
+                <iframe
+                    src="https://www.googletagmanager.com/ns.html?id={{ seo:google_tag_manager }}"
+                    height="0"
+                    width="0"
+                    style="display: none; visibility: hidden"
+                ></iframe>
+            </noscript>
         {{ /if }}
         {{ if seo:use_cookie_dialog }}
             <s:partial:partials.cookie-dialog />
         {{ /if }}
     {{ /section:seo_body }}
-
     {{ if seo:use_google_site_verification }}
         <meta name="google-site-verification" content="{{ seo:google_site_verification }}" />
     {{ /if }}
-
     {{ if seo:use_fathom && seo:fathom_use_custom_domain }}
         <script src="{{ seo:fathom_custom_script_url }}" site="{{ seo:fathom }}" defer></script>
     {{ elseif seo:use_fathom }}
         <script src="https://cdn.usefathom.com/script.js" site="{{ seo:fathom }}" defer></script>
     {{ /if }}
-
     {{ if seo:use_cloudflare_web_analytics }}
         <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ seo:cloudflare_web_analytics }}"}'></script>
     {{ /if }}

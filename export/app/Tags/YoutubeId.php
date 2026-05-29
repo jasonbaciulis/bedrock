@@ -8,10 +8,8 @@ class YoutubeId extends Tags
 {
     /**
      * The {{ youtube_id }} tag.
-     *
-     * @return string|array
      */
-    public function index()
+    public function index(): string|array|false
     {
         /**
          * https://gist.github.com/leogopal/b429f9700d473a55f70819dc6e5195f0
