@@ -25,7 +25,7 @@ tree:
         title: Components
         url: '#components'
         data:
-          icon: square-plus
+          icon: squares-plus
           description: 'Reusable Alpine.js components to speed up the dev'
       -
         id: 62075822-c793-4249-9b24-069076cea08b
