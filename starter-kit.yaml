@@ -42,3 +42,4 @@ dependencies_dev:
   pestphp/pest: ^4.0
   pestphp/pest-plugin-laravel: ^4.0
   phpstan/phpstan: ^2.1
+  phpunit/phpunit: ^12.5
