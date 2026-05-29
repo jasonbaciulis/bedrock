@@ -1,0 +1,92 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  php_coding_standards:
+    name: PHP (Pint & PHPStan)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          extensions: mbstring, intl
+          coverage: none
+          tools: composer
+
+      - name: Install dependencies (cached)
+        uses: ramsey/composer-install@v4
+        with:
+          dependency-versions: locked
+          composer-options: --no-progress --no-interaction --prefer-dist
+
+      - name: Run PHP coding standards (CI)
+        run: composer format:ci
+
+  frontend_coding_standards:
+    name: Frontend (Prettier & ESLint)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Run frontend coding standards (CI)
+        run: npm run frontend:ci
+
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite3, pdo_sqlite
+          coverage: none
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@v4
+
+      - name: Install NPM dependencies
+        run: npm ci
+
+      - name: Prepare Laravel
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Build frontend assets
+        run: npm run build
+
+      - name: Run tests
+        run: composer test

@@ -1,9 +1,8 @@
 import { defineConfig, loadEnv } from 'vite'
 import laravel from 'laravel-vite-plugin'
 import tailwindcss from '@tailwindcss/vite'
-// import vue2 from '@vitejs/plugin-vue2';
 
-export default defineConfig(({ command, mode }) => {
+export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   return {
     plugins: [
@@ -21,6 +20,7 @@ export default defineConfig(({ command, mode }) => {
           'resources/js/components/combobox.js',
           'resources/js/components/stepper.js',
           'resources/js/components/toaster.js',
+          'resources/js/components/statamicForm.js',
 
           // Control Panel assets.
           // https://statamic.dev/extending/control-panel#adding-css-and-js-assets
@@ -28,13 +28,14 @@ export default defineConfig(({ command, mode }) => {
           'resources/js/cp.js',
         ],
         refresh: true,
-        detectTls: false,
       }),
       tailwindcss(),
-      // vue2(),
     ],
     server: {
       open: env.APP_URL,
+      watch: {
+        ignored: ['**/storage/framework/views/**', '**/users/**'],
+      },
     },
     define: {
       appName: JSON.stringify(env.APP_NAME),

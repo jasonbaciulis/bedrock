@@ -7,7 +7,9 @@ use Statamic\Fields\Fieldtype;
 class Stepper extends Fieldtype
 {
     protected $categories = ['number'];
+
     protected $selectableInForms = true;
+
     protected $icon = 'integer';
 
     protected function configFieldItems(): array

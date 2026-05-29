@@ -124,7 +124,7 @@ document.addEventListener('alpine:init', () => {
       if (!this.itemActive) return
       const el = document.getElementById(this.optionId(this.itemActive.key))
       if (!el || !this.$refs.listbox) return
-      requestAnimationFrame(() => el.scrollIntoView({ block: 'nearest' }))
+      window.requestAnimationFrame(() => el.scrollIntoView({ block: 'nearest' }))
     },
 
     _searchItems() {

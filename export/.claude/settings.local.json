@@ -5,7 +5,16 @@
       "Bash(php artisan test:*)",
       "Bash(npx prettier:*)",
       "Bash(echo:*)",
-      "Bash(npm ls:*)"
+      "Bash(npm ls:*)",
+      "mcp__laravel-boost__search-docs",
+      "WebFetch(domain:statamic.dev)",
+      "Bash(composer show *)",
+      "Bash(composer require *)",
+      "Bash(composer update *)",
+      "Bash(php artisan *)",
+      "Bash(composer run *)",
+      "Bash(curl -s -o /tmp/home.html -w \"HTTP %{http_code} %{size_download}b\\\\n\" https://bedrock-demo.test/)",
+      "Read(//tmp/**)"
     ]
   },
   "enableAllProjectMcpServers": true,
@@ -14,7 +23,6 @@
     "herd"
   ],
   "enabledPlugins": {
-    "laravel-simplifier@laravel": true,
     "frontend-design@claude-plugins-official": true
   }
 }

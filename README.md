@@ -7,7 +7,7 @@ Features shadcn/ui style Alpine.js components that you can customize, extend, an
 ## Features
 - **shadcn/ui style Alpine.js components**. 10+ beautifully-designed, accessible components for rapid development.
 - **Blocks**. Blocks are based on Replicator Fieldtype and are like LEGO bricks that provide you the maximum flexibility when building pages. You can use CLI commands to quickly create or remove Blocks. Bedrock includes a few commonly used Blocks like FAQs and Form.
-- **Blade templates**. Unlocks the full potential of Laravel, while still utilizing Statamic modifiers and tags.
+- **Antlers templates**. Uses a cleaner, more readable component tag syntax for Antlers introduced in Statamic 6. Unlocks the full potential of Antlers templating engine, using front-matter, Statamic modifiers and tags.
 - **SEO**. Full SEO settings without extra addon. Including cookie consent dialog that works with GTM.
 - **Style guide.** A Block that’s very useful when starting projects. It’s more of an upgrade to your dev process that let’s you see all your small UI parts in one place before starting to build other Blocks and pages.
 

@@ -5,9 +5,7 @@ export_paths:
   - app/Http/Requests/NewsletterRequest.php
   - app/Providers/AppServiceProvider.php
   - app/Tags
-  - app/View/Components
   - app/Support/Yaml
-  - config/statamic/editions.php
   - config/statamic/git.php
   - config/statamic/search.php
   - content
@@ -26,14 +24,16 @@ export_paths:
   - .gitignore
   - package.json
   - prettier.config.js
-  - AGENTS.md
   - CLAUDE.md
   - .claude
-  - .cursor
-  - .gemini
+  - .ai
+  - .github/workflows/ci.yml
   - vite.config.js
 dependencies:
   blade-ui-kit/blade-icons: ^1.8
   mallardduck/blade-lucide-icons: ^1.23
 dependencies_dev:
+  cboxdk/statamic-mcp: ^2.5
+  larastan/larastan: ^3.9
   laravel/boost: ^2.0
+  phpstan/phpstan: ^2.1

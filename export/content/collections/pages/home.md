@@ -90,7 +90,7 @@ blocks:
             content:
               -
                 type: text
-                text: 'My goal is to make this the go-to Statamic starter kit for Laravel devs. It’s Blade-first (not Antlers), includes reusable Alpine.js components that cover ~90% of projects, and ships with block/set scaffolding commands to speed up your process.'
+                text: 'My goal is to make this the go-to Statamic starter kit for marketing sites. It uses a cleaner, more readable component tag syntax for Antlers introduced in Statamic 6, includes reusable Alpine.js components that cover ~90% of projects, and ships with block/set scaffolding commands to speed up your process.'
         type: item
         enabled: true
       -

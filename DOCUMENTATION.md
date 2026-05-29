@@ -27,8 +27,8 @@ Once you have started the development server with `composer run dev`, the websit
 - [TailwindCSS](https://tailwindcss.com/docs/installation) - Utility-first CSS framework.
 - [Alpine.js](https://alpinejs.dev/start-here) - Rugged, minimal tool for composing behavior directly in your markup.
 - [Embla](https://www.embla-carousel.com) - A lightweight carousel library with fluid motion and great swipe precision.
-- [Laravel Precognition](https://laravel.com/docs/12.x/precognition#using-alpine) - provides "live" validation for form fields.
 - [Laravel Boost](https://github.com/laravel/boost) - Accelerates AI-assisted development by providing the essential context that AI needs to generate high-quality, Laravel-specific code.
+- [Statamic MCP](https://statamic.com/addons/cboxdk/statamic-mcp) - MCP (Model Context Protocol) server for Statamic that provides AI assistants with structured access to Statamic's capabilities through a modern router-based architecture.
 - [Blade Icons](https://blade-ui-kit.com/blade-icons) - Easily add SVG icons in your Laravel Blade views from icon sets like Heroicons or Lucide.
 
 ## Views folder structure
@@ -176,32 +176,64 @@ $FORGE_PHP artisan statamic:static:warm --queue
     echo 'Restarting FPM...'; sudo -S service $FORGE_PHP_FPM reload ) 9>/tmp/fpmlock
 ```
 
-## Ploi deploy script
+## Ploi deploy scripts (with zero-downtime enabled)
+
+### Main deploy script
 
 ```bash
-if [[ {COMMIT_MESSAGE} =~ "[BOT]" ]] && [[ {DEPLOYMENT_SOURCE} == "quick-deploy" ]]; then
-    echo "Auto-committed on production. Nothing to deploy."
+# Early Exit Check
+if [[ {COMMIT_MESSAGE} =~ "[BOT]" ]]; then
+    echo "Auto-committed on staging. Nothing to deploy."
     {DO_NOT_NOTIFY}
+    {CLEAR_NEW_RELEASE}
     exit 0
 fi
 
-cd {SITE_DIRECTORY}
-git pull origin {BRANCH}
-composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
+cd {RELEASE}
 
+# Git & Dependencies
+git pull --rebase --autostash origin {BRANCH}
+
+{SITE_COMPOSER} install --no-interaction --prefer-dist --optimize-autoloader --no-dev --classmap-authoritative
+
+# Database (Safe Migration)
+if [ -f artisan ]; then
+    {SITE_PHP} artisan migrate --force
+fi
+
+# Frontend Build
 npm ci
 npm run build
 
-{RELOAD_PHP_FPM}
-
-{SITE_PHP} artisan cache:clear
+# Laravel Optimization
+# We group these to minimize the window where the app is "naked"
 {SITE_PHP} artisan config:cache
 {SITE_PHP} artisan route:cache
-{SITE_PHP} artisan statamic:stache:warm
-{SITE_PHP} artisan queue:restart
-{SITE_PHP} artisan statamic:search:update --all
-{SITE_PHP} artisan statamic:static:clear
-{SITE_PHP} artisan statamic:static:warm --queue
+{SITE_PHP} artisan view:cache
+{SITE_PHP} artisan event:cache
 
-echo "Website deployed!"
+echo "⏳ Release prepared. Awaiting symlink switch…"
+```
+
+### Post deploy script
+
+```bash
+# Flush the PHP FPM worker
+{RELOAD_PHP_FPM}
+
+# Statamic Stache
+{SITE_PHP} artisan statamic:stache:clear
+{SITE_PHP} artisan statamic:stache:warm
+
+# Restart Queue Workers
+{SITE_PHP} artisan queue:restart
+
+# Update all search indexes
+{SITE_PHP} artisan statamic:search:update --all
+
+# Static Caching
+{SITE_PHP} artisan statamic:static:clear
+{SITE_PHP} artisan statamic:static:warm --queue --insecure
+
+echo "🚀 Website deployed!"
 ```

@@ -1,0 +1,6 @@
+{
+  "enabledPlugins": {
+    "laravel@laravel": true,
+    "laravel-boost@claude-plugins-official": true
+  }
+}
