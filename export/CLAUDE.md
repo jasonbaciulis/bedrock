@@ -1,4 +1,347 @@
 <laravel-boost-guidelines>
+=== .ai/bedrock rules ===
+
+# Bedrock Statamic Starter Kit Rules
+
+## CLI Commands
+
+- **ALWAYS** use `php please make:bedrock-block` for new blocks, never create manually
+- **ALWAYS** use `php please make:bedrock-set` for new sets, never create manually
+- **ALWAYS** use `php please delete:bedrock-block` and `php please delete:bedrock-set` for removal
+- These commands create fieldsets, Blade templates, and update parent YAML definitions automatically
+
+## Blueprints
+
+- Import `image` and `text` fields from common fields, instead of creating from sratch. E.g. `field: common.text_plain`
+- Import `buttons` fieldset when design requires buttons, instead of creating from sratch.
+- Use `group` field when it makes sense. E.g. instead of creating fields like: `input_placeholder`, `input_label`, `input_prefix`, create `group` field named `input` and place `placeholder`, `label`, `prefix` fields inside.
+
+## File Naming Conventions
+
+- Blade templates: `kebab-case.blade.php`
+- Antlers templates: `kebab-case.antlers.html`
+- CSS/JS: `kebab-case.css`, `camelCase.js`
+
+## Component Architecture
+
+- Blocks go in `resources/views/blocks/` (page building)
+- Sets go in `resources/views/sets/` (content composition)
+- UI components (highly reusable, for any project) go in `resources/views/components/ui/`
+- Project specific reusable components go in `resources/views/components/`
+- Partials go in `resources/views/partials/` (template partials and fragments, things that aren't really reusable go here)
+
+=== .ai/laravel rules ===
+
+# PHP / Laravel Code Style
+
+## Collections Over Plain PHP
+
+- Prefer Laravel collections over plain PHP array functions
+  - `collect()->where()` not `array_filter()`
+  - `collect()->pluck()` not `array_map()`
+  - `collect()->contains()` not `in_array()`
+  - `collect()->each()` / `->map()` / `->mapWithKeys()` not `foreach`
+- Prefer collection pipelines (`map`, `filter`, `reject`, `flatMap`, `mapWithKeys`) over imperative loops. Exception is for a single array operation, PHP functions are fine. For example, no needs to call `collect()->each()->all()` if all we did was take array, wrap in collection, iterate and convert back to an array.
+
+## String Helpers
+
+- Prefer `Str::` / `Str::of()` helpers over PHP string functions
+  - `Str::startsWith()` not `str_starts_with()`
+  - `Str::after()` not `str_replace()` for extracting substrings
+  - `Str::contains()` not `str_contains()`
+
+## Naming
+
+- Never use single-letter variable names in closures — use descriptive names
+  - `fn (array $field) =>` not `fn (array $f) =>`
+  - `fn (Entry $entry) =>` not `fn (Entry $e) =>`
+
+## Type hint
+
+- Always type hint and add return types.
+- Instead of using @phpstan-ignore, always try to resolve issue with typehinting/importing/pointing to the used class for IDE to discover it
+
+## Readability
+
+- If a code block needs a comment to be understood, extract it into a named method instead
+- Always type-hint closure parameters when the type is known
+
+=== .ai/philosophy rules ===
+
+## Your Core Philosophy
+
+You believe in code that is:
+- **DRY (Don't Repeat Yourself)**: Ruthlessly eliminate duplication
+- **Concise**: Every line should earn its place
+- **Elegant**: Solutions should feel natural and obvious in hindsight
+- **Expressive**: Code should read like well-written prose
+- **Idiomatic**: Embrace the conventions and spirit of Laravel and Filament
+- **Self-documenting**: Comments are a code smell and should be avoided
+
+## Your Principles
+
+You follow these principles when interacting:
+- **Don't make assumptions**: Always ask for follow up questions to make.
+- **Direct communication**: Communicate directly with radical honesty. Be kind and polite, but always sincere.
+- **Surface inconsistencies**: Even if it does not relate to the instructed task directly, always mention inconsistencies in the surounding code about styling, naming conventions, formatting, or architectural patterns that make code difficult to read, maintain, or debug.
+- **Present trade-offs**: There are many ways to architecture and solve coding problems. The "right" way depends on many factors that you may not be aware off. Always consider the alternative aproaches and list the trade-offs.
+- **Push back when you need**: If what you're being asked to do, violates your "Core Philosophy" or other "Principles", always push back, ask more questions, clarify, make sure it's what the user really wants and is aware of trade-offs.
+
+=== .ai/statamic-mcp rules ===
+
+# Statamic MCP Guidelines (v2.0)
+
+This file provides AI assistants with comprehensive understanding of the Statamic MCP Server v2.0 capabilities.
+Requires Statamic v6+ and laravel/mcp v0.6+.
+
+## MCP Server Overview
+
+The Statamic MCP Server uses a router-based architecture with 11 tools:
+
+### Router Architecture (9 + 2 Tools)
+
+**Domain Routers** (9 core tools consolidating 140+ operations):
+- **statamic-entries**: Manage entries across all collections (CRUD, publish/unpublish)
+- **statamic-terms**: Manage taxonomy terms (CRUD operations)
+- **statamic-globals**: Manage global set values (list, get, update)
+- **statamic-structures**: Structural elements (collections, taxonomies, navigations, sites - 26+ ops)
+- **statamic-assets**: Complete asset management (containers, files, metadata - 20+ ops)
+- **statamic-users**: User and permission management (users, roles, groups - 24+ ops)
+- **statamic-system**: System operations (cache, health, config, info - 15+ ops)
+- **statamic-blueprints**: Schema management (CRUD, scanning, type generation - 10+ ops)
+
+**Agent Education Tools** (2 specialized tools):
+- **statamic-discovery**: Intent-based tool discovery and recommendations
+- **statamic-schema**: Detailed tool schema inspection and documentation
+
+Use `statamic-discovery` to find the right tool for your intent and `statamic-schema` for detailed documentation.
+
+## Authentication
+
+### Scoped API Tokens
+
+Web MCP endpoints use scoped API tokens for fine-grained access control:
+- Tokens are managed via the Statamic CP dashboard (Tools → MCP)
+- Each token has specific scopes (e.g., content:read, content:write, system:read)
+- Use Bearer token authentication: `Authorization: Bearer <token>`
+- CLI mode (php artisan mcp:start) runs with full permissions
+
+### Available Scopes
+
+- `content:read` / `content:write` - Entry and term operations
+- `structures:read` / `structures:write` - Collection and taxonomy management
+- `assets:read` / `assets:write` - Asset operations
+- `users:read` / `users:write` - User management
+- `globals:read` / `globals:write` - Global set operations
+- `blueprints:read` / `blueprints:write` - Blueprint management
+- `system:read` / `system:write` - System operations
+- `structures:read` / `structures:write` - Navigation management
+- `*` - Wildcard (all permissions)
+
+## Usage Patterns
+
+### Discovery Phase
+
+Always start development sessions with:
+1. `statamic-discovery` - Find the right tool for your intent
+2. `statamic-system` (action: "info") - Understand the installation
+3. `statamic-schema` - Get detailed tool documentation when needed
+4. `statamic-structures` (action: "list", type: "collections") - Map content structure
+
+### Development Phase
+
+For content work:
+- Use `statamic-entries` for entry CRUD and publishing across collections
+- Use `statamic-terms` for taxonomy term management
+- Use `statamic-globals` for global set value management
+- Use `statamic-structures` for collections, taxonomies, navigations
+- Use `statamic-blueprints` for schema management and type generation
+
+For system operations:
+- Use `statamic-system` for cache management, health checks, configuration
+- Use `statamic-assets` for file and media management
+- Use `statamic-users` for user, role, and permission management
+
+### Content Architecture
+
+Create structures with appropriate router tools:
+
+**Creating a Collection:**
+Use `statamic-structures` with `{"action": "create", "type": "collection", "handle": "blog"}`
+
+**Creating Blueprints:**
+Use `statamic-blueprints` with `{"action": "create", "handle": "article", "fields": [...]}`
+
+**Managing Entries:**
+Use `statamic-entries` with `{"action": "create", "collection": "blog", "data": {...}}`
+
+**Managing Terms:**
+Use `statamic-terms` with `{"action": "create", "taxonomy": "categories", "data": {...}}`
+
+**Global Settings:**
+Use `statamic-globals` with `{"action": "update", "handle": "site_settings", "data": {...}}`
+
+## Statamic Development Best Practices
+
+### Primary Templating Language
+
+- **Antlers-first projects**: Prefer Antlers syntax, use Antlers tags and variables
+- **Blade-first projects**: Prefer Blade components, use Statamic Blade tags
+
+### Code Quality
+
+1. **No inline PHP** in templates (both Antlers and Blade)
+2. **No direct facades** in views (use Statamic tags)
+3. **Proper error handling** for missing content
+4. **Security considerations** for user input
+
+## Field Type Reference
+
+### Text Fields
+
+- `text` - Single line text
+- `textarea` - Multi-line text
+- `markdown` - Markdown with preview
+- `code` - Syntax highlighted code
+
+### Rich Content
+
+- `bard` - Rich editor with custom sets
+
+### Media
+
+- `assets` - File/image management
+- `video` - Video embedding
+
+### Relationships
+
+- `entries` - Link to other entries
+- `taxonomy` - Link to taxonomy terms
+- `users` - Link to user accounts
+
+### Structured Data
+
+- `replicator` - Flexible content blocks
+- `grid` - Tabular data
+- `group` - Field grouping
+
+## AI Assistant Integration
+
+1. **Start with discovery** - Use `statamic-discovery` to find the right tool
+2. **Use router tools** - Each domain router handles multiple operations efficiently
+3. **Check schemas** - Use `statamic-schema` for detailed parameter documentation
+4. **Respect scopes** - Ensure your token has required scopes for the operations
+5. **Follow router patterns** - Always use action-based syntax for consistent behavior
+
+## Error Handling
+
+All router tools provide consistent error responses. When tools return errors:
+- Use `statamic-discovery` to find the correct tool and action
+- Use `statamic-schema` to verify parameter requirements
+- Check token scopes if you receive permission errors
+- Validate project state with appropriate router tools
+
+=== .ai/statamic rules ===
+
+## Templating Strategy
+
+### Antlers Rules
+
+- Use Statamic tags, not PHP
+- Prefer relationships over manual lookups
+- Handle missing data gracefully
+
+#### Use view-matter inside components to declare props
+
+```antlers
+---
+variant: 'dark'
+class: ''
+---
+
+<div {{ class | attribute:class }}>
+    <div class="{{ view:variant }}">
+        {{ slot }}
+    </div>
+</div>
+```
+
+#### Use view-matter to output variant styles
+
+```antlers
+---
+variants:
+  white:
+    background: 'bg-white'
+    text: 'text-gray'
+  dark:
+    background: 'bg-black'
+    text: 'text-white'
+---
+<section class="{{ view:variants:{variant}:background }} {{ view:variants:{variant}:text }}">
+    ...
+</section>
+```
+
+#### Use `attribute` modifier to pass variables to partials
+
+```antlers
+---
+class: ''
+---
+
+<div {{ class | attribute:class }}>
+    ...
+</div>
+```
+
+#### Use modifiers for formatting
+
+Example:
+
+```antlers
+{{ title }}
+{{ content | markdown }}
+{{ if featured }}...{{ /if }}
+```
+
+#### Use component tag syntax for Antlers
+
+Examples:
+
+```antlers
+<s:collection:blog limit="5">
+    <a href="{{ url }}">{{ title }}</a>
+</s:collection:blog>
+
+<s:partial:components.ui.button variant="primary">
+    View all
+</s:partial:components.ui.button>
+```
+
+## Content Architecture
+
+- Blueprint-first: structure content before templating
+- Prefer relationships over duplication
+- Choose field types deliberately (entries, taxonomy, assets, users)
+- Validation rules should live in blueprints
+
+## Prohibited Practices
+
+- Inline PHP in templates
+- Direct facade usage in views
+- Hard-coded content assumptions
+- Bypassing blueprints or the design system
+
+## Error Handling
+
+Templates must:
+- Fail gracefully
+- Avoid fatal errors when content is missing
+- Provide sensible fallbacks
+
+Content editors should never be able to break the site.
+
 === foundation rules ===
 
 # Laravel Boost Guidelines
@@ -9,26 +352,26 @@ The Laravel Boost guidelines are specifically curated by Laravel maintainers for
 
 This application is a Laravel application and its main Laravel ecosystems package & versions are below. You are an expert with them all. Ensure you abide by these specific packages & versions.
 
-- php - 8.4.17
-- inertiajs/inertia-laravel (INERTIA) - v2
-- laravel/framework (LARAVEL) - v12
+- php - 8.5
+- inertiajs/inertia-laravel (INERTIA_LARAVEL) - v2
+- laravel/framework (LARAVEL) - v13
 - laravel/prompts (PROMPTS) - v0
 - statamic/cms (STATAMIC) - v6
+- larastan/larastan (LARASTAN) - v3
+- laravel/boost (BOOST) - v2
 - laravel/mcp (MCP) - v0
+- laravel/pail (PAIL) - v1
 - laravel/pint (PINT) - v1
 - laravel/sail (SAIL) - v1
-- pestphp/pest (PEST) - v3
-- phpunit/phpunit (PHPUNIT) - v11
+- pestphp/pest (PEST) - v4
+- phpunit/phpunit (PHPUNIT) - v12
 - alpinejs (ALPINEJS) - v3
 - prettier (PRETTIER) - v3
 - tailwindcss (TAILWINDCSS) - v4
 
 ## Skills Activation
 
-This project has domain-specific skills available. You MUST activate the relevant skill whenever you work in that domain—don't wait until you're stuck.
-
-- `pest-testing` — Tests applications using the Pest 3 PHP framework. Activates when writing tests, creating unit or feature tests, adding assertions, testing Livewire components, architecture testing, debugging test failures, working with datasets or mocking; or when the user mentions test, spec, TDD, expects, assertion, coverage, or needs to verify functionality works.
-- `tailwindcss-development` — Styles applications using Tailwind CSS v4 utilities. Activates when adding styles, restyling components, working with gradients, spacing, layout, flex, grid, responsive design, dark mode, colors, typography, or borders; or when the user mentions CSS, styling, classes, Tailwind, restyle, hero section, cards, buttons, or any visual/UI changes.
+This project has domain-specific skills available in `**/skills/**`. You MUST activate the relevant skill whenever you work in that domain—don't wait until you're stuck.
 
 ## Conventions
 
@@ -61,83 +404,63 @@ This project has domain-specific skills available. You MUST activate the relevan
 
 # Laravel Boost
 
-- Laravel Boost is an MCP server that comes with powerful tools designed specifically for this application. Use them.
+## Tools
+
+- Laravel Boost is an MCP server with tools designed specifically for this application. Prefer Boost tools over manual alternatives like shell commands or file reads.
+- Use `database-query` to run read-only queries against the database instead of writing raw SQL in tinker.
+- Use `database-schema` to inspect table structure before writing migrations or models.
+- Use `get-absolute-url` to resolve the correct scheme, domain, and port for project URLs. Always use this before sharing a URL with the user.
+- Use `browser-logs` to read browser logs, errors, and exceptions. Only recent logs are useful, ignore old entries.
+
+## Searching Documentation (IMPORTANT)
+
+- Always use `search-docs` before making code changes. Do not skip this step. It returns version-specific docs based on installed packages automatically.
+- Pass a `packages` array to scope results when you know which packages are relevant.
+- Use multiple broad, topic-based queries: `['rate limiting', 'routing rate limiting', 'routing']`. Expect the most relevant results first.
+- Do not add package names to queries because package info is already shared. Use `test resource table`, not `filament 4 test resource table`.
+
+### Search Syntax
+
+1. Use words for auto-stemmed AND logic: `rate limit` matches both "rate" AND "limit".
+2. Use `"quoted phrases"` for exact position matching: `"infinite scroll"` requires adjacent words in order.
+3. Combine words and phrases for mixed queries: `middleware "rate limit"`.
+4. Use multiple queries for OR logic: `queries=["authentication", "middleware"]`.
 
 ## Artisan
 
-- Use the `list-artisan-commands` tool when you need to call an Artisan command to double-check the available parameters.
+- Run Artisan commands directly via the command line (e.g., `php artisan route:list`). Use `php artisan list` to discover available commands and `php artisan [command] --help` to check parameters.
+- Inspect routes with `php artisan route:list`. Filter with: `--method=GET`, `--name=users`, `--path=api`, `--except-vendor`, `--only-vendor`.
+- Read configuration values using dot notation: `php artisan config:show app.name`, `php artisan config:show database.default`. Or read config files directly from the `config/` directory.
 
-## URLs
+## Tinker
 
-- Whenever you share a project URL with the user, you should use the `get-absolute-url` tool to ensure you're using the correct scheme, domain/IP, and port.
-
-## Tinker / Debugging
-
-- You should use the `tinker` tool when you need to execute PHP to debug code or query Eloquent models directly.
-- Use the `database-query` tool when you only need to read from the database.
-
-## Reading Browser Logs With the `browser-logs` Tool
-
-- You can read browser logs, errors, and exceptions using the `browser-logs` tool from Boost.
-- Only recent browser logs will be useful - ignore old logs.
-
-## Searching Documentation (Critically Important)
-
-- Boost comes with a powerful `search-docs` tool you should use before trying other approaches when working with Laravel or Laravel ecosystem packages. This tool automatically passes a list of installed packages and their versions to the remote Boost API, so it returns only version-specific documentation for the user's circumstance. You should pass an array of packages to filter on if you know you need docs for particular packages.
-- Search the documentation before making code changes to ensure we are taking the correct approach.
-- Use multiple, broad, simple, topic-based queries at once. For example: `['rate limiting', 'routing rate limiting', 'routing']`. The most relevant results will be returned first.
-- Do not add package names to queries; package information is already shared. For example, use `test resource table`, not `filament 4 test resource table`.
-
-### Available Search Syntax
-
-1. Simple Word Searches with auto-stemming - query=authentication - finds 'authenticate' and 'auth'.
-2. Multiple Words (AND Logic) - query=rate limit - finds knowledge containing both "rate" AND "limit".
-3. Quoted Phrases (Exact Position) - query="infinite scroll" - words must be adjacent and in that order.
-4. Mixed Queries - query=middleware "rate limit" - "middleware" AND exact phrase "rate limit".
-5. Multiple Queries - queries=["authentication", "middleware"] - ANY of these terms.
+- Execute PHP in app context for debugging and testing code. Do not create models without user approval, prefer tests with factories instead. Prefer existing Artisan commands over custom tinker code.
+- Always use single quotes to prevent shell expansion: `php artisan tinker --execute 'Your::code();'`
+  - Double quotes for PHP strings inside: `php artisan tinker --execute 'User::where("active", true)->count();'`
 
 === php rules ===
 
 # PHP
 
 - Always use curly braces for control structures, even for single-line bodies.
+- Use PHP 8 constructor property promotion: `public function __construct(public GitHub $github) { }`. Do not leave empty zero-parameter `__construct()` methods unless the constructor is private.
+- Use explicit return type declarations and type hints for all method parameters: `function isAccessible(User $user, ?string $path = null): bool`
+- Use TitleCase for Enum keys: `FavoritePerson`, `BestLake`, `Monthly`.
+- Prefer PHPDoc blocks over inline comments. Only add inline comments for exceptionally complex logic.
+- Use array shape type definitions in PHPDoc blocks.
 
-## Constructors
+=== deployments rules ===
 
-- Use PHP 8 constructor property promotion in `__construct()`.
-    - <code-snippet>public function __construct(public GitHub $github) { }</code-snippet>
-- Do not allow empty `__construct()` methods with zero parameters unless the constructor is private.
+# Deployment
 
-## Type Declarations
-
-- Always use explicit return type declarations for methods and functions.
-- Use appropriate PHP type hints for method parameters.
-
-<code-snippet name="Explicit Return Types and Method Params" lang="php">
-protected function isAccessible(User $user, ?string $path = null): bool
-{
-    ...
-}
-</code-snippet>
-
-## Enums
-
-- Typically, keys in an Enum should be TitleCase. For example: `FavoritePerson`, `BestLake`, `Monthly`.
-
-## Comments
-
-- Prefer PHPDoc blocks over inline comments. Never use comments within the code itself unless the logic is exceptionally complex.
-
-## PHPDoc Blocks
-
-- Add useful array shape type definitions when appropriate.
+- Laravel can be deployed using [Laravel Cloud](https://cloud.laravel.com/), which is the fastest way to deploy and scale production Laravel applications.
 
 === herd rules ===
 
 # Laravel Herd
 
-- The application is served by Laravel Herd and will be available at: `https?://[kebab-case-project-dir].test`. Use the `get-absolute-url` tool to generate valid URLs for the user.
-- You must not run any commands to make the site available via HTTP(S). It is always available through Laravel Herd.
+- The application is served by Laravel Herd at `https?://[kebab-case-project-dir].test`. Use the `get-absolute-url` tool to generate valid URLs. Never run commands to serve the site. It is always available.
+- Use the `herd` CLI to manage services, PHP versions, and sites (e.g. `herd sites`, `herd services:start <service>`, `herd php:list`). Run `herd list` to discover all available commands.
 
 === tests rules ===
 
@@ -154,58 +477,31 @@ protected function isAccessible(User $user, ?string $path = null): bool
 - Components live in `resources/js/Pages` (unless specified in `vite.config.js`). Use `Inertia::render()` for server-side routing instead of Blade views.
 - ALWAYS use `search-docs` tool for version-specific Inertia documentation and updated code examples.
 
-=== inertia-laravel/v2 rules ===
-
 # Inertia v2
 
 - Use all Inertia features from v1 and v2. Check the documentation before making changes to ensure the correct approach.
-- New features: deferred props, infinite scrolling (merging props + `WhenVisible`), lazy loading on scroll, polling, prefetching.
+- New features: deferred props, infinite scroll, merging props, polling, prefetching, once props, flash data.
 - When using deferred props, add an empty state with a pulsing or animated skeleton.
 
 === laravel/core rules ===
 
 # Do Things the Laravel Way
 
-- Use `php artisan make:` commands to create new files (i.e. migrations, controllers, models, etc.). You can list available Artisan commands using the `list-artisan-commands` tool.
+- Use `php artisan make:` commands to create new files (i.e. migrations, controllers, models, etc.). You can list available Artisan commands using `php artisan list` and check their parameters with `php artisan [command] --help`.
 - If you're creating a generic PHP class, use `php artisan make:class`.
 - Pass `--no-interaction` to all Artisan commands to ensure they work without user input. You should also pass the correct `--options` to ensure correct behavior.
 
-## Database
-
-- Always use proper Eloquent relationship methods with return type hints. Prefer relationship methods over raw queries or manual joins.
-- Use Eloquent models and relationships before suggesting raw database queries.
-- Avoid `DB::`; prefer `Model::query()`. Generate code that leverages Laravel's ORM capabilities rather than bypassing them.
-- Generate code that prevents N+1 query problems by using eager loading.
-- Use Laravel's query builder for very complex database operations.
-
 ### Model Creation
 
-- When creating new models, create useful factories and seeders for them too. Ask the user if they need any other things, using `list-artisan-commands` to check the available options to `php artisan make:model`.
+- When creating new models, create useful factories and seeders for them too. Ask the user if they need any other things, using `php artisan make:model --help` to check the available options.
 
-### APIs & Eloquent Resources
+## APIs & Eloquent Resources
 
 - For APIs, default to using Eloquent API Resources and API versioning unless existing API routes do not, then you should follow existing application convention.
-
-## Controllers & Validation
-
-- Always create Form Request classes for validation rather than inline validation in controllers. Include both validation rules and custom error messages.
-- Check sibling Form Requests to see if the application uses array or string based validation rules.
-
-## Authentication & Authorization
-
-- Use Laravel's built-in authentication and authorization features (gates, policies, Sanctum, etc.).
 
 ## URL Generation
 
 - When generating links to other pages, prefer named routes and the `route()` function.
-
-## Queues
-
-- Use queued jobs for time-consuming operations with the `ShouldQueue` interface.
-
-## Configuration
-
-- Use environment variables only in configuration files - never use the `env()` function directly outside of config files. Always use `config('app.name')`, not `env('APP_NAME')`.
 
 ## Testing
 
@@ -217,55 +513,21 @@ protected function isAccessible(User $user, ?string $path = null): bool
 
 - If you receive an "Illuminate\Foundation\ViteException: Unable to locate file in Vite manifest" error, you can run `npm run build` or ask the user to run `npm run dev` or `composer run dev`.
 
-=== laravel/v12 rules ===
-
-# Laravel 12
-
-- CRITICAL: ALWAYS use `search-docs` tool for version-specific Laravel documentation and updated code examples.
-- Since Laravel 11, Laravel has a new streamlined file structure which this project uses.
-
-## Laravel 12 Structure
-
-- In Laravel 12, middleware are no longer registered in `app/Http/Kernel.php`.
-- Middleware are configured declaratively in `bootstrap/app.php` using `Application::configure()->withMiddleware()`.
-- `bootstrap/app.php` is the file to register middleware, exceptions, and routing files.
-- `bootstrap/providers.php` contains application specific service providers.
-- The `app\Console\Kernel.php` file no longer exists; use `bootstrap/app.php` or `routes/console.php` for console configuration.
-- Console commands in `app/Console/Commands/` are automatically available and do not require manual registration.
-
-## Database
-
-- When modifying a column, the migration must include all of the attributes that were previously defined on the column. Otherwise, they will be dropped and lost.
-- Laravel 12 allows limiting eagerly loaded records natively, without external packages: `$query->latest()->limit(10);`.
-
-### Models
-
-- Casts can and likely should be set in a `casts()` method on a model rather than the `$casts` property. Follow existing conventions from other models.
-
 === pint/core rules ===
 
 # Laravel Pint Code Formatter
 
-- You must run `vendor/bin/pint --dirty` before finalizing changes to ensure your code matches the project's expected style.
-- Do not run `vendor/bin/pint --test`, simply run `vendor/bin/pint` to fix any formatting issues.
+- If you have modified any PHP files, you must run `vendor/bin/pint --dirty --format agent` before finalizing changes to ensure your code matches the project's expected style.
+- Do not run `vendor/bin/pint --test --format agent`, simply run `vendor/bin/pint --format agent` to fix any formatting issues.
 
 === pest/core rules ===
 
 ## Pest
 
 - This project uses Pest for testing. Create tests: `php artisan make:test --pest {name}`.
+- The `{name}` argument should not include the test suite directory. Use `php artisan make:test --pest SomeFeatureTest` instead of `php artisan make:test --pest Feature/SomeFeatureTest`.
 - Run tests: `php artisan test --compact` or filter: `php artisan test --compact --filter=testName`.
 - Do NOT delete tests without approval.
-- CRITICAL: ALWAYS use `search-docs` tool for version-specific Pest documentation and updated code examples.
-- IMPORTANT: Activate `pest-testing` every time you're working with a Pest or testing-related task.
-
-=== tailwindcss/core rules ===
-
-# Tailwind CSS
-
-- Always use existing Tailwind conventions; check project patterns before adding new ones.
-- IMPORTANT: Always use `search-docs` tool for version-specific Tailwind CSS documentation and updated code examples. Never rely on training data.
-- IMPORTANT: Activate `tailwindcss-development` every time you're working with a Tailwind CSS or styling-related task.
 
 === statamic/cms rules ===
 
@@ -385,6 +647,7 @@ Most of the folder structure will feel familiar to Laravel developers. However, 
 
 - Statamic Documentation: https://statamic.dev/llms.txt
 - GitHub Issues: https://github.com/statamic/cms/issues
+
 </laravel-boost-guidelines>
 
 <!-- Bedrock Statamic Starter Kit Rules - DO NOT move inside <laravel-boost-guidelines> -->
