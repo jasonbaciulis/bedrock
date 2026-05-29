@@ -8,10 +8,6 @@ document.addEventListener('alpine:init', () => {
     subscribed: Alpine.$persist(false).as(persistKey),
     form,
 
-    init() {
-      this.form.setValidationTimeout(100)
-    },
-
     // derived state
     get isSubscribed() {
       return this.subscribed
