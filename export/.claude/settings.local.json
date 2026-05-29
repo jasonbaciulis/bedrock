@@ -16,7 +16,10 @@
       "Bash(curl -s -o /tmp/home.html -w \"HTTP %{http_code} %{size_download}b\\\\n\" https://bedrock-demo.test/)",
       "Read(//tmp/**)",
       "Bash(php *)",
-      "Bash(composer test *)"
+      "Bash(composer test *)",
+      "Bash(git check-ignore *)",
+      "Bash(git ls-tree *)",
+      "Bash(git config *)"
     ]
   },
   "enableAllProjectMcpServers": true,
