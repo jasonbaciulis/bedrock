@@ -11,8 +11,8 @@ trait UpdatesEntryContent
     /**
      * Rename usages of a block type in all entries using the `blocks` field.
      *
-     * @param string $oldHandle Existing block handle to replace
-     * @param string $newHandle New block handle to set
+     * @param  string  $oldHandle  Existing block handle to replace
+     * @param  string  $newHandle  New block handle to set
      * @return int Number of entries updated
      */
     protected function renameBlockUsagesInEntries(string $oldHandle, string $newHandle): int
@@ -34,6 +34,7 @@ trait UpdatesEntryContent
             if ($blocks->toJson() !== $updated->toJson()) {
                 $entry->set('blocks', $updated->all());
                 $entry->save();
+
                 return 1;
             }
 
@@ -44,7 +45,7 @@ trait UpdatesEntryContent
     /**
      * Delete usages of a block type from all entries using the `blocks` field.
      *
-     * @param string $fieldset Block handle to remove
+     * @param  string  $fieldset  Block handle to remove
      * @return int Number of entries updated
      */
     protected function deleteBlockUsagesFromEntries(string $fieldset): int
@@ -57,7 +58,7 @@ trait UpdatesEntryContent
 
             $filtered = $blocks
                 ->reject(
-                    static fn($item): bool => is_array($item) &&
+                    static fn ($item): bool => is_array($item) &&
                         Arr::get($item, 'type') === $fieldset
                 )
                 ->values();
@@ -66,6 +67,7 @@ trait UpdatesEntryContent
             if ($removed > 0) {
                 $entry->set('blocks', $filtered->all());
                 $entry->save();
+
                 return 1;
             }
 
@@ -76,8 +78,8 @@ trait UpdatesEntryContent
     /**
      * Rename usages of an Article set in all entries using the `article` field.
      *
-     * @param string $oldHandle Existing set handle to replace
-     * @param string $newHandle New set handle to set
+     * @param  string  $oldHandle  Existing set handle to replace
+     * @param  string  $newHandle  New set handle to set
      * @return int Number of entries updated
      */
     protected function renameSetUsagesInEntries(string $oldHandle, string $newHandle): int
@@ -89,7 +91,7 @@ trait UpdatesEntryContent
             }
 
             $updated = $article->map(function ($node) use ($oldHandle, $newHandle) {
-                if (!is_array($node) || Arr::get($node, 'type') !== 'set') {
+                if (! is_array($node) || Arr::get($node, 'type') !== 'set') {
                     return $node;
                 }
 
@@ -103,6 +105,7 @@ trait UpdatesEntryContent
             if ($article->toJson() !== $updated->toJson()) {
                 $entry->set('article', $updated->all());
                 $entry->save();
+
                 return 1;
             }
 
@@ -113,7 +116,7 @@ trait UpdatesEntryContent
     /**
      * Delete usages of an Article set from all entries using the `article` field.
      *
-     * @param string $fieldset Set handle to remove
+     * @param  string  $fieldset  Set handle to remove
      * @return int Number of entries updated
      */
     protected function deleteSetUsagesFromEntries(string $fieldset): int
@@ -126,7 +129,7 @@ trait UpdatesEntryContent
 
             $filtered = $article
                 ->reject(static function ($node) use ($fieldset): bool {
-                    if (!is_array($node) || Arr::get($node, 'type') !== 'set') {
+                    if (! is_array($node) || Arr::get($node, 'type') !== 'set') {
                         return false; // keep non-set nodes
                     }
 
@@ -138,6 +141,7 @@ trait UpdatesEntryContent
             if ($removed > 0) {
                 $entry->set('article', $filtered->all());
                 $entry->save();
+
                 return 1;
             }
 

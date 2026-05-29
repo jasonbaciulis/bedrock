@@ -2,15 +2,18 @@
 
 namespace App\Console\Commands\Scaffold;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Statamic\Facades\Entry;
-use Illuminate\Console\Command;
-use App\Support\Yaml\BlocksYaml;
-use Illuminate\Filesystem\Filesystem;
 use App\Console\Commands\Scaffold\Concerns\ManagesFieldsetFiles;
 use App\Console\Commands\Scaffold\Concerns\UpdatesEntryContent;
-use function Laravel\Prompts\{select, confirm, info, warning};
+use App\Support\Yaml\BlocksYaml;
+use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Arr;
+use Statamic\Facades\Entry;
+
+use function Laravel\Prompts\confirm;
+use function Laravel\Prompts\info;
+use function Laravel\Prompts\select;
+use function Laravel\Prompts\warning;
 
 class DeleteBlock extends Command
 {
@@ -69,7 +72,7 @@ class DeleteBlock extends Command
         }
 
         if (
-            !confirm(
+            ! confirm(
                 label: "Delete '{$blockLabel}' from '{$groups[$group]}' group?",
                 hint: (bool) $this->option('keep-files')
                     ? 'Only remove from blocks.yaml (files will be kept).'
@@ -86,7 +89,7 @@ class DeleteBlock extends Command
         try {
             $this->blocks->removeSet($group, $fieldset);
 
-            if (!(bool) $this->option('keep-files')) {
+            if (! (bool) $this->option('keep-files')) {
                 $this->deleteFilesFor(
                     fieldset: $fieldset,
                     force: (bool) $this->option('force'),
@@ -121,7 +124,7 @@ class DeleteBlock extends Command
                 }
 
                 return $blocks->contains(
-                    static fn($item): bool => is_array($item) &&
+                    static fn ($item): bool => is_array($item) &&
                         Arr::get($item, 'type') === $fieldset
                 );
             })

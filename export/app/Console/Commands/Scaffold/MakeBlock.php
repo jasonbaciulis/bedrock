@@ -2,13 +2,17 @@
 
 namespace App\Console\Commands\Scaffold;
 
+use App\Console\Commands\Scaffold\Concerns\ManagesFieldsetFiles;
+use App\Support\Yaml\BlocksYaml;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Statamic\Facades\Config;
-use App\Support\Yaml\BlocksYaml;
-use App\Console\Commands\Scaffold\Concerns\ManagesFieldsetFiles;
-use function Laravel\Prompts\{select, suggest, text, info};
+
+use function Laravel\Prompts\info;
+use function Laravel\Prompts\select;
+use function Laravel\Prompts\suggest;
+use function Laravel\Prompts\text;
 
 class MakeBlock extends Command
 {
@@ -66,10 +70,12 @@ class MakeBlock extends Command
             $this->updateBlocksFieldset($group, $fieldset, $name, $instructions);
         } catch (\Throwable $e) {
             $this->error($e->getMessage());
+
             return self::FAILURE;
         }
 
         info("Created '{$name}' block in '{$groups[$group]}' group.");
+
         return self::SUCCESS;
     }
 
@@ -79,7 +85,7 @@ class MakeBlock extends Command
             app_path('Console/Commands/Scaffold/stubs/fieldset_block.yaml.stub')
         );
         $this->files->put(
-            base_path("resources/fieldsets/{$fieldset}.yaml"),
+            $this->fieldsetPathFor($fieldset),
             Str::of($stub)->replace('{{ name }}', $name)
         );
     }
@@ -88,7 +94,7 @@ class MakeBlock extends Command
     {
         $stub = $this->files->get(app_path('Console/Commands/Scaffold/stubs/block.antlers.html.stub'));
         $this->files->put(
-            base_path("resources/views/blocks/{$view}.antlers.html"),
+            $this->viewPathFor($view, 'blocks'),
             Str::of($stub)->replace('{{ name }}', $name)
         );
     }
