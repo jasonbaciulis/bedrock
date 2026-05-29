@@ -1,0 +1,31 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+    - vendor/nesbot/carbon/extension.neon
+
+parameters:
+    level: 5
+
+    paths:
+        - app
+        - config
+        - bootstrap
+        - database/factories
+        - routes
+
+    ignoreErrors:
+        -
+            identifier: method.notFound
+            reportUnmatched: false
+            message: '#Statamic\\Contracts\\#'
+        -
+            identifier: staticMethod.notFound
+            reportUnmatched: false
+            message: '#Statamic\\Contracts\\#'
+        -
+            identifier: property.notFound
+            reportUnmatched: false
+            message: '#Statamic\\(Contracts\\)?Entries\\Entry#'
+        -
+            identifier: property.protected
+            reportUnmatched: false
+            message: '#Statamic\\Entries\\Entry#'
