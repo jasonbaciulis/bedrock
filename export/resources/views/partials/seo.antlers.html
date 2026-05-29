@@ -1,4 +1,6 @@
-{{ if response_code == 200 }}
+{{ if current_template | starts_with('errors.') }}
+    <title>{{ current_template | remove_left('errors.') }} | {{ config:app:name }}</title>
+{{ else }}
     {{# Page title #}}
     <title>
         {{ yield:seo_title }} {{ seo_title ? seo_title : title }}
@@ -173,8 +175,6 @@
             {{ /asset }}
         {{ /if }}
     {{ /if }}
-{{ else }}
-    <title>{{ response_code }} | {{ config:app:name }}</title>
 {{ /if }}
 {{# Trackers #}}
 {{ if (environment == 'local' && seo:trackers_local) || (environment == 'staging' && seo:trackers_staging) || (environment == 'production' && seo:trackers_production) }}

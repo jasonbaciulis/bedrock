@@ -6,6 +6,7 @@
     "build": "vite build",
     "icons:heroicons": "sh scripts/icons-heroicons.sh",
     "icons:lucide": "sh scripts/icons-lucide.sh",
+    "postinstall": "npm run icons:heroicons && npm run icons:lucide",
     "lint": "eslint \"resources/js\" --fix",
     "format": "prettier \"resources/**/*.{js,css,scss,html,antlers.html,blade.php}\" --write",
     "format:check": "prettier \"resources/**/*.{js,css,scss,html,antlers.html,blade.php}\" --check",
