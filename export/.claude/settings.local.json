@@ -20,7 +20,8 @@
       "Bash(git check-ignore *)",
       "Bash(git ls-tree *)",
       "Bash(git config *)",
-      "Bash(gh run *)"
+      "Bash(gh run *)",
+      "Bash(git rm *)"
     ]
   },
   "enableAllProjectMcpServers": true,
