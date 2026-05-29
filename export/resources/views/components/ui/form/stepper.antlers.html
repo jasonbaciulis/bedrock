@@ -13,12 +13,13 @@ class: ''
         <s:vite src="resources/js/components/stepper.js" />
     {{ /push:scripts }}
 {{ /once }}
-
-<div class="{{ view:container_class }}" x-data="stepper({{ view:min }}, {{ view:max }}, {{ view:step }})">
+<div
+    class="{{ view:container_class }}"
+    x-data="stepper({{ view:min }}, {{ view:max }}, {{ view:step }})"
+>
     {{ unless slot }}
         <s:partial:components.ui.label :display="display" :id="id" />
     {{ /unless }}
-
     <div class="flex items-center gap-x-1">
         <button
             type="button"
@@ -32,14 +33,13 @@ class: ''
         >
             <s:svg src="lucide/minus" />
         </button>
-
         {{ if view:show_input }}
             <input
                 x-ref="input"
                 x-model="{{ view:model }}"
                 x-modelable="count"
                 id="{{ id }}"
-                class="[&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none size-8 border-none px-0 text-center shadow-none [-moz-appearance:textfield]"
+                class="size-8 border-none px-0 text-center shadow-none [-moz-appearance:textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
                 name="{{ handle }}"
                 inputmode="numeric"
                 type="number"
@@ -54,7 +54,7 @@ class: ''
             />
         {{ elseif slot }}
             <input type="hidden" name="{{ handle }}" value="{{ view:model }}" />
-            <div class="text-center {{ view:class }}">
+            <div class="{{ view:class }} text-center">
                 <output
                     x-model="{{ view:model }}"
                     x-modelable="count"
@@ -65,7 +65,6 @@ class: ''
                 {{ slot }}
             </div>
         {{ /if }}
-
         <button
             type="button"
             class="btn btn--outline btn--sm btn--round shrink-0"

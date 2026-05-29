@@ -12,13 +12,16 @@
                 />
             </div>
             <h1 class="h1 mt-em">{{ title }}</h1>
-            <s:partial:components.entry-meta :date="date" :category="categories:title" class="mt-6" />
+            <s:partial:components.entry-meta
+                :date="date"
+                :category="categories:title"
+                class="mt-6"
+            />
             <s:partial:partials.social-sharing class="mt-6" />
         </div>
     </div>
 
     <s:partial:blocks.article />
-
     {{ if show_related_posts }}
         <s:partial:partials.related-posts />
     {{ /if }}

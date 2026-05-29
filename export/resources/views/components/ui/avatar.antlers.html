@@ -6,7 +6,7 @@ name: ''
 class: ''
 ---
 
-<div class="bg-primary-foreground shrink-0 overflow-hidden rounded-full {{ view:class }}">
+<div class="bg-primary-foreground {{ view:class }} shrink-0 overflow-hidden rounded-full">
     <s:glide :src="view:image" :width="view:w" :height="view:h" dpr="2" fit="crop_focal">
         <img src="{{ url }}" alt="{{ view:name }}’s avatar" loading="lazy" />
     </s:glide>

@@ -70,11 +70,10 @@ content_class: ''
             {{ slot:trigger }}
         </button>
     {{ /if }}
-
     {{#
-        Uses the Alpine.js teleport directive, which will teleport the Dialog
-        element to be a child of the body element. This allows the dialog
-        to be full-screen and prevents any display issues with its parent elements.
+        Uses the Alpine.js teleport directive, which will teleport the Dialog element to be a child of the
+        body element. This allows the dialog to be full-screen and prevents any display issues with its
+        parent elements.
     #}}
     <template x-teleport="body">
         <div
@@ -117,10 +116,9 @@ content_class: ''
                         x-transition:leave-end="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95"
                         @click.outside="close($refs.button)"
                         :id="id"
-                        class="bg-background relative transform overflow-hidden rounded-[0.625rem] border text-left shadow-lg transition-all sm:my-8 sm:w-full {{ ['px-4 pt-5 pb-4 sm:max-w-md sm:p-6' => view:size == 'sm', 'px-4 pt-5 pb-4 sm:max-w-xl sm:p-6' => view:size == 'md', 'px-4 pt-5 pb-4 sm:max-w-(--breakpoint-xl) sm:p-6 md:p-12 xl:px-16 xl:py-20' => view:size == 'xl'] | classes }} {{ view:content_class }}"
+                        class="bg-background {{ ['px-4 pt-5 pb-4 sm:max-w-md sm:p-6' => view:size == 'sm', 'px-4 pt-5 pb-4 sm:max-w-xl sm:p-6' => view:size == 'md', 'px-4 pt-5 pb-4 sm:max-w-(--breakpoint-xl) sm:p-6 md:p-12 xl:px-16 xl:py-20' => view:size == 'xl'] | classes }} {{ view:content_class }} relative transform overflow-hidden rounded-[0.625rem] border text-left shadow-lg transition-all sm:my-8 sm:w-full"
                     >
                         {{ slot:content }}
-
                         <button
                             @click="close($refs.button)"
                             class="btn hover:text-foreground absolute top-4 right-4 size-6 rounded-xs text-neutral-800/70"

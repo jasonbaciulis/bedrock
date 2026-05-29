@@ -15,7 +15,7 @@ content_class: ''
             this.open = false
         },
     }"
-    class="relative {{ view:class }}"
+    class="{{ view:class }} relative"
 >
     <dt>
         <button
@@ -38,7 +38,7 @@ content_class: ''
         id="collapsible-{{ view:name }}"
         role="region"
         :aria-hidden="!open"
-        class="relative {{ view:content_class }}"
+        class="{{ view:content_class }} relative"
     >
         {{ slot:content }}
     </dd>

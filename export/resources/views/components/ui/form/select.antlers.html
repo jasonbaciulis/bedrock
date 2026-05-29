@@ -27,7 +27,6 @@ class: ''
                 Select {{ handle | deslugify | title }}…
             </option>
         {{ /unless }}
-
         {{ foreach:options as="option|label" }}
             <option value="{{ option }}">{{ label }}</option>
         {{ /foreach:options }}

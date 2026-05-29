@@ -4,7 +4,6 @@
         <s:vite src="resources/js/lite-yt-embed.js" />
     {{ /push:scripts }}
 {{ /once }}
-
 <figure class="not-prose my-0">
     <lite-youtube
         videoid="{{ youtube_id }}"
@@ -15,7 +14,6 @@
             <span class="lyt-visually-hidden">Play Video</span>
         </a>
     </lite-youtube>
-
     {{ if caption }}
         <figcaption class="text-muted-foreground mt-2 block text-sm">{{ caption }}</figcaption>
     {{ /if }}

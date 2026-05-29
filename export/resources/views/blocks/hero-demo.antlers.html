@@ -2,14 +2,50 @@
     {{ push:scripts }}
         <script src="/vendor/statamic/frontend/js/helpers.js" defer></script>
         <script>
-            window.heroDemoContact = () => ({ form: { name: '', email: '', message: '', validate() { return true }, invalid() { return false } } });
-            window.heroDemoNewsletter = () => ({ form: { email: '', frequency: 'weekly', topics: [], marketing: false, validate() { return true }, invalid() { return false } } });
-            window.heroDemoPreferences = () => ({ form: { theme: 'system', language: 'en', notifications: false, validate() { return true }, invalid() { return false } } });
-            window.heroDemoSteps = () => ({ form: { steps: 5000 } });
+            window.heroDemoContact = () => ({
+                form: {
+                    name: '',
+                    email: '',
+                    message: '',
+                    validate() {
+                        return true
+                    },
+                    invalid() {
+                        return false
+                    },
+                },
+            })
+            window.heroDemoNewsletter = () => ({
+                form: {
+                    email: '',
+                    frequency: 'weekly',
+                    topics: [],
+                    marketing: false,
+                    validate() {
+                        return true
+                    },
+                    invalid() {
+                        return false
+                    },
+                },
+            })
+            window.heroDemoPreferences = () => ({
+                form: {
+                    theme: 'system',
+                    language: 'en',
+                    notifications: false,
+                    validate() {
+                        return true
+                    },
+                    invalid() {
+                        return false
+                    },
+                },
+            })
+            window.heroDemoSteps = () => ({ form: { steps: 5000 } })
         </script>
     {{ /push:scripts }}
 {{ /once }}
-
 <section class="py-8 md:py-16 lg:py-20">
     <div class="container flex flex-col items-center gap-4 text-center xl:gap-6">
         <h1 class="h1 text-balance">{{ title }}</h1>
@@ -28,7 +64,9 @@
                     <div class="card shadow-none">
                         <div class="card__header">
                             <p class="leading-none font-semibold">Contact us</p>
-                            <p class="text-muted-foreground text-sm">Get in touch and we'll respond within 24 hours.</p>
+                            <p class="text-muted-foreground text-sm">
+                                Get in touch and we'll respond within 24 hours.
+                            </p>
                         </div>
                         <div class="flex flex-1 flex-col gap-4">
                             <div class="grid gap-3">
@@ -51,7 +89,10 @@
                                 />
                             </div>
                             <div class="grid gap-3">
-                                <s:partial:components.ui.label id="contact_message" display="Message" />
+                                <s:partial:components.ui.label
+                                    id="contact_message"
+                                    display="Message"
+                                />
                                 <s:partial:components.ui.form.textarea
                                     model="form.message"
                                     handle="contact_message"
@@ -61,22 +102,32 @@
                                 />
                             </div>
                             <div class="flex justify-end">
-                                <s:partial:components.ui.button as="button" type="button">Submit</s:partial:components.ui.button>
+                                <s:partial:components.ui.button as="button" type="button">
+                                    Submit
+                                </s:partial:components.ui.button>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {{# Newsletter Form #}}
-                <div x-data="heroDemoNewsletter()" class="col-span-full md:col-span-6 lg:col-span-3">
+                <div
+                    x-data="heroDemoNewsletter()"
+                    class="col-span-full md:col-span-6 lg:col-span-3"
+                >
                     <div class="card shadow-none">
                         <div class="card__header">
                             <p class="leading-none font-semibold">Newsletter</p>
-                            <p class="text-muted-foreground text-sm">Stay updated with our latest insights and tips.</p>
+                            <p class="text-muted-foreground text-sm">
+                                Stay updated with our latest insights and tips.
+                            </p>
                         </div>
                         <div class="flex flex-1 flex-col gap-4">
                             <div class="grid gap-3">
-                                <s:partial:components.ui.label id="newsletter_email" display="Email Address" />
+                                <s:partial:components.ui.label
+                                    id="newsletter_email"
+                                    display="Email Address"
+                                />
                                 <s:partial:components.ui.form.text
                                     model="form.email"
                                     handle="email"
@@ -87,11 +138,7 @@
                             </div>
                             <div class="grid gap-3">
                                 <s:partial:components.ui.label id="frequency" display="Frequency" />
-                                {{ frequency_options = [
-                                    'daily' => 'Daily updates',
-                                    'weekly' => 'Weekly digest',
-                                    'monthly' => 'Monthly newsletter',
-                                ] }}
+                                {{ frequency_options = ['daily' => 'Daily updates', 'weekly' => 'Weekly digest', 'monthly' => 'Monthly newsletter', ] }}
                                 <s:partial:components.ui.form.select
                                     model="form.frequency"
                                     handle="frequency"
@@ -100,11 +147,7 @@
                                 />
                             </div>
                             <div class="grid gap-3">
-                                {{ topics_options = [
-                                    'design' => 'Design tips',
-                                    'development' => 'Development news',
-                                    'marketing' => 'Marketing insights',
-                                ] }}
+                                {{ topics_options = ['design' => 'Design tips', 'development' => 'Development news', 'marketing' => 'Marketing insights', ] }}
                                 <s:partial:components.ui.form.checkboxes
                                     model="form.topics"
                                     handle="topics"
@@ -114,7 +157,9 @@
                                 />
                             </div>
                             <div class="flex justify-end">
-                                <s:partial:components.ui.button as="button" type="button">Subscribe</s:partial:components.ui.button>
+                                <s:partial:components.ui.button as="button" type="button">
+                                    Subscribe
+                                </s:partial:components.ui.button>
                             </div>
                         </div>
                     </div>
@@ -127,29 +172,35 @@
                     <div class="card shadow-none">
                         <div class="card__header">
                             <p class="leading-none font-semibold">Featured posts</p>
-                            <p class="text-muted-foreground text-sm">Browse our most popular posts.</p>
+                            <p class="text-muted-foreground text-sm">
+                                Browse our most popular posts.
+                            </p>
                         </div>
 
                         <div class="flex flex-1 items-center px-8">
-                            {{ partial:components/ui/carousel/carousel
-                                class="w-full max-w-full"
-                                opts="loop: true, align: 'center'"
-                            }}
+                            {{ partial:components/ui/carousel/carousel class="w-full max-w-full" opts="loop: true, align: 'center'" }}
                                 {{ slot:content }}
                                     {{ loop times="5" }}
                                         <s:partial:components.ui.carousel.slide>
                                             <div class="p-1">
-                                                <div class="card aspect-square items-center justify-center lg:aspect-3/2 xl:aspect-square">
-                                                    <span class="text-4xl font-semibold">{{ count }}</span>
+                                                <div
+                                                    class="card aspect-square items-center justify-center lg:aspect-3/2 xl:aspect-square"
+                                                >
+                                                    <span class="text-4xl font-semibold">
+                                                        {{ count }}
+                                                    </span>
                                                 </div>
                                             </div>
                                         </s:partial:components.ui.carousel.slide>
                                     {{ /loop }}
                                 {{ /slot:content }}
-
                                 {{ slot:nav }}
-                                    <s:partial:components.ui.carousel.previous class="btn--outline btn--round" />
-                                    <s:partial:components.ui.carousel.next class="btn--outline btn--round" />
+                                    <s:partial:components.ui.carousel.previous
+                                        class="btn--outline btn--round"
+                                    />
+                                    <s:partial:components.ui.carousel.next
+                                        class="btn--outline btn--round"
+                                    />
                                 {{ /slot:nav }}
                             {{ /partial:components/ui/carousel/carousel }}
                         </div>
@@ -157,7 +208,10 @@
                 </div>
 
                 {{# Preferences Form #}}
-                <div x-data="heroDemoPreferences()" class="col-span-full md:col-span-6 lg:col-span-3">
+                <div
+                    x-data="heroDemoPreferences()"
+                    class="col-span-full md:col-span-6 lg:col-span-3"
+                >
                     <div class="card shadow-none">
                         <div class="card__header">
                             <p class="leading-none font-semibold">Preferences</p>
@@ -166,11 +220,7 @@
                         <div class="flex flex-1 flex-col gap-6">
                             <div class="grid gap-6">
                                 <div class="grid gap-3">
-                                    {{ theme_options = [
-                                        'light' => 'Light mode',
-                                        'dark' => 'Dark mode',
-                                        'system' => 'System default',
-                                    ] }}
+                                    {{ theme_options = ['light' => 'Light mode', 'dark' => 'Dark mode', 'system' => 'System default', ] }}
                                     <s:partial:components.ui.form.radio
                                         id="theme"
                                         handle="theme"
@@ -180,20 +230,11 @@
                                     />
                                 </div>
                                 <div class="grid gap-3">
-                                    <s:partial:components.ui.label id="language" display="Language" />
-                                    {{ languages = [
-                                        'en' => 'English',
-                                        'es' => 'Spanish',
-                                        'fr' => 'French',
-                                        'de' => 'German',
-                                        'it' => 'Italian',
-                                        'pt' => 'Portuguese',
-                                        'ru' => 'Russian',
-                                        'zh' => 'Chinese',
-                                        'ja' => 'Japanese',
-                                        'ko' => 'Korean',
-                                        'ar' => 'Arabic',
-                                    ] }}
+                                    <s:partial:components.ui.label
+                                        id="language"
+                                        display="Language"
+                                    />
+                                    {{ languages = ['en' => 'English', 'es' => 'Spanish', 'fr' => 'French', 'de' => 'German', 'it' => 'Italian', 'pt' => 'Portuguese', 'ru' => 'Russian', 'zh' => 'Chinese', 'ja' => 'Japanese', 'ko' => 'Korean', 'ar' => 'Arabic', ] }}
                                     <s:partial:components.ui.form.combobox
                                         id="language"
                                         handle="language"
@@ -211,7 +252,12 @@
                                     />
                                 </div>
                             </div>
-                            <s:partial:components.ui.button class="w-full" variant="outline" type="button" as="button">
+                            <s:partial:components.ui.button
+                                class="w-full"
+                                variant="outline"
+                                type="button"
+                                as="button"
+                            >
                                 Save preferences
                             </s:partial:components.ui.button>
                         </div>
@@ -232,24 +278,7 @@
         <div class="col-span-full grid grid-cols-1 gap-4 md:grid-cols-2 xl:col-span-6">
             {{# Tabs #}}
             <div class="grid gap-4 xl:col-span-full xl:grid-cols-2">
-                {{ services_tabs = [
-                    [
-                        'title' => 'AI agents',
-                        'description' => 'AI agents can help you with a wide range of tasks, from customer service to data analysis.',
-                        'features' => ['Automated workflows', 'Data analysis', 'Customer service'],
-                    ],
-                    [
-                        'title' => 'Web apps',
-                        'description' => 'Build apps for your business.',
-                        'features' => ['Filament dashboards', 'SPA apps with Inertia and Vue/React', 'Laravel apps'],
-                    ],
-                    [
-                        'title' => 'Websites',
-                        'description' => 'Build high-converting websites.',
-                        'features' => ['Beautiful design', 'Lightning-fast loading', 'SEO-friendly'],
-                    ],
-                ] }}
-
+                {{ services_tabs = [['title' => 'AI agents', 'description' => 'AI agents can help you with a wide range of tasks, from customer service to data analysis.', 'features' => ['Automated workflows', 'Data analysis', 'Customer service'], ], ['title' => 'Web apps', 'description' => 'Build apps for your business.', 'features' => ['Filament dashboards', 'SPA apps with Inertia and Vue/React', 'Laravel apps'], ], ['title' => 'Websites', 'description' => 'Build high-converting websites.', 'features' => ['Beautiful design', 'Lightning-fast loading', 'SEO-friendly'], ], ] }}
                 {{ partial:components/ui/tabs/tabs list_class="bg-muted text-muted-foreground flex min-h-9 w-full items-center justify-center rounded-lg p-[3px] outline-none" }}
                     {{ slot:list }}
                         {{ services_tabs }}
@@ -262,7 +291,6 @@
                             </s:partial:components.ui.tabs.trigger>
                         {{ /services_tabs }}
                     {{ /slot:list }}
-
                     {{ slot:panels }}
                         {{ services_tabs }}
                             <s:partial:components.ui.tabs.panel
@@ -278,7 +306,12 @@
                                     </ul>
                                 </div>
                                 <div class="card__footer">
-                                    <s:partial:components.ui.button variant="outline" size="sm" type="button" as="button">
+                                    <s:partial:components.ui.button
+                                        variant="outline"
+                                        size="sm"
+                                        type="button"
+                                        as="button"
+                                    >
                                         Learn more
                                     </s:partial:components.ui.button>
                                 </div>
@@ -286,12 +319,13 @@
                         {{ /services_tabs }}
                     {{ /slot:panels }}
                 {{ /partial:components/ui/tabs/tabs }}
-
                 <div x-data="heroDemoSteps()">
                     <div class="card shadow-none">
                         <div class="card__header">
                             <p class="leading-none font-semibold">Move goal</p>
-                            <p class="text-muted-foreground text-sm">Set your daily activity goal.</p>
+                            <p class="text-muted-foreground text-sm">
+                                Set your daily activity goal.
+                            </p>
                         </div>
                         <div class="flex flex-1 flex-col items-center gap-4">
                             <s:partial:components.ui.form.stepper
@@ -305,7 +339,10 @@
                                 :max="30000"
                                 class="flex flex-col px-4 text-4xl font-bold tracking-tighter"
                             >
-                                <label for="steps" class="text-muted-foreground text-xs font-normal tracking-normal uppercase">
+                                <label
+                                    for="steps"
+                                    class="text-muted-foreground text-xs font-normal tracking-normal uppercase"
+                                >
                                     Steps/day
                                 </label>
                             </s:partial:components.ui.form.stepper>
@@ -318,7 +355,12 @@
                             </div>
                         </div>
                         <div>
-                            <s:partial:components.ui.button variant="secondary" type="button" as="button" class="w-full">
+                            <s:partial:components.ui.button
+                                variant="secondary"
+                                type="button"
+                                as="button"
+                                class="w-full"
+                            >
                                 Set Goal
                             </s:partial:components.ui.button>
                         </div>
@@ -332,30 +374,15 @@
                 <div class="card shadow-none">
                     <div class="card__header">
                         <p class="text-xl font-semibold">FAQs</p>
-                        <p class="text-muted-foreground text-sm">Here are some of the most frequently asked questions.</p>
+                        <p class="text-muted-foreground text-sm">
+                            Here are some of the most frequently asked questions.
+                        </p>
                     </div>
 
-                    {{ demo_faqs = [
-                        [
-                            'question' => 'How long does a project take?',
-                            'answer' => 'Project timelines vary based on complexity, but most websites take 4-8 weeks from start to finish.',
-                        ],
-                        [
-                            'question' => 'Do you offer maintenance?',
-                            'answer' => 'Yes, we provide ongoing maintenance and support packages to keep your website running smoothly.',
-                        ],
-                        [
-                            'question' => 'How do I get started?',
-                            'answer' => 'Contact us to discuss your project and we’ll provide a free consultation to help you get started.',
-                        ],
-                    ] }}
-
+                    {{ demo_faqs = [['question' => 'How long does a project take?', 'answer' => 'Project timelines vary based on complexity, but most websites take 4-8 weeks from start to finish.', ], ['question' => 'Do you offer maintenance?', 'answer' => 'Yes, we provide ongoing maintenance and support packages to keep your website running smoothly.', ], ['question' => 'How do I get started?', 'answer' => 'Contact us to discuss your project and we’ll provide a free consultation to help you get started.', ], ] }}
                     <dl class="space-y-2">
                         {{ demo_faqs }}
-                            {{ partial:components/ui/collapsible
-                                trigger_class="flex w-full items-center justify-between py-2 text-left text-sm font-medium"
-                                content_class="text-muted-foreground text-sm"
-                            }}
+                            {{ partial:components/ui/collapsible trigger_class="flex w-full items-center justify-between py-2 text-left text-sm font-medium" content_class="text-muted-foreground text-sm" }}
                                 {{ slot:trigger }}
                                     {{ question }}
                                     <s:svg
@@ -383,7 +410,9 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium">Share bedrock</p>
-                            <p class="text-muted-foreground text-sm">Share this starter-kit with your followers</p>
+                            <p class="text-muted-foreground text-sm">
+                                Share this starter-kit with your followers
+                            </p>
                         </div>
                         {{ partial:components/ui/dialog size="sm" trigger_class="btn--outline btn--sm" }}
                             {{ slot:trigger }}
@@ -392,12 +421,24 @@
                             {{ slot:content }}
                                 <div class="flex flex-col gap-4">
                                     <div class="flex flex-col gap-2 text-center sm:text-left">
-                                        <p class="text-lg leading-none font-semibold text-neutral-800">Share link</p>
-                                        <p class="text-muted-foreground text-sm">Anyone who has this link will be able to view this.</p>
+                                        <p
+                                            class="text-lg leading-none font-semibold text-neutral-800"
+                                        >
+                                            Share link
+                                        </p>
+                                        <p class="text-muted-foreground text-sm">
+                                            Anyone who has this link will be able to view this.
+                                        </p>
                                     </div>
                                     <div class="flex items-center gap-2">
                                         <label for="link" class="sr-only">Link</label>
-                                        <input type="text" id="link" class="input" readonly value="https://bedrock.remarkable.dev" />
+                                        <input
+                                            type="text"
+                                            id="link"
+                                            class="input"
+                                            readonly
+                                            value="https://bedrock.remarkable.dev"
+                                        />
                                         <s:partial:components.ui.button
                                             variant="outline"
                                             as="button"
@@ -431,23 +472,37 @@
                         {{ partial:components/ui/dropdown/dropdown alignment="right" width="w-48" toggle_class="btn--outline btn--sm" }}
                             {{ slot:toggle }}
                                 Actions
-                                <s:svg src="lucide/chevron-down" class="mt-px -mr-1 size-4 opacity-50" />
+                                <s:svg
+                                    src="lucide/chevron-down"
+                                    class="mt-px -mr-1 size-4 opacity-50"
+                                />
                             {{ /slot:toggle }}
-
                             {{ slot:content }}
-                                <s:partial:components.ui.dropdown.item href="/" @click.prevent="close()">
+                                <s:partial:components.ui.dropdown.item
+                                    href="/"
+                                    @click.prevent="close()"
+                                >
                                     <s:svg src="lucide/edit" />
                                     Edit Content
                                 </s:partial:components.ui.dropdown.item>
-                                <s:partial:components.ui.dropdown.item href="/" @click.prevent="close()">
+                                <s:partial:components.ui.dropdown.item
+                                    href="/"
+                                    @click.prevent="close()"
+                                >
                                     <s:svg src="lucide/share-2" />
                                     Share Page
                                 </s:partial:components.ui.dropdown.item>
-                                <s:partial:components.ui.dropdown.item href="/" @click.prevent="close()">
+                                <s:partial:components.ui.dropdown.item
+                                    href="/"
+                                    @click.prevent="close()"
+                                >
                                     <s:svg src="lucide/download" />
                                     Export Data
                                 </s:partial:components.ui.dropdown.item>
-                                <s:partial:components.ui.dropdown.item href="/" @click.prevent="close()">
+                                <s:partial:components.ui.dropdown.item
+                                    href="/"
+                                    @click.prevent="close()"
+                                >
                                     <s:svg src="lucide/settings" />
                                     Settings
                                 </s:partial:components.ui.dropdown.item>
@@ -488,11 +543,46 @@
                     </div>
 
                     <div class="flex flex-wrap gap-3">
-                        <button class="btn btn--outline" x-data type="button" @click="$dispatch('toast', &#123; message: 'Saved!', description: 'Anyone with a link can now view this file.', type: 'success', dismissible: true &#125;)">Success</button>
-                        <button class="btn btn--outline" x-data type="button" @click="$dispatch('toast', &#123; message: 'There was an error!', type: 'error' &#125;)">Error</button>
-                        <button class="btn btn--outline" x-data type="button" @click="$dispatch('toast', &#123; message: 'This is a warning', type: 'warning' &#125;)">Warning</button>
-                        <button class="btn btn--outline" x-data type="button" @click="$dispatch('toast', &#123; message: 'This is an info message', type: 'info' &#125;)">Info</button>
-                        <button class="btn btn--outline" x-data type="button" @click="$dispatch('toast', &#123; message: 'This is a default toast' &#125;)">Default</button>
+                        <button
+                            class="btn btn--outline"
+                            x-data
+                            type="button"
+                            @click="$dispatch('toast', &#123; message: 'Saved!', description: 'Anyone with a link can now view this file.', type: 'success', dismissible: true &#125;)"
+                        >
+                            Success
+                        </button>
+                        <button
+                            class="btn btn--outline"
+                            x-data
+                            type="button"
+                            @click="$dispatch('toast', &#123; message: 'There was an error!', type: 'error' &#125;)"
+                        >
+                            Error
+                        </button>
+                        <button
+                            class="btn btn--outline"
+                            x-data
+                            type="button"
+                            @click="$dispatch('toast', &#123; message: 'This is a warning', type: 'warning' &#125;)"
+                        >
+                            Warning
+                        </button>
+                        <button
+                            class="btn btn--outline"
+                            x-data
+                            type="button"
+                            @click="$dispatch('toast', &#123; message: 'This is an info message', type: 'info' &#125;)"
+                        >
+                            Info
+                        </button>
+                        <button
+                            class="btn btn--outline"
+                            x-data
+                            type="button"
+                            @click="$dispatch('toast', &#123; message: 'This is a default toast' &#125;)"
+                        >
+                            Default
+                        </button>
                     </div>
                 </div>
             </div>

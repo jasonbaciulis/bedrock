@@ -7,12 +7,15 @@ class: ''
 ---
 
 {{#
-    Set the search results URL inside Control Panel in /cp/globals/theme
-
-    Docs: https://statamic.dev/search#forms
+    Set the search results URL inside Control Panel in /cp/globals/theme Docs:
+    https://statamic.dev/search#forms
 #}}
 
-<form class="flex items-center gap-6 {{ view:class }}" action="{{ view:action }}" x-data="{ search: '{{ view:query ? view:query : get:q | sanitize }}' }">
+<form
+    class="{{ view:class }} flex items-center gap-6"
+    action="{{ view:action }}"
+    x-data="{ search: '{{ view:query ? view:query : get:q | sanitize }}' }"
+>
     <div class="text-foreground relative flex-1">
         <input
             x-model="search"
@@ -39,7 +42,8 @@ class: ''
     </div>
     {{ if view:query }}
         <span class="shrink-0 font-semibold">
-            {{ view:total_results }} {{ 'result' | plural(view:total_results) }}
+            {{ view:total_results }}
+            {{ 'result' | plural(view:total_results) }}
         </span>
     {{ /if }}
 </form>

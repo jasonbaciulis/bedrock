@@ -5,15 +5,11 @@ submit_label: 'Submit'
 ---
 
 {{#
-    Component for outputting Statamic form fields grouped in sections. We keep the form field
-    components inside the views/components/ui/form folder instead of publishing and customizing a
-    vendor folder like the docs suggest: https://statamic.dev/tags/form-create#prerendered-field-html
-    This gives us more control over the form fields and allows us to reuse the same form fields
-    outside of the Statamic form.
-
-    Docs:
-    https://statamic.dev/forms
-    https://statamic.dev/tags/form-create
+    Component for outputting Statamic form fields grouped in sections. We keep the form field components
+    inside the views/components/ui/form folder instead of publishing and customizing a vendor folder
+    like the docs suggest: https://statamic.dev/tags/form-create#prerendered-field-html This gives us
+    more control over the form fields and allows us to reuse the same form fields outside of the
+    Statamic form. Docs: https://statamic.dev/forms https://statamic.dev/tags/form-create
 #}}
 
 {{ once }}
@@ -22,7 +18,6 @@ submit_label: 'Submit'
         <s:vite src="resources/js/components/statamicForm.js" />
     {{ /push:scripts }}
 {{ /once }}
-
 <s:form:create
     :in="view:form_handle"
     id="form-{view:form_handle}"

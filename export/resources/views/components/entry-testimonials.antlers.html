@@ -3,7 +3,7 @@ fetched_from_rest_api: false
 class: ''
 ---
 
-<figure class="bg-primary-foreground rounded-2xl p-8 text-sm/6 {{ view:class }}">
+<figure class="bg-primary-foreground {{ view:class }} rounded-2xl p-8 text-sm/6">
     <blockquote class="text-neutral-900">
         {{ if view:fetched_from_rest_api }}
             <p x-html="`“${entry.quote}”`"></p>

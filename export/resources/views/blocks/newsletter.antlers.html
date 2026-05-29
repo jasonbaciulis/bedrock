@@ -1,6 +1,6 @@
 {{#
-    Configure newsletter content inside Control Panel in /cp/globals/newsletter
-    Configure email service provider logic inside app/Http/Controllers/NewsletterController.php
+    Configure newsletter content inside Control Panel in /cp/globals/newsletter Configure email service
+    provider logic inside app/Http/Controllers/NewsletterController.php
 #}}
 
 {{ once }}
@@ -8,7 +8,6 @@
         <s:vite src="resources/js/components/newsletter.js" />
     {{ /push:scripts }}
 {{ /once }}
-
 <div
     x-cloak
     x-show="!isSubscribed"
@@ -55,7 +54,12 @@
                     :placeholder="newsletter:input_placeholder"
                 />
 
-                <s:partial:components.ui.button class="shrink-0 sm:w-auto" type="submit" as="button" :label="newsletter:button_label" />
+                <s:partial:components.ui.button
+                    class="shrink-0 sm:w-auto"
+                    type="submit"
+                    as="button"
+                    :label="newsletter:button_label"
+                />
             </div>
 
             <s:partial:components.ui.input-error handle="email" id="{type}-email" />
