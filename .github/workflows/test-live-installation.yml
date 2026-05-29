@@ -13,10 +13,12 @@ on:
 jobs:
   test-live-installation:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     strategy:
+      fail-fast: false
       matrix:
-        php-version: [8.2, 8.3]
+        php-version: [8.3, 8.4, 8.5]
 
     steps:
       - name: Setup PHP
@@ -29,7 +31,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Install Statamic CLI
         run: composer global require statamic/cli
@@ -77,42 +79,12 @@ jobs:
             fi
           done
 
-      - name: Install dependencies
+      - name: Run setup
         run: |
           cd test-installation/bedrock-test
 
-          # Install PHP dependencies
-          composer install --no-interaction --prefer-dist --optimize-autoloader
-
-          # Install Node dependencies
-          npm install
-
-      - name: Setup environment
-        run: |
-          cd test-installation/bedrock-test
-
-          # Copy or create .env file
-          if [ -f .env.example ]; then
-            cp .env.example .env
-          else
-            echo "APP_NAME=BedrockTest" > .env
-            echo "APP_ENV=testing" >> .env
-            echo "APP_KEY=" >> .env
-            echo "APP_DEBUG=true" >> .env
-            echo "APP_URL=http://localhost" >> .env
-          fi
-
-          # Generate application key
-          php artisan key:generate --no-interaction
-          echo "✓ Application key generated"
-
-      - name: Build assets
-        run: |
-          cd test-installation/bedrock-test
-
-          # Build production assets
-          npm run build
-          echo "✓ Assets built successfully"
+          # Install all dependencies and build assets
+          composer run setup --no-interaction
 
       - name: Test application
         run: |
@@ -131,7 +103,9 @@ jobs:
           if curl -f -s http://localhost:8000 > /dev/null; then
             echo "✓ Homepage loads successfully"
           else
-            echo "⚠️  Homepage test failed, but installation completed"
+            echo "❌ Homepage failed to load"
+            kill $SERVER_PID 2>/dev/null || true
+            exit 1
           fi
 
           # Clean up server process
