@@ -1,0 +1,25 @@
+---
+title: ''
+text: ''
+class: ''
+---
+
+{{ partial:components/ui/collapsible
+    class="group {view:class}"
+    trigger_class="flex w-full items-center justify-between gap-x-6 py-6 text-left underline-offset-4 hover:underline"
+    content_class="-top-2 pr-12"
+}}
+    {{ slot:trigger }}
+        <span class="content-lg font-medium text-neutral-900">{{ view:title }}</span>
+        <span class="size-6 flex-none text-neutral-800/70" aria-hidden="true">
+            <s:svg src="lucide/plus" x-show="!open" />
+            <s:svg src="lucide/minus" x-show="open" />
+        </span>
+    {{ /slot:trigger }}
+
+    {{ slot:content }}
+        <div class="content-sm prose text-muted-foreground max-w-none pb-4 text-pretty">
+            {{ view:text }}
+        </div>
+    {{ /slot:content }}
+{{ /partial:components/ui/collapsible }}

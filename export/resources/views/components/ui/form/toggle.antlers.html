@@ -1,0 +1,58 @@
+---
+model: ''
+class: ''
+---
+
+<div
+    class="flex items-center gap-3 {{ view:class }}"
+    x-data="{
+        on: false,
+        toggle() {
+            this.on = ! this.on
+            this.$refs.switch.focus()
+            this.{{ view:model }} = this.on
+            this.form.validate('{{ handle }}')
+        },
+    }"
+>
+    <button
+        x-ref="switch"
+        id="{{ id }}"
+        type="button"
+        class="peer focus-visible:border-ring focus-visible:ring-ring/50 inline-flex h-[1.15rem] w-8 shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visible:ring-3 disabled:cursor-not-allowed disabled:opacity-50"
+        :class="{ 'bg-primary': on, 'bg-input dark:bg-input/80': !on }"
+        role="switch"
+        aria-labelledby="{{ id }}-label"
+        :aria-describedby="form.invalid('{{ handle }}') ? '{{ id }}-error' : {{ if instructions }}'{{ id }}-instructions'{{ else }}false{{ /if }}"
+        :aria-checked="on.toString()"
+        @click="toggle()"
+    >
+        <span
+            aria-hidden="true"
+            class="bg-background pointer-events-none block size-4 rounded-full ring-0 transition-transform"
+            :class="{
+                'translate-x-[calc(100%-2px)] dark:bg-primary-foreground': on,
+                'translate-x-0 dark:bg-foreground': !on,
+            }"
+        ></span>
+        <span class="sr-only">Toggle {{ handle | deslugify | title }}</span>
+    </button>
+
+    <label
+        class="text-foreground prose prose-a:underline prose-a:hover:no-underline text-sm/none"
+        id="{{ id }}-label"
+        for="{{ id }}"
+    >
+        {{ inline_label }}
+    </label>
+
+    <input
+        name="{{ handle }}"
+        aria-hidden="true"
+        tabindex="-1"
+        type="checkbox"
+        value="on"
+        :checked="on"
+        class="sr-only"
+    />
+</div>

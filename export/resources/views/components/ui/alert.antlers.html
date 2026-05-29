@@ -1,0 +1,46 @@
+---
+variant: 'success'
+title: ''
+description: ''
+dismissible: false
+class: ''
+---
+
+<div
+    class="alert {{ ['alert--success' => view:variant == 'success', 'alert--warning' => view:variant == 'warning', 'alert--error' => view:variant == 'error'] | classes }} {{ view:class }}"
+    {{ if view:dismissible }}
+        x-data="{ dismissed: false }"
+        x-show="!dismissed"
+    {{ /if }}
+>
+    <div class="alert__icon">
+        {{ if view:variant == 'success' }}
+            <s:svg src="lucide/circle-check" />
+        {{ elseif view:variant == 'warning' }}
+            <s:svg src="lucide/triangle-alert" />
+        {{ elseif view:variant == 'error' }}
+            <s:svg src="lucide/circle-x" />
+        {{ /if }}
+    </div>
+    <div class="alert__content">
+        <p class="line-clamp-1 font-medium tracking-tight">{{ view:title }}</p>
+        {{ if view:description }}
+            <p class="text-muted-foreground text-sm">{{ view:description }}</p>
+        {{ /if }}
+    </div>
+
+    {{ if view:dismissible }}
+        <div class="ml-auto pl-2">
+            <div class="-m-2">
+                <button
+                    type="button"
+                    class="hover:text-foreground inline-flex translate-y-0.5 rounded-xs p-1.5 text-neutral-800/70"
+                    aria-label="Dismiss"
+                    @click="dismissed = !dismissed"
+                >
+                    <s:svg src="lucide/x" class="size-4" />
+                </button>
+            </div>
+        </div>
+    {{ /if }}
+</div>

@@ -1,0 +1,71 @@
+---
+label: ''
+as: 'a'
+variant: 'primary'
+size: ''
+base: 'btn'
+variants:
+  primary: 'btn--primary'
+  secondary: 'btn--secondary'
+  outline: 'btn--outline'
+  ghost: 'btn--ghost'
+  destructive: 'btn--destructive'
+  link: 'btn--link'
+sizes:
+  sm: 'btn--sm'
+  lg: 'btn--lg'
+  xl: 'btn--xl'
+link_type: 'url'
+url: ''
+entry: ''
+email: ''
+phone: ''
+asset: ''
+code: ''
+target_blank: false
+class: ''
+aria_label: ''
+aria_controls: ''
+x_ref: ''
+x_aria_controls: ''
+x_aria_label: ''
+x_aria_expanded: ''
+x_aria_pressed: ''
+x_disabled: ''
+x_click: ''
+x_class: ''
+type: 'button'
+---
+
+{{ if view:label or slot }}
+    <{{ view:as }}
+        {{ if view:as == 'a' }}
+            {{ switch(
+                (view:link_type == 'entry') => 'href="{{ view:entry:url }}"',
+                (view:link_type == 'url') => 'href="{{ view:url }}"',
+                (view:link_type == 'email') => 'href="mailto:{{ view:email | obfuscate_email }}"',
+                (view:link_type == 'phone') => 'href="tel:{{ view:phone }}"',
+                (view:link_type == 'asset') => 'href="{{ view:asset }}" download',
+            )}}
+            {{ view:target_blank ?= 'rel="noopener" target="_blank"' }}
+        {{ /if }}
+        {{ slot:attributes }}
+        {{ if view:link_type == 'code' }} x-data @click.prevent="{{ view:code }}" {{ /if }}
+        {{ view:as == 'button' ?= 'type="{view:type}"' }}
+        {{ view:disabled ?= 'disabled' }}
+        {{ view:x_ref | attribute:x-ref }}
+        {{ view:aria_label | attribute:aria-label }}
+        {{ view:aria_controls | attribute:aria-controls }}
+        {{ view:x_aria_controls | attribute::aria-controls }}
+        {{ view:x_aria_label | attribute::aria-label }}
+        {{ view:x_aria_expanded | attribute::aria-expanded }}
+        {{ view:x_aria_pressed | attribute::aria-pressed }}
+        {{ view:x_disabled | attribute::disabled }}
+        {{ view:x_click | attribute:@click }}
+        {{ view:x_class | attribute::class }}
+        class="{{ view:base }} {{ view:variants[view:variant] }} {{ view:sizes[view:size] }} {{ view:class }}"
+    >
+        {{ view:label }}
+        {{ slot }}
+    </{{ view:as }}>
+{{ /if }}

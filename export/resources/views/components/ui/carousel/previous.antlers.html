@@ -1,0 +1,16 @@
+---
+class: ''
+---
+
+<button
+    class="btn absolute {{ view:class }}"
+    :class="{
+        'top-1/2 -left-12 -translate-y-1/2': orientation === 'horizontal',
+        '-top-12 left-1/2 -translate-x-1/2 rotate-90': orientation === 'vertical',
+    }"
+    :disabled="!canScrollPrev"
+    @click="scrollPrev()"
+    aria-label="Previous slide"
+>
+    <s:svg src="lucide/arrow-left" />
+</button>

@@ -1,5 +1,0 @@
-<section id="{{ Statamic::modify($block->type)->slugify() }}" class="m-section">
-    <div class="container">
-        <x-section-header :title="$block->title" :text="$block->text ?? null" />
-    </div>
-</section>

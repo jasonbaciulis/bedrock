@@ -1,0 +1,27 @@
+<section id="{{ type | slugify }}" class="m-section">
+    <div class="container">
+        <s:partial:components.section-header :title="title" :text="text" />
+
+        <s:collection from="posts" paginate="true" :limit="limit" on_each_side="1" as="posts">
+            {{ if posts }}
+                <div class="site-grid gap-y-20 md:gap-y-12">
+                    {{ posts }}
+                        <s:partial:components.entry-posts
+                            :image="image"
+                            :url="url"
+                            :title="title"
+                            :excerpt="excerpt"
+                            :date="date"
+                            :categories="categories"
+                            class="col-span-full md:col-span-6 lg:col-span-4"
+                        />
+                    {{ /posts }}
+                </div>
+            {{ /if }}
+
+            {{ if paginate }}
+                <s:partial:components.ui.pagination.pagination class="mt-20" :paginate="paginate" />
+            {{ /if }}
+        </s:collection>
+    </div>
+</section>

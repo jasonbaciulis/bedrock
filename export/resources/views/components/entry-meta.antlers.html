@@ -1,0 +1,14 @@
+---
+date: ''
+category: ''
+class: ''
+---
+
+<div class="flex items-center gap-4 {{ view:class }}">
+    <time datetime="{{ view:date | format('c') }}" class="text-muted-foreground text-xs">
+        {{ view:date | format('M j, Y') }}
+    </time>
+    {{ if view:category }}
+        <span class="badge badge--outline">{{ view:category }}</span>
+    {{ /if }}
+</div>

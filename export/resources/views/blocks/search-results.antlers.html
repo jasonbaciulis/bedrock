@@ -1,0 +1,48 @@
+<section class="m-section">
+    <div class="container">
+        <s:partial:components.section-header :title="title" :text="text" />
+
+        {{#
+            You can set index in config/statamic/search.php
+            Docs: https://statamic.dev/search#indexes
+        #}}
+        <s:search:results
+            index="blog"
+            :limit="limit"
+            paginate="true"
+            on_each_side="1"
+            as="results"
+        >
+            <div class="site-grid gap-y-20 md:gap-y-12">
+                <div class="max-w-md sm:col-span-12">
+                    <s:partial:components.search-form
+                        :action="theme:search_results:url"
+                        :total_results="paginate:total_items ?? 0"
+                    />
+                </div>
+
+                {{ if results | count > 0 }}
+                    {{ results }}
+                        <s:partial:components.entry-posts
+                            :image="image"
+                            :url="url"
+                            :title="title"
+                            :excerpt="excerpt"
+                            :date="date"
+                            :categories="categories"
+                            class="col-span-full md:col-span-6 lg:col-span-4"
+                        />
+                    {{ /results }}
+                {{ else }}
+                    <div class="rounded-lg bg-yellow-50 px-6 py-4 sm:col-span-8">
+                        <p class="text-lg text-yellow-800">{{ no_results_text }}</p>
+                    </div>
+                {{ /if }}
+            </div>
+
+            {{ if paginate }}
+                <s:partial:components.ui.pagination.pagination class="mt-20" :paginate="paginate" />
+            {{ /if }}
+        </s:search:results>
+    </div>
+</section>

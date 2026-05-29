@@ -1,0 +1,20 @@
+---
+name: ''
+alpine_property: 'activeTab'
+class: ''
+x_class: ''
+---
+
+<button
+    id="tab-{{ view:name }}"
+    type="button"
+    role="tab"
+    :aria-selected="{{ view:alpine_property }} == '{{ view:name }}'"
+    aria-controls="tabpanel-{{ view:name }}"
+    @click.prevent="{{ view:alpine_property }} = '{{ view:name }}'"
+    :tabindex="{{ view:alpine_property }} == '{{ view:name }}' ? 0 : -1"
+    {{ view:class | attribute:class }}
+    {{ view:x_class | attribute::class }}
+>
+    {{ slot }}
+</button>

@@ -1,0 +1,14 @@
+---
+label: 'Submit'
+class: ''
+---
+
+<s:partial:components.ui.button
+    as="button"
+    type="submit"
+    x_disabled="form.processing || form.hasErrors"
+    :class="view:class"
+>
+    <s:partial:components.ui.spinner x_show="form.processing" />
+    {{ view:label }}
+</s:partial:components.ui.button>

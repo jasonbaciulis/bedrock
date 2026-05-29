@@ -1,0 +1,17 @@
+---
+model: ''
+max_files: 1
+class: ''
+---
+
+<input
+    x-model="{{ view:model }}"
+    id="{{ id }}"
+    name="{{ handle }}{{ view:max_files !== 1 ?= '[]' }}"
+    type="file"
+    {{ view:class | attribute:class }}
+    {{ view:max_files !== 1 ?= 'multiple' }}
+    :aria-invalid="form.invalid('{{ handle }}')"
+    :aria-describedby="form.invalid('{{ handle }}') ? '{{ id }}-error' : {{ if instructions }}'{{ id }}-instructions'{{ else }}false{{ /if }}"
+    @change="form.validate('{{ handle }}')"
+/>

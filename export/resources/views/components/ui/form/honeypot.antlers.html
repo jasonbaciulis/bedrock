@@ -1,0 +1,17 @@
+---
+model: ''
+handle: ''
+form_handle: ''
+---
+
+<div class="hidden">
+    <label for="{{ view:form_handle }}-{{ view:handle }}-field">{{ view:handle | deslugify | title }}</label>
+    <input
+        x-model="{{ view:model }}"
+        id="{{ view:form_handle }}-{{ view:handle }}-field"
+        type="text"
+        name="{{ view:handle }}"
+        tabindex="-1"
+        autocomplete="off"
+    />
+</div>

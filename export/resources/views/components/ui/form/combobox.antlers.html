@@ -1,0 +1,125 @@
+---
+model: ''
+placeholder: 'Select a value…'
+class: ''
+---
+
+{{ once }}
+    {{ push:scripts }}
+        <s:vite src="resources/js/components/combobox.js" />
+    {{ /push:scripts }}
+{{ /once }}
+
+<div
+    x-data="combobox({
+                id: '{{ id }}',
+                items: {{ options | to_json | entities }},
+                placeholder: '{{ view:placeholder }}',
+            })"
+    x-modelable="value"
+    x-model="{{ view:model }}"
+    @keydown.escape.stop.prevent="closeListbox()"
+    @change="form.validate('{{ handle }}')"
+    class="relative {{ view:class }}"
+>
+    <input type="hidden" name="{{ handle }}" x-model="value" />
+
+    <button
+        x-cloak
+        :id="id"
+        type="button"
+        aria-haspopup="listbox"
+        :aria-expanded="listboxOpen"
+        class="btn btn--outline w-full justify-between font-normal"
+        @click="toggleListbox()"
+    >
+        <span
+            class="block truncate"
+            x-text="buttonLabel"
+            :class="{ 'text-muted-foreground': !value }"
+        ></span>
+        <s:svg src="lucide/chevrons-up-down" class="opacity-50" />
+    </button>
+
+    <div
+        x-ref="popover"
+        x-show="listboxOpen"
+        x-cloak
+        x-trap="listboxOpen"
+        x-transition:enter="transition duration-100 ease-out"
+        x-transition:enter-start="scale-95 opacity-0"
+        x-transition:enter-end="scale-100 opacity-100"
+        x-transition:leave="transition duration-75 ease-in"
+        x-transition:leave-start="scale-100 opacity-100"
+        x-transition:leave-end="scale-95 opacity-0"
+        @click.away="closeListbox()"
+        class="bg-popover text-popover-foreground absolute z-50 mt-1 w-full origin-top rounded-md border p-0 shadow-md outline-none"
+    >
+        <div class="flex h-full w-full flex-col overflow-hidden rounded-md">
+            <div class="flex h-9 items-center gap-2 border-b px-3">
+                <s:svg src="lucide/search" class="size-4 shrink-0 opacity-50" />
+                <input
+                    :id="`${id}-search`"
+                    x-ref="comboboxInput"
+                    x-model.debounce.200ms="comboboxSearch"
+                    placeholder="Search…"
+                    class="placeholder:text-muted-foreground flex h-9 w-full rounded-md border-none bg-transparent px-0 py-3 text-sm ring-0 outline-hidden disabled:cursor-not-allowed disabled:opacity-50"
+                    role="combobox"
+                    :aria-controls="listboxId"
+                    :aria-activedescendant="activeDescendant"
+                    :aria-expanded="listboxOpen"
+                    autocomplete="off"
+                    autocorrect="off"
+                    spellcheck="false"
+                    aria-autocomplete="list"
+                    @keydown.enter.stop.prevent="selectOption()"
+                    @keydown.arrow-up.prevent="navigate('previous')"
+                    @keydown.arrow-down.prevent="navigate('next')"
+                />
+            </div>
+
+            <ul
+                x-ref="listbox"
+                :id="listboxId"
+                class="max-h-[300px] overflow-x-hidden overflow-y-auto p-1"
+                tabindex="-1"
+                role="listbox"
+            >
+                <template x-for="(item, index) in itemsShown" :key="`item-${index}`">
+                    <li
+                        :id="optionId(item.key)"
+                        role="option"
+                        :aria-selected="itemIsSelected(item)"
+                        class="relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none"
+                        :class="{ 'bg-accent text-accent-foreground': itemIsActive(item) }"
+                        @click="selectOption(item)"
+                        @mousemove="setActiveItem(item)"
+                    >
+                        <span x-text="item.value"></span>
+                        <s:svg
+                            src="lucide/check"
+                            class="text-muted-foreground pointer-events-none ml-auto size-4 shrink-0"
+                            x-show="itemIsSelected(item)"
+                        />
+                    </li>
+                </template>
+
+                {{# Loads more items when the user scrolls to the bottom of the list. #}}
+                <li
+                    x-show="itemsFiltered.length > itemsLoaded"
+                    x-intersect="loadMoreItems()"
+                    class="text-muted-foreground px-2 py-1.5 text-xs"
+                >
+                    Loading more…
+                </li>
+
+                <li
+                    x-show="!itemsFiltered.length && comboboxSearch.length > 0"
+                    class="py-6 text-center text-sm"
+                >
+                    No results match your search.
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

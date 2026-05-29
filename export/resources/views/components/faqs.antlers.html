@@ -1,0 +1,31 @@
+---
+items: ''
+class: ''
+---
+
+<dl {{ view:class | attribute:class }}>
+    {{ slot }}
+</dl>
+
+{{ if view:items }}
+    {{ section:json_ld }}
+        <script type="application/ld+json" id="schema-faq">
+            {
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {{ view:items }}
+                        {
+                            "@type": "Question",
+                            "name": "{{ title | add_slashes }}",
+                            "acceptedAnswer": {
+                                "@type": "Answer",
+                                "text": "{{ text | add_slashes }}"
+                            }
+                        }{{ unless last }},{{ /unless }}
+                    {{ /view:items }}
+                ]
+            }
+        </script>
+    {{ /section:json_ld }}
+{{ /if }}

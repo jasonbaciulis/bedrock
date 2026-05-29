@@ -1,0 +1,14 @@
+---
+color: ''
+---
+
+<div class="relative flex">
+    <div class="flex w-full items-center gap-x-3 md:block md:space-y-1.5">
+        <div class="{{ view:color }} size-24 rounded md:w-full"></div>
+        <div class="px-0.5">
+            <div class="text-muted-foreground w-full font-mono text-xs">
+                {{ view:color | replace('bg-', '') }}
+            </div>
+        </div>
+    </div>
+</div>

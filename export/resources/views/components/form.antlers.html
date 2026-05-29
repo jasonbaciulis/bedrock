@@ -1,0 +1,69 @@
+---
+form_handle: ''
+success_message: 'Thank you for your submission.'
+submit_label: 'Submit'
+---
+
+{{#
+    Component for outputting Statamic form fields grouped in sections. We keep the form field
+    components inside the views/components/ui/form folder instead of publishing and customizing a
+    vendor folder like the docs suggest: https://statamic.dev/tags/form-create#prerendered-field-html
+    This gives us more control over the form fields and allows us to reuse the same form fields
+    outside of the Statamic form.
+
+    Docs:
+    https://statamic.dev/forms
+    https://statamic.dev/tags/form-create
+#}}
+
+{{ once }}
+    {{ push:scripts }}
+        <script src="/vendor/statamic/frontend/js/helpers.js" defer></script>
+        <s:vite src="resources/js/components/statamicForm.js" />
+    {{ /push:scripts }}
+{{ /once }}
+
+<s:form:create
+    :in="view:form_handle"
+    id="form-{view:form_handle}"
+    csrf="false"
+    x-ref="form"
+    js="alpine"
+>
+    <div x-data="statamicForm">
+        <template x-if="success">
+            <s:partial:components.ui.alert
+                variant="success"
+                :title="view:success_message"
+                class="mb-8"
+            />
+        </template>
+
+        <input type="hidden" name="_token" value="{{ csrf_token }}" />
+
+        <s:partial:components.ui.form.honeypot
+            model="form.{honeypot}"
+            :handle="honeypot"
+            :form_handle="view:form_handle"
+        />
+
+        <div class="space-y-12 divide-y divide-gray-300">
+            {{ sections }}
+                <div {{ !last ?= 'class="pb-12"' }}>
+                    {{ if display }}
+                        <h3 class="h6 mb-8">{{ display }}</h3>
+                    {{ /if }}
+                    <div class="grid gap-x-8 gap-y-6 md:grid-cols-12">
+                        {{ fields }}
+                            <s:partial:components.form-field />
+                        {{ /fields }}
+                    </div>
+                </div>
+            {{ /sections }}
+        </div>
+
+        <div class="pt-8">
+            <s:partial:components.ui.form.submit :label="view:submit_label" />
+        </div>
+    </div>
+</s:form:create>

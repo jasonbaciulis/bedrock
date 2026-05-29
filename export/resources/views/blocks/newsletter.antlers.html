@@ -1,0 +1,72 @@
+{{#
+    Configure newsletter content inside Control Panel in /cp/globals/newsletter
+    Configure email service provider logic inside app/Http/Controllers/NewsletterController.php
+#}}
+
+{{ once }}
+    {{ push:scripts }}
+        <s:vite src="resources/js/components/newsletter.js" />
+    {{ /push:scripts }}
+{{ /once }}
+
+<div
+    x-cloak
+    x-show="!isSubscribed"
+    x-data="newsletter({
+                form: $form('post', '/newsletter', {
+                    email: '',
+                    honeypot: '',
+                }),
+            })"
+    class="m-section"
+>
+    <div class="container">
+        <s:partial:components.section-header
+            :title="newsletter:title"
+            :text="newsletter:text"
+            margin="mb-10"
+        />
+
+        <form
+            x-ref="form"
+            x-show="!success"
+            @submit.prevent="submit()"
+            class="mx-auto grid max-w-md gap-2"
+        >
+            <div class="flex flex-col gap-3 md:flex-row">
+                <s:partial:components.ui.form.honeypot
+                    model="form.honeypot"
+                    handle="fax_number"
+                    :form_handle="type"
+                />
+                <input type="hidden" name="_token" value="{{ csrf_token }}" />
+
+                <s:partial:components.ui.label
+                    id="{type}-email"
+                    display="Email"
+                    hide_display="true"
+                />
+                <s:partial:components.ui.form.text
+                    id="{type}-email"
+                    model="form.email"
+                    handle="email"
+                    input_type="email"
+                    autocomplete="email"
+                    :placeholder="newsletter:input_placeholder"
+                />
+
+                <s:partial:components.ui.button class="shrink-0 sm:w-auto" type="submit" as="button" :label="newsletter:button_label" />
+            </div>
+
+            <s:partial:components.ui.input-error handle="email" id="{type}-email" />
+        </form>
+
+        <template x-if="success">
+            <s:partial:components.ui.alert
+                variant="success"
+                class="mx-auto mt-10 max-w-md"
+                :title="newsletter:success_message"
+            />
+        </template>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+---
+class: ''
+---
+
+<nav aria-label="breadcrumb" class="max-w-[calc(100vw-48px)] overflow-hidden {{ view:class }}">
+    <ol class="text-muted-foreground flex gap-1.5 text-sm sm:gap-2.5">
+        <s:nav:breadcrumbs>
+            <li class="flex items-center gap-1.5 {{ last ?= 'truncate' }}">
+                {{ unless last }}
+                    <a
+                        href="{{ url }}"
+                        class="hover:text-foreground whitespace-nowrap"
+                    >
+                        <span>{{ title }}</span>
+                    </a>
+                    <s:svg src="lucide/chevron-right" class="size-3.5 shrink-0" />
+                {{ else }}
+                    <span class="text-primary truncate" aria-current="page">
+                        <span>{{ title }}</span>
+                    </span>
+                {{ /unless }}
+            </li>
+        </s:nav:breadcrumbs>
+    </ol>
+</nav>

@@ -1,0 +1,14 @@
+---
+id: ''
+display: ''
+hide_display: false
+class: 'text-foreground'
+---
+
+<label
+    id="{{ view:id }}-label"
+    class="block {{ view:class }} {{ view:hide_display ?= 'sr-only' }}"
+    for="{{ view:id }}"
+>
+    {{ view:display }}
+</label>

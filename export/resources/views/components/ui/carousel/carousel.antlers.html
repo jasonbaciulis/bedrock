@@ -1,0 +1,75 @@
+---
+orientation: 'horizontal'
+opts: ''
+class: ''
+content_class: ''
+---
+
+{{#
+    Carousel component similar to shadcn/ui carousel
+    Uses Embla Carousel with Alpine.js state management
+    Available options: https://www.embla-carousel.com/api/options/
+#}}
+
+{{ once }}
+    {{ push:scripts }}
+        <s:vite src="resources/js/embla.js" />
+    {{ /push:scripts }}
+{{ /once }}
+
+<div
+    class="relative outline-none {{ view:class }}"
+    role="region"
+    aria-roledescription="carousel"
+    x-data="{
+        emblaApi: null,
+        orientation: '{{ view:orientation }}',
+        canScrollPrev: false,
+        canScrollNext: false,
+
+        init() {
+            const options = {
+                axis: this.orientation === 'horizontal' ? 'x' : 'y',
+                {{ view:opts }}
+            };
+
+            this.emblaApi = window.EmblaCarousel(this.$refs.viewport, options);
+
+            this.updateScrollButtons();
+            this.emblaApi.on('select', () => this.updateScrollButtons());
+            this.emblaApi.on('reInit', () => this.updateScrollButtons());
+        },
+
+        updateScrollButtons() {
+            if (!this.emblaApi) return;
+            this.canScrollPrev = this.emblaApi.canScrollPrev();
+            this.canScrollNext = this.emblaApi.canScrollNext();
+        },
+
+        scrollPrev() {
+            if (this.emblaApi) this.emblaApi.scrollPrev();
+        },
+
+        scrollNext() {
+            if (this.emblaApi) this.emblaApi.scrollNext();
+        },
+    }"
+    x-init="init()"
+    @keydown.left.prevent="scrollPrev()"
+    @keydown.right.prevent="scrollNext()"
+    tabindex="0"
+>
+    <div x-ref="viewport" class="overflow-hidden">
+        <div
+            class="flex {{ view:content_class }}"
+            :class="{
+                '-ml-4': orientation === 'horizontal',
+                '-mt-4 flex-col': orientation === 'vertical',
+            }"
+        >
+            {{ slot:content }}
+        </div>
+    </div>
+
+    {{ slot:nav }}
+</div>

@@ -1,0 +1,13 @@
+{{ seo:collection_defaults | where('collection', {collection}) }}
+    {{ if fallback == 'field' }}
+        {{ {field_handle} | bard_text | strip_tags | trim | safe_truncate('160', '…') }}
+    {{ elseif fallback == 'custom_text' }}
+        {{ custom_text }}
+    {{ elseif fallback == 'blocks' }}
+        {{ blocks limit="1" }}
+            {{ if text }}
+                {{ text | strip_tags | trim | safe_truncate('160', '…') }}
+            {{ /if }}
+        {{ /blocks }}
+    {{ /if }}
+{{ /seo:collection_defaults }}

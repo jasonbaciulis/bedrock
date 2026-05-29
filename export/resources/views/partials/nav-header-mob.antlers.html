@@ -1,0 +1,87 @@
+<s:nav
+    handle="header"
+    max_depth="2"
+    select="title|url|is_external|icon|badge|two_col_menu"
+    as="items"
+>
+    {{# Mobile menu #}}
+    <div x-cloak x-show="mobileNavOpen" x-trap.noscroll="mobileNavOpen" class="lg:hidden" role="dialog" aria-modal="true">
+        {{# Background backdrop #}}
+        <div x-cloak x-show="mobileNavOpen" class="fixed inset-0 z-10"></div>
+        <div
+            class="fixed inset-y-0 right-0 z-10 flex w-full flex-col justify-between overflow-y-auto bg-white sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+        >
+            <div class="p-6">
+                <div class="flex items-center justify-between">
+                    <s:partial:components.logo :logo="theme:logo" class="inline-flex h-8 w-40" />
+                    <button
+                        type="button"
+                        class="btn btn--ghost btn--square -my-2 -mr-2"
+                        @click="mobileNavOpen = false"
+                        aria-label="Close menu"
+                    >
+                        <s:svg src="lucide/x" class="size-5" />
+                    </button>
+                </div>
+                <div class="mt-6 flow-root">
+                    <div class="-my-6 divide-y divide-gray-500/10">
+                        <div class="space-y-2 py-6">
+                            {{ items }}
+                                {{ if children && two_col_menu }}
+                                    {{ children scope="child" }}
+                                        <s:partial:partials.nav-header-item
+                                            :url="child:url"
+                                            :title="child:title"
+                                            :is_external="child:is_external"
+                                            :icon="child:icon"
+                                            :badge="child:badge"
+                                        />
+                                    {{ /children }}
+                                {{ /if }}
+                            {{ /items }}
+                        </div>
+                        <div class="space-y-2 py-6">
+                            {{ items }}
+                                {{ if children && !two_col_menu }}
+                                    {{ children scope="child" }}
+                                        <a
+                                            href="{{ child:url }}"
+                                            class="hover:bg-accent -mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-neutral-900"
+                                            {{ child:is_external ?= 'target="_blank" rel="noopener nofollow"' }}
+                                        >
+                                            {{ child:title }}
+                                        </a>
+                                    {{ /children }}
+                                {{ elseif !children }}
+                                    <a
+                                        href="{{ url }}"
+                                        class="hover:bg-accent -mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-neutral-900"
+                                        {{ is_external ?= 'target="_blank" rel="noopener nofollow"' }}
+                                    >
+                                        {{ title }}
+                                    </a>
+                                {{ /if }}
+                            {{ /items }}
+                        </div>
+                        <div class="flex flex-col-reverse gap-y-6 py-6">
+                            {{ theme:header_buttons }}
+                                <s:partial:components.ui.button
+                                    :variant="variant"
+                                    :link_type="link_type"
+                                    :url="url"
+                                    :entry="entry"
+                                    :email="email"
+                                    :phone="phone"
+                                    :asset="asset"
+                                    :code="code"
+                                    :target_blank="target_blank"
+                                    :label="label"
+                                />
+                            {{ /theme:header_buttons }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</s:nav>

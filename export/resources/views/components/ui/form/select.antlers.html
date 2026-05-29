@@ -1,0 +1,35 @@
+---
+model: ''
+placeholder: 'Select a value…'
+multiple: false
+searchable: false
+class: ''
+---
+
+{{ if view:searchable }}
+    <s:partial:components.ui.form.combobox :model="view:model" />
+{{ else }}
+    <select
+        x-model="{{ view:model }}"
+        :class="{
+            'text-muted-foreground': ! {{ view:model }},
+        }"
+        {{ view:class | attribute:class }}
+        id="{{ id }}"
+        name="{{ handle }}{{ view:multiple ?= '[]' }}"
+        {{ view:multiple ?= 'multiple' }}
+        :aria-invalid="form.invalid('{{ handle }}')"
+        :aria-describedby="form.invalid('{{ handle }}') ? '{{ id }}-error' : {{ if instructions }}'{{ id }}-instructions'{{ else }}false{{ /if }}"
+        @change="form.validate('{{ handle }}')"
+    >
+        {{ unless view:multiple }}
+            <option value :selected="! {{ view:model }} ? true : false" disabled>
+                Select {{ handle | deslugify | title }}…
+            </option>
+        {{ /unless }}
+
+        {{ foreach:options as="option|label" }}
+            <option value="{{ option }}">{{ label }}</option>
+        {{ /foreach:options }}
+    </select>
+{{ /if }}

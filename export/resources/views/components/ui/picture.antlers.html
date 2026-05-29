@@ -1,0 +1,66 @@
+---
+image: ''
+w: ''
+h: ''
+cover: false
+lazy: true
+class: ''
+fetchpriority: ''
+---
+
+{{#
+    Lightweight picture component that uses Glide to generate images. It supports lazy loading and object-cover.
+    Notice that the component doesn't use sizes attribute, because in my opinion it's a waste of time.
+    Just pass the dimensions of the largest image size that needs rendered. Images are lazy loaded and saving a few kilobytes
+    on the initial load is not worth the extra complexity.
+
+    Docs: https://statamic.dev/tags/glide
+#}}
+
+{{ if view:image }}
+    <s:asset :url="view:image">
+        <picture>
+            {{ if extension == 'svg' or extension == 'gif' }}
+                <img
+                    {{ if view:cover }}
+                        class="size-full object-cover {{ view:class }}"
+                        style="object-position: {{ focus | background_position }}"
+                    {{ else }}
+                        {{ view:class | attribute:class }}
+                    {{ /if }}
+                    src="{{ url }}"
+                    alt="{{ alt }}"
+                    {{ if view:lazy }}loading="lazy"{{ /if }}
+                    decoding="async"
+                    width="{{ width }}"
+                    height="{{ height }}"
+                    {{ view:fetchpriority | attribute:fetchpriority }}
+                />
+            {{ elseif view:w and view:h }}
+                <source
+                    srcset="{{ glide:url :width='view:w' :height='view:h' fit='crop_focal' format='webp' }} 1x, {{ glide:url :width='view:w' :height='view:h' fit='crop_focal' format='webp' dpr='2' }} 2x"
+                    type="image/webp"
+                />
+                <source
+                    srcset="{{ glide:url :width='view:w' :height='view:h' fit='crop_focal' }} 1x, {{ glide:url :width='view:w' :height='view:h' fit='crop_focal' dpr='2' }} 2x"
+                    type="{{ mime_type }}"
+                />
+                <img
+                    {{ if view:cover }}
+                        class="size-full object-cover {{ view:class }}"
+                        style="object-position: {{ focus | background_position }}"
+                    {{ else }}
+                        {{ view:class | attribute:class }}
+                    {{ /if }}
+                    src="{{ glide:url :width='view:w' :height='view:h' fit='crop_focal' }}"
+                    alt="{{ alt }}"
+                    width="{{ view:w }}"
+                    height="{{ view:h }}"
+                    {{ if view:lazy }}loading="lazy"{{ /if }}
+                    decoding="async"
+                    {{ view:fetchpriority | attribute:fetchpriority }}
+                />
+            {{ /if }}
+        </picture>
+    </s:asset>
+{{ /if }}

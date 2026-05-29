@@ -1,0 +1,12 @@
+---
+class: ''
+list_class: ''
+---
+
+<div x-data="{ activeTab: 1 }" class="flex flex-col gap-2 {{ view:class }}">
+    <div role="tablist" aria-orientation="horizontal" class="{{ view:list_class }}">
+        {{ slot:list }}
+    </div>
+
+    {{ slot:panels }}
+</div>

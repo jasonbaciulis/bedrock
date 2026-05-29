@@ -23,7 +23,7 @@ trait ManagesFieldsetFiles
         string $viewDir
     ): void {
         $fieldsetPath = base_path("resources/fieldsets/{$fieldset}.yaml");
-        $viewPath = base_path("resources/views/{$viewDir}/{$view}.blade.php");
+        $viewPath = base_path("resources/views/{$viewDir}/{$view}.antlers.html");
 
         foreach ([$fieldsetPath, $viewPath] as $path) {
             if ($this->files->exists($path) && !$force) {
@@ -45,7 +45,7 @@ trait ManagesFieldsetFiles
     {
         $fieldsetPath = base_path("resources/fieldsets/{$fieldset}.yaml");
         $view = str_replace('_', '-', $fieldset);
-        $viewPath = base_path("resources/views/{$viewDir}/{$view}.blade.php");
+        $viewPath = base_path("resources/views/{$viewDir}/{$view}.antlers.html");
 
         $missing = [];
 
@@ -101,8 +101,8 @@ trait ManagesFieldsetFiles
         }
 
         // Rename view file
-        $oldViewPath = base_path("resources/views/{$viewDir}/{$originalView}.blade.php");
-        $newViewPath = base_path("resources/views/{$viewDir}/{$newView}.blade.php");
+        $oldViewPath = base_path("resources/views/{$viewDir}/{$originalView}.antlers.html");
+        $newViewPath = base_path("resources/views/{$viewDir}/{$newView}.antlers.html");
 
         if ($this->files->exists($oldViewPath)) {
             if ($this->files->exists($newViewPath)) {

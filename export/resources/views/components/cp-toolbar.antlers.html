@@ -1,0 +1,15 @@
+{{#
+    Show the edit entry button if the user has the permission. i.e. shown only for logged in users with a permission.
+    Wrapped in <s:nocache> so it works with static caching enabled.
+#}}
+
+<s:nocache select="collection:handle|environment|edit_url">
+    <s:user:can do="edit {collection:handle} entries">
+        <nav class="fixed right-6 bottom-6 z-50">
+            <a href="{{ edit_url }}" class="btn btn--outline">
+                <s:svg src="lucide/edit" />
+                Edit this entry
+            </a>
+        </nav>
+    </s:user:can>
+</s:nocache>

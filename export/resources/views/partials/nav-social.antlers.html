@@ -1,0 +1,15 @@
+{{ if social_media:platforms | count > 0 }}
+    <div class="flex gap-6">
+        {{ social_media:platforms }}
+            <a
+                href="{{ prefix }}{{ url }}"
+                class="text-muted-foreground hover:text-foreground"
+                target="_blank"
+                rel="noopener"
+                aria-label="{{ config:app:name }} {{ type | title }} (Opens in a new window)"
+            >
+                <s:svg src="social/{type}" class="size-5" />
+            </a>
+        {{ /social_media:platforms }}
+    </div>
+{{ /if }}

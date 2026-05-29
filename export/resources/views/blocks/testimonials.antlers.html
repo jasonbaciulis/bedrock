@@ -1,0 +1,21 @@
+<section id="{{ type | slugify }}" class="m-section">
+    <div class="container">
+        <s:partial:components.section-header :title="title" :text="text" />
+
+        {{ if query == 'custom' }}
+            {{ testimonials = entries }}
+        {{ elseif query == 'latest' }}
+            {{ testimonials = {collection:testimonials :limit="limit" sort="date:desc"} }}
+        {{ elseif query == 'featured' }}
+            {{ testimonials = {collection:testimonials :limit="limit" featured="true" sort="order"} }}
+        {{ /if }}
+
+        <div class="site-grid">
+            {{ testimonials }}
+                <div class="sm:col-span-6 lg:col-span-4">
+                    <s:partial:components.entry-testimonials />
+                </div>
+            {{ /testimonials }}
+        </div>
+    </div>
+</section>

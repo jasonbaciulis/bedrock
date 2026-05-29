@@ -1,0 +1,137 @@
+<section id="{{ type | slugify }}" class="m-section container">
+    <h2 class="h2 mb-28">Style guide</h2>
+    <div class="space-y-28">
+        <div>
+            <div class="mb-10 border-b border-gray-300">
+                <h3 class="h3 pb-6">Site grid</h3>
+            </div>
+            <div
+                class="site-grid"
+                x-data="{
+                    columnGap: 0,
+                    columnWidth: 0,
+                    calcGrid() {
+                        const styles = window.getComputedStyle($el)
+                        this.columnGap = parseInt(styles.gridColumnGap)
+                        const columnCount = styles.gridTemplateColumns.split(' ').length
+                        this.columnWidth =
+                            ($el.clientWidth - this.columnGap * (columnCount - 1)) / columnCount
+                    },
+                }"
+                x-init="calcGrid()"
+                @resize.window="calcGrid()"
+            >
+                {{ loop times="12" }}
+                    <div class="relative h-40 bg-pink-50">
+                        {{ unless count == 12 }}
+                            <span
+                                class="text-muted-foreground absolute top-1/2 left-full hidden -translate-y-1/2 border-b border-dashed border-gray-400 text-center font-mono text-[10px] sm:block"
+                                :style="`width:${columnGap}px`"
+                                x-text="`${columnGap}px`"
+                            ></span>
+                        {{ /unless }}
+                        <span
+                            class="text-muted-foreground absolute top-full left-1/2 -translate-x-1/2 font-mono text-[10px] sm:mt-2"
+                            x-text="`${columnWidth.toFixed(1)}px`"
+                        ></span>
+                    </div>
+                {{ /loop }}
+            </div>
+        </div>
+
+        <div>
+            <div class="mb-10 border-b border-gray-300">
+                <h3 class="h3 pb-6">Colors</h3>
+            </div>
+            <div class="space-y-10">
+                <div class="grid grid-cols-1 gap-x-2 gap-y-3 md:grid-cols-11">
+                    <s:partial:partials.style-guide.swatch color="bg-background" />
+                    <s:partial:partials.style-guide.swatch color="bg-foreground" />
+                    <s:partial:partials.style-guide.swatch color="bg-primary" />
+                    <s:partial:partials.style-guide.swatch color="bg-primary-foreground" />
+                    <s:partial:partials.style-guide.swatch color="bg-secondary" />
+                    <s:partial:partials.style-guide.swatch color="bg-secondary-foreground" />
+                    <s:partial:partials.style-guide.swatch color="bg-muted" />
+                    <s:partial:partials.style-guide.swatch color="bg-muted-foreground" />
+                    <s:partial:partials.style-guide.swatch color="bg-accent" />
+                    <s:partial:partials.style-guide.swatch color="bg-accent-foreground" />
+                    <s:partial:partials.style-guide.swatch color="bg-destructive" />
+                </div>
+                <div class="grid grid-cols-1 gap-x-2 gap-y-3 md:grid-cols-11">
+                    <s:partial:partials.style-guide.swatch color="bg-neutral-50" />
+                    <s:partial:partials.style-guide.swatch color="bg-neutral-100" />
+                    <s:partial:partials.style-guide.swatch color="bg-neutral-200" />
+                    <s:partial:partials.style-guide.swatch color="bg-neutral-300" />
+                    <s:partial:partials.style-guide.swatch color="bg-neutral-400" />
+                    <s:partial:partials.style-guide.swatch color="bg-neutral-500" />
+                    <s:partial:partials.style-guide.swatch color="bg-neutral-600" />
+                    <s:partial:partials.style-guide.swatch color="bg-neutral-700" />
+                    <s:partial:partials.style-guide.swatch color="bg-neutral-800" />
+                    <s:partial:partials.style-guide.swatch color="bg-neutral-900" />
+                    <s:partial:partials.style-guide.swatch color="bg-neutral-950" />
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="mb-10 border-b border-gray-300">
+                <h3 class="h3 pb-6">Buttons</h3>
+            </div>
+            <dl class="space-y-10">
+                <s:partial:partials.style-guide.button-row variant="primary" />
+                <s:partial:partials.style-guide.button-row variant="secondary" />
+                <s:partial:partials.style-guide.button-row variant="outline" />
+                <s:partial:partials.style-guide.button-row variant="destructive" />
+                <s:partial:partials.style-guide.button-row variant="ghost" />
+                <div class="flex flex-col gap-y-6 md:flex-row md:items-end">
+                    <dt class="content-sm text-muted-foreground shrink-0 font-mono leading-6 md:w-44">btn--link</dt>
+                    <dd class="flex flex-col items-start justify-start gap-6 md:flex-row md:items-end">
+                        <s:partial:components.ui.button variant="link" label="Get started" link_type="url" url="/" />
+                    </dd>
+                </div>
+            </dl>
+        </div>
+
+        <div>
+            <div class="mb-10 border-b border-gray-300">
+                <h3 class="h3 pb-6">Headings</h3>
+            </div>
+            <dl class="space-y-10">
+                <s:partial:partials.style-guide.heading-row heading="h1" />
+                <s:partial:partials.style-guide.heading-row heading="h2" />
+                <s:partial:partials.style-guide.heading-row heading="h3" />
+                <s:partial:partials.style-guide.heading-row heading="h4" />
+                <s:partial:partials.style-guide.heading-row heading="h5" />
+                <s:partial:partials.style-guide.heading-row heading="h6" />
+            </dl>
+        </div>
+
+        <div>
+            <div class="mb-10 border-b border-gray-300">
+                <h3 class="h3 pb-6">Typography</h3>
+            </div>
+            <dl class="space-y-10">
+                <div class="flex items-center">
+                    <dt class="content-sm text-muted-foreground w-32 shrink-0 font-mono leading-6">badge</dt>
+                    <dd class="flex flex-wrap gap-3">
+                        <s:partial:components.ui.badge variant="primary">Primary</s:partial:components.ui.badge>
+                        <a href="/" class="badge badge--secondary">
+                            Secondary
+                            <s:svg src="lucide/arrow-right" />
+                        </a>
+                        <s:partial:components.ui.badge variant="outline">Outline</s:partial:components.ui.badge>
+                    </dd>
+                </div>
+                <div class="flex items-center">
+                    <dt class="content-sm text-muted-foreground w-32 shrink-0 font-mono leading-6">tagline</dt>
+                    <dd class="tagline text-primary truncate">The quick brown fox</dd>
+                </div>
+                <s:partial:partials.style-guide.content-row size="content-xl" />
+                <s:partial:partials.style-guide.content-row size="content-lg" />
+                <s:partial:partials.style-guide.content-row size="content" />
+                <s:partial:partials.style-guide.content-row size="content-sm" />
+                <s:partial:partials.style-guide.content-row size="content-xs" />
+            </dl>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,9 @@
+<section id="{{ type | slugify }}" class="m-section">
+    <div class="container">
+        <s:partial:components.section-header :title="title" :text="text" margin="mb-10" />
+
+        <div class="mx-auto max-w-xl">
+            <s:partial:components.search-form :action="theme:search_results:url" />
+        </div>
+    </div>
+</section>

@@ -1,0 +1,17 @@
+---
+model: ''
+class: ''
+---
+
+<textarea
+    x-model="{{ view:model }}"
+    id="{{ id }}"
+    name="{{ handle }}"
+    rows="{{ rows ?? 5 }}"
+    {{ view:class | attribute:class }}
+    {{ placeholder | attribute:placeholder }}
+    {{ character_limit | attribute:maxlength }}
+    :aria-invalid="form.invalid('{{ handle }}')"
+    :aria-describedby="form.invalid('{{ handle }}') ? '{{ id }}-error' : {{ if instructions }}'{{ id }}-instructions'{{ else }}false{{ /if }}"
+    @change="form.validate('{{ handle }}')"
+></textarea>

@@ -1,0 +1,501 @@
+{{ once }}
+    {{ push:scripts }}
+        <script src="/vendor/statamic/frontend/js/helpers.js" defer></script>
+        <script>
+            window.heroDemoContact = () => ({ form: { name: '', email: '', message: '', validate() { return true }, invalid() { return false } } });
+            window.heroDemoNewsletter = () => ({ form: { email: '', frequency: 'weekly', topics: [], marketing: false, validate() { return true }, invalid() { return false } } });
+            window.heroDemoPreferences = () => ({ form: { theme: 'system', language: 'en', notifications: false, validate() { return true }, invalid() { return false } } });
+            window.heroDemoSteps = () => ({ form: { steps: 5000 } });
+        </script>
+    {{ /push:scripts }}
+{{ /once }}
+
+<section class="py-8 md:py-16 lg:py-20">
+    <div class="container flex flex-col items-center gap-4 text-center xl:gap-6">
+        <h1 class="h1 text-balance">{{ title }}</h1>
+        <p class="content-lg text-muted-foreground max-w-3xl text-balance">{{ text }}</p>
+        <s:partial:components.buttons :buttons="buttons" class="gap-x-3" size="xl" />
+    </div>
+
+    <div
+        id="components"
+        class="site-grid container max-w-screen-2xl items-start gap-4 pt-16 md:pt-24 lg:pt-32"
+    >
+        <div class="col-span-full grid grid-cols-1 gap-4 md:grid-cols-2 xl:col-span-6">
+            <div class="space-y-4">
+                {{# Contact Form #}}
+                <div x-data="heroDemoContact()" class="col-span-full md:col-span-6 lg:col-span-3">
+                    <div class="card shadow-none">
+                        <div class="card__header">
+                            <p class="leading-none font-semibold">Contact us</p>
+                            <p class="text-muted-foreground text-sm">Get in touch and we'll respond within 24 hours.</p>
+                        </div>
+                        <div class="flex flex-1 flex-col gap-4">
+                            <div class="grid gap-3">
+                                <s:partial:components.ui.label id="contact_name" display="Name" />
+                                <s:partial:components.ui.form.text
+                                    model="form.name"
+                                    handle="contact_name"
+                                    id="contact_name"
+                                    placeholder="Your full name"
+                                />
+                            </div>
+                            <div class="grid gap-3">
+                                <s:partial:components.ui.label id="contact_email" display="Email" />
+                                <s:partial:components.ui.form.text
+                                    model="form.email"
+                                    handle="contact_email"
+                                    id="contact_email"
+                                    autocomplete="email"
+                                    placeholder="your@email.com"
+                                />
+                            </div>
+                            <div class="grid gap-3">
+                                <s:partial:components.ui.label id="contact_message" display="Message" />
+                                <s:partial:components.ui.form.textarea
+                                    model="form.message"
+                                    handle="contact_message"
+                                    id="contact_message"
+                                    class="min-h-24"
+                                    placeholder="Tell us about your project…"
+                                />
+                            </div>
+                            <div class="flex justify-end">
+                                <s:partial:components.ui.button as="button" type="button">Submit</s:partial:components.ui.button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{# Newsletter Form #}}
+                <div x-data="heroDemoNewsletter()" class="col-span-full md:col-span-6 lg:col-span-3">
+                    <div class="card shadow-none">
+                        <div class="card__header">
+                            <p class="leading-none font-semibold">Newsletter</p>
+                            <p class="text-muted-foreground text-sm">Stay updated with our latest insights and tips.</p>
+                        </div>
+                        <div class="flex flex-1 flex-col gap-4">
+                            <div class="grid gap-3">
+                                <s:partial:components.ui.label id="newsletter_email" display="Email Address" />
+                                <s:partial:components.ui.form.text
+                                    model="form.email"
+                                    handle="email"
+                                    id="newsletter_email"
+                                    autocomplete="email"
+                                    placeholder="your@email.com"
+                                />
+                            </div>
+                            <div class="grid gap-3">
+                                <s:partial:components.ui.label id="frequency" display="Frequency" />
+                                {{ frequency_options = [
+                                    'daily' => 'Daily updates',
+                                    'weekly' => 'Weekly digest',
+                                    'monthly' => 'Monthly newsletter',
+                                ] }}
+                                <s:partial:components.ui.form.select
+                                    model="form.frequency"
+                                    handle="frequency"
+                                    id="frequency"
+                                    :options="frequency_options"
+                                />
+                            </div>
+                            <div class="grid gap-3">
+                                {{ topics_options = [
+                                    'design' => 'Design tips',
+                                    'development' => 'Development news',
+                                    'marketing' => 'Marketing insights',
+                                ] }}
+                                <s:partial:components.ui.form.checkboxes
+                                    model="form.topics"
+                                    handle="topics"
+                                    id="topics"
+                                    display="Topics"
+                                    :options="topics_options"
+                                />
+                            </div>
+                            <div class="flex justify-end">
+                                <s:partial:components.ui.button as="button" type="button">Subscribe</s:partial:components.ui.button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                {{# Carousel #}}
+                <div class="col-span-full md:col-span-6 lg:col-span-3">
+                    <div class="card shadow-none">
+                        <div class="card__header">
+                            <p class="leading-none font-semibold">Featured posts</p>
+                            <p class="text-muted-foreground text-sm">Browse our most popular posts.</p>
+                        </div>
+
+                        <div class="flex flex-1 items-center px-8">
+                            {{ partial:components/ui/carousel/carousel
+                                class="w-full max-w-full"
+                                opts="loop: true, align: 'center'"
+                            }}
+                                {{ slot:content }}
+                                    {{ loop times="5" }}
+                                        <s:partial:components.ui.carousel.slide>
+                                            <div class="p-1">
+                                                <div class="card aspect-square items-center justify-center lg:aspect-3/2 xl:aspect-square">
+                                                    <span class="text-4xl font-semibold">{{ count }}</span>
+                                                </div>
+                                            </div>
+                                        </s:partial:components.ui.carousel.slide>
+                                    {{ /loop }}
+                                {{ /slot:content }}
+
+                                {{ slot:nav }}
+                                    <s:partial:components.ui.carousel.previous class="btn--outline btn--round" />
+                                    <s:partial:components.ui.carousel.next class="btn--outline btn--round" />
+                                {{ /slot:nav }}
+                            {{ /partial:components/ui/carousel/carousel }}
+                        </div>
+                    </div>
+                </div>
+
+                {{# Preferences Form #}}
+                <div x-data="heroDemoPreferences()" class="col-span-full md:col-span-6 lg:col-span-3">
+                    <div class="card shadow-none">
+                        <div class="card__header">
+                            <p class="leading-none font-semibold">Preferences</p>
+                            <p class="text-muted-foreground text-sm">Customize your experience.</p>
+                        </div>
+                        <div class="flex flex-1 flex-col gap-6">
+                            <div class="grid gap-6">
+                                <div class="grid gap-3">
+                                    {{ theme_options = [
+                                        'light' => 'Light mode',
+                                        'dark' => 'Dark mode',
+                                        'system' => 'System default',
+                                    ] }}
+                                    <s:partial:components.ui.form.radio
+                                        id="theme"
+                                        handle="theme"
+                                        model="form.theme"
+                                        display="Theme"
+                                        :options="theme_options"
+                                    />
+                                </div>
+                                <div class="grid gap-3">
+                                    <s:partial:components.ui.label id="language" display="Language" />
+                                    {{ languages = [
+                                        'en' => 'English',
+                                        'es' => 'Spanish',
+                                        'fr' => 'French',
+                                        'de' => 'German',
+                                        'it' => 'Italian',
+                                        'pt' => 'Portuguese',
+                                        'ru' => 'Russian',
+                                        'zh' => 'Chinese',
+                                        'ja' => 'Japanese',
+                                        'ko' => 'Korean',
+                                        'ar' => 'Arabic',
+                                    ] }}
+                                    <s:partial:components.ui.form.combobox
+                                        id="language"
+                                        handle="language"
+                                        model="form.language"
+                                        placeholder="Select language…"
+                                        :options="languages"
+                                    />
+                                </div>
+                                <div class="grid gap-3">
+                                    <s:partial:components.ui.form.toggle
+                                        model="form.notifications"
+                                        handle="notifications"
+                                        id="notifications"
+                                        inline_label="Notifications"
+                                    />
+                                </div>
+                            </div>
+                            <s:partial:components.ui.button class="w-full" variant="outline" type="button" as="button">
+                                Save preferences
+                            </s:partial:components.ui.button>
+                        </div>
+                    </div>
+                </div>
+
+                {{# Alert #}}
+                <div class="col-span-full md:col-span-6 lg:col-span-3">
+                    <s:partial:components.ui.alert
+                        variant="success"
+                        title="Success! Your changes have been saved."
+                        description="This is an alert with icon, title and description."
+                    />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-span-full grid grid-cols-1 gap-4 md:grid-cols-2 xl:col-span-6">
+            {{# Tabs #}}
+            <div class="grid gap-4 xl:col-span-full xl:grid-cols-2">
+                {{ services_tabs = [
+                    [
+                        'title' => 'AI agents',
+                        'description' => 'AI agents can help you with a wide range of tasks, from customer service to data analysis.',
+                        'features' => ['Automated workflows', 'Data analysis', 'Customer service'],
+                    ],
+                    [
+                        'title' => 'Web apps',
+                        'description' => 'Build apps for your business.',
+                        'features' => ['Filament dashboards', 'SPA apps with Inertia and Vue/React', 'Laravel apps'],
+                    ],
+                    [
+                        'title' => 'Websites',
+                        'description' => 'Build high-converting websites.',
+                        'features' => ['Beautiful design', 'Lightning-fast loading', 'SEO-friendly'],
+                    ],
+                ] }}
+
+                {{ partial:components/ui/tabs/tabs list_class="bg-muted text-muted-foreground flex min-h-9 w-full items-center justify-center rounded-lg p-[3px] outline-none" }}
+                    {{ slot:list }}
+                        {{ services_tabs }}
+                            <s:partial:components.ui.tabs.trigger
+                                :name="count"
+                                class="btn text-foreground inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 border border-transparent px-2 py-1"
+                                x_class="activeTab == '{{ count }}' ? 'bg-background shadow-sm' : ''"
+                            >
+                                {{ title }}
+                            </s:partial:components.ui.tabs.trigger>
+                        {{ /services_tabs }}
+                    {{ /slot:list }}
+
+                    {{ slot:panels }}
+                        {{ services_tabs }}
+                            <s:partial:components.ui.tabs.panel
+                                :name="count"
+                                class="card h-full justify-between shadow-none"
+                            >
+                                <div class="card__content">
+                                    <p class="text-sm">{{ description }}</p>
+                                    <ul class="list-inside list-disc space-y-1 text-sm">
+                                        {{ features }}
+                                            <li>{{ value }}</li>
+                                        {{ /features }}
+                                    </ul>
+                                </div>
+                                <div class="card__footer">
+                                    <s:partial:components.ui.button variant="outline" size="sm" type="button" as="button">
+                                        Learn more
+                                    </s:partial:components.ui.button>
+                                </div>
+                            </s:partial:components.ui.tabs.panel>
+                        {{ /services_tabs }}
+                    {{ /slot:panels }}
+                {{ /partial:components/ui/tabs/tabs }}
+
+                <div x-data="heroDemoSteps()">
+                    <div class="card shadow-none">
+                        <div class="card__header">
+                            <p class="leading-none font-semibold">Move goal</p>
+                            <p class="text-muted-foreground text-sm">Set your daily activity goal.</p>
+                        </div>
+                        <div class="flex flex-1 flex-col items-center gap-4">
+                            <s:partial:components.ui.form.stepper
+                                model="form.steps"
+                                handle="steps"
+                                id="steps"
+                                display="Steps"
+                                :hide_display="true"
+                                :show_input="false"
+                                :step="100"
+                                :max="30000"
+                                class="flex flex-col px-4 text-4xl font-bold tracking-tighter"
+                            >
+                                <label for="steps" class="text-muted-foreground text-xs font-normal tracking-normal uppercase">
+                                    Steps/day
+                                </label>
+                            </s:partial:components.ui.form.stepper>
+
+                            <div class="flex w-full items-end gap-2">
+                                {{ bar_heights = ['h-16', 'h-12', 'h-8', 'h-6', 'h-4', 'h-8', 'h-10', 'h-12', 'h-14', 'h-16'] }}
+                                {{ bar_heights }}
+                                    <div class="bg-foreground {{ value }} flex-1 rounded-md"></div>
+                                {{ /bar_heights }}
+                            </div>
+                        </div>
+                        <div>
+                            <s:partial:components.ui.button variant="secondary" type="button" as="button" class="w-full">
+                                Set Goal
+                            </s:partial:components.ui.button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{# Interactive Components and FAQs #}}
+            <div class="space-y-4 xl:col-span-full">
+                {{# Collapsible FAQ #}}
+                <div class="card shadow-none">
+                    <div class="card__header">
+                        <p class="text-xl font-semibold">FAQs</p>
+                        <p class="text-muted-foreground text-sm">Here are some of the most frequently asked questions.</p>
+                    </div>
+
+                    {{ demo_faqs = [
+                        [
+                            'question' => 'How long does a project take?',
+                            'answer' => 'Project timelines vary based on complexity, but most websites take 4-8 weeks from start to finish.',
+                        ],
+                        [
+                            'question' => 'Do you offer maintenance?',
+                            'answer' => 'Yes, we provide ongoing maintenance and support packages to keep your website running smoothly.',
+                        ],
+                        [
+                            'question' => 'How do I get started?',
+                            'answer' => 'Contact us to discuss your project and we’ll provide a free consultation to help you get started.',
+                        ],
+                    ] }}
+
+                    <dl class="space-y-2">
+                        {{ demo_faqs }}
+                            {{ partial:components/ui/collapsible
+                                trigger_class="flex w-full items-center justify-between py-2 text-left text-sm font-medium"
+                                content_class="text-muted-foreground text-sm"
+                            }}
+                                {{ slot:trigger }}
+                                    {{ question }}
+                                    <s:svg
+                                        src="lucide/chevron-down"
+                                        class="size-4 transition-transform"
+                                        :class="open && 'rotate-180'"
+                                    />
+                                {{ /slot:trigger }}
+                                {{ slot:content }}
+                                    <p>{{ answer }}</p>
+                                {{ /slot:content }}
+                            {{ /partial:components/ui/collapsible }}
+                        {{ /demo_faqs }}
+                    </dl>
+                </div>
+
+                {{# Dialog and Dropdown #}}
+                <div class="card shadow-none">
+                    <div class="card__header">
+                        <p class="leading-none font-semibold">Interactive elements</p>
+                        <p class="text-muted-foreground text-sm">Explore our components.</p>
+                    </div>
+
+                    {{# Dialog #}}
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium">Share bedrock</p>
+                            <p class="text-muted-foreground text-sm">Share this starter-kit with your followers</p>
+                        </div>
+                        {{ partial:components/ui/dialog size="sm" trigger_class="btn--outline btn--sm" }}
+                            {{ slot:trigger }}
+                                Share
+                            {{ /slot:trigger }}
+                            {{ slot:content }}
+                                <div class="flex flex-col gap-4">
+                                    <div class="flex flex-col gap-2 text-center sm:text-left">
+                                        <p class="text-lg leading-none font-semibold text-neutral-800">Share link</p>
+                                        <p class="text-muted-foreground text-sm">Anyone who has this link will be able to view this.</p>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <label for="link" class="sr-only">Link</label>
+                                        <input type="text" id="link" class="input" readonly value="https://bedrock.remarkable.dev" />
+                                        <s:partial:components.ui.button
+                                            variant="outline"
+                                            as="button"
+                                            type="button"
+                                            @click="navigator.clipboard.writeText('https://bedrock.remarkable.dev')"
+                                        >
+                                            Copy link
+                                        </s:partial:components.ui.button>
+                                    </div>
+                                    <div>
+                                        <s:partial:components.ui.button
+                                            variant="secondary"
+                                            as="button"
+                                            type="button"
+                                            @click="close()"
+                                        >
+                                            Close
+                                        </s:partial:components.ui.button>
+                                    </div>
+                                </div>
+                            {{ /slot:content }}
+                        {{ /partial:components/ui/dialog }}
+                    </div>
+
+                    {{# Dropdown #}}
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium">Quick actions</p>
+                            <p class="text-muted-foreground text-sm">Common website actions</p>
+                        </div>
+                        {{ partial:components/ui/dropdown/dropdown alignment="right" width="w-48" toggle_class="btn--outline btn--sm" }}
+                            {{ slot:toggle }}
+                                Actions
+                                <s:svg src="lucide/chevron-down" class="mt-px -mr-1 size-4 opacity-50" />
+                            {{ /slot:toggle }}
+
+                            {{ slot:content }}
+                                <s:partial:components.ui.dropdown.item href="/" @click.prevent="close()">
+                                    <s:svg src="lucide/edit" />
+                                    Edit Content
+                                </s:partial:components.ui.dropdown.item>
+                                <s:partial:components.ui.dropdown.item href="/" @click.prevent="close()">
+                                    <s:svg src="lucide/share-2" />
+                                    Share Page
+                                </s:partial:components.ui.dropdown.item>
+                                <s:partial:components.ui.dropdown.item href="/" @click.prevent="close()">
+                                    <s:svg src="lucide/download" />
+                                    Export Data
+                                </s:partial:components.ui.dropdown.item>
+                                <s:partial:components.ui.dropdown.item href="/" @click.prevent="close()">
+                                    <s:svg src="lucide/settings" />
+                                    Settings
+                                </s:partial:components.ui.dropdown.item>
+                            {{ /slot:content }}
+                        {{ /partial:components/ui/dropdown/dropdown }}
+                    </div>
+                </div>
+
+                {{# Mock pagination #}}
+                <div class="card shadow-none">
+                    <nav class="flex items-center justify-center gap-1">
+                        <button class="btn btn--ghost shrink-0">
+                            <s:svg src="lucide/chevron-left" class="size-4" />
+                            <span class="sr-only lg:not-sr-only">Previous</span>
+                        </button>
+
+                        <div class="flex gap-1">
+                            <button class="btn btn--ghost btn--square">1</button>
+                            <button class="btn btn--outline btn--square">2</button>
+                            <button class="btn btn--ghost btn--square">3</button>
+                            <span class="flex size-9 items-center justify-center">
+                                <s:svg src="lucide/ellipsis" class="size-4" />
+                            </span>
+                            <button class="btn btn--ghost btn--square">12</button>
+                        </div>
+
+                        <button class="btn btn--ghost shrink-0">
+                            <span class="sr-only lg:not-sr-only">Next</span>
+                            <s:svg src="lucide/chevron-right" class="size-4" />
+                        </button>
+                    </nav>
+                </div>
+
+                <div class="card flex flex-row items-center justify-between shadow-none">
+                    <div class="card__header">
+                        <p class="leading-none font-semibold">Toaster</p>
+                        <p class="text-muted-foreground text-sm">A toaster component.</p>
+                    </div>
+
+                    <div class="flex flex-wrap gap-3">
+                        <button class="btn btn--outline" x-data type="button" @click="$dispatch('toast', &#123; message: 'Saved!', description: 'Anyone with a link can now view this file.', type: 'success', dismissible: true &#125;)">Success</button>
+                        <button class="btn btn--outline" x-data type="button" @click="$dispatch('toast', &#123; message: 'There was an error!', type: 'error' &#125;)">Error</button>
+                        <button class="btn btn--outline" x-data type="button" @click="$dispatch('toast', &#123; message: 'This is a warning', type: 'warning' &#125;)">Warning</button>
+                        <button class="btn btn--outline" x-data type="button" @click="$dispatch('toast', &#123; message: 'This is an info message', type: 'info' &#125;)">Info</button>
+                        <button class="btn btn--outline" x-data type="button" @click="$dispatch('toast', &#123; message: 'This is a default toast' &#125;)">Default</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

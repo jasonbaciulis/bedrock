@@ -1,0 +1,45 @@
+---
+name: ''
+class: ''
+trigger_class: ''
+content_class: ''
+---
+
+<div
+    x-data="{
+        open: false,
+        toggle() {
+            this.open = !this.open
+        },
+        close() {
+            this.open = false
+        },
+    }"
+    class="relative {{ view:class }}"
+>
+    <dt>
+        <button
+            type="button"
+            aria-controls="collapsible-{{ view:name }}"
+            :aria-expanded="open"
+            @click="toggle()"
+            @keydown.enter.prevent="toggle()"
+            @keydown.space.prevent="toggle()"
+            @keydown.escape="close()"
+            class="{{ view:trigger_class }}"
+        >
+            {{ slot:trigger }}
+        </button>
+    </dt>
+    <dd
+        x-cloak
+        x-show="open"
+        x-collapse
+        id="collapsible-{{ view:name }}"
+        role="region"
+        :aria-hidden="!open"
+        class="relative {{ view:content_class }}"
+    >
+        {{ slot:content }}
+    </dd>
+</div>

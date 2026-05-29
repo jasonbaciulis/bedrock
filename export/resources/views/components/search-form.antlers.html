@@ -1,0 +1,45 @@
+---
+action: ''
+query: ''
+total_results: ''
+placeholder: 'Search…'
+class: ''
+---
+
+{{#
+    Set the search results URL inside Control Panel in /cp/globals/theme
+
+    Docs: https://statamic.dev/search#forms
+#}}
+
+<form class="flex items-center gap-6 {{ view:class }}" action="{{ view:action }}" x-data="{ search: '{{ view:query ? view:query : get:q | sanitize }}' }">
+    <div class="text-foreground relative flex-1">
+        <input
+            x-model="search"
+            class="w-full px-12"
+            placeholder="{{ view:placeholder }}"
+            type="text"
+            name="q"
+            autocorrect="off"
+            autocomplete="off"
+            spellcheck="false"
+        />
+        <button class="btn absolute inset-y-0 left-0 px-4" type="submit" aria-label="Search">
+            <s:svg src="lucide/search" class="opacity-50" />
+        </button>
+        <button
+            x-cloak
+            x-show="search"
+            class="btn absolute inset-y-0 right-0 px-4"
+            type="reset"
+            aria-label="Clear search"
+        >
+            <s:svg src="lucide/x" class="opacity-50" />
+        </button>
+    </div>
+    {{ if view:query }}
+        <span class="shrink-0 font-semibold">
+            {{ view:total_results }} {{ 'result' | plural(view:total_results) }}
+        </span>
+    {{ /if }}
+</form>

@@ -1,0 +1,28 @@
+---
+class: ''
+container_class: ''
+---
+
+{{ if buttons }}
+    <div
+        class="{{ view:container_class }} {{ ['flex flex-wrap gap-4' => (buttons | count) > 1] | classes }}"
+    >
+        {{ buttons }}
+            <s:partial:components.ui.button
+                :variant="variant"
+                :link_type="link_type"
+                :url="url"
+                :entry="entry"
+                :email="email"
+                :phone="phone"
+                :asset="asset"
+                :code="code"
+                :target_blank="target_blank"
+                :aria_label="aria_label"
+                :class="class"
+            >
+                {{ label }}
+            </s:partial:components.ui.button>
+        {{ /buttons }}
+    </div>
+{{ /if }}

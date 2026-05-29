@@ -86,9 +86,9 @@ class MakeSet extends Command
 
     private function createPartial(string $view, string $name): void
     {
-        $stub = $this->files->get(app_path('Console/Commands/Scaffold/stubs/set.blade.php.stub'));
+        $stub = $this->files->get(app_path('Console/Commands/Scaffold/stubs/set.antlers.html.stub'));
         $this->files->put(
-            base_path("resources/views/sets/{$view}.blade.php"),
+            base_path("resources/views/sets/{$view}.antlers.html"),
             Str::of($stub)->replace('{{ name }}', $name)
         );
     }

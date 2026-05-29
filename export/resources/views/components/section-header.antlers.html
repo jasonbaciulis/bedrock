@@ -1,0 +1,14 @@
+---
+title: ''
+text: ''
+margin: 'mb-20'
+class: ''
+---
+
+<div class="mx-auto max-w-xl text-center {{ view:margin }} {{ view:class }}">
+    <h2 class="h2 text-pretty">{{ view:title }}</h2>
+
+    {{ if view:text }}
+        <p class="text-muted-foreground mt-6 text-lg text-pretty">{{ view:text }}</p>
+    {{ /if }}
+</div>

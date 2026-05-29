@@ -1,0 +1,11 @@
+---
+variant: 'primary'
+as: 'span'
+class: ''
+---
+
+<{{ view:as }}
+    class="{{ ['badge--primary' => view:variant == 'primary', 'badge--secondary' => view:variant == 'secondary', 'badge--outline' => view:variant == 'outline'] | classes }} badge {{ view:class }}"
+>
+    {{ slot }}
+</{{ view:as }}>
