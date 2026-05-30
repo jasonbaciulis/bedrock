@@ -15,6 +15,7 @@
     "frontend:ci": "npm run lint:ci && npm run format:ci"
   },
   "devDependencies": {
+    "@alpinejs/anchor": "^3.15.12",
     "@alpinejs/collapse": "^3.15.0",
     "@alpinejs/focus": "^3.15.0",
     "@alpinejs/intersect": "^3.15.0",
