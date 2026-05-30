@@ -26,6 +26,7 @@ export_paths:
   - package.json
   - phpstan.neon
   - prettier.config.js
+  - eslint.config.mjs
   - CLAUDE.md
   - .claude
   - .ai

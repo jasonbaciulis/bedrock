@@ -15,6 +15,7 @@
     "frontend:ci": "npm run lint:ci && npm run format:ci"
   },
   "devDependencies": {
+    "@alpinejs/anchor": "^3.15.12",
     "@alpinejs/collapse": "^3.15.0",
     "@alpinejs/focus": "^3.15.0",
     "@alpinejs/intersect": "^3.15.0",
@@ -28,6 +29,7 @@
     "concurrently": "^9.2.0",
     "embla-carousel": "^8.6.0",
     "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.6.0",
     "heroicons": "^2.2.0",
     "js-cookie": "^3.0.5",
     "laravel-vite-plugin": "^3.1.0",
