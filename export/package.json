@@ -29,6 +29,7 @@
     "concurrently": "^9.2.0",
     "embla-carousel": "^8.6.0",
     "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.6.0",
     "heroicons": "^2.2.0",
     "js-cookie": "^3.0.5",
     "laravel-vite-plugin": "^3.1.0",

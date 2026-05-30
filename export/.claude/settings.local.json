@@ -21,7 +21,9 @@
       "Bash(git ls-tree *)",
       "Bash(git config *)",
       "Bash(gh run *)",
-      "Bash(git rm *)"
+      "Bash(git rm *)",
+      "Bash(npm i *)",
+      "Bash(npm run *)"
     ]
   },
   "enableAllProjectMcpServers": true,
