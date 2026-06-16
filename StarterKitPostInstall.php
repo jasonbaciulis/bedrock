@@ -40,6 +40,10 @@ class StarterKitPostInstall
                 'Composer\\Config::disableProcessTimeout',
                 'npx concurrently -c "#c4b5fd,#fb7185,#fdba74" "php artisan queue:listen --tries=1" "php artisan pail --timeout=0" "npm run dev" --names=queue,logs,vite',
             ],
+            'post-update-cmd' => [
+                '@php artisan vendor:publish --tag=laravel-assets --ansi --force',
+                '@php artisan boost:update --ansi',
+            ],
             'pint' => 'pint',
             'pint:ci' => 'pint --test --parallel',
             'phpstan' => 'phpstan analyse --configuration=phpstan.neon --no-progress',
