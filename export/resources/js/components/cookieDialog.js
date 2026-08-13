@@ -9,7 +9,9 @@ document.addEventListener('alpine:init', () => {
     },
 
     acceptAll() {
-      this.data.types.forEach(type => (type.value = true))
+      for (const type of this.data.types) {
+        type.value = true
+      }
       this.saveConsent()
     },
 
@@ -18,14 +20,11 @@ document.addEventListener('alpine:init', () => {
     },
 
     getConsentAPIValues() {
-      return this.data.types
-        .filter(type => {
-          return type['consent_api'] === true
-        })
-        .reduce((acc, type) => {
-          acc[type.consent_api_handle] = type.value ? 'granted' : 'denied'
-          return acc
-        }, {})
+      return Object.fromEntries(
+        this.data.types
+          .filter(type => type.consent_api === true)
+          .map(type => [type.consent_api_handle, type.value ? 'granted' : 'denied'])
+      )
     },
 
     getConsentDate() {
@@ -41,7 +40,9 @@ document.addEventListener('alpine:init', () => {
     },
 
     rejectAll() {
-      this.data.types.forEach(type => (type.value = false))
+      for (const type of this.data.types) {
+        type.value = false
+      }
       this.saveConsent()
     },
 

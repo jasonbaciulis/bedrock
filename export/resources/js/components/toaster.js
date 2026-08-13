@@ -1,6 +1,6 @@
 const VISIBLE_TOASTS_LIMIT = 3
 const TOAST_LIFETIME = 4000
-const ALLOWED_TYPES = ['success', 'error', 'warning', 'info', 'default']
+const ALLOWED_TYPES = new Set(['success', 'error', 'warning', 'info', 'default'])
 
 // To show a toast, dispatch a custom event:
 // this.$dispatch('toast', { message: 'Hello, world!', description: 'This is a description', type: 'success', dismissible: true })
@@ -68,7 +68,7 @@ document.addEventListener('alpine:init', () => {
       },
 
       resolveType(type) {
-        return ALLOWED_TYPES.includes(type) ? type : 'default'
+        return ALLOWED_TYPES.has(type) ? type : 'default'
       },
     }
   })

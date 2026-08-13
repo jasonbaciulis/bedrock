@@ -8,15 +8,15 @@ export function slugify(input) {
   if (!input) return ''
 
   const asString = String(input)
-  const normalized = asString.normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
+  const normalized = asString.normalize('NFKD').replaceAll(/[\u{300}-\u{36F}]/gu, '')
   const slug = normalized
     .toLowerCase()
-    .replace(/&/g, ' and ')
-    .replace(/\//g, '-')
-    .replace(/[\s_]+/g, '-')
-    .replace(/[^a-z0-9-]/g, '')
-    .replace(/-+/g, '-')
-    .replace(/^-+|-+$/g, '')
+    .replaceAll('&', ' and ')
+    .replaceAll('/', '-')
+    .replaceAll(/[\s_]+/g, '-')
+    .replaceAll(/[^a-z0-9-]/g, '')
+    .replaceAll(/-+/g, '-')
+    .replaceAll(/^-+|-+$/g, '')
 
   return slug
 }

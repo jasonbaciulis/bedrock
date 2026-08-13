@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => {
           'resources/css/fonts.css',
           'resources/js/site.js',
           'resources/js/embla.js',
-          'resources/js/lite-yt-embed.js',
+          'resources/js/liteYtEmbed.js',
           'resources/css/lite-yt-embed.css',
           'resources/js/fetchEntries.js',
           'resources/js/components/cookieDialog.js',
