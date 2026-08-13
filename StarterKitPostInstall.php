@@ -12,6 +12,8 @@ use function Laravel\Prompts\info;
 
 final class StarterKitPostInstall
 {
+    public const PHP_VERSION = '^8.5';
+
     /**
      * Statamic installs `dependencies_dev` with a partial `composer require` that cannot
      * pass `--with-all-dependencies`, which Pest 5 and PHPUnit 13 need, so this hook
@@ -41,9 +43,9 @@ final class StarterKitPostInstall
     {
         info('Thanks for installing Bedrock starter kit!');
 
-        $this->installDevDependencies($console);
+        $this->updateComposerJson();
 
-        $this->mergeComposerScripts();
+        $this->installDevDependencies($console);
 
         if ($this->installNodeDependencies()) {
             $this->formatDefaultFiles();
@@ -112,12 +114,17 @@ final class StarterKitPostInstall
         }
     }
 
-    private function mergeComposerScripts(): void
+    /**
+     * Runs before the dev dependencies, so that their `composer require` re-resolves
+     * the lock file against the new PHP constraint.
+     */
+    private function updateComposerJson(): void
     {
         $path = getcwd().'/composer.json';
 
         $composer = json_decode(file_get_contents($path), true);
 
+        $composer['require']['php'] = self::PHP_VERSION;
         $composer['scripts'] = array_merge($composer['scripts'] ?? [], $this->customScripts());
 
         file_put_contents(
@@ -125,7 +132,7 @@ final class StarterKitPostInstall
             json_encode($composer, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE).PHP_EOL
         );
 
-        info('Added Bedrock composer scripts.');
+        info('Set the PHP requirement to '.self::PHP_VERSION.' and added Bedrock composer scripts.');
     }
 
     /**
