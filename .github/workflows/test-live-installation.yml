@@ -33,6 +33,9 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
       - name: Install Statamic CLI
         run: composer global require statamic/cli
 
@@ -52,6 +55,40 @@ jobs:
           statamic new bedrock-test jasonbaciulis/bedrock --no-interaction
 
           echo "✓ Starter kit installation completed"
+
+      - name: Run deferred post-install hook
+        run: |
+          cd test-installation/bedrock-test
+
+          # Statamic skips the post-install hook when the environment has no TTY.
+          # The hook installs the dev dependencies, thus CI must run it.
+          if [ -f storage/statamic/tmp/cli/post-install-instructions.txt ]; then
+            echo "TTY not supported during install. Running the post-install hook now."
+            php please starter-kit:run-post-install jasonbaciulis/bedrock --no-interaction
+          else
+            echo "✓ Post-install hook already ran during installation"
+          fi
+
+      - name: Verify dev dependencies
+        run: |
+          cd test-installation/bedrock-test
+
+          REQUIRED_BINARIES=(
+            "vendor/bin/pest"
+            "vendor/bin/phpstan"
+            "vendor/bin/rector"
+          )
+
+          for binary in "${REQUIRED_BINARIES[@]}"; do
+            if [ -e "$binary" ]; then
+              echo "✓ $binary exists"
+            else
+              echo "❌ $binary missing"
+              exit 1
+            fi
+          done
+
+          php vendor/bin/pest --version
 
       - name: Verify installation
         run: |
@@ -86,30 +123,24 @@ jobs:
           # Install all dependencies and build assets
           composer run setup --no-interaction
 
-      - name: Test application
+      - name: Install Playwright browsers
         run: |
           cd test-installation/bedrock-test
 
-          # Test basic artisan commands
-          php artisan --version
-          php artisan list
+          bunx playwright install --with-deps chromium
 
-          # Test that the application can serve
-          timeout 15s php artisan serve &
-          SERVER_PID=$!
-          sleep 8
+      - name: Run browser tests
+        run: |
+          cd test-installation/bedrock-test
 
-          # Test homepage loads
-          if curl -f -s http://localhost:8000 > /dev/null; then
-            echo "✓ Homepage loads successfully"
-          else
-            echo "❌ Homepage failed to load"
-            kill $SERVER_PID 2>/dev/null || true
-            exit 1
-          fi
+          composer test:browser
 
-          # Clean up server process
-          kill $SERVER_PID 2>/dev/null || true
+      - name: Store browser screenshots
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: browser-screenshots-php-${{ matrix.php-version }}
+          path: test-installation/bedrock-test/tests/Browser/Screenshots
 
       - name: Test post-install script
         run: |
@@ -135,4 +166,4 @@ jobs:
           echo "✅ Installation works correctly"
           echo "✅ Dependencies install properly"
           echo "✅ Assets build successfully"
-          echo "✅ Application serves correctly"
+          echo "✅ Homepage passes the browser smoke test"
