@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 use function Laravel\Prompts\confirm;
 use function Laravel\Prompts\info;
 
-class StarterKitPostInstall
+final class StarterKitPostInstall
 {
     public function handle($console): void
     {
@@ -11,10 +13,13 @@ class StarterKitPostInstall
 
         $this->mergeComposerScripts();
 
+        // run initial formatting over default Statamic/Laravel
+        exec('composer run lint');
+
         $this->starRepo();
     }
 
-    protected function mergeComposerScripts(): void
+    private function mergeComposerScripts(): void
     {
         $path = getcwd().'/composer.json';
 
@@ -33,38 +38,47 @@ class StarterKitPostInstall
     /**
      * @return array<string, string|array<int, string>>
      */
-    protected function customScripts(): array
+    private function customScripts(): array
     {
         return [
             'dev' => [
                 'Composer\\Config::disableProcessTimeout',
-                'npx concurrently -c "#c4b5fd,#fb7185,#fdba74" "php artisan queue:listen --tries=1" "php artisan pail --timeout=0" "npm run dev" --names=queue,logs,vite',
+                'bunx concurrently -c "#c4b5fd,#fb7185,#fdba74" "php artisan queue:listen --tries=1" "php artisan pail --timeout=0" "bun run dev" --names=queue,logs,vite',
             ],
             'post-update-cmd' => [
                 '@php artisan vendor:publish --tag=laravel-assets --ansi --force',
                 '@php artisan boost:update --ansi',
+                '@update:requirements',
             ],
-            'pint' => 'pint',
-            'pint:ci' => 'pint --test --parallel',
-            'phpstan' => 'phpstan analyse --configuration=phpstan.neon --no-progress',
-            'phpstan:ci' => 'phpstan analyse --configuration=phpstan.neon --no-progress --no-interaction',
-            'format' => [
-                'npm run lint',
-                'npm run format',
-                '@pint',
-                '@phpstan',
+            'update:requirements' => [
+                'composer bump',
+                'bunx npm-check-updates -u',
             ],
-            'format:ci' => [
-                '@pint:ci',
-                '@phpstan:ci',
+            'lint' => [
+                'rector',
+                'pint --parallel',
+                'bun run lint',
             ],
+            'test:lint' => [
+                'pint --parallel --test',
+                'rector --dry-run',
+                'bun run test:lint',
+            ],
+            'test:type-coverage' => 'pest --type-coverage --min=100',
+            'test:types' => 'phpstan',
+            'test:unit' => 'XDEBUG_MODE="coverage" pest --parallel --exclude-testsuite=Browser --coverage --exactly=100.0',
+            'test:browser' => 'pest --testsuite=Browser',
             'test' => [
-                'pest --parallel',
+                '@test:lint',
+                '@test:type-coverage',
+                '@test:types',
+                '@test:unit',
+                '@test:browser',
             ],
         ];
     }
 
-    protected function starRepo(): void
+    private function starRepo(): void
     {
         if (! confirm('Would you like to star the Bedrock repo?')) {
             return;

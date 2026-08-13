@@ -1,18 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Fieldtypes;
 
 use Statamic\Fields\Fieldtype;
 
-class Stepper extends Fieldtype
+final class Stepper extends Fieldtype
 {
+    /** @var list<string> */
     protected $categories = ['number'];
 
+    /** @var bool */
     protected $selectableInForms = true;
 
+    /** @var string */
     protected $icon = 'integer';
 
-    protected function configFieldItems(): array
+    /**
+     * @return list<array{display: string, fields: array<string, array<string, mixed>>}>
+     */
+    public function configFieldItems(): array
     {
         return [
             [
@@ -58,12 +66,10 @@ class Stepper extends Fieldtype
         ];
     }
 
-    public function preProcess($value)
+    public function preProcess(mixed $value): int
     {
-        if ($value === null) {
-            return (int) $this->config('default', 0);
-        }
+        $value ??= $this->config('default', 0);
 
-        return (int) $value;
+        return is_numeric($value) ? (int) $value : 0;
     }
 }

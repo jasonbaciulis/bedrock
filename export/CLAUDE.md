@@ -1,92 +1,4 @@
 <laravel-boost-guidelines>
-=== .ai/bedrock rules ===
-
-# Bedrock Statamic Starter Kit Rules
-
-## CLI Commands
-
-- **ALWAYS** use `php please make:bedrock-block` for new blocks, never create manually
-- **ALWAYS** use `php please make:bedrock-set` for new sets, never create manually
-- **ALWAYS** use `php please delete:bedrock-block` and `php please delete:bedrock-set` for removal
-- These commands create fieldsets, Blade templates, and update parent YAML definitions automatically
-
-## Blueprints
-
-- Import `image` and `text` fields from common fields, instead of creating from sratch. E.g. `field: common.text_plain`
-- Import `buttons` fieldset when design requires buttons, instead of creating from sratch.
-- Use `group` field when it makes sense. E.g. instead of creating fields like: `input_placeholder`, `input_label`, `input_prefix`, create `group` field named `input` and place `placeholder`, `label`, `prefix` fields inside.
-
-## File Naming Conventions
-
-- Blade templates: `kebab-case.blade.php`
-- Antlers templates: `kebab-case.antlers.html`
-- CSS/JS: `kebab-case.css`, `camelCase.js`
-
-## Component Architecture
-
-- Blocks go in `resources/views/blocks/` (page building)
-- Sets go in `resources/views/sets/` (content composition)
-- UI components (highly reusable, for any project) go in `resources/views/components/ui/`
-- Project specific reusable components go in `resources/views/components/`
-- Partials go in `resources/views/partials/` (template partials and fragments, things that aren't really reusable go here)
-
-=== .ai/laravel rules ===
-
-# PHP / Laravel Code Style
-
-## Collections Over Plain PHP
-
-- Prefer Laravel collections over plain PHP array functions
-  - `collect()->where()` not `array_filter()`
-  - `collect()->pluck()` not `array_map()`
-  - `collect()->contains()` not `in_array()`
-  - `collect()->each()` / `->map()` / `->mapWithKeys()` not `foreach`
-- Prefer collection pipelines (`map`, `filter`, `reject`, `flatMap`, `mapWithKeys`) over imperative loops. Exception is for a single array operation, PHP functions are fine. For example, no needs to call `collect()->each()->all()` if all we did was take array, wrap in collection, iterate and convert back to an array.
-
-## String Helpers
-
-- Prefer `Str::` / `Str::of()` helpers over PHP string functions
-  - `Str::startsWith()` not `str_starts_with()`
-  - `Str::after()` not `str_replace()` for extracting substrings
-  - `Str::contains()` not `str_contains()`
-
-## Naming
-
-- Never use single-letter variable names in closures — use descriptive names
-  - `fn (array $field) =>` not `fn (array $f) =>`
-  - `fn (Entry $entry) =>` not `fn (Entry $e) =>`
-
-## Type hint
-
-- Always type hint and add return types.
-- Instead of using @phpstan-ignore, always try to resolve issue with typehinting/importing/pointing to the used class for IDE to discover it
-
-## Readability
-
-- If a code block needs a comment to be understood, extract it into a named method instead
-- Always type-hint closure parameters when the type is known
-
-=== .ai/philosophy rules ===
-
-## Your Core Philosophy
-
-You believe in code that is:
-- **DRY (Don't Repeat Yourself)**: Ruthlessly eliminate duplication
-- **Concise**: Every line should earn its place
-- **Elegant**: Solutions should feel natural and obvious in hindsight
-- **Expressive**: Code should read like well-written prose
-- **Idiomatic**: Embrace the conventions and spirit of Laravel and Filament
-- **Self-documenting**: Comments are a code smell and should be avoided
-
-## Your Principles
-
-You follow these principles when interacting:
-- **Don't make assumptions**: Always ask for follow up questions to make.
-- **Direct communication**: Communicate directly with radical honesty. Be kind and polite, but always sincere.
-- **Surface inconsistencies**: Even if it does not relate to the instructed task directly, always mention inconsistencies in the surounding code about styling, naming conventions, formatting, or architectural patterns that make code difficult to read, maintain, or debug.
-- **Present trade-offs**: There are many ways to architecture and solve coding problems. The "right" way depends on many factors that you may not be aware off. Always consider the alternative aproaches and list the trade-offs.
-- **Push back when you need**: If what you're being asked to do, violates your "Core Philosophy" or other "Principles", always push back, ask more questions, clarify, make sure it's what the user really wants and is aware of trade-offs.
-
 === .ai/statamic-mcp rules ===
 
 # Statamic MCP Guidelines (v2.0)
@@ -241,107 +153,6 @@ All router tools provide consistent error responses. When tools return errors:
 - Check token scopes if you receive permission errors
 - Validate project state with appropriate router tools
 
-=== .ai/statamic rules ===
-
-## Templating Strategy
-
-### Antlers Rules
-
-- Use Statamic tags, not PHP
-- Prefer relationships over manual lookups
-- Handle missing data gracefully
-
-#### Use view-matter inside components to declare props
-
-```antlers
----
-variant: 'dark'
-class: ''
----
-
-<div {{ class | attribute:class }}>
-    <div class="{{ view:variant }}">
-        {{ slot }}
-    </div>
-</div>
-```
-
-#### Use view-matter to output variant styles
-
-```antlers
----
-variants:
-  white:
-    background: 'bg-white'
-    text: 'text-gray'
-  dark:
-    background: 'bg-black'
-    text: 'text-white'
----
-<section class="{{ view:variants:{variant}:background }} {{ view:variants:{variant}:text }}">
-    ...
-</section>
-```
-
-#### Use `attribute` modifier to pass variables to partials
-
-```antlers
----
-class: ''
----
-
-<div {{ class | attribute:class }}>
-    ...
-</div>
-```
-
-#### Use modifiers for formatting
-
-Example:
-
-```antlers
-{{ title }}
-{{ content | markdown }}
-{{ if featured }}...{{ /if }}
-```
-
-#### Use component tag syntax for Antlers
-
-Examples:
-
-```antlers
-<s:collection:blog limit="5">
-    <a href="{{ url }}">{{ title }}</a>
-</s:collection:blog>
-
-<s:partial:components.ui.button variant="primary">
-    View all
-</s:partial:components.ui.button>
-```
-
-## Content Architecture
-
-- Blueprint-first: structure content before templating
-- Prefer relationships over duplication
-- Choose field types deliberately (entries, taxonomy, assets, users)
-- Validation rules should live in blueprints
-
-## Prohibited Practices
-
-- Inline PHP in templates
-- Direct facade usage in views
-- Hard-coded content assumptions
-- Bypassing blueprints or the design system
-
-## Error Handling
-
-Templates must:
-- Fail gracefully
-- Avoid fatal errors when content is missing
-- Provide sensible fallbacks
-
-Content editors should never be able to break the site.
-
 === foundation rules ===
 
 # Laravel Boost Guidelines
@@ -363,8 +174,9 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - laravel/pail (PAIL) - v1
 - laravel/pint (PINT) - v1
 - laravel/sail (SAIL) - v1
-- pestphp/pest (PEST) - v4
-- phpunit/phpunit (PHPUNIT) - v12
+- pestphp/pest (PEST) - v5
+- phpunit/phpunit (PHPUNIT) - v13
+- rector/rector (RECTOR) - v2
 - alpinejs (ALPINEJS) - v3
 - prettier (PRETTIER) - v3
 - tailwindcss (TAILWINDCSS) - v4
@@ -390,7 +202,7 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 ## Frontend Bundling
 
-- If the user doesn't see a frontend change reflected in the UI, it could mean they need to run `npm run build`, `npm run dev`, or `composer run dev`. Ask them.
+- If the user doesn't see a frontend change reflected in the UI, it could mean they need to run `bun run build`, `bun run dev`, or `composer run dev`. Ask them.
 
 ## Documentation Files
 
@@ -511,7 +323,7 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 ## Vite Error
 
-- If you receive an "Illuminate\Foundation\ViteException: Unable to locate file in Vite manifest" error, you can run `npm run build` or ask the user to run `npm run dev` or `composer run dev`.
+- If you receive an "Illuminate\Foundation\ViteException: Unable to locate file in Vite manifest" error, you can run `bun run build` or ask the user to run `bun run dev` or `composer run dev`.
 
 === pint/core rules ===
 
@@ -649,72 +461,3 @@ Most of the folder structure will feel familiar to Laravel developers. However, 
 - GitHub Issues: https://github.com/statamic/cms/issues
 
 </laravel-boost-guidelines>
-
-<!-- Bedrock Statamic Starter Kit Rules - DO NOT move inside <laravel-boost-guidelines> -->
-
-# Bedrock Statamic Starter Kit Rules
-
-## CLI Commands (CRITICAL)
-
-- **ALWAYS** use `php please make:bedrock-block` for new blocks, never create manually
-- **ALWAYS** use `php please make:bedrock-set` for new sets, never create manually
-- **ALWAYS** use `php please delete:bedrock-block` and `php please delete:bedrock-set` for removal
-- These commands create fieldsets, Blade templates, and update parent YAML definitions automatically
-
-## Blueprints
-- Import `image` and `text` fields from common fields, instead of creating from sratch. E.g. `field: common.text_plain`
-- Import `buttons` fieldset when design requires buttons, instead of creating from sratch.
-
-## File Naming Conventions
-
-- Blade templates: `kebab-case.blade.php`
-- YAML fieldsets: `snake_case.yaml`
-- PHP classes: `PascalCase.php`
-- CSS/JS: `kebab-case.css`, `camelCase.js`
-
-## Component Architecture
-
-- Blocks go in `resources/views/blocks/` (page building)
-- Sets go in `resources/views/sets/` (content composition)
-- UI components go in `resources/views/components/ui/`
-- Partials go in `resources/views/partials/`
-
-## Statamic Patterns
-
-- Use Antlers Blade components syntax: `<s:collection from="pages" limit="2" sort="title:desc">{!! $title !!}</s:collection>`
-- Reference existing fieldsets in `resources/fieldsets/`
-- Content files are in `content/collections/`
-- Always consider flat-file structure (no database)
-
-## Styling Guidelines
-
-- Primary: TailwindCSS utility classes
-- Custom styles: Use `@apply` in component CSS files
-- Follow mobile-first responsive design
-- Use `resources/css/config.css` for custom config
-
-## JavaScript Guidelines
-
-- Use AlpineJS for interactivity
-- Keep `x-data` simple and focused
-- Place complex logic in separate JS files in `resources/js/`
-
-## Development Workflow
-
-- Start with `composer run dev` for full development stack
-- Run `php please stache:warm` after content changes
-- Test both development and static generation modes
-
-## Code Quality
-
-- Follow PSR-12 for PHP
-- Keep Blade templates minimal and readable
-- Use partials for reusable template fragments
-- Prefer composition over inheritance
-
-## When Uncertain
-
-- Check CLAUDE.md rules inside `<laravel-boost-guidelines>` for detailed context
-- Follow existing patterns in the codebase
-- Use Statamic CLI commands over manual file creation
-- Remember this is a marketing website (consider SEO)

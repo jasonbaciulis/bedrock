@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\NewsletterController;
-use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
+declare(strict_types=1);
+
+use App\Http\Controllers\SubscribeNewsletterController;
 use Illuminate\Support\Facades\Route;
 
 // Route for handling newsletter subscriptions.
-Route::post('/newsletter', NewsletterController::class)
-    ->middleware([HandlePrecognitiveRequests::class])
+Route::post('/newsletter', SubscribeNewsletterController::class)
     ->name('newsletter');
 
 // The Sitemap route to the sitemap.xml

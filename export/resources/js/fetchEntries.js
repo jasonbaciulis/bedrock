@@ -35,6 +35,9 @@ document.addEventListener('alpine:init', () => {
 
       filterEntries(filterName, selectedValue, condition = 'contains') {
         this.page = 1
+        // innerText, not textContent: the filter label is whatever the user
+        // actually sees rendered in the option.
+        // eslint-disable-next-line unicorn/prefer-dom-node-text-content
         const selectedText = this.$el.innerText
 
         this.filters[filterName] = {
@@ -46,18 +49,18 @@ document.addEventListener('alpine:init', () => {
         this.fetchEntries(false)
       },
 
-      async fetchEntries(loadmore = false) {
+      async fetchEntries(shouldLoadMore = false) {
         this.loading = true
 
         const endpoint = this.buildEndpoint()
 
-        await this.runFetch(endpoint, loadmore)
+        await this.runFetch(endpoint, shouldLoadMore)
       },
 
       buildEndpoint() {
         const baseEndpoint = `/api/collections/${this.collection}/entries?limit=${this.entriesPerPage}&page=${this.page}`
 
-        const filterParams =
+        const filterParameters =
           this.filtered && this.filters
             ? Object.entries(this.filters)
                 .filter(([, { value }]) => value)
@@ -65,12 +68,12 @@ document.addEventListener('alpine:init', () => {
                 .join('')
             : ''
 
-        const sortParam = this.sort ? `&sort=${this.sort}` : ''
+        const sortParameter = this.sort ? `&sort=${this.sort}` : ''
 
-        return `${baseEndpoint}${filterParams}${sortParam}`
+        return `${baseEndpoint}${filterParameters}${sortParameter}`
       },
 
-      async runFetch(endpoint, loadmore) {
+      async runFetch(endpoint, shouldLoadMore) {
         try {
           const response = await fetch(endpoint, {
             headers: {
@@ -83,13 +86,13 @@ document.addEventListener('alpine:init', () => {
 
           this.loading = false
 
-          if (!loadmore) {
-            this.entries = json.data
-          } else {
+          if (shouldLoadMore) {
             this.entries.push(...json.data)
+          } else {
+            this.entries = json.data
           }
 
-          // to hide/show loadmore button
+          // to hide/show load more button
           this.nextPage = !!json.links?.next
         } catch (error) {
           this.loading = false

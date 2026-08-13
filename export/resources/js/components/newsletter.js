@@ -16,7 +16,6 @@ document.addEventListener('alpine:init', () => {
       this.subscribed = !!status
     },
 
-    /** main submit flow */
     async submit() {
       try {
         // honeypot: pretend success (don’t surface errors to bots)
@@ -27,22 +26,17 @@ document.addEventListener('alpine:init', () => {
           return
         }
 
-        this.form
-          .submit()
-          .then(response => {
-            if (response?.data?.success) {
-              this.success = true
-              this.error = false
-              this.isSubscribed = true
-              this.form.reset()
-            } else {
-              this.success = false
-              this.error = true
-            }
-          })
-          .catch(error => {
-            console.log(error)
-          })
+        const response = await this.form.submit()
+
+        if (response?.data?.success) {
+          this.success = true
+          this.error = false
+          this.isSubscribed = true
+          this.form.reset()
+        } else {
+          this.success = false
+          this.error = true
+        }
       } catch (error) {
         console.error(error)
         this.success = false

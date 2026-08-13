@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
+$configuredBinary = env('STATAMIC_GIT_BINARY', 'git');
+$binary = is_string($configuredBinary) ? $configuredBinary : 'git';
+
 return [
     /*
     |--------------------------------------------------------------------------
@@ -117,7 +122,7 @@ return [
     |
     */
 
-    'binary' => env('STATAMIC_GIT_BINARY', 'git'),
+    'binary' => $binary,
 
     /*
     |--------------------------------------------------------------------------
@@ -133,9 +138,8 @@ return [
     */
 
     'commands' => [
-        config('statamic.git.binary').' add {{ paths }}',
-        config('statamic.git.binary').
-        ' -c "user.name={{ name }}" -c "user.email={{ email }}" commit -m "{{ message }} [BOT]"',
+        $binary.' add {{ paths }}',
+        $binary.' -c "user.name={{ name }}" -c "user.email={{ email }}" commit -m "{{ message }} [BOT]"',
     ],
 
     /*
@@ -180,5 +184,5 @@ return [
     |
     */
 
-    'locale' => env('STATAMIC_GIT_LOCALE', null),
+    'locale' => env('STATAMIC_GIT_LOCALE'),
 ];

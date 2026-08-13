@@ -1,19 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Fieldtypes;
 
 use Statamic\Fields\Fieldtype;
 
-class HiddenInput extends Fieldtype
+final class HiddenInput extends Fieldtype
 {
+    /** @var string */
     protected static $title = 'Hidden Input';
 
+    /** @var bool */
     protected $selectable = false;
 
+    /** @var bool */
     protected $selectableInForms = true;
 
+    /** @var list<string> */
     protected $categories = ['text'];
 
+    /** @var string */
     protected $icon = 'fieldtype-hidden';
 
     public function component(): string
@@ -21,6 +28,9 @@ class HiddenInput extends Fieldtype
         return 'text';
     }
 
+    /**
+     * @return array<string, array<string, string>>
+     */
     public function configFieldItems(): array
     {
         return [
