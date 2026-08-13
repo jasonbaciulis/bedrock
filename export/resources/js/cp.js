@@ -4,8 +4,8 @@
  */
 
 Statamic.booting(() => {
-  // Field actions allow you to modify value for specific fields:
-  // https://statamic.dev/extending/field-actions
-  // Action registration example
-  //   Statamic.$fieldActions.add('slug-fieldtype', action)
+    // Field actions allow you to modify value for specific fields:
+    // https://statamic.dev/extending/field-actions
+    // Action registration example
+    //   Statamic.$fieldActions.add('slug-fieldtype', action)
 })

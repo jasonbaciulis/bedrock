@@ -1,9 +1,9 @@
 @layer components {
-  html {
-    @apply scroll-smooth;
-  }
+    html {
+        @apply scroll-smooth;
+    }
 
-  hr {
-    @apply border-gray-200;
-  }
+    hr {
+        @apply border-gray-200;
+    }
 }

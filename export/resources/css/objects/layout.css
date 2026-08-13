@@ -1,9 +1,9 @@
 @layer components {
-  .p-section {
-    @apply py-24 sm:py-32 lg:py-40;
-  }
+    .p-section {
+        @apply py-24 sm:py-32 lg:py-40;
+    }
 
-  .m-section {
-    @apply my-24 sm:my-32 lg:my-40;
-  }
+    .m-section {
+        @apply my-24 sm:my-32 lg:my-40;
+    }
 }
