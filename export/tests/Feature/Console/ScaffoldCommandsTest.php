@@ -1,371 +1,166 @@
 <?php
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Str;
-use Laravel\Prompts\ConfirmPrompt;
-use Laravel\Prompts\Prompt;
-use Statamic\Facades\Config as StatamicConfig;
-use Statamic\Facades\Entry;
-use Statamic\Facades\YAML;
+declare(strict_types=1);
 
-beforeAll(function () {
-    // Always auto-confirm destructive prompts in tests.
-    Prompt::fallbackWhen(true);
-    ConfirmPrompt::fallbackUsing(fn () => true);
+use Illuminate\Support\Facades\File;
+use Tests\Feature\Console\Support\ScaffoldFixture;
+use Tests\Feature\Console\Support\Scratch;
+use Tests\Feature\Console\Support\TestEntry;
+
+beforeEach(function (): void {
+    Scratch::setUpScaffoldWorkspace();
+    Scratch::isolateContentTree();
 });
 
-beforeEach(function () {
-    setUpBedrockScaffoldPaths();
-
-    $this->blocksYamlPath = config('statamic.bedrock.scaffold.fieldsets_path').'/blocks.yaml';
-    $this->articleYamlPath = config('statamic.bedrock.scaffold.fieldsets_path').'/article.yaml';
+afterEach(function (): void {
+    Scratch::delete();
 });
 
-afterEach(function () {
-    tearDownBedrockScaffoldPaths();
+test('make creates the files and declares the set in the parent fieldset', function (ScaffoldFixture $scaffold): void {
+    [$name, $fieldset, $view] = $scaffold->create();
 
-    // Entries live in the shared Statamic content tree; clean only this worker's.
-    $worker = bedrockTestWorkerToken();
-    $globPaths = [
-        base_path("content/collections/pages/test-page-w{$worker}-*.md"),
-        base_path("content/collections/posts/test-post-w{$worker}-*.md"),
-    ];
+    expect($scaffold->fieldsetPath($fieldset))->toBeFile()
+        ->and($scaffold->viewPath($view))->toBeFile();
 
-    foreach ($globPaths as $pattern) {
-        foreach (glob($pattern) ?: [] as $file) {
-            @unlink($file);
-        }
-    }
-});
+    $declared = $scaffold->declaredSets()[$fieldset] ?? [];
 
-function parseYaml(string $path): array
-{
-    return YAML::file($path)->parse() ?? [];
-}
+    expect($declared)->not->toBeEmpty()
+        ->and($declared['display'] ?? null)->toBe($name)
+        ->and($declared['instructions'] ?? null)->toBe('Test instructions')
+        ->and(data_get($declared, 'fields.0.import'))->toBe($fieldset);
+})->with('scaffolds');
 
-function findFieldIndexByHandle(array $data, string $handle): int
-{
-    foreach ($data['fields'] ?? [] as $index => $field) {
-        if (($field['handle'] ?? null) === $handle) {
-            return $index;
-        }
-    }
+test('make without --force fails when the files already exist', function (ScaffoldFixture $scaffold): void {
+    [$name] = $scaffold->create();
 
-    return -1;
-}
-
-test('make:bedrock-block creates files and updates blocks.yaml', function () {
-    $group = 'messaging';
-    $name = 'Scaffold Test Block '.Str::random(6);
-    $instructions = 'Test instructions';
-
-    $locale = StatamicConfig::getShortLocale();
-    $fieldset = Str::slug($name, '_', $locale);
-    $view = Str::slug($name, '-', $locale);
-
-    $this->artisan('make:bedrock-block', [
-        'group' => $group,
+    $this->artisan($scaffold->command('make'), [
+        'group' => $scaffold->group(),
         'name' => $name,
-        '--instructions' => $instructions,
-        '--force' => true,
-    ])->assertExitCode(Command::SUCCESS);
+        '--instructions' => 'Test instructions',
+    ])->assertFailed();
+})->with('scaffolds');
 
-    $fieldsetPath = config('statamic.bedrock.scaffold.fieldsets_path')."/{$fieldset}.yaml";
-    $viewPath = config('statamic.bedrock.scaffold.blocks_views_path')."/{$view}.antlers.html";
+test('make fails when the parent fieldset declares no groups', function (ScaffoldFixture $scaffold): void {
+    $scaffold->writeParentFieldsetWithoutGroups();
 
-    expect(is_file($fieldsetPath))->toBeTrue();
-    expect(is_file($viewPath))->toBeTrue();
+    [$name] = ScaffoldFixture::plan();
 
-    $data = parseYaml($this->blocksYamlPath);
-    $idx = findFieldIndexByHandle($data, 'blocks');
-    expect($idx)->toBeGreaterThan(-1);
-
-    $config = $data['fields'][$idx]['field']['sets'][$group]['sets'][$fieldset] ?? null;
-    expect($config)->not->toBeNull();
-    expect($config['display'] ?? null)->toBe($name);
-    expect($config['instructions'] ?? null)->toBe($instructions);
-    expect($config['fields'][0]['import'] ?? null)->toBe($fieldset);
-});
-
-test('make:bedrock-set creates files and updates article.yaml', function () {
-    $group = 'text_layout';
-    $name = 'Scaffold Test Set '.Str::random(6);
-    $instructions = 'Test instructions';
-
-    $locale = StatamicConfig::getShortLocale();
-    $fieldset = Str::slug($name, '_', $locale);
-    $view = Str::slug($name, '-', $locale);
-
-    $this->artisan('make:bedrock-set', [
-        'group' => $group,
+    $this->artisan($scaffold->command('make'), [
+        'group' => $scaffold->group(),
         'name' => $name,
-        '--instructions' => $instructions,
+        '--instructions' => 'Test instructions',
         '--force' => true,
-    ])->assertExitCode(Command::SUCCESS);
-
-    $fieldsetPath = config('statamic.bedrock.scaffold.fieldsets_path')."/{$fieldset}.yaml";
-    $viewPath = config('statamic.bedrock.scaffold.sets_views_path')."/{$view}.antlers.html";
-
-    expect(is_file($fieldsetPath))->toBeTrue();
-    expect(is_file($viewPath))->toBeTrue();
-
-    $data = parseYaml($this->articleYamlPath);
-    $idx = findFieldIndexByHandle($data, 'article');
-    expect($idx)->toBeGreaterThan(-1);
-
-    $config = $data['fields'][$idx]['field']['sets'][$group]['sets'][$fieldset] ?? null;
-    expect($config)->not->toBeNull();
-    expect($config['display'] ?? null)->toBe($name);
-    expect($config['instructions'] ?? null)->toBe($instructions);
-    expect($config['fields'][0]['import'] ?? null)->toBe($fieldset);
-});
-
-test('delete:bedrock-block removes from blocks.yaml and deletes files', function () {
-    $group = 'messaging';
-    $name = 'Scaffold Test Block '.Str::random(6);
-    $locale = StatamicConfig::getShortLocale();
-    $fieldset = Str::slug($name, '_', $locale);
-    $view = Str::slug($name, '-', $locale);
-
-    // Create first
-    $this->artisan('make:bedrock-block', [
-        'group' => $group,
-        'name' => $name,
-        '--instructions' => 'irrelevant',
-        '--force' => true,
-    ])->assertExitCode(Command::SUCCESS);
-
-    // Create a page entry that uses the block so we exercise usage removal and message still confirms
-    /** @var Statamic\Entries\Entry $entry */
-    $entry = Entry::make();
-    $entry->collection('pages');
-    $entry->id($entryId = bedrockTestEntryId('test-page'));
-    $entry->slug($entryId);
-    $entry->data([
-        'title' => 'Test Page',
-        'blocks' => [['type' => $fieldset, 'enabled' => true]],
-    ]);
-    $entry->save();
-
-    // Then delete
-    $this->artisan('delete:bedrock-block', [
-        'group' => $group,
-        'block' => $fieldset,
     ])
-        ->expectsConfirmation("Delete '{$name}' from 'Messaging' group?", 'yes')
-        ->assertExitCode(Command::SUCCESS);
+        ->expectsOutputToContain('No groups found')
+        ->assertFailed();
+})->with('scaffolds');
 
-    // Entry usages should be removed
-    /** @var Statamic\Entries\Entry|null $updated */
-    $updated = Entry::find($entryId);
-    expect($updated)->not->toBeNull();
-    $blocks = (array) $updated->data()->get('blocks');
-    $hasBlock = collect($blocks)->contains(
-        fn ($i) => is_array($i) && ($i['type'] ?? null) === $fieldset
-    );
-    expect($hasBlock)->toBeFalse();
+test('make with an unknown group fails before it creates files', function (ScaffoldFixture $scaffold): void {
+    [$name, $fieldset, $view] = ScaffoldFixture::plan();
 
-    $fieldsetPath = config('statamic.bedrock.scaffold.fieldsets_path')."/{$fieldset}.yaml";
-    $viewPath = config('statamic.bedrock.scaffold.blocks_views_path')."/{$view}.antlers.html";
-
-    expect(is_file($fieldsetPath))->toBeFalse();
-    expect(is_file($viewPath))->toBeFalse();
-
-    $data = parseYaml($this->blocksYamlPath);
-    $idx = findFieldIndexByHandle($data, 'blocks');
-    expect($idx)->toBeGreaterThan(-1);
-    $exists = isset($data['fields'][$idx]['field']['sets'][$group]['sets'][$fieldset]);
-    expect($exists)->toBeFalse();
-});
-
-test('delete:bedrock-block with --keep-files removes blocks.yaml but keeps files', function () {
-    $group = 'messaging';
-    $name = 'Scaffold Test Block '.Str::random(6);
-    $locale = StatamicConfig::getShortLocale();
-    $fieldset = Str::slug($name, '_', $locale);
-    $view = Str::slug($name, '-', $locale);
-
-    $this->artisan('make:bedrock-block', [
-        'group' => $group,
+    $this->artisan($scaffold->command('make'), [
+        'group' => 'does_not_exist',
         'name' => $name,
-        '--instructions' => 'irrelevant',
+        '--instructions' => 'Test instructions',
         '--force' => true,
-    ])->assertExitCode(Command::SUCCESS);
+    ])
+        ->expectsOutputToContain("Group 'does_not_exist' not found")
+        ->assertFailed();
 
-    $fieldsetPath = config('statamic.bedrock.scaffold.fieldsets_path')."/{$fieldset}.yaml";
-    $viewPath = config('statamic.bedrock.scaffold.blocks_views_path')."/{$view}.antlers.html";
-    expect(is_file($fieldsetPath))->toBeTrue();
-    expect(is_file($viewPath))->toBeTrue();
+    expect($scaffold->fieldsetPath($fieldset))->not->toBeFile()
+        ->and($scaffold->viewPath($view))->not->toBeFile();
+})->with('scaffolds');
 
-    $this->artisan('delete:bedrock-block', [
-        'group' => $group,
-        'block' => $fieldset,
+test('delete removes the declaration, the files and the entry usages', function (ScaffoldFixture $scaffold): void {
+    [$name, $fieldset, $view] = $scaffold->create();
+
+    $entry = $scaffold->createEntryUsing($fieldset);
+
+    $this->artisan($scaffold->command('delete'), [
+        'group' => $scaffold->group(),
+        $scaffold->noun() => $fieldset,
+    ])
+        ->expectsConfirmation($scaffold->deleteConfirmation($name), 'yes')
+        ->assertSuccessful();
+
+    expect($scaffold->usedHandles(TestEntry::fresh($entry)))->not->toContain($fieldset)
+        ->and($scaffold->declaredSets())->not->toHaveKey($fieldset)
+        ->and($scaffold->fieldsetPath($fieldset))->not->toBeFile()
+        ->and($scaffold->viewPath($view))->not->toBeFile();
+})->with('scaffolds');
+
+test('delete with --keep-files removes the declaration but keeps the files', function (ScaffoldFixture $scaffold): void {
+    [$name, $fieldset, $view] = $scaffold->create();
+
+    $this->artisan($scaffold->command('delete'), [
+        'group' => $scaffold->group(),
+        $scaffold->noun() => $fieldset,
         '--keep-files' => true,
     ])
-        ->expectsConfirmation("Delete '{$name}' from 'Messaging' group?", 'yes')
-        ->assertExitCode(Command::SUCCESS);
+        ->expectsConfirmation($scaffold->deleteConfirmation($name), 'yes')
+        ->assertSuccessful();
 
-    expect(is_file($fieldsetPath))->toBeTrue();
-    expect(is_file($viewPath))->toBeTrue();
+    expect($scaffold->declaredSets())->not->toHaveKey($fieldset)
+        ->and($scaffold->fieldsetPath($fieldset))->toBeFile()
+        ->and($scaffold->viewPath($view))->toBeFile();
+})->with('scaffolds');
 
-    $data = parseYaml($this->blocksYamlPath);
-    $idx = findFieldIndexByHandle($data, 'blocks');
-    expect($idx)->toBeGreaterThan(-1);
-    $exists = isset($data['fields'][$idx]['field']['sets'][$group]['sets'][$fieldset]);
-    expect($exists)->toBeFalse();
-});
+test('delete with --force skips the confirmation prompt', function (ScaffoldFixture $scaffold): void {
+    [, $fieldset] = $scaffold->create();
 
-test('delete:bedrock-set removes from article.yaml and deletes files', function () {
-    $group = 'text_layout';
-    $name = 'Scaffold Test Set '.Str::random(6);
-    $locale = StatamicConfig::getShortLocale();
-    $fieldset = Str::slug($name, '_', $locale);
-    $view = Str::slug($name, '-', $locale);
-
-    // Create first
-    $this->artisan('make:bedrock-set', [
-        'group' => $group,
-        'name' => $name,
-        '--instructions' => 'irrelevant',
+    // A shown prompt would hit the output mock without an expectation and fail the test.
+    $this->artisan($scaffold->command('delete'), [
+        'group' => $scaffold->group(),
+        $scaffold->noun() => $fieldset,
         '--force' => true,
-    ])->assertExitCode(Command::SUCCESS);
+    ])->assertSuccessful();
 
-    // Create a post entry that uses the set in Bard so we exercise usage removal
-    /** @var Statamic\Entries\Entry $entry */
-    $entry = Entry::make();
-    $entry->collection('posts');
-    $entry->id($entryId = bedrockTestEntryId('test-post'));
-    $entry->slug($entryId);
-    $entry->data([
-        'title' => 'Test Post',
-        'article' => [
-            [
-                'type' => 'set',
-                'attrs' => [
-                    'id' => 'abc',
-                    'values' => [
-                        'type' => $fieldset,
-                    ],
-                ],
-            ],
-        ],
-    ]);
-    $entry->save();
+    expect($scaffold->declaredSets())->not->toHaveKey($fieldset);
+})->with('scaffolds');
 
-    // Then delete
-    $this->artisan('delete:bedrock-set', [
-        'group' => $group,
-        'set' => $fieldset,
+test('delete with an unknown group fails with an error', function (ScaffoldFixture $scaffold): void {
+    $this->artisan($scaffold->command('delete'), [
+        'group' => 'does_not_exist',
+        $scaffold->noun() => 'whatever',
+        '--force' => true,
     ])
-        ->expectsConfirmation("Delete '{$name}' from 'Text & Layout' group?", 'yes')
-        ->assertExitCode(Command::SUCCESS);
+        ->expectsOutputToContain("Group 'does_not_exist' not found")
+        ->assertFailed();
+})->with('scaffolds');
 
-    // Entry usages should be removed
-    /** @var Statamic\Entries\Entry|null $updated */
-    $updated = Entry::find($entryId);
-    expect($updated)->not->toBeNull();
-    $article = (array) $updated->data()->get('article');
-    $hasSet = collect($article)->contains(function ($node) use ($fieldset) {
-        if (! is_array($node) || ($node['type'] ?? null) !== 'set') {
-            return false;
-        }
+test('delete fails when the parent fieldset declares no groups', function (ScaffoldFixture $scaffold): void {
+    $scaffold->writeParentFieldsetWithoutGroups();
 
-        return ($node['attrs']['values']['type'] ?? null) === $fieldset;
-    });
-    expect($hasSet)->toBeFalse();
-
-    $fieldsetPath = config('statamic.bedrock.scaffold.fieldsets_path')."/{$fieldset}.yaml";
-    $viewPath = config('statamic.bedrock.scaffold.sets_views_path')."/{$view}.antlers.html";
-
-    expect(is_file($fieldsetPath))->toBeFalse();
-    expect(is_file($viewPath))->toBeFalse();
-
-    $data = parseYaml($this->articleYamlPath);
-    $idx = findFieldIndexByHandle($data, 'article');
-    expect($idx)->toBeGreaterThan(-1);
-    $exists = isset($data['fields'][$idx]['field']['sets'][$group]['sets'][$fieldset]);
-    expect($exists)->toBeFalse();
-});
-
-test('delete:bedrock-set with --keep-files removes from article.yaml but keeps files', function () {
-    $group = 'text_layout';
-    $name = 'Scaffold Test Set '.Str::random(6);
-    $locale = StatamicConfig::getShortLocale();
-    $fieldset = Str::slug($name, '_', $locale);
-    $view = Str::slug($name, '-', $locale);
-
-    $this->artisan('make:bedrock-set', [
-        'group' => $group,
-        'name' => $name,
-        '--instructions' => 'irrelevant',
+    $this->artisan($scaffold->command('delete'), [
+        'group' => $scaffold->group(),
+        $scaffold->noun() => 'whatever',
         '--force' => true,
-    ])->assertExitCode(Command::SUCCESS);
-
-    $fieldsetPath = config('statamic.bedrock.scaffold.fieldsets_path')."/{$fieldset}.yaml";
-    $viewPath = config('statamic.bedrock.scaffold.sets_views_path')."/{$view}.antlers.html";
-    expect(is_file($fieldsetPath))->toBeTrue();
-    expect(is_file($viewPath))->toBeTrue();
-
-    $this->artisan('delete:bedrock-set', [
-        'group' => $group,
-        'set' => $fieldset,
-        '--keep-files' => true,
     ])
-        ->expectsConfirmation("Delete '{$name}' from 'Text & Layout' group?", 'yes')
-        ->assertExitCode(Command::SUCCESS);
+        ->expectsOutputToContain('No groups found')
+        ->assertFailed();
+})->with('scaffolds');
 
-    expect(is_file($fieldsetPath))->toBeTrue();
-    expect(is_file($viewPath))->toBeTrue();
+test('delete reports an empty group instead of prompting', function (ScaffoldFixture $scaffold): void {
+    $scaffold->writeParentFieldsetWithEmptyGroup();
 
-    $data = parseYaml($this->articleYamlPath);
-    $idx = findFieldIndexByHandle($data, 'article');
-    expect($idx)->toBeGreaterThan(-1);
-    $exists = isset($data['fields'][$idx]['field']['sets'][$group]['sets'][$fieldset]);
-    expect($exists)->toBeFalse();
-});
-
-test('make:bedrock-block without --force fails when files already exist', function () {
-    $group = 'messaging';
-    $name = 'Scaffold Test Block '.Str::random(6);
-    $locale = StatamicConfig::getShortLocale();
-    $fieldset = Str::slug($name, '_', $locale);
-    $view = Str::slug($name, '-', $locale);
-
-    // First creation succeeds
-    $this->artisan('make:bedrock-block', [
-        'group' => $group,
-        'name' => $name,
-        '--instructions' => 'irrelevant',
+    $this->artisan($scaffold->command('delete'), [
+        'group' => $scaffold->group(),
         '--force' => true,
-    ])->assertExitCode(Command::SUCCESS);
+    ])
+        ->expectsOutputToContain($scaffold->emptyGroupNotice())
+        ->assertSuccessful();
+})->with('scaffolds');
 
-    // Second should fail due to existing files
-    $this->artisan('make:bedrock-block', [
-        'group' => $group,
-        'name' => $name,
-        '--instructions' => 'irrelevant',
-    ])->assertExitCode(Command::FAILURE);
-});
+test('delete fails when the files are already gone and --force is not passed', function (ScaffoldFixture $scaffold): void {
+    [$name, $fieldset, $view] = $scaffold->create();
 
-test('make:bedrock-set without --force fails when files already exist', function () {
-    $group = 'text_layout';
-    $name = 'Scaffold Test Set '.Str::random(6);
-    $locale = StatamicConfig::getShortLocale();
-    $fieldset = Str::slug($name, '_', $locale);
-    $view = Str::slug($name, '-', $locale);
+    File::delete([$scaffold->fieldsetPath($fieldset), $scaffold->viewPath($view)]);
 
-    // First creation succeeds
-    $this->artisan('make:bedrock-set', [
-        'group' => $group,
-        'name' => $name,
-        '--instructions' => 'irrelevant',
-        '--force' => true,
-    ])->assertExitCode(Command::SUCCESS);
-
-    // Second should fail due to existing files
-    $this->artisan('make:bedrock-set', [
-        'group' => $group,
-        'name' => $name,
-        '--instructions' => 'irrelevant',
-    ])->assertExitCode(Command::FAILURE);
-});
+    $this->artisan($scaffold->command('delete'), [
+        'group' => $scaffold->group(),
+        $scaffold->noun() => $fieldset,
+    ])
+        ->expectsConfirmation($scaffold->deleteConfirmation($name), 'yes')
+        ->expectsOutputToContain('Some files were not found to delete')
+        ->assertFailed();
+})->with('scaffolds');
