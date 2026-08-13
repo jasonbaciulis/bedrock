@@ -20,7 +20,7 @@ In the age of LLM agents, the only way to prevent the slop, is to enforce strict
 
 - **100% type coverage.** Every parameter, property, and return value is explicitly typed. Enforced by `pest --type-coverage --min=100`.
 - **100% test coverage.** The test run fails below *and* above 100%, so coverage cannot silently drift.
-- **Zero tolerance for code smell.** PHPStan at level 9 catch issues before they become bugs.
+- **Zero tolerance for code smell.** PHPStan at level 9 catches issues before they become bugs.
 - **Tests fails on anything suspicious.** Deprecations, notices, warnings, risky tests, unexpected output, and tests that assert nothing all fail the suite.
 - **Immutable-first architecture.** Data structures favor immutability to prevent unexpected mutations.
 - **Automated code quality.** `composer lint` fixes what it can. `composer test` refuses to pass anything else. Nobody has to police style in code review.
