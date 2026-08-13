@@ -1,31 +1,91 @@
 includes:
     - vendor/larastan/larastan/extension.neon
     - vendor/nesbot/carbon/extension.neon
+    - vendor/pestphp/pest-plugin-phpstan/extension.neon
 
 parameters:
-    level: 5
 
     paths:
         - app
+        - bootstrap/app.php
         - config
-        - bootstrap
-        - database/factories
+        - database
         - routes
+        - tests
 
+    # Level 9 is checkExplicitMixed: strict about every mixed we declare. Level 10
+    # adds checkImplicitMixed, which flags mixed that vendor code failed to declare.
+    # Statamic's whole fluent API is the second kind, and silencing it would need an
+    # unscopable method.nonObject rule, so 9 is the honest ceiling with Statamic.
+    level: 9
+
+    tmpDir: /tmp/phpstan
+
+    # Statamic declares no types on its public API and we cannot annotate vendor
+    # code. Every rule is keyed on the Statamic namespace, so none can reach our
+    # code or Laravel's. reportUnmatched is off because a starter kit ships rules
+    # for the code downstream projects will write, not only for what it holds today.
     ignoreErrors:
+        # Contracts such as Entries\Entry and Entries\QueryBuilder are empty marker
+        # interfaces; the methods live on the concrete classes the facades return.
         -
             identifier: method.notFound
             reportUnmatched: false
-            message: '#Statamic\\Contracts\\#'
+            message: '#Statamic\\#'
         -
             identifier: staticMethod.notFound
             reportUnmatched: false
-            message: '#Statamic\\Contracts\\#'
+            message: '#Statamic\\#'
         -
             identifier: property.notFound
             reportUnmatched: false
-            message: '#Statamic\\(Contracts\\)?Entries\\Entry#'
+            message: '#Statamic\\#'
+
+        # Statamic collections carry no element type, so any callback typed with a
+        # Statamic class reads as "narrower than mixed".
         -
-            identifier: property.protected
+            identifier: argument.type
             reportUnmatched: false
-            message: '#Statamic\\Entries\\Entry#'
+            message: '#Closure\(Statamic\\#'
+
+    # -------------------------------------------------------------------------
+    # Retiring the rules above: what an upstream statamic/cms PR would change.
+    # The three items are independent, so landing any one retires just its rule.
+    #
+    # 1. method.notFound / staticMethod.notFound / property.notFound
+    #    Cause: the contracts are empty marker interfaces declaring zero methods.
+    #      src/Contracts/Entries/Entry.php
+    #      src/Contracts/Entries/QueryBuilder.php
+    #      src/Contracts/Data/Localizable.php
+    #    Fix: add @method annotations mirroring the concrete classes the facades
+    #    return (Statamic\Entries\Entry, Stache\Query\EntryQueryBuilder).
+    #
+    # 2. argument.type on Closure(Statamic\...)
+    #    Cause: src/Entries/EntryCollection.php and src/Data/DataCollection.php
+    #    extend Illuminate\Support\Collection without declaring generics, so
+    #    elements read as mixed and any typed callback is "narrower than mixed".
+    #    Fix: @template TKey/TValue + @extends IlluminateCollection<TKey, TValue>
+    #    on DataCollection, then @extends DataCollection<int, Entry> on
+    #    EntryCollection.
+    #
+    # 3. level: 9 -> max
+    #    Cause: the fluent setters return $this without declaring it, so every
+    #    link after the first in a chain is mixed. src/Support/FluentGetterSetter.php
+    #    args() is annotated @return mixed, and Fieldset::setContents(),
+    #    Entry::id()/collection(), Routable::slug(), ContainsData::data() plus the
+    #    ~95 other fluentlyGetOrSet accessors declare no return type at all.
+    #    Fix: @return ($value is null ? T|null : $this) on each fluent accessor.
+    #    Until then max would need a blanket method.nonObject rule, because
+    #    "Cannot call method x() on mixed" names no vendor class to key on.
+    #
+    # 4. Reaching max additionally needs return types on the data accessors:
+    #      Fields/Fieldset.php        contents(): array   -> array<string, mixed>
+    #      Data/ContainsData.php      get(), data()
+    #      Fields/Fieldtype.php       config()
+    #      Tags/Parameters.php        get()
+    #
+    # Note that 1-4 would not remove all narrowing here. $entry->get('field')
+    # reads schemaless YAML, so mixed is the honest return type however well
+    # Statamic is annotated. App\Support\UntypedYaml exists for that irreducible
+    # part and would stay even against a perfectly typed Statamic.
+    # -------------------------------------------------------------------------
