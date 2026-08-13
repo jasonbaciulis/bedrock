@@ -41,9 +41,11 @@ final class StarterKitPostInstall
 
     public function handle(Command|NullConsole $console): void
     {
-        $this->updateComposerJson();
+        $this->setPhpRequirement();
 
         $this->installDevDependencies($console);
+
+        $this->addComposerScripts();
 
         if ($this->installNodeDependencies()) {
             $this->formatDefaultFiles();
@@ -122,21 +124,45 @@ final class StarterKitPostInstall
      * Runs before the dev dependencies, so that their `composer require` re-resolves
      * the lock file against the new PHP constraint.
      */
-    private function updateComposerJson(): void
+    private function setPhpRequirement(): void
+    {
+        $this->updateComposerJson(function (array $composer): array {
+            $composer['require']['php'] = self::PHP_VERSION;
+
+            return $composer;
+        });
+
+        info('Set the PHP requirement to '.self::PHP_VERSION.'.');
+    }
+
+    /**
+     * Runs after the dev dependencies, because `post-update-cmd` calls `boost:update`,
+     * which fails until Boost is installed.
+     */
+    private function addComposerScripts(): void
+    {
+        $this->updateComposerJson(function (array $composer): array {
+            $composer['scripts'] = array_merge($composer['scripts'] ?? [], $this->customScripts());
+
+            return $composer;
+        });
+
+        info('Added Bedrock composer scripts.');
+    }
+
+    /**
+     * @param  callable(array<string, mixed>): array<string, mixed>  $callback
+     */
+    private function updateComposerJson(callable $callback): void
     {
         $path = getcwd().'/composer.json';
 
-        $composer = json_decode(file_get_contents($path), true);
-
-        $composer['require']['php'] = self::PHP_VERSION;
-        $composer['scripts'] = array_merge($composer['scripts'] ?? [], $this->customScripts());
+        $composer = $callback(json_decode(file_get_contents($path), true));
 
         file_put_contents(
             $path,
             json_encode($composer, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE).PHP_EOL
         );
-
-        info('Set the PHP requirement to '.self::PHP_VERSION.' and added Bedrock composer scripts.');
     }
 
     /**

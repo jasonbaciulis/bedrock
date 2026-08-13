@@ -1,0 +1,22 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "php",
+            "args": [
+                "artisan",
+                "boost:mcp"
+            ]
+        },
+        "statamic": {
+            "command": "php",
+            "args": [
+                "artisan",
+                "mcp:start",
+                "statamic"
+            ],
+            "env": {
+                "APP_ENV": "local"
+            }
+        }
+    }
+}
