@@ -22,15 +22,12 @@
       "Bash(git config *)",
       "Bash(gh run *)",
       "Bash(git rm *)",
-      "Bash(npm i *)",
-      "Bash(npm run *)"
+      "Bash(bun install *)",
+      "Bash(bun run *)"
     ]
   },
   "enableAllProjectMcpServers": true,
-  "enabledMcpjsonServers": [
-    "laravel-boost",
-    "herd"
-  ],
+  "enabledMcpjsonServers": ["laravel-boost", "herd"],
   "enabledPlugins": {
     "frontend-design@claude-plugins-official": true
   }
