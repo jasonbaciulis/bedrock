@@ -1,37 +1,20 @@
 export default {
-  trailingComma: 'es5',
-  printWidth: 100,
-  tabWidth: 2,
-  overrides: [
-    {
-      files: ['*.php', '*.vue'],
-      options: {
-        tabWidth: 4,
-      },
-    },
-    {
-      files: ['*.blade.php'],
-      options: {
-        tabWidth: 4,
-        parser: 'blade',
-      },
-    },
-    {
-      files: ['*.antlers.html'],
-      options: {
-        parser: 'antlers',
-        tabWidth: 4,
-      },
-    },
-  ],
-  semi: false,
-  singleQuote: true,
-  jsxSingleQuote: false,
-  bracketSpacing: true,
-  arrowParens: 'avoid',
-  plugins: [
-    'prettier-plugin-tailwindcss',
-    'prettier-plugin-blade',
-    'prettier-plugin-antlers',
-  ],
+    semi: false,
+    singleQuote: true,
+    singleAttributePerLine: false,
+    htmlWhitespaceSensitivity: 'css',
+    printWidth: 100,
+    trailingComma: 'es5',
+    tabWidth: 4,
+    bracketSpacing: true,
+    arrowParens: 'avoid',
+    overrides: [
+        {
+            files: ['**/*.yml'],
+            options: {
+                tabWidth: 2,
+            },
+        },
+    ],
+    plugins: ['prettier-plugin-tailwindcss', 'prettier-plugin-blade', 'prettier-plugin-antlers'],
 }

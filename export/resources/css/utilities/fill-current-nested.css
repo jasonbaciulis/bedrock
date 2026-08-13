@@ -1,5 +1,5 @@
 @utility fill-current-nested {
-  & * {
-    @apply fill-current;
-  }
+    & * {
+        @apply fill-current;
+    }
 }

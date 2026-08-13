@@ -1,10 +1,10 @@
 @layer components {
-  a,
-  button {
-    @apply focus-visible:border-ring focus-visible:ring-ring/50 rounded-lg transition focus:outline-none focus-visible:ring-3;
-  }
+    a,
+    button {
+        @apply focus-visible:border-ring focus-visible:ring-ring/50 rounded-lg transition focus:outline-none focus-visible:ring-3;
+    }
 
-  button {
-    @apply cursor-pointer;
-  }
+    button {
+        @apply cursor-pointer;
+    }
 }
