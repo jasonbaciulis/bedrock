@@ -1,14 +1,19 @@
 export_paths:
+  - .ai
+  - .claude
+  - .github/workflows/ci.yml
+  - app/Actions
   - app/Console/Commands
+  - app/Enums
   - app/Fieldtypes
-  - app/Http/Controllers/NewsletterController.php
-  - app/Http/Requests/NewsletterRequest.php
+  - app/Http
   - app/Providers/AppServiceProvider.php
+  - app/Support
   - app/Tags
-  - app/Support/Yaml
+  - config/essentials.php
+  - config/statamic/bedrock.php
   - config/statamic/git.php
   - config/statamic/search.php
-  - config/statamic/bedrock.php
   - content
   - public/assets
   - public/favicon
@@ -18,29 +23,36 @@ export_paths:
   - resources/fonts
   - resources/forms
   - resources/js
-  - resources/svg
+  - resources/svg/social
   - resources/views
   - routes/web.php
+  - tests
   - .env.example
   - .gitignore
+  - CLAUDE.md
+  - eslint.config.mjs
   - package.json
   - phpstan.neon
+  - phpunit.xml
+  - pint.json
   - prettier.config.js
-  - eslint.config.mjs
-  - CLAUDE.md
-  - .claude
-  - .ai
-  - .github/workflows/ci.yml
+  - rector.php
   - vite.config.js
-  - tests
 dependencies:
-  blade-ui-kit/blade-icons: ^1.8
-  mallardduck/blade-lucide-icons: ^1.23
+  nunomaduro/essentials: ^1.2
 dependencies_dev:
   cboxdk/statamic-mcp: ^2.5
-  larastan/larastan: ^3.9
-  laravel/boost: ^2.0
-  pestphp/pest: ^4.0
-  pestphp/pest-plugin-laravel: ^4.0
-  phpstan/phpstan: ^2.1
-  phpunit/phpunit: ^12.5
+  driftingly/rector-laravel: ^2.5
+  larastan/larastan: ^3.9.6
+  laravel/boost: ^2.4.8
+  laravel/pao: ^1.1
+  pestphp/pest: ^5.0.4
+  pestphp/pest-plugin-browser: ^5.0
+  pestphp/pest-plugin-laravel: ^5.0.1
+  pestphp/pest-plugin-phpstan: ^5.0.2
+  pestphp/pest-plugin-rector: ^5.0.3
+  pestphp/pest-plugin-type-coverage: ^5.0.2
+  phpstan/phpstan: ^2.2.8
+  phpunit/phpunit: ^13.2.6
+  rector/rector: ^2.6.1
+  roave/security-advisories: dev-latest
