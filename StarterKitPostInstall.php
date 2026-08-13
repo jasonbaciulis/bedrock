@@ -15,8 +15,7 @@ final class StarterKitPostInstall
     /**
      * Statamic installs `dependencies_dev` with a partial `composer require` that cannot
      * pass `--with-all-dependencies`, which Pest 5 and PHPUnit 13 need, so this hook
-     * installs them instead. `export-starter-kit.sh` fails when a version here drifts
-     * from require-dev in composer.json.
+     * installs them instead.
      *
      * @var list<string>
      */
@@ -46,8 +45,9 @@ final class StarterKitPostInstall
 
         $this->mergeComposerScripts();
 
-        // run initial formatting over default Statamic/Laravel
-        exec('composer run lint');
+        if ($this->installNodeDependencies()) {
+            $this->formatDefaultFiles();
+        }
 
         $this->starRepo();
     }
@@ -84,6 +84,34 @@ final class StarterKitPostInstall
         info('Installed dev dependencies.');
     }
 
+    private function installNodeDependencies(): bool
+    {
+        info('Installing node dependencies...');
+
+        passthru('bun install', $exitCode);
+
+        if ($exitCode !== 0) {
+            error('Failed to install node dependencies. Please run `bun install` manually, then `composer run lint`.');
+
+            return false;
+        }
+
+        info('Installed node dependencies.');
+
+        return true;
+    }
+
+    private function formatDefaultFiles(): void
+    {
+        info('Formatting default Statamic/Laravel files...');
+
+        passthru('composer run lint', $exitCode);
+
+        if ($exitCode !== 0) {
+            error('Failed to format the default files. Please run `composer run lint` manually.');
+        }
+    }
+
     private function mergeComposerScripts(): void
     {
         $path = getcwd().'/composer.json';
@@ -106,6 +134,14 @@ final class StarterKitPostInstall
     private function customScripts(): array
     {
         return [
+            'setup' => [
+                'composer install',
+                "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+                '@php artisan key:generate',
+                '@php artisan migrate --force',
+                'bun install',
+                'bun run build',
+            ],
             'dev' => [
                 'Composer\\Config::disableProcessTimeout',
                 'bunx concurrently -c "#c4b5fd,#fb7185,#fdba74" "php artisan queue:listen --tries=1" "php artisan pail --timeout=0" "bun run dev" --names=queue,logs,vite',
