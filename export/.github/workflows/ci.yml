@@ -10,9 +10,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  php_coding_standards:
-    name: PHP (Pint & PHPStan)
+  ci:
+    name: Lint, Types & Tests
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: Checkout code
@@ -21,64 +22,37 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.5'
-          extensions: mbstring, intl
-          coverage: none
-          tools: composer
+          php-version: 8.5
+          tools: composer:v2
+          coverage: pcov
+          ini-values: zend.assertions=1
 
-      - name: Install dependencies (cached)
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Validate composer.json against composer.lock
+        run: composer validate --no-check-publish
+
+      - name: Install Composer dependencies
         uses: ramsey/composer-install@v4
         with:
           dependency-versions: locked
           composer-options: --no-progress --no-interaction --prefer-dist
 
-      - name: Run PHP coding standards (CI)
-        run: composer format:ci
+      # roave/security-advisories only blocks vulnerable packages at install
+      # time, so this catches advisories published against the locked versions.
+      - name: Audit dependencies for security advisories
+        run: composer audit
 
-  frontend_coding_standards:
-    name: Frontend (Prettier & ESLint)
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - name: Setup Node
-        uses: actions/setup-node@v6
+      - name: Cache Bun dependencies
+        uses: actions/cache@v6
         with:
-          node-version: "22"
-          cache: "npm"
+          path: node_modules
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: ${{ runner.os }}-bun-
 
-      - name: Install Node dependencies
-        run: npm ci
-
-      - name: Run frontend coding standards (CI)
-        run: npm run frontend:ci
-
-  test:
-    name: Tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.5'
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite3, pdo_sqlite
-          coverage: none
-
-      - name: Setup Node
-        uses: actions/setup-node@v6
-        with:
-          node-version: 22
-          cache: npm
-
-      - name: Install Composer dependencies
-        uses: ramsey/composer-install@v4
-
-      - name: Install NPM dependencies
-        run: npm ci
+      - name: Install Bun dependencies
+        run: bun install --frozen-lockfile
 
       - name: Prepare Laravel
         run: |
@@ -86,7 +60,103 @@ jobs:
           php artisan key:generate
 
       - name: Build frontend assets
-        run: npm run build
+        run: bun run build
 
-      - name: Run tests
-        run: composer test
+      - name: Create cache directories
+        run: mkdir -p /tmp/rector /tmp/phpstan
+
+      - name: Cache Rector
+        uses: actions/cache@v6
+        with:
+          path: /tmp/rector
+          key: ${{ runner.os }}-rector-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-rector-
+
+      - name: Cache PHPStan
+        uses: actions/cache@v6
+        with:
+          path: /tmp/phpstan
+          key: ${{ runner.os }}-phpstan-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-phpstan-
+
+      - name: Run linters
+        run: composer test:lint
+
+      - name: Run PHPStan
+        run: composer test:types
+
+      - name: Run unit tests
+        run: composer test:unit
+
+  browser:
+    name: Browser Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.5
+          tools: composer:v2
+          coverage: none
+          ini-values: zend.assertions=1
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@v4
+        with:
+          dependency-versions: locked
+          composer-options: --no-progress --no-interaction --prefer-dist
+
+      - name: Cache Bun dependencies
+        uses: actions/cache@v6
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: ${{ runner.os }}-bun-
+
+      - name: Install Bun dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Prepare Laravel
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
+      - name: Build frontend assets
+        run: bun run build
+
+      - name: Get Playwright version
+        id: playwright-version
+        run: echo "version=$(node -p "require('playwright/package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}
+
+      - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: bunx playwright install --with-deps chromium
+
+      - name: Install Playwright system dependencies
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: bunx playwright install-deps chromium
+
+      - name: Run browser tests
+        run: composer test:browser
+
+      - name: Store browser screenshots
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: browser-screenshots
+          path: tests/Browser/Screenshots
