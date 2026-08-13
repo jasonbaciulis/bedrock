@@ -47,6 +47,10 @@ final class StarterKitPostInstall
 
         $this->addComposerScripts();
 
+        $this->installBoost();
+
+        $this->configureStatamicMcpServer();
+
         if ($this->installNodeDependencies()) {
             $this->formatDefaultFiles();
         }
@@ -86,6 +90,33 @@ final class StarterKitPostInstall
         }
 
         info('Installed dev dependencies.');
+    }
+
+    /**
+     * `.mcp.json` holds machine specific paths, so the installers write it instead of
+     * the starter kit shipping it. Both run in a subprocess, because their packages
+     * were installed after this process booted.
+     */
+    private function installBoost(): void
+    {
+        info('Installing Laravel Boost…');
+
+        passthru('php artisan boost:install', $exitCode);
+
+        if ($exitCode !== 0) {
+            error('Failed to install Laravel Boost. Please run `php artisan boost:install` manually.');
+        }
+    }
+
+    private function configureStatamicMcpServer(): void
+    {
+        info('Configuring the Statamic MCP server…');
+
+        passthru('php artisan mcp:statamic:install', $exitCode);
+
+        if ($exitCode !== 0) {
+            error('Failed to configure the Statamic MCP server. Please run `php artisan mcp:statamic:install` manually.');
+        }
     }
 
     private function installNodeDependencies(): bool
