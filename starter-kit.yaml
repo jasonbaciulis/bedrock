@@ -29,6 +29,8 @@ export_paths:
   - tests
   - .env.example
   - .gitignore
+  - .mcp.json
+  - boost.json
   - CLAUDE.md
   - eslint.config.mjs
   - package.json
