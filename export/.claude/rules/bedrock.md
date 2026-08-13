@@ -2,10 +2,16 @@
 
 ## CLI Commands
 
-- **ALWAYS** use `php please make:bedrock-block` for new blocks, never create manually
-- **ALWAYS** use `php please make:bedrock-set` for new sets, never create manually
-- **ALWAYS** use `php please delete:bedrock-block` and `php please delete:bedrock-set` for removal
+- Use `php please make:bedrock-block` for new blocks, never create manually
+- Use `php please make:bedrock-set` for new sets, never create manually
+- Use `php please delete:bedrock-block` and `php please delete:bedrock-set` for removal
+- Use `php please rename:bedrock-block` and `php please rename:bedrock-set` for renaming
 - These commands create fieldsets, Antlers templates, and update parent YAML definitions automatically
+- Always pass the positional arguments so the command never prompts (a prompt hangs a non-interactive shell):
+  - `php please make:bedrock-block <group> "<Display Name>" --instructions="..."`
+  - `php please delete:bedrock-block <group> <fieldset_handle> --force`
+  - `php please rename:bedrock-block <group> <current_handle> "<New Display Name>" --force`
+  - `<group>` must be an existing group handle from `blocks.yaml` / `article.yaml`
 
 ## Blueprints
 - Import `image` and `text` fields from common fields, instead of creating from sratch. E.g. `field: common.text_plain`

@@ -1,12 +1,17 @@
-## Templating Strategy
+---
+paths:
+  - "resources/views/**"
+---
 
-### Antlers Rules
+# Templating
+
+## Antlers Rules
 
 - Use Statamic tags, not PHP
 - Prefer relationships over manual lookups
 - Handle missing data gracefully
 
-#### Use view-matter inside components to declare props
+### Use view-matter inside components to declare props
 
 Note that props have to be declared at the very top even before any comments
 
@@ -25,7 +30,7 @@ class: ''
 </div>
 ```
 
-#### Use view-matter to output variant styles
+### Use view-matter to output variant styles
 
 ```antlers
 ---
@@ -42,7 +47,7 @@ variants:
 </section>
 ```
 
-#### Use `attribute` modifier to pass variables to partials
+### Use `attribute` modifier to pass variables to partials
 
 ```antlers
 ---
@@ -54,7 +59,7 @@ class: ''
 </div>
 ```
 
-#### Use modifiers for formatting
+### Use modifiers for formatting
 
 Example:
 
@@ -64,7 +69,7 @@ Example:
 {{ if featured }}...{{ /if }}
 ```
 
-#### Use component tag syntax for Antlers
+### Use component tag syntax for Antlers
 
 Examples:
 
@@ -77,13 +82,6 @@ Examples:
     View all
 </s:partial:components.ui.button>
 ```
-
-## Content Architecture
-
-- Blueprint-first: structure content before templating
-- Prefer relationships over duplication
-- Choose field types deliberately (entries, taxonomy, assets, users)
-- Validation rules should live in blueprints
 
 ## Prohibited Practices
 

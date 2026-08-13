@@ -2,7 +2,7 @@
 
 ## Requirements
 
-Before running Statamic, you should ensure that your local machine has PHP and [Composer](https://getcomposer.org/) installed. If you are developing on macOS, PHP and Composer can be installed via [Homebrew](https://brew.sh/). In addition, I recommend [installing Node and NPM](https://nodejs.org/en/).
+Before running Statamic, you should ensure that your local machine has PHP and [Composer](https://getcomposer.org/) installed. If you are developing on macOS, PHP and Composer can be installed via [Homebrew](https://brew.sh/). In addition, I recommend [installing Bun](https://bun.sh/) for frontend dependencies.
 
 ## Installation
 
@@ -13,13 +13,12 @@ statamic new project_name jasonbaciulis/bedrock
 ```
 
 1. Navigate to the installed project folder: `cd project_name`
-2. Install NPM dependencies: `npm install`
+2. Install frontend dependencies: `bun install`
 3. Create a Statamic user: `php please make:user`
 4. (Optional) install the MCP server and AI coding guidelines: `php artisan boost:install`
-5. Start Laravel's local dev server, npm run dev, start queue: `composer run dev`
-6. (Optional) Clear demo content: `php artisan bedrock:clear`
+5. Start Laravel's local dev server, bun run dev, start queue: `composer run dev`
 
-Recommended to use [Herd](https://laravel.com/docs/12.x/installation#installation-using-herd) for local dev.
+Recommended to use [Herd](https://laravel.com/docs/13.x/installation#installation-using-herd) for local dev.
 Once you have started the development server with `composer run dev`, the website will be accessible in your web browser at [https://bedrock.test](https://bedrock.test). Head to [https://bedrock.test/cp](https://bedrock.test/cp) and use your email address and password to sign into the Statamic control panel.
 
 ## Tools, libraries and addons used in the project
@@ -29,7 +28,6 @@ Once you have started the development server with `composer run dev`, the websit
 - [Embla](https://www.embla-carousel.com) - A lightweight carousel library with fluid motion and great swipe precision.
 - [Laravel Boost](https://github.com/laravel/boost) - Accelerates AI-assisted development by providing the essential context that AI needs to generate high-quality, Laravel-specific code.
 - [Statamic MCP](https://statamic.com/addons/cboxdk/statamic-mcp) - MCP (Model Context Protocol) server for Statamic that provides AI assistants with structured access to Statamic's capabilities through a modern router-based architecture.
-- [Blade Icons](https://blade-ui-kit.com/blade-icons) - Easily add SVG icons in your Laravel Blade views from icon sets like Heroicons or Lucide.
 
 ## Views folder structure
 ```
@@ -161,8 +159,8 @@ cd $FORGE_SITE_PATH
 git pull origin $FORGE_SITE_BRANCH
 $FORGE_COMPOSER install --no-interaction --optimize-autoloader --no-dev
 
-npm ci
-npm run build
+bun install --frozen-lockfile
+bun run build
 $FORGE_PHP artisan cache:clear
 $FORGE_PHP artisan config:cache
 $FORGE_PHP artisan route:cache
@@ -202,8 +200,8 @@ if [ -f artisan ]; then
 fi
 
 # Frontend Build
-npm ci
-npm run build
+bun install --frozen-lockfile
+bun run build
 
 # Laravel Optimization
 # We group these to minimize the window where the app is "naked"
