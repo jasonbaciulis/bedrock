@@ -41,8 +41,6 @@ final class StarterKitPostInstall
 
     public function handle(Command|NullConsole $console): void
     {
-        info('Thanks for installing Bedrock starter kit!');
-
         $this->updateComposerJson();
 
         $this->installDevDependencies($console);
@@ -51,12 +49,14 @@ final class StarterKitPostInstall
             $this->formatDefaultFiles();
         }
 
+        info('Thanks for installing Bedrock starter kit!');
+
         $this->starRepo();
     }
 
     private function installDevDependencies(Command|NullConsole $console): void
     {
-        info('Installing dev dependencies...');
+        info('Installing dev dependencies…');
 
         $arguments = array_merge(
             ['require', '--dev', '--with-all-dependencies', '--no-interaction'],
@@ -88,7 +88,7 @@ final class StarterKitPostInstall
 
     private function installNodeDependencies(): bool
     {
-        info('Installing node dependencies...');
+        info('Installing node dependencies…');
 
         passthru('bun install', $exitCode);
 
@@ -105,13 +105,17 @@ final class StarterKitPostInstall
 
     private function formatDefaultFiles(): void
     {
-        info('Formatting default Statamic/Laravel files...');
+        info('Formatting default Statamic/Laravel files…');
 
-        passthru('composer run lint', $exitCode);
+        exec('composer run lint 2>&1', $output, $exitCode);
 
         if ($exitCode !== 0) {
             error('Failed to format the default files. Please run `composer run lint` manually.');
+
+            return;
         }
+
+        info('Formatted the default files.');
     }
 
     /**
