@@ -7,13 +7,17 @@ export_paths:
   - app/Enums
   - app/Fieldtypes
   - app/Http
+  - app/Models/User.php
   - app/Providers/AppServiceProvider.php
   - app/Support
   - app/Tags
+  - config/filesystems.php
   - config/essentials.php
   - config/statamic/bedrock.php
+  - config/statamic/mcp.php
   - config/statamic/git.php
   - config/statamic/search.php
+  - database/factories/UserFactory.php
   - content
   - public/assets
   - public/favicon
