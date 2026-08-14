@@ -15,23 +15,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
-    strategy:
-      fail-fast: false
-      matrix:
-        php-version: [8.5]
-
     steps:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-version }}
+          php-version: 8.5
           extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv
           coverage: none
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -139,7 +129,7 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v7
         with:
-          name: browser-screenshots-php-${{ matrix.php-version }}
+          name: browser-screenshots
           path: test-installation/bedrock-test/tests/Browser/Screenshots
 
       - name: Test post-install script
@@ -161,7 +151,6 @@ jobs:
           echo "🎉 Live installation test completed successfully!"
           echo ""
           echo "Tested command: statamic new bedrock-test jasonbaciulis/bedrock"
-          echo "PHP Version: ${{ matrix.php-version }}"
           echo ""
           echo "✅ Installation works correctly"
           echo "✅ Dependencies install properly"

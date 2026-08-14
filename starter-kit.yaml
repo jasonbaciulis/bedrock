@@ -29,6 +29,7 @@ export_paths:
   - tests
   - .env.example
   - .gitignore
+  - .prettierignore
   - boost.json
   - CLAUDE.md
   - eslint.config.mjs
