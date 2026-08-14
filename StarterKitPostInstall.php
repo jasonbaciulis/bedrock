@@ -39,8 +39,23 @@ final class StarterKitPostInstall
         'roave/security-advisories:dev-latest',
     ];
 
+    /**
+     * The Statamic skeleton ships these, and `export_paths` can only overwrite files,
+     * never delete them. `CreatesApplication` is orphaned by the kit's own TestCase,
+     * and both example tests fail `composer run test`.
+     *
+     * @var list<string>
+     */
+    public const SKELETON_TEST_FILES = [
+        'tests/CreatesApplication.php',
+        'tests/Feature/ExampleTest.php',
+        'tests/Unit/ExampleTest.php',
+    ];
+
     public function handle(Command|NullConsole $console): void
     {
+        $this->removeSkeletonTestFiles();
+
         $this->setPhpRequirement();
 
         $this->installDevDependencies($console);
@@ -58,6 +73,24 @@ final class StarterKitPostInstall
         info('Thanks for installing Bedrock starter kit!');
 
         $this->starRepo();
+    }
+
+    /**
+     * Runs before the formatting step, so Pint and Rector never touch a file that
+     * is about to be deleted.
+     */
+    private function removeSkeletonTestFiles(): void
+    {
+        $removed = collect(self::SKELETON_TEST_FILES)
+            ->map(fn (string $path): string => getcwd().'/'.$path)
+            ->filter(fn (string $path): bool => file_exists($path))
+            ->each(fn (string $path) => unlink($path));
+
+        if ($removed->isEmpty()) {
+            return;
+        }
+
+        info('Removed default Statamic test files.');
     }
 
     private function installDevDependencies(Command|NullConsole $console): void
