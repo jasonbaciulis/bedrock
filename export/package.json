@@ -4,8 +4,8 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "icons:heroicons": "sh scripts/icons-heroicons.sh",
-        "icons:lucide": "sh scripts/icons-lucide.sh",
+        "icons:heroicons": "rm -rf resources/svg/heroicons && mkdir -p resources/svg/heroicons && cp -R node_modules/heroicons/24/outline resources/svg/heroicons/outline && cp -R node_modules/heroicons/24/solid resources/svg/heroicons/solid && cp -R node_modules/heroicons/20/solid resources/svg/heroicons/mini",
+        "icons:lucide": "rm -rf resources/svg/lucide && mkdir -p resources/svg/lucide && cp -R node_modules/lucide-static/icons/. resources/svg/lucide",
         "postinstall": "bun run icons:heroicons && bun run icons:lucide",
         "lint": "prettier \"resources/**/*.{js,css,scss,html,antlers.html,blade.php}\" --write && eslint \"resources/js\" --fix",
         "test:lint": "prettier \"resources/**/*.{js,css,scss,html,antlers.html,blade.php}\" --check && eslint \"resources/js\" --max-warnings=0"
