@@ -67,6 +67,8 @@ final class StarterKitPostInstall
         $this->configureStatamicMcpServer();
 
         if ($this->installNodeDependencies()) {
+            $this->copyIcons();
+
             $this->formatDefaultFiles();
         }
 
@@ -167,6 +169,23 @@ final class StarterKitPostInstall
         info('Installed node dependencies.');
 
         return true;
+    }
+
+    /**
+     * The skeleton's `.npmrc` sets `ignore-scripts=true`, so a `postinstall` script
+     * never runs and the icons must be copied explicitly.
+     */
+    private function copyIcons(): void
+    {
+        passthru('bun run icons', $exitCode);
+
+        if ($exitCode !== 0) {
+            error('Failed to copy the icons. Please run `bun run icons` manually.');
+
+            return;
+        }
+
+        info('Copied the icons.');
     }
 
     private function formatDefaultFiles(): void
