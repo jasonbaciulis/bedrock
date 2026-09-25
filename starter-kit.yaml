@@ -35,7 +35,7 @@ export_paths:
   - .gitignore
   - .prettierignore
   - boost.json
-  - CLAUDE.md
+  - AGENTS.md
   - eslint.config.mjs
   - package.json
   - phpstan.neon

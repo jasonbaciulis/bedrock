@@ -22,20 +22,20 @@ final class StarterKitPostInstall
      * @var list<string>
      */
     public const DEV_DEPENDENCIES = [
-        'cboxdk/statamic-mcp:^2.5',
-        'driftingly/rector-laravel:^2.5',
-        'larastan/larastan:^3.9.6',
-        'laravel/boost:^2.4.8',
-        'laravel/pao:^1.1',
-        'pestphp/pest:^5.0.4',
-        'pestphp/pest-plugin-browser:^5.0',
+        'cboxdk/statamic-mcp:^2.10.1',
+        'driftingly/rector-laravel:^2.6.2',
+        'larastan/larastan:^3.12.2',
+        'laravel/boost:^2.10.0',
+        'laravel/pao:^1.1.5',
+        'pestphp/pest:^5.2.1',
+        'pestphp/pest-plugin-browser:^5.0.1',
         'pestphp/pest-plugin-laravel:^5.0.1',
-        'pestphp/pest-plugin-phpstan:^5.0.2',
-        'pestphp/pest-plugin-rector:^5.0.3',
+        'pestphp/pest-plugin-phpstan:^5.2.1',
+        'pestphp/pest-plugin-rector:^5.0.4',
         'pestphp/pest-plugin-type-coverage:^5.0.2',
-        'phpstan/phpstan:^2.2.8',
-        'phpunit/phpunit:^13.2.6',
-        'rector/rector:^2.6.1',
+        'phpstan/phpstan:^2.2.15',
+        'phpunit/phpunit:^13.3.4',
+        'rector/rector:^2.6.7',
         'roave/security-advisories:dev-latest',
     ];
 
