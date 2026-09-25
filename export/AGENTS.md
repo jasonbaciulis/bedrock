@@ -1,4 +1,97 @@
 <laravel-boost-guidelines>
+=== .ai/bedrock rules ===
+
+# Bedrock Statamic Starter Kit Rules
+
+## CLI Commands
+
+- Use `php please make:bedrock-block` for new blocks, never create manually
+- Use `php please make:bedrock-set` for new sets, never create manually
+- Use `php please delete:bedrock-block` and `php please delete:bedrock-set` for removal
+- Use `php please rename:bedrock-block` and `php please rename:bedrock-set` for renaming
+- These commands create fieldsets, Antlers templates, and update parent YAML definitions automatically
+- Always pass the positional arguments so the command never prompts (a prompt hangs a non-interactive shell):
+  - `php please make:bedrock-block <group> "<Display Name>" --instructions="..."`
+  - `php please delete:bedrock-block <group> <fieldset_handle> --force`
+  - `php please rename:bedrock-block <group> <current_handle> "<New Display Name>" --force`
+  - `<group>` must be an existing group handle from `blocks.yaml` / `article.yaml`
+
+## Blueprints
+
+- Import `image` and `text` fields from common fields, instead of creating from sratch. E.g. `field: common.text_plain`
+- Import `buttons` fieldset when design requires buttons, instead of creating from sratch.
+- Use `group` field when it makes sense. E.g. instead of creating fields like: `input_placeholder`, `input_label`, `input_prefix`, create `group` field named `input` and place `placeholder`, `label`, `prefix` fields inside.
+
+## File Naming Conventions
+
+- Blade templates: `kebab-case.blade.php`
+- Antlers templates: `kebab-case.antlers.html`
+- CSS/JS: `kebab-case.css`, `camelCase.js`
+
+## Component Architecture
+
+- Blocks go in `resources/views/blocks/` (page building)
+- Sets go in `resources/views/sets/` (content composition)
+- UI components (highly reusable, for any project) go in `resources/views/components/ui/`
+- Project specific reusable components go in `resources/views/components/`
+- Partials go in `resources/views/partials/` (template partials and fragments, things that aren't really reusable go here)
+
+=== .ai/general rules ===
+
+# General Guidelines
+
+- Only communicate in ASD-STE100 Simplified Technical English.
+- Before writing a guard, name the concrete caller or state that produces the condition (schema-nullable column, race window, user input). Can't name one → no guard; types and upstream gates count as proof.
+- Docblock lines are either an `@`-annotation adding type info the signature can't express (array shapes, generics, `list<>`) or prose within the comment cap below. Stub prose from `make:` commands ("Execute the action.", "Create a new event instance.", "Get the validation rules that apply to the request.") is deleted on sight.
+
+## Naming
+
+- Never use single-letter variable names in closures — use descriptive names
+  - `fn (array $field) =>` not `fn (array $f) =>`
+  - `fn (Entry $entry) =>` not `fn (Entry $e) =>`
+- Spell a multi-word concept out wherever the name *is* the concept — models, enum cases and their values, PHP classes, components, filenames, database tables and columns. Abbreviate only in lookup keys, which are grepped rather than read: route names, config keys, `data-test` attributes.
+
+## Self-documenting code
+
+Code should be readable on its own. Use descriptive method and variable names instead of comments.
+Extract multi-line conditions into a method whose name states the business rule, instead of making the reader decode each clause at the call site.
+
+Incorrect:
+```php
+// Check if a user can join
+if ($user->can(Permission::JoinWorkspace)
+    && ! $workspace->isMember($user)
+    && config()->integer('workspace.slots') - $workspace->membersCount() > 0)
+```
+
+Correct:
+```php
+if ($workspace->isJoinableBy($user))
+```
+
+Not just conditions — any statements that together perform one nameable step get extracted, so the calling method reads as a sequence of business events instead of mechanics.
+
+## Comment Style
+
+Doc blocks and comments are capped at 1–2 sentences and allowed only for an invariant the code cannot show (lock ordering, after-commit semantics, a deliberate non-obvious choice). If a sentence describes what the code below does, delete it. Existing files with longer docblocks are legacy, not license — do not match their density.
+
+Comment placement decides the syntax, not the comment's length:
+
+- Use a doc block (`/** */` in TS/JS, PHPDoc in PHP) to document the declaration directly below it — a function, type, constant. It explains *what the symbol is*.
+- Use line comments (`//`) only for rationale attached to a statement inside a body. They explain *why a specific line does what it does*.
+- A long comment is not automatically a doc block: a multiline explanation inside a function body still uses `//`.
+
+=== .ai/principles rules ===
+
+## Your Principles
+
+You follow these principles when interacting:
+- **Don't make assumptions**: Always ask for follow up questions.
+- **Direct communication**: Communicate directly without sugarcoating (but don't say phrases like "let me be honest"). Be kind and polite, but always sincere.
+- **Surface inconsistencies**: Even if it does not relate to the instructed task directly, always mention inconsistencies in the surounding code about styling, naming conventions, formatting, or architectural patterns that make code difficult to read, maintain, or debug.
+- **Present trade-offs**: There are many ways to architecture and solve coding problems. The "right" way depends on many factors that you may not be aware off. Always consider the alternative aproaches and list the trade-offs.
+- **Push back when you need**: If what you're being asked to do, violates your other "Principles", always push back, ask more questions, clarify, make sure it's what the user really wants and is aware of trade-offs.
+
 === .ai/statamic-mcp rules ===
 
 # Statamic MCP Guidelines (v2.0)
@@ -161,25 +254,11 @@ The Laravel Boost guidelines are specifically curated by Laravel maintainers for
 
 ## Foundational Context
 
-This application is a Laravel application and its main Laravel ecosystems package & versions are below. You are an expert with them all. Ensure you abide by these specific packages & versions.
+This application is a Laravel application running on PHP 8.5. You are an expert with the Laravel ecosystem. Always use the APIs that match the installed major version of each package — do not assume a version.
 
-- php - 8.5
-- inertiajs/inertia-laravel (INERTIA_LARAVEL) - v2
-- laravel/framework (LARAVEL) - v13
-- laravel/prompts (PROMPTS) - v0
-- statamic/cms (STATAMIC) - v6
-- larastan/larastan (LARASTAN) - v3
-- laravel/boost (BOOST) - v2
-- laravel/mcp (MCP) - v0
-- laravel/pail (PAIL) - v1
-- laravel/pint (PINT) - v1
-- laravel/sail (SAIL) - v1
-- pestphp/pest (PEST) - v5
-- phpunit/phpunit (PHPUNIT) - v13
-- rector/rector (RECTOR) - v2
-- alpinejs (ALPINEJS) - v3
-- prettier (PRETTIER) - v3
-- tailwindcss (TAILWINDCSS) - v4
+Before relying on a package's API, confirm its installed version:
+- PHP packages: run `composer show --direct` to list direct dependencies with versions, or `composer show <vendor/package>` for a single package.
+- JS packages: check `package.json` for the installed versions.
 
 ## Skills Activation
 
@@ -226,7 +305,7 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 ## Searching Documentation (IMPORTANT)
 
-- Always use `search-docs` before making code changes. Do not skip this step. It returns version-specific docs based on installed packages automatically.
+- Use `search-docs` before changes that depend on Laravel ecosystem APIs, behavior, configuration, or version-specific syntax. Skip it for copy-only edits and other changes where package documentation is irrelevant. Reuse sufficient results already in context instead of searching again.
 - Pass a `packages` array to scope results when you know which packages are relevant.
 - Use multiple broad, topic-based queries: `['rate limiting', 'routing rate limiting', 'routing']`. Expect the most relevant results first.
 - Do not add package names to queries because package info is already shared. Use `test resource table`, not `filament 4 test resource table`.
@@ -237,6 +316,11 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 2. Use `"quoted phrases"` for exact position matching: `"infinite scroll"` requires adjacent words in order.
 3. Combine words and phrases for mixed queries: `middleware "rate limit"`.
 4. Use multiple queries for OR logic: `queries=["authentication", "middleware"]`.
+
+## Project Rules
+
+- This project contains committed, area-grouped rules in `.ai/rules` when that directory exists (settled decisions, non-obvious traps, standing constraints). Framework and package guidelines that only apply to specific paths (testing, frontend, components) also live there, under `.ai/rules/boost` — this is not just recorded decisions, it is load-bearing guidance you have not seen inline. Before you enter plan mode or create/edit any file, you MUST first: open @.ai/rules/index.md (it maps file globs to rule files), read every rule file whose globs cover the path(s) in scope, and run `grep -rin 'keyword' .ai/rules` to catch what a path match alone misses. Do not write code until you have read and are following every matching rule. If `.ai/rules` does not exist, continue without it.
+- Record a rule with `record-rule` only when the user explicitly asks for one. Instructions for the work at hand are not rules, no matter how emphatic: "remove this typo", "use X here" are work to do, not rules to record. Never record a rule on your own initiative, as a byproduct of a change, or to summarize what you just did. When the user does ask, pass a `glob` (e.g. `app/Http/Controllers/**`), a short `title`, and a few-line `note`. Use `record-rule` rather than your native memory or notes tool, because native memory is personal and session-scoped, while only `.ai/rules` is shared with the team and persists in the repo.
 
 ## Artisan
 
@@ -266,6 +350,7 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 # Deployment
 
 - Laravel can be deployed using [Laravel Cloud](https://cloud.laravel.com/), which is the fastest way to deploy and scale production Laravel applications.
+- Activate the `deploying-to-cloud` skill whenever deploying to Laravel Cloud, configuring Cloud environments or resources, using the Cloud CLI, or troubleshooting Cloud deployments.
 
 === herd rules ===
 
@@ -278,8 +363,11 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 # Test Enforcement
 
-- Every change must be programmatically tested. Write a new test or update an existing test, then run the affected tests to make sure they pass.
-- Run the minimum number of tests needed to ensure code quality and speed. Use `php artisan test --compact` with a specific filename or filter.
+- Add or update tests for behavior and logic changes when a test provides meaningful regression coverage.
+- Pure copy, styling, and layout-only changes do not require new or updated tests.
+- When test coverage applies, run the affected tests and ensure they pass.
+- Test the changed behavior and its important failure modes, but do not add tests beyond them.
+- Read the `testing-best-practices` skill before writing tests.
 
 === inertia-laravel/core rules ===
 
@@ -289,11 +377,19 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 - Components live in `resources/js/Pages` (unless specified in `vite.config.js`). Use `Inertia::render()` for server-side routing instead of Blade views.
 - ALWAYS use `search-docs` tool for version-specific Inertia documentation and updated code examples.
 
-# Inertia v2
+# Inertia v3
 
-- Use all Inertia features from v1 and v2. Check the documentation before making changes to ensure the correct approach.
-- New features: deferred props, infinite scroll, merging props, polling, prefetching, once props, flash data.
+- Use all Inertia features from v1, v2, and v3. Check the documentation before making changes to ensure the correct approach.
+- New v3 features: standalone HTTP requests (`useHttp` hook), optimistic updates with automatic rollback, layout props (`useLayoutProps` hook), instant visits, simplified SSR via `@inertiajs/vite` plugin, custom exception handling for error pages.
+- Carried over from v2: deferred props, infinite scroll, merging props, polling, prefetching, once props, flash data.
 - When using deferred props, add an empty state with a pulsing or animated skeleton.
+- Axios has been removed. Use the built-in XHR client with interceptors, or install Axios separately if needed.
+- `Inertia::lazy()` / `LazyProp` has been removed. Use `Inertia::optional()` instead.
+- Prop types (`Inertia::optional()`, `Inertia::defer()`, `Inertia::merge()`) work inside nested arrays with dot-notation paths.
+- SSR works automatically in Vite dev mode with `@inertiajs/vite` - no separate Node.js server needed during development.
+- Event renames: `invalid` is now `httpException`, `exception` is now `networkError`.
+- `router.cancel()` replaced by `router.cancelAll()`.
+- The `future` configuration namespace has been removed - all v2 future options are now always enabled.
 
 === laravel/core rules ===
 
@@ -334,14 +430,21 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 === pest/core rules ===
 
-## Pest
+# Pest
 
-- This project uses Pest for testing. Create tests: `php artisan make:test --pest {name}`.
-- The `{name}` argument should not include the test suite directory. Use `php artisan make:test --pest SomeFeatureTest` instead of `php artisan make:test --pest Feature/SomeFeatureTest`.
-- Run tests: `php artisan test --compact` or filter: `php artisan test --compact --filter=testName`.
-- Do NOT delete tests without approval.
+- This project uses Pest. Create tests with `php artisan make:test --pest {name}`.
+- Do not include the test suite directory in `{name}`. Use `SomeFeatureTest`, not `Feature/SomeFeatureTest`.
+- Read the `testing-best-practices` skill for guidance on coverage, naming, structure, dependency isolation, and review.
+- Do not delete tests or test files without approval. They are part of the application.
 
-=== statamic/cms rules ===
+## Running Tests
+
+- Run the narrowest set of tests that covers the change. Pass a file path or `--filter=testName` to `php artisan test --compact`.
+- Rerun a test after each change to it.
+- Run `vendor/bin/pest` to call the test runner directly. It accepts the same file path and `--filter=testName` arguments.
+- After the feature tests pass, ask the user to run the complete suite with `php artisan test --compact`.
+
+=== statamic/cms/core rules ===
 
 ## Statamic
 
@@ -364,43 +467,30 @@ Most of the folder structure will feel familiar to Laravel developers. However, 
 ├── bootstrap/
 ├── config/
 │   ├── statamic/         # Statamic-specific configs
-
 ├── content/
 │   ├── assets/           # Asset containers
-
 │   ├── collections/      # Collections and entries
-
 │   ├── globals/          # Global sets
-
 │   ├── navigation/       # Navigations
-
 │   ├── trees/            # Collection and navigation trees
-
 ├── database/
 ├── lang/
 ├── public/
 │   ├── assets/           # Default location for assets
-
 │   ├── ...
 ├── resources/
 │   ├── addons/
 │   ├── blueprints/       # Blueprints
-
 │   ├── fieldsets/        # Fieldsets
-
 │   ├── users/            # User roles & groups
-
 │   ├── preferences.yaml  # Default preferences
-
 │   ├── sites.yaml        # Sites config
-
 │   ├── ...
 ├── routes/
 ├── storage/
 ├── tests/
 ├── users/
 ├── please                # Statamic's CLI tool
-
 ├── ...
 </code-snippet>
 
@@ -454,6 +544,7 @@ Most of the folder structure will feel familiar to Laravel developers. However, 
 - You should use Statamic's UI Components where possible. It includes components for buttons, cards, inputs, etc.
     - UI Components can be imported from `@statamic/cms/ui`.
     - For more information on Statamic's UI Components, please visit our Storybook docs: https://ui.statamic.dev
+    - A machine-readable manifest of the UI Components (props, slots, events, and usage snippets) is available at https://ui.statamic.dev/manifests/components.json. Its entries link to per-component details via relative `$ref` URLs.
 
 ### Additional Context
 
