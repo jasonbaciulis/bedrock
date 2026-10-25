@@ -1,13 +1,15 @@
 {{ once }}
     {{ push:scripts }}
         <s:vite src="resources/css/lite-yt-embed.css" />
-        <s:vite src="resources/js/liteYtEmbed.js" />
+        <s:vite src="resources/js/lite-yt-embed.js" />
     {{ /push:scripts }}
 {{ /once }}
 <figure class="not-prose my-0">
     <lite-youtube
         videoid="{{ video:id }}"
-        style="background-image: url('https://i.ytimg.com/vi_webp/{{ video:id }}/maxresdefault.webp');"
+        style="
+            background-image: url('https://i.ytimg.com/vi_webp/{{ video:id }}/maxresdefault.webp');
+        "
         class="max-w-none!"
     >
         <a href="{{ video }}" class="lyt-playbtn" title="Play Video">

@@ -1,5 +1,5 @@
 document.addEventListener('alpine:init', () => {
-    Alpine.data('stepper', (min = 0, max = 9999, step = 1) => ({
+    Alpine.data('Stepper', (min = 0, max = 9999, step = 1) => ({
         count: 0,
         min: min,
         max: max,

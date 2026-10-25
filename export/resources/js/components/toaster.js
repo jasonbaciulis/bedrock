@@ -6,7 +6,7 @@ const ALLOWED_TYPES = new Set(['success', 'error', 'warning', 'info', 'default']
 // this.$dispatch('toast', { message: 'Hello, world!', description: 'This is a description', type: 'success', dismissible: true })
 
 document.addEventListener('alpine:init', () => {
-    Alpine.data('toaster', () => {
+    Alpine.data('Toaster', () => {
         return {
             toasts: [],
             toastsCounter: 1,

@@ -40,7 +40,7 @@ Communicate outward with custom events instead of reaching into other components
 - Events bubble **up** — siblings never receive them. For component-to-component communication, listen with `.window`:
 
 ```html
-<div x-data="notifications" @notify.window="add($event.detail.message)">...</div>
+<div x-data="Notifications" @notify.window="add($event.detail.message)">...</div>
 ```
 
 - `$dispatch(name, detail, options)` — third argument overrides `CustomEvent` defaults, e.g. `{ bubbles: false }`.
@@ -94,6 +94,8 @@ For modals/overlays inside deeply nested components:
 
 # Alpine.data, Alpine.store, Alpine.bind & Reactivity Primitives
 
+Name `Alpine.data()` components and `Alpine.store()` stores in PascalCase: `Alpine.data('StatamicForm')`, `Alpine.store('CookieDialog')`. The file that registers them stays kebab-case (`statamic-form.js`).
+
 ## Alpine.data() — Reusable Components
 
 The primary pattern for extracting component logic out of markup. Register before `Alpine.start()` (bundle) or in `alpine:init` (script tag); reference by name in `x-data`:
@@ -109,11 +111,11 @@ export default () => ({
 ```
 
 ```js
-Alpine.data('dropdown', dropdown)
+Alpine.data('Dropdown', dropdown)
 ```
 
 ```html
-<div x-data="dropdown">
+<div x-data="Dropdown">
     <button @click="toggle">...</button>
     <div x-show="open">...</div>
 </div>
@@ -122,13 +124,13 @@ Alpine.data('dropdown', dropdown)
 ### Initial parameters
 
 ```js
-Alpine.data('dropdown', (initialOpenState = false) => ({
+Alpine.data('Dropdown', (initialOpenState = false) => ({
     open: initialOpenState,
 }))
 ```
 
 ```html
-<div x-data="dropdown(true)"></div>
+<div x-data="Dropdown(true)"></div>
 ```
 
 ### Lifecycle hooks
@@ -137,7 +139,7 @@ Alpine.data('dropdown', (initialOpenState = false) => ({
 - `destroy()` — called before cleanup (element removed via `x-if`, morphing, etc.). Release timers, observers, external listeners here.
 
 ```js
-Alpine.data('timer', () => ({
+Alpine.data('Timer', () => ({
     timer: null,
     counter: 0,
     init() {
@@ -154,7 +156,7 @@ Alpine.data('timer', () => ({
 All magics are available on `this` inside `Alpine.data()` components:
 
 ```js
-Alpine.data('dropdown', () => ({
+Alpine.data('Dropdown', () => ({
     open: false,
     init() {
         this.$watch('open', isOpen => this.$dispatch('dropdown-toggled', { isOpen }))
@@ -165,7 +167,7 @@ Alpine.data('dropdown', () => ({
 ### Getters as computed properties
 
 ```js
-Alpine.data('cart', () => ({
+Alpine.data('Cart', () => ({
     items: [],
     get total() {
         return this.items.reduce((sum, item) => sum + item.price, 0)
@@ -178,7 +180,7 @@ Getters are evaluated per access (not cached), but reads inside them are reactiv
 ## Alpine.store() — Global State
 
 ```js
-Alpine.store('darkMode', {
+Alpine.store('DarkMode', {
     on: false,
 
     init() {
@@ -192,9 +194,9 @@ Alpine.store('darkMode', {
 })
 ```
 
-- Access in expressions via `$store.darkMode.on`; changes propagate reactively to every component reading the store.
-- Access outside templates: `Alpine.store('darkMode')` (getter form — omit the second argument).
-- Single-value stores are allowed: `Alpine.store('darkMode', false)` then `$store.darkMode = ! $store.darkMode`.
+- Access in expressions via `$store.DarkMode.on`; changes propagate reactively to every component reading the store.
+- Access outside templates: `Alpine.store('DarkMode')` (getter form — omit the second argument).
+- Single-value stores are allowed: `Alpine.store('DarkMode', false)` then `$store.DarkMode = ! $store.DarkMode`.
 - Stores have no host element, so element-bound magics (`$el`, `$dispatch`, `$watch`…) are unavailable inside them.
 
 ## Reactivity Primitives

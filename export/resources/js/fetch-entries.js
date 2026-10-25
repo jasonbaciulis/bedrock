@@ -3,12 +3,12 @@
 // https://statamic.dev/rest-api#enable-resources
 //
 document.addEventListener('alpine:init', () => {
-    Alpine.data('fetchEntries', ({ collection, entriesPerPage, sort, page }) => {
+    Alpine.data('FetchEntries', ({ collection, entriesPerPage, sort, page = 1 }) => {
         return {
             collection,
             entriesPerPage,
             sort,
-            page: page ?? 1,
+            page,
             loading: false,
             entries: [],
             nextPage: true,

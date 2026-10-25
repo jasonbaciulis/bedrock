@@ -1,7 +1,7 @@
 document.addEventListener('alpine:init', () => {
     const storageKey = appName.toLowerCase().replaceAll(' ', '_') + '_cookie_dialog'
 
-    Alpine.store('cookieDialog', {
+    Alpine.store('CookieDialog', {
         data: Alpine.$persist(null).as(storageKey),
 
         setData(consentData) {
@@ -62,31 +62,31 @@ document.addEventListener('alpine:init', () => {
         },
     })
 
-    Alpine.data('cookieDialog', settings => {
+    Alpine.data('CookieDialog', settings => {
         return {
             consentData: settings.consentData,
             consentRevokeBefore: settings.consentRevokeBefore,
-            data: Alpine.store('cookieDialog').data,
+            data: Alpine.store('CookieDialog').data,
             settingsOpen: false,
 
             init() {
                 if (this.data === null) {
-                    Alpine.store('cookieDialog').setData(this.consentData)
-                    this.data = Alpine.store('cookieDialog').data
+                    Alpine.store('CookieDialog').setData(this.consentData)
+                    this.data = Alpine.store('CookieDialog').data
                 }
 
-                if (Alpine.store('cookieDialog').getConsentDate() < this.consentRevokeBefore) {
-                    Alpine.store('cookieDialog').invalidate(this.consentData)
+                if (Alpine.store('CookieDialog').getConsentDate() < this.consentRevokeBefore) {
+                    Alpine.store('CookieDialog').invalidate(this.consentData)
                 }
 
                 if (
-                    Alpine.store('cookieDialog').useConsentAPI() &&
-                    Alpine.store('cookieDialog').getConsent()
+                    Alpine.store('CookieDialog').useConsentAPI() &&
+                    Alpine.store('CookieDialog').getConsent()
                 ) {
-                    gtag('consent', 'update', Alpine.store('cookieDialog').getConsentAPIValues())
+                    gtag('consent', 'update', Alpine.store('CookieDialog').getConsentAPIValues())
                 }
 
-                if (Alpine.store('cookieDialog').useConsentAPI()) {
+                if (Alpine.store('CookieDialog').useConsentAPI()) {
                     this.$watch(
                         'data.consent',
                         value =>
@@ -94,7 +94,7 @@ document.addEventListener('alpine:init', () => {
                             gtag(
                                 'consent',
                                 'update',
-                                Alpine.store('cookieDialog').getConsentAPIValues()
+                                Alpine.store('CookieDialog').getConsentAPIValues()
                             )
                     )
                 }

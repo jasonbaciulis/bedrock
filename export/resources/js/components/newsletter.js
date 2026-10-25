@@ -1,7 +1,7 @@
 document.addEventListener('alpine:init', () => {
     const persistKey = appName.toLowerCase().replaceAll(' ', '_') + '_newsletter_subscribed'
 
-    Alpine.data('newsletter', ({ form }) => ({
+    Alpine.data('Newsletter', ({ form }) => ({
         // component state
         success: false,
         error: false,

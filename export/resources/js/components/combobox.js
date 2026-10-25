@@ -1,7 +1,7 @@
 import { slugify } from '../lib/utils.js'
 
 document.addEventListener('alpine:init', () => {
-    Alpine.data('combobox', props => ({
+    Alpine.data('Combobox', props => ({
         id: props.id || 'combobox',
         placeholder: props.placeholder || 'Select an option…',
         itemsRaw: props.items,
@@ -65,10 +65,12 @@ document.addEventListener('alpine:init', () => {
                 this.$nextTick(() => {
                     this._searchItems()
                     this.$refs.comboboxInput.focus()
-                    if (this.itemSelected) {
-                        this.itemActive = this.itemSelected
-                        this._scrollToActiveItem()
+                    if (!this.itemSelected) {
+                        return
                     }
+
+                    this.itemActive = this.itemSelected
+                    this._scrollToActiveItem()
                 })
             })
         },
@@ -145,10 +147,7 @@ document.addEventListener('alpine:init', () => {
         },
 
         _normalizeItems(map) {
-            if (this._isObject(map)) {
-                return this._convertItemsToArray(map)
-            }
-            return []
+            return this._isObject(map) ? this._convertItemsToArray(map) : []
         },
 
         _isObject(object) {
