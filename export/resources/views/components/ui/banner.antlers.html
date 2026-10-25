@@ -1,30 +1,17 @@
-{{#
-    Configure Banner inside Control Panel in /cp/globals/banner Relies on a tiny `js-cookie` npm package
-    for setting and getting cookies.
-#}}
-
+{{# Configure Banner inside Control Panel in /cp/globals/banner #}}
 <div
     x-cloak
     x-show="visible"
     x-data="{
-        visible: false,
-        cookieName: 'hide_header_banner',
-        initBannerDisplay() {
-            const bannerCookie = !!Cookies.get(this.cookieName)
-            if (bannerCookie) {
-                this.visible = false
-            } else {
-                this.visible = true
-            }
+        dismissedAt: $persist(null).as('{{ site:name | snake }}_banner_dismissed_at'),
+        dismissDurationInMilliseconds: {{ banner:dismiss_duration }} * 24 * 60 * 60 * 1000,
+        get visible() {
+            return this.dismissedAt === null || Date.now() - this.dismissedAt > this.dismissDurationInMilliseconds
         },
         dismiss() {
-            this.visible = false
-            Cookies.set(this.cookieName, true, {
-                expires: {{ banner:cookie_expires }},
-            })
+            this.dismissedAt = Date.now()
         },
     }"
-    x-init="initBannerDisplay()"
     class="bg-foreground flex items-center gap-x-6 px-6 py-2.5 sm:px-3.5 sm:before:flex-1"
 >
     <div class="text-sm/6 text-white">

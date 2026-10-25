@@ -42,7 +42,6 @@ export default [
                 ...globals.browser,
                 Alpine: 'readonly',
                 Statamic: 'readonly',
-                appName: 'readonly',
                 gtag: 'readonly',
             },
         },

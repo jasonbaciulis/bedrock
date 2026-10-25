@@ -29,7 +29,6 @@
         "eslint-plugin-unicorn": "^79.0.0",
         "globals": "^17.13.0",
         "heroicons": "^2.2.0",
-        "js-cookie": "^3.0.8",
         "laravel-vite-plugin": "^3.2.0",
         "lite-youtube-embed": "^0.3.4",
         "lucide-static": "^1.61.0",
