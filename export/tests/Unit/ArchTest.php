@@ -15,4 +15,4 @@ arch('controllers')
 
 arch()
     ->expect('App')
-    ->not->toUse('@phpstan-ignore');
+    ->not->toUse(['@phpstan-ignore', '@phpstan-ignore-next-line', '@phpstan-type']);

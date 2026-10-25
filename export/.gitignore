@@ -26,4 +26,3 @@ yarn-error.log
 /public/css/
 /public/js/
 .vercel
-.env*

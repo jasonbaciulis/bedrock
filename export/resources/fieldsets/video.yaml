@@ -1,11 +1,13 @@
 title: Video
 fields:
   -
-    handle: youtube_url
+    handle: video
     field:
       display: 'YouTube URL'
       type: video
       always_save: false
+      validate:
+        - required
   -
     handle: caption
     field:

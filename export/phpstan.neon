@@ -86,6 +86,5 @@ parameters:
     #
     # Note that 1-4 would not remove all narrowing here. $entry->get('field')
     # reads schemaless YAML, so mixed is the honest return type however well
-    # Statamic is annotated. App\Support\UntypedYaml exists for that irreducible
-    # part and would stay even against a perfectly typed Statamic.
+    # Statamic is annotated.
     # -------------------------------------------------------------------------
