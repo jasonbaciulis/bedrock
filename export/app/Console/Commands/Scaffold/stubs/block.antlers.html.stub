@@ -1,5 +1,0 @@
-<section id="{{ type | slugify }}" class="m-section">
-    <div class="container">
-        <s:partial:components.section-header :title="title" :text="text" />
-    </div>
-</section>

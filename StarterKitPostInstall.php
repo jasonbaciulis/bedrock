@@ -24,6 +24,7 @@ final class StarterKitPostInstall
     public const DEV_DEPENDENCIES = [
         'cboxdk/statamic-mcp:^2.10.1',
         'driftingly/rector-laravel:^2.6.2',
+        'jasonbaciulis/bedrock-commands:^1.0',
         'larastan/larastan:^3.12.2',
         'laravel/boost:^2.10.0',
         'laravel/pao:^1.1.5',
