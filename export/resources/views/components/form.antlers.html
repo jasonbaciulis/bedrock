@@ -15,7 +15,7 @@ submit_label: 'Submit'
 {{ once }}
     {{ push:scripts }}
         <script src="/vendor/statamic/frontend/js/helpers.js" defer></script>
-        <s:vite src="resources/js/components/statamicForm.js" />
+        <s:vite src="resources/js/components/statamic-form.js" />
     {{ /push:scripts }}
 {{ /once }}
 <s:form:create
@@ -25,7 +25,7 @@ submit_label: 'Submit'
     x-ref="form"
     js="alpine"
 >
-    <div x-data="statamicForm">
+    <div x-data="StatamicForm">
         <template x-if="success">
             <s:partial:components.ui.alert
                 variant="success"

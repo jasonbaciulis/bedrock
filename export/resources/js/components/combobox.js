@@ -1,7 +1,7 @@
 import { slugify } from '../lib/utils.js'
 
 document.addEventListener('alpine:init', () => {
-    Alpine.data('combobox', props => ({
+    Alpine.data('Combobox', props => ({
         id: props.id || 'combobox',
         placeholder: props.placeholder || 'Select an option…',
         itemsRaw: props.items,

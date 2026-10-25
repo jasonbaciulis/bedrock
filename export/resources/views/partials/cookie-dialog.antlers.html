@@ -5,19 +5,19 @@
 
 {{ once }}
     {{ push:scripts }}
-        <s:vite src="resources/js/components/cookieDialog.js" />
+        <s:vite src="resources/js/components/cookie-dialog.js" />
     {{ /push:scripts }}
 {{ /once }}
 <div
     x-cloak
-    x-show="!$store.cookieDialog.getConsent()"
+    x-show="!$store.CookieDialog.getConsent()"
     x-transition:enter="ease duration-200"
     x-transition:enter-start="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95"
     x-transition:enter-end="translate-y-0 opacity-100 sm:scale-100"
     x-transition:leave="ease duration-150"
     x-transition:leave-start="translate-y-0 opacity-100 sm:scale-100"
     x-transition:leave-end="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95"
-    x-data="cookieDialog({
+    x-data="CookieDialog({
         {{ if seo:cookie:consent_revoke_before }}
             consentRevokeBefore: {{ seo:cookie:consent_revoke_before | format('U') }},
         {{ else }}
@@ -45,7 +45,7 @@
         </div>
 
         <div x-cloak x-show="settingsOpen" class="flex flex-col gap-4">
-            <template x-for="type in $store.cookieDialog.getConsentTypes()">
+            <template x-for="type in $store.CookieDialog.getConsentTypes()">
                 <div class="relative flex items-start gap-x-3">
                     <div class="flex h-6 items-center">
                         <template x-if="!type.consent_api">
@@ -91,7 +91,7 @@
             {{# Accept all cookies and set current date. #}}
             <button
                 x-show="!settingsOpen"
-                @click="$store.cookieDialog.acceptAll()"
+                @click="$store.CookieDialog.acceptAll()"
                 type="button"
                 class="btn btn--primary flex-1 sm:flex-none"
             >
@@ -101,7 +101,7 @@
             {{# Accept user selected cookies and set current date. #}}
             <button
                 x-show="settingsOpen"
-                @click="$store.cookieDialog.saveConsent()"
+                @click="$store.CookieDialog.saveConsent()"
                 type="button"
                 class="btn btn--primary flex-1 sm:flex-none"
             >
@@ -110,7 +110,7 @@
 
             {{# Reject all cookies #}}
             <button
-                @click="$store.cookieDialog.rejectAll()"
+                @click="$store.CookieDialog.rejectAll()"
                 type="button"
                 class="btn btn--outline flex-1 sm:flex-none"
             >
@@ -134,10 +134,10 @@
     {{ if seo:use_cookie_dialog }}
         <a
             x-cloak
-            x-show="$store.cookieDialog.getConsent()"
+            x-show="$store.CookieDialog.getConsent()"
             x-data
             href="#"
-            @click.prevent="$store.cookieDialog.revokeConsent()"
+            @click.prevent="$store.CookieDialog.revokeConsent()"
             class="text-muted-foreground hover:text-foreground text-xs"
         >
             {{ seo:cookie:reset_consent_label }}

@@ -22,7 +22,7 @@
 
 - Blade templates: `kebab-case.blade.php`
 - Antlers templates: `kebab-case.antlers.html`
-- CSS/JS: `kebab-case.css`, `camelCase.js`
+- CSS/JS: `kebab-case.css`, `kebab-case.js`
 
 ## Component Architecture
 

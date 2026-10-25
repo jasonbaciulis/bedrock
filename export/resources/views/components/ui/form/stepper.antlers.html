@@ -15,7 +15,7 @@ class: ''
 {{ /once }}
 <div
     class="{{ view:container_class }}"
-    x-data="stepper({{ view:min }}, {{ view:max }}, {{ view:step }})"
+    x-data="Stepper({{ view:min }}, {{ view:max }}, {{ view:step }})"
 >
     {{ unless slot }}
         <s:partial:components.ui.label :display="display" :id="id" />

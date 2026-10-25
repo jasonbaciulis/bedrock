@@ -10,7 +10,7 @@ class: ''
     {{ /push:scripts }}
 {{ /once }}
 <div
-    x-data="combobox({
+    x-data="Combobox({
                 id: '{{ id }}',
                 items: {{ options | to_json | entities }},
                 placeholder: '{{ view:placeholder }}',

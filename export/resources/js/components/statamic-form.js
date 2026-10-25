@@ -1,5 +1,5 @@
 document.addEventListener('alpine:init', () => {
-    Alpine.data('statamicForm', () => ({
+    Alpine.data('StatamicForm', () => ({
         form: null,
         success: false,
 

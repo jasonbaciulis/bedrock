@@ -68,7 +68,7 @@ export default [
             // Doc blocks keep the conventional ` * ` prefix.
             'unicorn/no-asterisk-prefix-in-documentation-comments': 'off',
 
-            'unicorn/filename-case': ['error', { case: 'camelCase' }],
+            'unicorn/filename-case': ['error', { case: 'kebabCase' }],
         },
     },
     {
