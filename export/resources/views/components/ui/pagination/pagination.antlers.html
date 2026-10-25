@@ -5,15 +5,6 @@ class: ''
 {{# Docs: https://statamic.dev/tags/collection#pagination #}}
 {{ if paginate:total_pages > 1 }}
     <div {{ view:class | attribute:class }}>
-        {{# Section that will be yielded in the <head> of documents for search engines. #}}
-        {{ section:pagination }}
-            {{ if paginate:prev_page }}
-                <link rel="prev" href="{{ paginate:prev_page }}" />
-            {{ /if }}
-            {{ if paginate:next_page }}
-                <link rel="next" href="{{ paginate:next_page }}" />
-            {{ /if }}
-        {{ /section:pagination }}
         <nav class="flex items-center justify-center gap-1 md:items-start">
             <a
                 href="{{ paginate:prev_page ?? 'javascript:void(0)' }}"

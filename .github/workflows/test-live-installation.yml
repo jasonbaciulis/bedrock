@@ -117,13 +117,17 @@ jobs:
         run: |
           cd test-installation/bedrock-test
 
+          # Statamic logs Composer's stderr from the install as errors, so only check what's logged from here on
+          log=storage/logs/laravel.log
+          offset=$(stat -c %s "$log" 2>/dev/null || echo 0)
+
           php artisan serve --port=8000 > /dev/null 2>&1 &
           timeout 30 bash -c 'until curl -s -o /dev/null http://127.0.0.1:8000; do sleep 1; done'
 
           # Follows the redirect to the login screen and fails on a 4xx/5xx
           curl -fsSL -o /dev/null -w '%{http_code} %{url_effective}\n' http://127.0.0.1:8000/cp
 
-          if [ -f storage/logs/laravel.log ] && grep -E '\.(EMERGENCY|ALERT|CRITICAL|ERROR):' storage/logs/laravel.log; then
+          if [ -f "$log" ] && tail -c +$((offset + 1)) "$log" | grep -E '\.(EMERGENCY|ALERT|CRITICAL|ERROR):'; then
             echo "::error::PHP errors were logged"
             exit 1
           fi

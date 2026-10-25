@@ -13,4 +13,4 @@ text:
         type: text
         text: " We're excited to announce a brand new product. Check it out →"
 link_url: '#'
-cookie_expires: 7
+dismiss_duration: 7

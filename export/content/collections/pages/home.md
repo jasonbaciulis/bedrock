@@ -11,7 +11,7 @@ blocks:
     type: hero_demo
     enabled: true
     title: 'The Foundation for your Statamic projects'
-    text: 'shadcn/ui style Alpine.js components that you can customize, extend, and build on. Plus page builder and complete SEO setup.'
+    text: 'shadcn/ui style Alpine.js components that you can customize, extend, and build on. Plus page builder and CLI tools.'
     buttons:
       -
         id: KdAsb0Ad
@@ -271,13 +271,8 @@ blocks:
                 text: .
         type: item
         enabled: true
-seo_noindex: false
-seo_nofollow: false
-seo_canonical_type: entry
-sitemap_change_frequency: weekly
-sitemap_priority: 0.5
-seo_title: 'The Foundation for Statamic projects'
-seo_description: 'Features shadcn/ui style Alpine.js components that you can customize, extend, and build on. Plus a page builder with CLI tools and complete SEO setup'
-og_image: images/bedrock-screenshot-social.png
-twitter_image: images/bedrock-screenshot-social.png
+seo:
+  title: 'The Foundation for Statamic projects'
+  description: 'Features shadcn/ui style Alpine.js components that you can customize, extend, and build on. Plus a page builder with CLI tools.'
+  image: images/bedrock-screenshot-social.png
 ---
