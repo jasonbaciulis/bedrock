@@ -62,11 +62,17 @@ export default [
             // DOM and JSON APIs return and expect `null`, not `undefined`.
             'unicorn/no-null': 'off',
 
+            // getElementById needs no CSS.escape for ids from content or $id().
+            'unicorn/prefer-query-selector': 'off',
+
+            // Doc blocks keep the conventional ` * ` prefix.
+            'unicorn/no-asterisk-prefix-in-documentation-comments': 'off',
+
             'unicorn/filename-case': ['error', { case: 'camelCase' }],
         },
     },
     {
-        files: ['vite.config.*', 'eslint.config.*'],
+        files: ['vite.config.*', 'eslint.config.*', 'tailwind.config.*'],
         languageOptions: {
             ecmaVersion: 'latest',
             sourceType: 'module',

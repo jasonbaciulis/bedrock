@@ -7,8 +7,8 @@ class: ''
 <input
     x-model="{{ view:model }}"
     id="{{ id }}"
-    name="{{ handle }}{{ view:max_files !== 1 ?= '[]' }}"
     type="file"
+    name="{{ handle }}{{ view:max_files !== 1 ?= '[]' }}"
     {{ view:class | attribute:class }}
     {{ view:max_files !== 1 ?= 'multiple' }}
     :aria-invalid="form.invalid('{{ handle }}')"

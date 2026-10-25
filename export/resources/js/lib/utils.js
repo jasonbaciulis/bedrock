@@ -7,7 +7,7 @@
 export function slugify(input) {
     if (!input) return ''
 
-    const asString = String(input)
+    const asString = input
     const normalized = asString.normalize('NFKD').replaceAll(/[\u{300}-\u{36F}]/gu, '')
     const slug = normalized
         .toLowerCase()

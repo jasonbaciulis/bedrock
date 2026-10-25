@@ -138,7 +138,7 @@
                             </div>
                             <div class="grid gap-3">
                                 <s:partial:components.ui.label id="frequency" display="Frequency" />
-                                {{ frequency_options = ['daily' => 'Daily updates', 'weekly' => 'Weekly digest', 'monthly' => 'Monthly newsletter', ] }}
+                                {{ frequency_options = ['daily' => 'Daily updates', 'weekly' => 'Weekly digest', 'monthly' => 'Monthly newsletter'] }}
                                 <s:partial:components.ui.form.select
                                     model="form.frequency"
                                     handle="frequency"
@@ -147,7 +147,7 @@
                                 />
                             </div>
                             <div class="grid gap-3">
-                                {{ topics_options = ['design' => 'Design tips', 'development' => 'Development news', 'marketing' => 'Marketing insights', ] }}
+                                {{ topics_options = ['design' => 'Design tips', 'development' => 'Development news', 'marketing' => 'Marketing insights'] }}
                                 <s:partial:components.ui.form.checkboxes
                                     model="form.topics"
                                     handle="topics"
@@ -220,7 +220,7 @@
                         <div class="flex flex-1 flex-col gap-6">
                             <div class="grid gap-6">
                                 <div class="grid gap-3">
-                                    {{ theme_options = ['light' => 'Light mode', 'dark' => 'Dark mode', 'system' => 'System default', ] }}
+                                    {{ theme_options = ['light' => 'Light mode', 'dark' => 'Dark mode', 'system' => 'System default'] }}
                                     <s:partial:components.ui.form.radio
                                         id="theme"
                                         handle="theme"
@@ -234,7 +234,7 @@
                                         id="language"
                                         display="Language"
                                     />
-                                    {{ languages = ['en' => 'English', 'es' => 'Spanish', 'fr' => 'French', 'de' => 'German', 'it' => 'Italian', 'pt' => 'Portuguese', 'ru' => 'Russian', 'zh' => 'Chinese', 'ja' => 'Japanese', 'ko' => 'Korean', 'ar' => 'Arabic', ] }}
+                                    {{ languages = ['en' => 'English', 'es' => 'Spanish', 'fr' => 'French', 'de' => 'German', 'it' => 'Italian', 'pt' => 'Portuguese', 'ru' => 'Russian', 'zh' => 'Chinese', 'ja' => 'Japanese', 'ko' => 'Korean', 'ar' => 'Arabic'] }}
                                     <s:partial:components.ui.form.combobox
                                         id="language"
                                         handle="language"
@@ -278,7 +278,7 @@
         <div class="col-span-full grid grid-cols-1 gap-4 md:grid-cols-2 xl:col-span-6">
             {{# Tabs #}}
             <div class="grid gap-4 xl:col-span-full xl:grid-cols-2">
-                {{ services_tabs = [['title' => 'AI agents', 'description' => 'AI agents can help you with a wide range of tasks, from customer service to data analysis.', 'features' => ['Automated workflows', 'Data analysis', 'Customer service'], ], ['title' => 'Web apps', 'description' => 'Build apps for your business.', 'features' => ['Filament dashboards', 'SPA apps with Inertia and Vue/React', 'Laravel apps'], ], ['title' => 'Websites', 'description' => 'Build high-converting websites.', 'features' => ['Beautiful design', 'Lightning-fast loading', 'SEO-friendly'], ], ] }}
+                {{ services_tabs = [['title' => 'AI agents', 'description' => 'AI agents can help you with a wide range of tasks, from customer service to data analysis.', 'features' => ['Automated workflows', 'Data analysis', 'Customer service']], ['title' => 'Web apps', 'description' => 'Build apps for your business.', 'features' => ['Filament dashboards', 'SPA apps with Inertia and Vue/React', 'Laravel apps']], ['title' => 'Websites', 'description' => 'Build high-converting websites.', 'features' => ['Beautiful design', 'Lightning-fast loading', 'SEO-friendly']]] }}
                 {{ partial:components/ui/tabs/tabs list_class="bg-muted text-muted-foreground flex min-h-9 w-full items-center justify-center rounded-lg p-[3px] outline-none" }}
                     {{ slot:list }}
                         {{ services_tabs }}
@@ -379,7 +379,7 @@
                         </p>
                     </div>
 
-                    {{ demo_faqs = [['question' => 'How long does a project take?', 'answer' => 'Project timelines vary based on complexity, but most websites take 4-8 weeks from start to finish.', ], ['question' => 'Do you offer maintenance?', 'answer' => 'Yes, we provide ongoing maintenance and support packages to keep your website running smoothly.', ], ['question' => 'How do I get started?', 'answer' => 'Contact us to discuss your project and we’ll provide a free consultation to help you get started.', ], ] }}
+                    {{ demo_faqs = [['question' => 'How long does a project take?', 'answer' => 'Project timelines vary based on complexity, but most websites take 4-8 weeks from start to finish.'], ['question' => 'Do you offer maintenance?', 'answer' => 'Yes, we provide ongoing maintenance and support packages to keep your website running smoothly.'], ['question' => 'How do I get started?', 'answer' => 'Contact us to discuss your project and we’ll provide a free consultation to help you get started.']] }}
                     <dl class="space-y-2">
                         {{ demo_faqs }}
                             {{ partial:components/ui/collapsible trigger_class="flex w-full items-center justify-between py-2 text-left text-sm font-medium" content_class="text-muted-foreground text-sm" }}
