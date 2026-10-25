@@ -21,11 +21,6 @@ export default defineConfig(({ mode }) => {
           'resources/js/components/stepper.js',
           'resources/js/components/toaster.js',
           'resources/js/components/statamicForm.js',
-
-          // Control Panel assets.
-          // https://statamic.dev/extending/control-panel#adding-css-and-js-assets
-          // 'resources/css/cp.css',
-          'resources/js/cp.js',
         ],
         refresh: true,
       }),
