@@ -113,6 +113,21 @@ jobs:
           # Install all dependencies and build assets
           composer run setup --no-interaction
 
+      - name: Check control panel loads
+        run: |
+          cd test-installation/bedrock-test
+
+          php artisan serve --port=8000 > /dev/null 2>&1 &
+          timeout 30 bash -c 'until curl -s -o /dev/null http://127.0.0.1:8000; do sleep 1; done'
+
+          # Follows the redirect to the login screen and fails on a 4xx/5xx
+          curl -fsSL -o /dev/null -w '%{http_code} %{url_effective}\n' http://127.0.0.1:8000/cp
+
+          if [ -f storage/logs/laravel.log ] && grep -E '\.(EMERGENCY|ALERT|CRITICAL|ERROR):' storage/logs/laravel.log; then
+            echo "::error::PHP errors were logged"
+            exit 1
+          fi
+
       - name: Install Playwright browsers
         run: |
           cd test-installation/bedrock-test
