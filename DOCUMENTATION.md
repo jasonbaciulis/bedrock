@@ -39,7 +39,6 @@ resources/views/
 ├── partials/                    # Template partials and fragments (things that aren't really reusable go here)
 ├── posts/                       # Posts collection templates
 ├── sets/                        # Content sets for Article Block
-├── sitemap/                     # Sitemap templates
 └── errors/                      # Error page templates
 ```
 

@@ -27,11 +27,11 @@ tabs:
               if:
                 show: 'equals true'
           -
-            handle: cookie_expires
+            handle: dismiss_duration
             field:
               input_type: number
               default: '7'
-              display: 'Cookie expires'
+              display: 'Dismiss duration'
               type: text
               instructions: 'After a user clicks dismiss button how many days to not show the banner'
               if:

@@ -11,6 +11,8 @@ export_paths:
   - config/statamic/mcp.php
   - config/statamic/git.php
   - config/statamic/search.php
+  - config/statamic/seo-pro.php
+  - config/statamic/static_caching.php
   - database/factories/UserFactory.php
   - content
   - public/assets
@@ -40,3 +42,4 @@ export_paths:
   - vite.config.js
 dependencies:
   nunomaduro/essentials: ^1.2
+  statamic/seo-pro: ^7.15

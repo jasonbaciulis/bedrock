@@ -5,7 +5,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
-        <s:partial:partials.seo />
+        {{ seo_pro:meta }}
+        {{# Add JSON-LD coming from components like FAQs #}}
+        {{ yield:json_ld }}
         <s:partial:partials.browser-appearance />
 
         <s:vite src="resources/css/site.css" />
@@ -30,7 +32,6 @@
         class="selection:bg-primary min-h-screen overflow-x-hidden bg-white font-sans text-base/6 text-neutral-800 antialiased selection:text-white"
     >
         <s:partial:partials.skip-to-content />
-        {{ yield:seo_body }}
         {{# Banner global #}}
         {{ if banner:show }}
             <s:partial:components.ui.banner />

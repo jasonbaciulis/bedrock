@@ -32,39 +32,6 @@ tabs:
               default: true
           -
             import: article
-  seo:
-    display: SEO
-    sections:
-      -
-        display: Basic
-        instructions: 'Basic SEO settings'
-        fields:
-          -
-            import: seo_basic
-      -
-        display: Advanced
-        instructions: 'Advanced SEO settings'
-        fields:
-          -
-            import: seo_advanced
-      -
-        display: 'Open Graph'
-        instructions: 'Open Graph meta tags for social sharing'
-        fields:
-          -
-            import: seo_open_graph
-      -
-        display: Sitemap
-        instructions: 'Sitemap configuration'
-        fields:
-          -
-            import: seo_sitemap
-      -
-        display: 'JSON-ld Schema'
-        instructions: 'Custom JSON-ld schema objects'
-        fields:
-          -
-            import: seo_json-ld_schema
   sidebar:
     display: Sidebar
     sections:

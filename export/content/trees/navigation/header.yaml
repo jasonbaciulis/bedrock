@@ -14,13 +14,6 @@ tree:
           description: 'Get the maximum flexibility when building pages'
           badge: null
       -
-        id: 2d0bb427-8acd-4dcb-870a-ab768b48a4ed
-        title: SEO
-        url: '#'
-        data:
-          icon: adjustments-horizontal
-          description: 'Full SEO settings without extra addons'
-      -
         id: eb572299-0404-472d-8b5d-7f056b60ebc5
         title: Components
         url: '#components'

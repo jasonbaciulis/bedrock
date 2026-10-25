@@ -15,7 +15,7 @@ header_buttons:
     url: '#faqs'
     variant: primary
     label: 'Get started'
-about: 'Features shadcn/ui style Alpine.js components that you can customize, extend, and build on. Plus page builder and complete SEO setup.'
+about: 'Features shadcn/ui style Alpine.js components that you can customize, extend, and build on. Plus page builder and CLI tools.'
 copyright_text:
   -
     type: paragraph
