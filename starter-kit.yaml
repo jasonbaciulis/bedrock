@@ -6,7 +6,6 @@ export_paths:
   - app/Http
   - app/Models/User.php
   - app/Providers/AppServiceProvider.php
-  - app/Tags
   - config/filesystems.php
   - config/essentials.php
   - config/statamic/mcp.php
