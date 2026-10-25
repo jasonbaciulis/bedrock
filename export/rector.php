@@ -7,10 +7,14 @@ use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\CodingStyle\Rector\ClassMethod\MakeInheritedMethodVisibilitySameAsParentRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassMethod\RemoveUnusedPublicMethodParameterRector;
-use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 use Rector\Transform\Rector\FuncCall\FuncCallToStaticCallRector;
 use Rector\Transform\ValueObject\FuncCallToStaticCall;
 use RectorLaravel\Rector\Class_\AddHasFactoryToModelsRector;
+use RectorLaravel\Rector\Class_\RemoveModelPropertyFromFactoriesRector;
+use RectorLaravel\Rector\Empty_\EmptyToBlankAndFilledFuncRector;
+use RectorLaravel\Rector\FuncCall\ConfigToTypedConfigMethodCallRector;
+use RectorLaravel\Rector\MethodCall\DateWhereClauseToShorthandRector;
+use RectorLaravel\Rector\MethodCall\WhereToWhereLikeRector;
 use RectorLaravel\Rector\StaticCall\DispatchToHelperFunctionsRector;
 use RectorLaravel\Set\LaravelSetList;
 
@@ -26,13 +30,27 @@ return RectorConfig::configure()
         LaravelSetList::LARAVEL_FACTORIES,
         LaravelSetList::LARAVEL_IF_HELPERS,
         LaravelSetList::LARAVEL_LEGACY_FACTORIES_TO_CLASSES,
+        LaravelSetList::LARAVEL_TESTING,
+        LaravelSetList::LARAVEL_TYPE_DECLARATIONS,
         PestSetList::CODING_STYLE,
+    ])
+    ->withRules([
+        ConfigToTypedConfigMethodCallRector::class,
+        RemoveModelPropertyFromFactoriesRector::class,
+        WhereToWhereLikeRector::class,
+        DateWhereClauseToShorthandRector::class,
+        EmptyToBlankAndFilledFuncRector::class,
     ])
     ->withConfiguredRule(FuncCallToStaticCallRector::class, [
         new FuncCallToStaticCall('str_starts_with', 'Illuminate\Support\Str', 'startsWith'),
         new FuncCallToStaticCall('str_contains', 'Illuminate\Support\Str', 'contains'),
         new FuncCallToStaticCall('str_ends_with', 'Illuminate\Support\Str', 'endsWith'),
         new FuncCallToStaticCall('str_replace', 'Illuminate\Support\Str', 'replace'),
+        new FuncCallToStaticCall('preg_replace', 'Illuminate\Support\Str', 'replaceMatches'),
+        new FuncCallToStaticCall('strtolower', 'Illuminate\Support\Str', 'lower'),
+        new FuncCallToStaticCall('strlen', 'Illuminate\Support\Str', 'length'),
+        new FuncCallToStaticCall('ucfirst', 'Illuminate\Support\Str', 'ucfirst'),
+        new FuncCallToStaticCall('trim', 'Illuminate\Support\Str', 'trim'),
     ])
     ->withImportNames(
         removeUnusedImports: true,
@@ -58,7 +76,6 @@ return RectorConfig::configure()
         RemoveUnusedPublicMethodParameterRector::class => [
             __DIR__.'/app/Http/Controllers',
         ],
-        AddOverrideAttributeToOverriddenMethodsRector::class,
         DispatchToHelperFunctionsRector::class,
         MakeInheritedMethodVisibilitySameAsParentRector::class,
     ])
