@@ -120,7 +120,7 @@ final class StarterKitPostInstall
                 });
         } catch (Throwable) {
             error('Failed to install dev dependencies. Please run this command manually:');
-            error('composer require --dev -W '.implode(' ', self::DEV_DEPENDENCIES));
+            error('composer require --dev -W '.implode(' ', array_map(escapeshellarg(...), self::DEV_DEPENDENCIES)));
 
             return;
         }
