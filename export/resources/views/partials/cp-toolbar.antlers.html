@@ -1,0 +1,29 @@
+{{#
+    Show the edit entry button if the user has the permission. i.e. shown only for logged in users with
+    a permission. Wrapped in `nocache` tag so it works with static caching enabled.
+#}}
+
+<s:nocache select="@auto">
+    <s:user:can do="edit {collection:handle} entries">
+        <nav
+            x-show="show"
+            x-data="{ show: true }"
+            class="fixed right-6 bottom-6 z-10 flex shadow-lg"
+        >
+            <s:partial:components.ui.button :url="edit_url" variant="secondary">
+                <s:svg src="heroicons/outline/pencil-square" />
+                Edit this entry
+            </s:partial:components.ui.button>
+
+            <s:partial:components.ui.button
+                as="button"
+                variant="secondary"
+                aria_label="Hide toolbar"
+                x_click="show = false"
+                class="-ml-px btn--square"
+            >
+                <s:svg src="heroicons/outline/x-mark" />
+            </s:partial:components.ui.button>
+        </nav>
+    </s:user:can>
+</s:nocache>
