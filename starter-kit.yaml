@@ -42,4 +42,4 @@ export_paths:
   - vite.config.js
 dependencies:
   nunomaduro/essentials: ^1.2
-  statamic/seo-pro: ^7.15
+  statamic/seo-pro: ^7.15.1
