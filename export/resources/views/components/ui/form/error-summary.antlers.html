@@ -1,0 +1,36 @@
+{{# StatamicForm moves focus here after a failed submit, so the field errors do not need their own live regions. #}}
+{{# x-show waits one frame before it shows the element, but the hidden binding updates in the same tick, so the element can take focus in $nextTick. #}}
+<div
+    hidden
+    :hidden="!form.hasErrors && !submitFailure"
+    x-ref="errorSummary"
+    tabindex="-1"
+    class="alert alert--error mb-8 scroll-mt-8"
+>
+    <div class="alert__icon">
+        <s:svg src="heroicons/outline/x-circle" />
+    </div>
+    <div role="alert" class="alert__content space-y-2">
+        <h2 class="font-medium tracking-tight">There is a problem</h2>
+        <template x-if="submitFailure === 'expired'">
+            <p>Your session has expired. Reload the page and send the form again.</p>
+        </template>
+        <template x-if="submitFailure === 'unknown'">
+            <p>We could not send the form. Please try again.</p>
+        </template>
+        <ul x-show="form.hasErrors" class="space-y-1">
+            {{ fields }}
+                <template x-if="form.invalid('{{ handle }}')">
+                    <li>
+                        <a
+                            href="#{{ id }}"
+                            class="underline hover:no-underline"
+                            x-text="form.errors['{{ handle }}']"
+                            @click.prevent="focusField"
+                        ></a>
+                    </li>
+                </template>
+            {{ /fields }}
+        </ul>
+    </div>
+</div>

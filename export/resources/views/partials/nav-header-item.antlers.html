@@ -1,7 +1,7 @@
 <a
     href="{{ url }}"
     class="group hover:bg-accent relative -mx-2 flex items-center gap-x-4 rounded-lg p-2 transition-colors lg:m-0 lg:items-start lg:p-3"
-    {{ is_external ?= 'target="_blank" rel="noopener nofollow"' }}
+    {{ is_external ?= 'target="_blank"' }}
 >
     {{ if icon }}
         <s:svg
@@ -10,7 +10,12 @@
         />
     {{ /if }}
     <div>
-        <span class="text-foreground font-medium">{{ title }}</span>
+        <span class="text-foreground font-medium">
+            {{ title }}
+            {{ if is_external }}
+                <s:partial:components.ui.new-tab-hint />
+            {{ /if }}
+        </span>
         {{ if badge }}
             <span class="badge badge--outline relative -top-px ml-1.5">{{ badge }}</span>
         {{ /if }}

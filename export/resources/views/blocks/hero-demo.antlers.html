@@ -70,8 +70,11 @@
                         </div>
                         <div class="flex flex-1 flex-col gap-4">
                             <div class="grid gap-3">
-                                <s:partial:components.ui.label id="contact_name" display="Name" />
-                                <s:partial:components.ui.form.text
+                                <s:partial:components.ui.form.label
+                                    id="contact_name"
+                                    display="Name"
+                                />
+                                <s:partial:components.ui.form.fields.text
                                     model="form.name"
                                     handle="contact_name"
                                     id="contact_name"
@@ -79,8 +82,11 @@
                                 />
                             </div>
                             <div class="grid gap-3">
-                                <s:partial:components.ui.label id="contact_email" display="Email" />
-                                <s:partial:components.ui.form.text
+                                <s:partial:components.ui.form.label
+                                    id="contact_email"
+                                    display="Email"
+                                />
+                                <s:partial:components.ui.form.fields.text
                                     model="form.email"
                                     handle="contact_email"
                                     id="contact_email"
@@ -89,11 +95,11 @@
                                 />
                             </div>
                             <div class="grid gap-3">
-                                <s:partial:components.ui.label
+                                <s:partial:components.ui.form.label
                                     id="contact_message"
                                     display="Message"
                                 />
-                                <s:partial:components.ui.form.textarea
+                                <s:partial:components.ui.form.fields.textarea
                                     model="form.message"
                                     handle="contact_message"
                                     id="contact_message"
@@ -124,11 +130,11 @@
                         </div>
                         <div class="flex flex-1 flex-col gap-4">
                             <div class="grid gap-3">
-                                <s:partial:components.ui.label
+                                <s:partial:components.ui.form.label
                                     id="newsletter_email"
                                     display="Email Address"
                                 />
-                                <s:partial:components.ui.form.text
+                                <s:partial:components.ui.form.fields.text
                                     model="form.email"
                                     handle="email"
                                     id="newsletter_email"
@@ -137,9 +143,12 @@
                                 />
                             </div>
                             <div class="grid gap-3">
-                                <s:partial:components.ui.label id="frequency" display="Frequency" />
+                                <s:partial:components.ui.form.label
+                                    id="frequency"
+                                    display="Frequency"
+                                />
                                 {{ frequency_options = ['daily' => 'Daily updates', 'weekly' => 'Weekly digest', 'monthly' => 'Monthly newsletter'] }}
-                                <s:partial:components.ui.form.select
+                                <s:partial:components.ui.form.fields.select
                                     model="form.frequency"
                                     handle="frequency"
                                     id="frequency"
@@ -148,7 +157,7 @@
                             </div>
                             <div class="grid gap-3">
                                 {{ topics_options = ['design' => 'Design tips', 'development' => 'Development news', 'marketing' => 'Marketing insights'] }}
-                                <s:partial:components.ui.form.checkboxes
+                                <s:partial:components.ui.form.fields.checkboxes
                                     model="form.topics"
                                     handle="topics"
                                     id="topics"
@@ -221,7 +230,7 @@
                             <div class="grid gap-6">
                                 <div class="grid gap-3">
                                     {{ theme_options = ['light' => 'Light mode', 'dark' => 'Dark mode', 'system' => 'System default'] }}
-                                    <s:partial:components.ui.form.radio
+                                    <s:partial:components.ui.form.fields.radio
                                         id="theme"
                                         handle="theme"
                                         model="form.theme"
@@ -230,7 +239,7 @@
                                     />
                                 </div>
                                 <div class="grid gap-3">
-                                    <s:partial:components.ui.label
+                                    <s:partial:components.ui.form.label
                                         id="language"
                                         display="Language"
                                     />
@@ -244,7 +253,7 @@
                                     />
                                 </div>
                                 <div class="grid gap-3">
-                                    <s:partial:components.ui.form.toggle
+                                    <s:partial:components.ui.form.fields.toggle
                                         model="form.notifications"
                                         handle="notifications"
                                         id="notifications"
@@ -328,7 +337,7 @@
                             </p>
                         </div>
                         <div class="flex flex-1 flex-col items-center gap-4">
-                            <s:partial:components.ui.form.stepper
+                            <s:partial:components.ui.form.fields.stepper
                                 model="form.steps"
                                 handle="steps"
                                 id="steps"
@@ -345,7 +354,7 @@
                                 >
                                     Steps/day
                                 </label>
-                            </s:partial:components.ui.form.stepper>
+                            </s:partial:components.ui.form.fields.stepper>
 
                             <div class="flex w-full items-end gap-2">
                                 {{ bar_heights = ['h-16', 'h-12', 'h-8', 'h-6', 'h-4', 'h-8', 'h-10', 'h-12', 'h-14', 'h-16'] }}
@@ -385,11 +394,12 @@
                             {{ partial:components/ui/collapsible trigger_class="flex w-full items-center justify-between py-2 text-left text-sm font-medium" content_class="text-muted-foreground text-sm" }}
                                 {{ slot:trigger }}
                                     {{ question }}
-                                    <s:svg
-                                        src="lucide/chevron-down"
-                                        class="size-4 transition-transform"
-                                        :class="open && 'rotate-180'"
-                                    />
+                                    <span :class="open && 'rotate-180'">
+                                        <s:svg
+                                            src="heroicons/outline/chevron-down"
+                                            class="size-4 transition-transform"
+                                        />
+                                    </span>
                                 {{ /slot:trigger }}
                                 {{ slot:content }}
                                     <p>{{ answer }}</p>
@@ -473,7 +483,7 @@
                             {{ slot:toggle }}
                                 Actions
                                 <s:svg
-                                    src="lucide/chevron-down"
+                                    src="heroicons/outline/chevron-down"
                                     class="mt-px -mr-1 size-4 opacity-50"
                                 />
                             {{ /slot:toggle }}
@@ -482,28 +492,28 @@
                                     href="/"
                                     @click.prevent="close()"
                                 >
-                                    <s:svg src="lucide/edit" />
+                                    <s:svg src="heroicons/outline/pencil-square" />
                                     Edit Content
                                 </s:partial:components.ui.dropdown.item>
                                 <s:partial:components.ui.dropdown.item
                                     href="/"
                                     @click.prevent="close()"
                                 >
-                                    <s:svg src="lucide/share-2" />
+                                    <s:svg src="heroicons/outline/share" />
                                     Share Page
                                 </s:partial:components.ui.dropdown.item>
                                 <s:partial:components.ui.dropdown.item
                                     href="/"
                                     @click.prevent="close()"
                                 >
-                                    <s:svg src="lucide/download" />
+                                    <s:svg src="heroicons/outline/arrow-down-tray" />
                                     Export Data
                                 </s:partial:components.ui.dropdown.item>
                                 <s:partial:components.ui.dropdown.item
                                     href="/"
                                     @click.prevent="close()"
                                 >
-                                    <s:svg src="lucide/settings" />
+                                    <s:svg src="heroicons/outline/cog-6-tooth" />
                                     Settings
                                 </s:partial:components.ui.dropdown.item>
                             {{ /slot:content }}
@@ -515,7 +525,7 @@
                 <div class="card shadow-none">
                     <nav class="flex items-center justify-center gap-1">
                         <button class="btn btn--ghost shrink-0">
-                            <s:svg src="lucide/chevron-left" class="size-4" />
+                            <s:svg src="heroicons/outline/chevron-left" class="size-4" />
                             <span class="sr-only lg:not-sr-only">Previous</span>
                         </button>
 
@@ -524,14 +534,14 @@
                             <button class="btn btn--outline btn--square">2</button>
                             <button class="btn btn--ghost btn--square">3</button>
                             <span class="flex size-9 items-center justify-center">
-                                <s:svg src="lucide/ellipsis" class="size-4" />
+                                <s:svg src="heroicons/outline/ellipsis-horizontal" class="size-4" />
                             </span>
                             <button class="btn btn--ghost btn--square">12</button>
                         </div>
 
                         <button class="btn btn--ghost shrink-0">
                             <span class="sr-only lg:not-sr-only">Next</span>
-                            <s:svg src="lucide/chevron-right" class="size-4" />
+                            <s:svg src="heroicons/outline/chevron-right" class="size-4" />
                         </button>
                     </nav>
                 </div>

@@ -1,10 +1,8 @@
 /node_modules
 /resources/svg/heroicons
-/resources/svg/lucide
 /public/hot
 /public/storage
-/public/vendor/statamic
-/public/vendor/seo-pro
+/public/vendor
 /public/img/
 /public/static/
 /storage/*.key

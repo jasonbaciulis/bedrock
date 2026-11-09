@@ -1,0 +1,23 @@
+---
+model: ''
+character_limit: ''
+id: ''
+class: 'text-muted-foreground text-sm'
+label: 'Character limit:'
+---
+
+{{# The status for screen readers waits until typing stops, so it does not speak on each key press. #}}
+<span
+    {{ view:class | attribute:class }}
+    x-data="{ get currentLength() { return {{ view:model }}.length }, spokenStatus: '' }"
+    x-init="$watch('currentLength', Alpine.debounce(length => spokenStatus = `${length} of {{ view:character_limit }} characters used`, 1000))"
+>
+    <span aria-hidden="true">
+        {{ view:label }}
+        <span x-text="`${currentLength}/{{ view:character_limit }}`"></span>
+    </span>
+    <span {{ view:id | attribute:id }} class="sr-only">
+        You can enter up to {{ view:character_limit }} characters.
+    </span>
+    <span class="sr-only" role="status" x-text="spokenStatus"></span>
+</span>

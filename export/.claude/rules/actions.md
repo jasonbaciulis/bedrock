@@ -13,6 +13,7 @@ paths:
 - Create new actions with `php artisan make:action "{name}" --no-interaction`
 - Wrap complex operations in `DB::transaction()` within actions when multiple models are involved.
 - Some actions won't require dependencies via `__construct` and they can use just the `handle()` method.
+- Don't create an Action for a write that is one statement on one model with no dependencies — keep it as a named method on the model (see the controllers rules).
 
 Example action class:
 

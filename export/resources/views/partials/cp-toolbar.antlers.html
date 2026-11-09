@@ -8,19 +8,23 @@
         <nav
             x-show="show"
             x-data="{ show: true }"
-            class="fixed right-6 bottom-6 z-10 flex shadow-lg"
+            class="fixed right-6 bottom-6 z-10 flex rounded-lg shadow-lg"
         >
-            <s:partial:components.ui.button :url="edit_url" variant="secondary">
+            <s:partial:components.ui.button
+                :url="edit_url"
+                variant="outline"
+                class="rounded-r-none"
+            >
                 <s:svg src="heroicons/outline/pencil-square" />
                 Edit this entry
             </s:partial:components.ui.button>
 
             <s:partial:components.ui.button
                 as="button"
-                variant="secondary"
+                variant="outline"
                 aria_label="Hide toolbar"
                 x_click="show = false"
-                class="-ml-px btn--square"
+                class="btn--square -ml-px rounded-l-none"
             >
                 <s:svg src="heroicons/outline/x-mark" />
             </s:partial:components.ui.button>

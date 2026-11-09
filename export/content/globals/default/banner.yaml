@@ -1,16 +1,23 @@
 show: true
+dismissible: true
 text:
   -
-    type: paragraph
-    content:
+    type: text
+    marks:
       -
-        type: text
-        marks:
-          -
-            type: bold
-        text: 'Big news!'
+        type: bold
+    text: 'Big news!'
+  -
+    type: text
+    text: " We're excited to announce a brand new product. "
+  -
+    type: text
+    marks:
       -
-        type: text
-        text: " We're excited to announce a brand new product. Check it out →"
-link_url: '#'
-dismiss_duration: 7
+        type: link
+        attrs:
+          href: '#'
+          rel: noopener
+          target: null
+          title: null
+    text: 'Check it out →'

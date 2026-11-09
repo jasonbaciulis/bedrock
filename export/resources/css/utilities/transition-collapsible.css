@@ -1,0 +1,8 @@
+/* Put padding on an inner wrapper, because the transition animates only the height. */
+@utility transition-collapsible {
+    @apply overflow-clip transition-[height,content-visibility] transition-discrete duration-250 motion-reduce:transition-none [[hidden]]:h-0;
+
+    /* Focus outlines inside the panel reach up to 0.5rem past its edge. */
+    overflow-clip-margin: 0.5rem;
+    interpolate-size: allow-keywords;
+}

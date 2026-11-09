@@ -5,13 +5,12 @@
             <ul role="list" class="mt-6 space-y-4">
                 {{ children }}
                     <li>
-                        <a
-                            href="{{ url }}"
+                        <s:partial:partials.nav-link
+                            :url="url"
+                            :title="title"
+                            :is_external="is_external"
                             class="text-muted-foreground hover:text-foreground text-sm/6"
-                            {{ is_external ?= 'target="_blank" rel="noopener nofollow"' }}
-                        >
-                            {{ title }}
-                        </a>
+                        />
                     </li>
                 {{ /children }}
             </ul>

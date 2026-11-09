@@ -7,9 +7,6 @@ class: ''
 <template x-if="form.invalid('{{ view:handle }}')">
     <p
         id="{{ view:id }}-error"
-        role="alert"
-        aria-live="polite"
-        aria-atomic="true"
         class="text-destructive {{ view:class }} text-sm"
         x-text="form.errors.{{ view:handle }}"
     ></p>

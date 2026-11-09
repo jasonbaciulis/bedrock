@@ -18,6 +18,12 @@ Route::apiResource('posts', Api\PostController::class);
 - A controller with all seven actions gets a bare `Route::resource()` — never a list of individual verb routes.
 - Partial resources pick the shorter list: 3 or fewer actions kept → `->only([...])`, 4 or more kept → `->except([...])`.
 - Keep the URIs and route names the resource generates. Don't re-declare a resource verb as an individual route to bend its URI (`GET messages/{message}` for `edit` was this mistake); frontend and tests reach routes through Wayfinder and `route()`, so the generated shape costs nothing.
+- A controller with a single action gets an explicit route, not a resource or singleton cut down with `->only([...])`. Use the URI and name a resource would generate, so the route can become a resource when a second action arrives:
+
+```php
+Route::post('entries/{entry}/feedback', [EntryFeedbackController::class, 'store'])
+    ->name('entries.feedback.store');
+```
 
 ## Middleware on Resources
 

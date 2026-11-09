@@ -21,6 +21,7 @@ paths:
 - Never call `$this->authorize()`, `abort_if()`, or `abort_unless()` inside a controller method. Authorization belongs in that method's FormRequest `authorize()`.
 - Every method that authorizes gets its own FormRequest, even when it has nothing to validate and the class holds only `authorize()`.
 - `authorize()` runs before validation, so an unauthorized request with a bad payload returns 403 rather than 422. That ordering is intended.
+- Exception: a method that only reuses an existing ability on a route-bound model and has nothing to validate gets `->middleware('can:<ability>,<param>')` on its route instead of an empty FormRequest: `->middleware('can:edit,entry')`.
 
 ## Models Are Injected, Never Hand-Resolved
 
@@ -32,6 +33,7 @@ paths:
 ## Keep Controllers Thin
 
 - Controllers only route HTTP: read the validated request, call an Action, shape the response. Domain logic lives in `app/Actions`.
+- A write that is one statement on one model, with no dependencies, stays a named method on that model instead of an Action: `EntryFeedback::record($entry, $answer)`. Extract an Action once the write has more than one step, touches more than one model, or needs injected dependencies.
 
 ## Where Query Logic Lives
 

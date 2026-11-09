@@ -4,9 +4,8 @@
     "scripts": {
         "dev": "vite",
         "build": "bun run icons && vite build",
-        "icons": "bun run icons:heroicons && bun run icons:lucide",
+        "icons": "bun run icons:heroicons",
         "icons:heroicons": "rm -rf resources/svg/heroicons && mkdir -p resources/svg/heroicons && cp -R node_modules/heroicons/24/outline resources/svg/heroicons/outline && cp -R node_modules/heroicons/24/solid resources/svg/heroicons/solid && cp -R node_modules/heroicons/20/solid resources/svg/heroicons/mini",
-        "icons:lucide": "rm -rf resources/svg/lucide && mkdir -p resources/svg/lucide && cp -R node_modules/lucide-static/icons/. resources/svg/lucide",
         "lint": "prettier \"resources/**/*.{js,css,scss,html,antlers.html,blade.php}\" --write && eslint \"resources/js\" --fix",
         "test:lint": "prettier \"resources/**/*.{js,css,scss,html,antlers.html,blade.php}\" --check && eslint \"resources/js\" --max-warnings=0"
     },
@@ -20,24 +19,23 @@
         "@eslint/js": "^10.0.1",
         "@tailwindcss/forms": "^0.5.11",
         "@tailwindcss/typography": "^0.5.20",
-        "@tailwindcss/vite": "^4.3.3",
+        "@tailwindcss/vite": "^4.3.5",
         "alpinejs": "^3.17.5",
-        "concurrently": "^10.0.6",
+        "concurrently": "^10.0.7",
         "embla-carousel": "^8.6.0",
-        "eslint": "^10.13.0",
+        "eslint": "^10.14.0",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-unicorn": "^79.0.0",
-        "globals": "^17.13.0",
+        "globals": "^17.14.0",
         "heroicons": "^2.2.0",
-        "laravel-vite-plugin": "^3.2.0",
+        "laravel-vite-plugin": "^3.2.1",
         "lite-youtube-embed": "^0.3.4",
-        "lucide-static": "^1.62.0",
-        "playwright": "^1.64.1",
+        "playwright": "^1.65.0",
         "prettier": "^3.9.10",
         "prettier-plugin-antlers": "^2.0.8",
         "prettier-plugin-blade": "^3.3.3",
         "prettier-plugin-tailwindcss": "^0.8.1",
-        "tailwindcss": "^4.3.3",
-        "vite": "^8.3.5"
+        "tailwindcss": "^4.3.5",
+        "vite": "^8.3.6"
     }
 }

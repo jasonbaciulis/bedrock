@@ -1,0 +1,36 @@
+{{# Configure Banner inside Control Panel in /cp/globals/banner #}}
+<section
+    {{ if banner:dismissible }}
+        x-cloak
+        x-show="visible"
+        x-data="{
+            contentHash: {{ '{banner:text}' | md5 | macro('to_js') }},
+            dismissedHash: $persist(null).as('{{ site:name | snake }}_banner_dismissed_hash'),
+            get visible() {
+                return this.dismissedHash !== this.contentHash
+            },
+            dismiss() {
+                this.dismissedHash = this.contentHash
+            },
+        }"
+    {{ /if }}
+    class="bg-foreground flex items-center gap-x-6 px-6 py-2.5 sm:px-3.5 sm:before:flex-1"
+    aria-label="Site notice"
+>
+    <p class="text-sm/6 text-white [&_a]:underline [&_a]:underline-offset-2 [&_a]:hover:opacity-80">
+        {{ banner:text }}
+    </p>
+    <div class="flex flex-1 justify-end">
+        {{ if banner:dismissible }}
+            <s:partial:components.ui.button
+                as="button"
+                variant="ghost"
+                class="hover:bg-primary-foreground/20 -m-2 size-8"
+                x_click="dismiss()"
+                aria_label="Dismiss banner"
+            >
+                <s:svg src="heroicons/outline/x-mark" class="text-white" />
+            </s:partial:components.ui.button>
+        {{ /if }}
+    </div>
+</section>
