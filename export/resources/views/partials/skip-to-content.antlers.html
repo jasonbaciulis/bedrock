@@ -1,6 +1,11 @@
-<a
-    class="btn btn--primary fixed top-4 left-8 z-50 hidden -translate-y-24 opacity-0 focus-visible:translate-y-0 focus-visible:opacity-100 md:block"
-    href="#content"
+---
+to: '#content'
+---
+
+<s:partial:components.ui.button
+    variant="primary"
+    class="fixed top-4 left-8 z-50 -translate-y-24 opacity-0 focus-visible:translate-y-0 focus-visible:opacity-100"
+    url="{{ view:to }}"
 >
-    Skip to content
-</a>
+    Skip to main content
+</s:partial:components.ui.button>
