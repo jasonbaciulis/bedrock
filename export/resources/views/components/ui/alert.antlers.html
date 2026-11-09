@@ -12,14 +12,15 @@ class: ''
         x-data="{ dismissed: false }"
         x-show="!dismissed"
     {{ /if }}
+    role="alert"
 >
     <div class="alert__icon">
         {{ if view:variant == 'success' }}
-            <s:svg src="lucide/circle-check" />
+            <s:svg src="heroicons/outline/check-circle" />
         {{ elseif view:variant == 'warning' }}
-            <s:svg src="lucide/triangle-alert" />
+            <s:svg src="heroicons/outline/exclamation-triangle" />
         {{ elseif view:variant == 'error' }}
-            <s:svg src="lucide/circle-x" />
+            <s:svg src="heroicons/outline/x-circle" />
         {{ /if }}
     </div>
     <div class="alert__content">
@@ -37,7 +38,7 @@ class: ''
                     aria-label="Dismiss"
                     @click="dismissed = !dismissed"
                 >
-                    <s:svg src="lucide/x" class="size-4" />
+                    <s:svg src="heroicons/outline/x-mark" class="size-4" />
                 </button>
             </div>
         </div>

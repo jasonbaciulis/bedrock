@@ -20,16 +20,22 @@
                 role="status"
             >
                 <template x-if="toast.type === 'success'">
-                    <s:svg src="lucide/circle-check" class="mt-0.5 size-4 shrink-0" />
+                    <s:svg src="heroicons/outline/check-circle" class="mt-0.5 size-4 shrink-0" />
                 </template>
                 <template x-if="toast.type === 'warning'">
-                    <s:svg src="lucide/triangle-alert" class="mt-0.5 size-4 shrink-0" />
+                    <s:svg
+                        src="heroicons/outline/exclamation-triangle"
+                        class="mt-0.5 size-4 shrink-0"
+                    />
                 </template>
                 <template x-if="toast.type === 'error'">
-                    <s:svg src="lucide/circle-x" class="mt-0.5 size-4 shrink-0" />
+                    <s:svg src="heroicons/outline/x-circle" class="mt-0.5 size-4 shrink-0" />
                 </template>
                 <template x-if="toast.type === 'info'">
-                    <s:svg src="lucide/info" class="mt-0.5 size-4 shrink-0" />
+                    <s:svg
+                        src="heroicons/outline/information-circle"
+                        class="mt-0.5 size-4 shrink-0"
+                    />
                 </template>
 
                 <div class="flex flex-1 flex-col gap-0.5">
@@ -45,7 +51,7 @@
                     aria-label="Dismiss toast"
                     @click="dismiss(toast.id)"
                 >
-                    <s:svg src="lucide/x" class="size-4" />
+                    <s:svg src="heroicons/outline/x-mark" class="size-4" />
                 </button>
             </li>
         </template>
