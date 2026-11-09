@@ -47,7 +47,7 @@ type: 'button'
                 (view:link_type == 'phone') => 'href="tel:{{ view:phone }}"',
                 (view:link_type == 'asset') => 'href="{{ view:asset }}" download',
             )}}
-            {{ view:target_blank ?= 'rel="noopener" target="_blank"' }}
+            {{ view:target_blank ?= 'target="_blank"' }}
         {{ /if }}
         {{ slot:attributes }}
         {{ if view:link_type == 'code' }} x-data @click.prevent="{{ view:code }}" {{ /if }}
@@ -67,5 +67,8 @@ type: 'button'
     >
         {{ view:label }}
         {{ slot }}
+        {{ if view:target_blank }}
+            <s:partial:components.ui.new-tab-hint />
+        {{ /if }}
     </{{ view:as }}>
 {{ /if }}

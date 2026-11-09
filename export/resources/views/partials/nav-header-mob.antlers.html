@@ -27,7 +27,7 @@
                         @click="mobileNavOpen = false"
                         aria-label="Close menu"
                     >
-                        <s:svg src="lucide/x" class="size-5" />
+                        <s:svg src="heroicons/outline/x-mark" class="size-5" />
                     </button>
                 </div>
                 <div class="mt-6 flow-root">
@@ -51,22 +51,20 @@
                             {{ items }}
                                 {{ if children && !two_col_menu }}
                                     {{ children scope="child" }}
-                                        <a
-                                            href="{{ child:url }}"
+                                        <s:partial:partials.nav-link
+                                            :url="child:url"
+                                            :title="child:title"
+                                            :is_external="child:is_external"
                                             class="hover:bg-accent -mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-neutral-900"
-                                            {{ child:is_external ?= 'target="_blank" rel="noopener nofollow"' }}
-                                        >
-                                            {{ child:title }}
-                                        </a>
+                                        />
                                     {{ /children }}
                                 {{ elseif !children }}
-                                    <a
-                                        href="{{ url }}"
+                                    <s:partial:partials.nav-link
+                                        :url="url"
+                                        :title="title"
+                                        :is_external="is_external"
                                         class="hover:bg-accent -mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-neutral-900"
-                                        {{ is_external ?= 'target="_blank" rel="noopener nofollow"' }}
-                                    >
-                                        {{ title }}
-                                    </a>
+                                    />
                                 {{ /if }}
                             {{ /items }}
                         </div>

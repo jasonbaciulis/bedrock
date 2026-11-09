@@ -5,6 +5,7 @@ export_paths:
   - app/Fieldtypes
   - app/Http
   - app/Models/User.php
+  - app/MutatorPlugins
   - app/Providers/AppServiceProvider.php
   - config/filesystems.php
   - config/essentials.php
@@ -41,5 +42,6 @@ export_paths:
   - rector.php
   - vite.config.js
 dependencies:
+  jacksleight/statamic-bard-mutator: ^3.0.6
   nunomaduro/essentials: ^1.2
-  statamic/seo-pro: ^7.15.1
+  statamic/seo-pro: ^7.16.0

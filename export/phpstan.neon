@@ -22,8 +22,8 @@ parameters:
     tmpDir: /tmp/phpstan
 
     # Statamic declares no types on its public API and we cannot annotate vendor
-    # code. Every rule is keyed on the Statamic namespace, so none can reach our
-    # code or Laravel's. reportUnmatched is off because a starter kit ships rules
+    # code. Every rule is keyed on a Statamic or Bard Mutator namespace, so none can
+    # reach our code or Laravel's. reportUnmatched is off because a starter kit ships rules
     # for the code downstream projects will write, not only for what it holds today.
     ignoreErrors:
         # Contracts such as Entries\Entry and Entries\QueryBuilder are empty marker
@@ -47,6 +47,12 @@ parameters:
             identifier: argument.type
             reportUnmatched: false
             message: '#Closure\(Statamic\\#'
+
+        # Bard Mutator's Info exposes its protected properties through __get.
+        -
+            identifier: property.protected
+            reportUnmatched: false
+            message: '#JackSleight\\StatamicBardMutator\\Info::#'
 
     # -------------------------------------------------------------------------
     # Retiring the rules above: what an upstream statamic/cms PR would change.

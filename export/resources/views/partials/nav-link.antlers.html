@@ -1,0 +1,13 @@
+---
+url: ''
+title: ''
+is_external: false
+class: ''
+---
+
+<a href="{{ url }}" {{ class | attribute:class }} {{ is_external ?= 'target="_blank"' }}>
+    {{ title }}
+    {{ if is_external }}
+        <s:partial:components.ui.new-tab-hint />
+    {{ /if }}
+</a>
