@@ -13,28 +13,27 @@ tabs:
               type: toggle
               instructions: 'Displays banner sitewide at the very top of the page'
           -
+            handle: dismissible
+            field:
+              type: toggle
+              display: Dismissible
+              instructions: 'Shows a close button. A dismissed banner stays hidden until the text changes.'
+              if:
+                show: 'equals true'
+          -
             handle: text
             field: common.text_basic
             config:
+              buttons:
+                - bold
+                - italic
+                - underline
+                - removeformat
+                - anchor
               display: Text
+              validate:
+                - 'required_if:show,true'
               if:
                 show: 'equals true'
-          -
-            handle: link_url
-            field:
-              display: 'Link URL'
-              type: link
-              if:
-                show: 'equals true'
-          -
-            handle: dismiss_duration
-            field:
-              input_type: number
-              default: '7'
-              display: 'Dismiss duration'
-              type: text
-              instructions: 'After a user clicks dismiss button how many days to not show the banner'
-              if:
-                show: 'equals true'
-              width: 66
-              append: days
+              fullscreen: false
+              inline: true

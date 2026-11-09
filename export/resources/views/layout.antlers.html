@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ site:short_locale }}">
+<html lang="{{ site:short_locale }}" class="motion-safe:scroll-smooth">
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -29,15 +29,17 @@
         {{ scripts:code_head }}
     </head>
     <body
-        class="selection:bg-primary min-h-screen overflow-x-hidden bg-white font-sans text-base/6 text-neutral-800 antialiased selection:text-white"
+        class="selection:bg-selection selection:text-selection-foreground bg-background text-foreground min-h-screen overflow-x-hidden font-sans text-base/6 antialiased"
     >
         <s:partial:partials.skip-to-content />
         {{# Banner global #}}
         {{ if banner:show }}
-            <s:partial:components.ui.banner />
+            <s:partial:components.banner />
         {{ /if }}
         <s:partial:partials.header />
-        {{ template_content }}
+        <main id="content">
+            {{ template_content }}
+        </main>
         <s:partial:partials.footer />
 
         {{# Control panel toolbar #}}
