@@ -12,7 +12,7 @@ class: ''
 <div
     x-data="Combobox({
                 id: '{{ id }}',
-                items: {{ options | to_json | entities }},
+                items: {{ options | macro('to_js') }},
                 placeholder: '{{ view:placeholder }}',
             })"
     x-modelable="value"
@@ -29,6 +29,7 @@ class: ''
         type="button"
         aria-haspopup="listbox"
         :aria-expanded="listboxOpen"
+        {{ partial:components.ui.form.aria-describedby }}
         class="btn btn--outline w-full justify-between font-normal"
         @click="toggleListbox()"
     >
@@ -37,7 +38,7 @@ class: ''
             x-text="buttonLabel"
             :class="{ 'text-muted-foreground': !value }"
         ></span>
-        <s:svg src="lucide/chevrons-up-down" class="opacity-50" />
+        <s:svg src="heroicons/outline/chevron-up-down" class="opacity-50" />
     </button>
 
     <div
@@ -56,7 +57,10 @@ class: ''
     >
         <div class="flex h-full w-full flex-col overflow-hidden rounded-md">
             <div class="flex h-9 items-center gap-2 border-b px-3">
-                <s:svg src="lucide/search" class="size-4 shrink-0 opacity-50" />
+                <s:svg
+                    src="heroicons/outline/magnifying-glass"
+                    class="size-4 shrink-0 opacity-50"
+                />
                 <input
                     :id="`${id}-search`"
                     x-ref="comboboxInput"
@@ -96,7 +100,7 @@ class: ''
                     >
                         <span x-text="item.value"></span>
                         <s:svg
-                            src="lucide/check"
+                            src="heroicons/outline/check"
                             class="text-muted-foreground pointer-events-none ml-auto size-4 shrink-0"
                             x-show="itemIsSelected(item)"
                         />

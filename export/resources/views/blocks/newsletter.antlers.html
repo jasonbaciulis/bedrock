@@ -41,12 +41,12 @@
                 />
                 <input type="hidden" name="_token" value="{{ csrf_token }}" />
 
-                <s:partial:components.ui.label
+                <s:partial:components.ui.form.label
                     id="{type}-email"
                     display="Email"
                     hide_display="true"
                 />
-                <s:partial:components.ui.form.text
+                <s:partial:components.ui.form.fields.text
                     id="{type}-email"
                     model="form.email"
                     handle="email"
@@ -63,7 +63,7 @@
                 />
             </div>
 
-            <s:partial:components.ui.input-error handle="email" id="{type}-email" />
+            <s:partial:components.ui.form.error handle="email" id="{type}-email" />
         </form>
 
         <template x-if="success">

@@ -1,0 +1,11 @@
+---
+id: ''
+instructions: ''
+class: ''
+---
+
+{{ if view:instructions }}
+    <p class="text-muted-foreground {{ view:class }} text-sm" id="{{ view:id }}-instructions">
+        {{ view:instructions }}
+    </p>
+{{ /if }}

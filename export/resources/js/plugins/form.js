@@ -15,26 +15,29 @@ function createForm(Alpine, method, url, inputs) {
         ...sanitizedInputs,
 
         processing: false,
-        hasErrors: false,
         errors: {},
 
+        get hasErrors() {
+            return Object.keys(this.errors).length > 0
+        },
+
         invalid(fieldName) {
-            return Object.hasOwn(this.errors, fieldName)
+            // Object.keys() is reactive to the delete in validate(). The reactive proxy does not track Object.hasOwn().
+            return Object.keys(this.errors).includes(fieldName)
         },
 
         validate(fieldName) {
-            if (!fieldName || !Object.hasOwn(this.errors, fieldName)) {
-                return
-            }
-
             delete this.errors[fieldName]
-            this.hasErrors = Object.keys(this.errors).length > 0
+        },
+
+        reset() {
+            Object.assign(this, structuredClone(sanitizedInputs))
+            this.errors = {}
         },
 
         async submit(formElement) {
             this.processing = true
             this.errors = {}
-            this.hasErrors = false
 
             try {
                 const response = await fetch(url, {
@@ -51,7 +54,6 @@ function createForm(Alpine, method, url, inputs) {
                         flatErrors[field] = Array.isArray(messages) ? messages[0] : messages
                     }
                     this.errors = flatErrors
-                    this.hasErrors = true
                     throw { response, errors: flatErrors }
                 }
 

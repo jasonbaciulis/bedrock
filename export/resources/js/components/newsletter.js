@@ -24,7 +24,7 @@ document.addEventListener('alpine:init', () => {
                     return
                 }
 
-                const response = await this.form.submit()
+                const response = await this.form.submit(this.$refs.form)
 
                 if (response?.data?.success) {
                     this.success = true
@@ -39,6 +39,11 @@ document.addEventListener('alpine:init', () => {
                 console.error(error)
                 this.success = false
                 this.error = true
+
+                // The error has no live region, so focus on the input makes screen readers read it through aria-describedby.
+                if (error?.errors) {
+                    this.$nextTick(() => this.$refs.form.querySelector('[name="email"]').focus())
+                }
             }
         },
     }))

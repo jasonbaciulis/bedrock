@@ -20,10 +20,10 @@ class: ''
         id="{{ id }}"
         type="button"
         class="peer focus-visible:border-ring focus-visible:ring-ring/50 inline-flex h-[1.15rem] w-8 shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visible:ring-3 disabled:cursor-not-allowed disabled:opacity-50"
-        :class="{ 'bg-primary': on, 'bg-input dark:bg-input/80': !on }"
+        :class="{ 'bg-primary': on, 'bg-input': !on }"
         role="switch"
         aria-labelledby="{{ id }}-label"
-        :aria-describedby="form.invalid('{{ handle }}') ? '{{ id }}-error' : {{ if instructions }}'{{ id }}-instructions'{{ else }}false{{ /if }}"
+        {{ partial:components.ui.form.aria-describedby }}
         :aria-checked="on.toString()"
         @click="toggle()"
     >
@@ -31,8 +31,8 @@ class: ''
             aria-hidden="true"
             class="bg-background pointer-events-none block size-4 rounded-full ring-0 transition-transform"
             :class="{
-                'translate-x-[calc(100%-2px)] dark:bg-primary-foreground': on,
-                'translate-x-0 dark:bg-foreground': !on,
+                'translate-x-[calc(100%-2px)]': on,
+                'translate-x-0': !on,
             }"
         ></span>
         <span class="sr-only">Toggle {{ handle | deslugify | title }}</span>
@@ -56,3 +56,4 @@ class: ''
         class="sr-only"
     />
 </div>
+<s:partial:components.ui.form.instructions :instructions="instructions" :id="id" />

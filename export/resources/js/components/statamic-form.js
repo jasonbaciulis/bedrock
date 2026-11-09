@@ -1,7 +1,13 @@
+function scrollToAndFocus(element, block) {
+    element.scrollIntoView({ block })
+    element.focus({ preventScroll: true })
+}
+
 document.addEventListener('alpine:init', () => {
     Alpine.data('StatamicForm', () => ({
         form: null,
         success: false,
+        submitFailure: null,
 
         init() {
             this.form = this.$form(
@@ -17,6 +23,8 @@ document.addEventListener('alpine:init', () => {
         },
 
         async submit() {
+            this.submitFailure = null
+
             try {
                 const response = await this.form.submit(this.$refs.form)
 
@@ -26,25 +34,22 @@ document.addEventListener('alpine:init', () => {
                     this.$dispatch('form-submission')
                 }
 
-                this.$refs.form.scrollIntoView({ behavior: 'smooth' })
+                this.$refs.form.scrollIntoView()
             } catch (error) {
-                if (error?.errors) {
-                    this.$nextTick(() => this.scrollToFirstError(error.errors))
+                if (!error?.errors) {
+                    this.submitFailure = error?.response?.status === 419 ? 'expired' : 'unknown'
                 }
+
+                this.$nextTick(() => scrollToAndFocus(this.$refs.errorSummary, 'start'))
             }
         },
 
-        scrollToFirstError(errors) {
-            const fieldName = Object.keys(errors)[0]
-            const input = this.$refs.form.querySelector(`[name='${CSS.escape(fieldName)}']`)
+        focusField(event) {
+            const fieldId = event.currentTarget.hash.slice(1)
+            const field = document.getElementById(fieldId)
 
-            if (!input) return
-
-            const listbox = input.closest('[x-listbox]')
-            const target = listbox ? listbox.querySelector(String.raw`[x-listbox\:button]`) : input
-
-            target.scrollIntoView({ behavior: 'smooth', block: 'center' })
-            target.focus({ preventScroll: true })
+            // A radio or checkbox group links to its fieldset, which cannot take focus.
+            scrollToAndFocus(field.querySelector('input') ?? field, 'center')
         },
     }))
 })
