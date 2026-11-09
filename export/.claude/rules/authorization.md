@@ -15,6 +15,7 @@ Always adhere to the following structural separation when designing or refactori
 * **Purpose:** Answer the full question — "may this user do this to this resource *right now*?" Identity, permission, and model state all belong here.
 * **Non-CRUD abilities are welcome.** Name the transition verb: `cancel`, `hire`, `revealPrice`, `finalize`. One ability per user-facing operation gives each verb a single named, testable home.
 * **Status codes:** Identity/permission failures deny plainly (403). State failures deny with the accurate status and a message: `Response::denyWithStatus(Response::HTTP_LOCKED, 'The statement of work is no longer editable.')`.
+* **Skip a policy that adds nothing.** Reuse an existing ability (e.g. Statamic's `edit` on an entry) instead of a new one that only delegates to it. A public endpoint with no user identity and one entry point keeps its state checks in that FormRequest's `authorize()`, returning the same `Response` (`denyAsNotFound()`, `denyWithStatus()`).
 * **UI hints come from the same ability** (`can()` props, Filament visibility). Never hand-compose identity + state in a resource or controller (`can('update') && $model->isEditable()`) — that composition drifts from enforcement.
 
 ## Form Requests (The "What")

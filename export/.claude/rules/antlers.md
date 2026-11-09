@@ -98,3 +98,14 @@ Templates must:
 - Provide sensible fallbacks
 
 Content editors should never be able to break the site.
+
+## Reusing design system
+
+Always check if you can reuse UI components in `resources/views/components/` or partials/fragments in `resources/views/partials/`.
+Also, check `resources/css/components` for reusable CSS classes: the heading classes `.h1`–`.h6` in `headings.css`, the body text classes `.content-*` in `typography.css`, and the utilities in `resources/css/utilities`.
+
+### Buttons
+
+- Render every button and button-styled link with `components.ui.button`. Do not write raw `btn btn--*` classes in templates.
+- Pass extra icons or `sr-only` text in the slot. Pass Alpine bindings with the `x_*` props (`x_click`, `x_aria_expanded`, `x_ref`, …) and other attributes with `{{ slot:attributes }}`.
+- Write raw `.btn` classes only when the component cannot output the element. Tell the user in your report when you do this.
