@@ -40,7 +40,6 @@ CSS folder structure is based on ITCSS:
 @import './components/typography.css';
 
 /* Utilities */
-@import './utilities/br-hidden.css';
+@import './utilities/transition-collapsible.css';
 @import './utilities/container.css';
-@import './utilities/fill-current-nested.css';
 @import './utilities/site-grid.css';
