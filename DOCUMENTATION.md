@@ -1,4 +1,4 @@
-# [Bedrock demo](https://bedrock.remarkable.dev)
+# [Bedrock](https://bedrock.remarkable.dev)
 
 ## Requirements
 
