@@ -14,6 +14,7 @@
         "infer-conventions",
         "laravel-best-practices",
         "testing-best-practices",
+        "configuring-horizon",
         "tailwindcss-development"
     ]
 }

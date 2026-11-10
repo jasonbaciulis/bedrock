@@ -43,7 +43,9 @@
         <s:partial:partials.footer />
 
         {{# Control panel toolbar #}}
-        <s:partial:partials.cp-toolbar />
+        {{ if {config:bedrock:cp_toolbar_enabled} }}
+            <s:partial:partials.cp-toolbar />
+        {{ /if }}
 
         {{# Notifications #}}
         <s:partial:components.ui.toaster />

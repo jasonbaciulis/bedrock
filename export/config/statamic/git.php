@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-$configuredBinary = env('STATAMIC_GIT_BINARY', 'git');
-$binary = is_string($configuredBinary) ? $configuredBinary : 'git';
-
 return [
+
     /*
     |--------------------------------------------------------------------------
     | Git Integration
@@ -68,6 +66,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Unique Lock Expiry
+    |--------------------------------------------------------------------------
+    |
+    | When commits are queued, a unique lock prevents multiple jobs from
+    | running concurrently against the same repository. This value (in
+    | seconds) controls how long that lock is held as a crash-safety
+    | net. It should exceed your queue worker's configured timeout.
+    |
+    */
+
+    'unique_lock_expiry' => env('STATAMIC_GIT_UNIQUE_LOCK_EXPIRY', 120),
+
+    /*
+    |--------------------------------------------------------------------------
     | Git User
     |--------------------------------------------------------------------------
     |
@@ -122,7 +134,7 @@ return [
     |
     */
 
-    'binary' => $binary,
+    'binary' => env('STATAMIC_GIT_BINARY', 'git'),
 
     /*
     |--------------------------------------------------------------------------
@@ -138,8 +150,8 @@ return [
     */
 
     'commands' => [
-        $binary.' add {{ paths }}',
-        $binary.' -c "user.name={{ name }}" -c "user.email={{ email }}" commit -m "{{ message }} [BOT]"',
+        '{{ git }} add {{ paths }}',
+        '{{ git }} -c "user.name={{ name }}" -c "user.email={{ email }}" commit -m "{{ message }} [BOT]"',
     ],
 
     /*
@@ -185,4 +197,5 @@ return [
     */
 
     'locale' => env('STATAMIC_GIT_LOCALE'),
+
 ];

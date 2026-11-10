@@ -4,6 +4,8 @@
 
 Before running Statamic, you should ensure that your local machine has PHP and [Composer](https://getcomposer.org/) installed. If you are developing on macOS, PHP and Composer can be installed via [Homebrew](https://brew.sh/). In addition, I recommend [installing Bun](https://bun.sh/) for frontend dependencies.
 
+The queue runs on [Laravel Horizon](https://laravel.com/docs/13.x/horizon), so you also need Redis. Use the Redis service in [Herd Pro](https://herd.laravel.com/docs/macos/herd-pro-services/services), or install it with `brew install redis && brew services start redis`.
+
 ## Installation
 
 Using the [Statamic CLI](https://github.com/statamic/cli) tool run the following command:
@@ -16,7 +18,8 @@ statamic new project_name jasonbaciulis/bedrock
 2. Install frontend dependencies: `bun install`
 3. Create a Statamic user: `php please make:user`
 4. (Optional) install the MCP server and AI coding guidelines: `php artisan boost:install`
-5. Start Laravel's local dev server, bun run dev, start queue: `composer run dev`
+5. Give the project a unique `APP_NAME` in `.env` (see [Queues and Horizon](#queues-and-horizon))
+6. Start Horizon, log tailing and Vite: `composer run dev`
 
 Recommended to use [Herd](https://laravel.com/docs/13.x/installation#installation-using-herd) for local dev.
 Once you have started the development server with `composer run dev`, the website will be accessible in your web browser at [https://bedrock.test](https://bedrock.test). Head to [https://bedrock.test/cp](https://bedrock.test/cp) and use your email address and password to sign into the Statamic control panel.
@@ -26,6 +29,7 @@ Once you have started the development server with `composer run dev`, the websit
 - [TailwindCSS](https://tailwindcss.com/docs/installation) - Utility-first CSS framework.
 - [Alpine.js](https://alpinejs.dev/start-here) - Rugged, minimal tool for composing behavior directly in your markup.
 - [Embla](https://www.embla-carousel.com) - A lightweight carousel library with fluid motion and great swipe precision.
+- [Laravel Horizon](https://laravel.com/docs/13.x/horizon) - Redis queue workers with a dashboard at `/horizon`.
 - [Laravel Boost](https://github.com/laravel/boost) - Accelerates AI-assisted development by providing the essential context that AI needs to generate high-quality, Laravel-specific code.
 - [Statamic MCP](https://statamic.com/addons/cboxdk/statamic-mcp) - MCP (Model Context Protocol) server for Statamic that provides AI assistants with structured access to Statamic's capabilities through a modern router-based architecture.
 
@@ -35,7 +39,8 @@ resources/views/
 ├── blocks/                      # Page building blocks (Replicator fields)
 ├── components/                  # Project specific reusable components
 │   └── ui/                      # Highly-reusable shadcn/ui style Alpine.js components
-│       └── form/                # Form field types (custom Statamic form fields will require a snake_case view file here)
+│       └── form/                # Statamic form (create), field wrapper and shared form parts (label, error, instructions, etc.)
+│           └── fields/          # Form field types (custom Statamic form fields will require a snake_case view file here)
 ├── partials/                    # Template partials and fragments (things that aren't really reusable go here)
 ├── posts/                       # Posts collection templates
 ├── sets/                        # Content sets for Article Block
@@ -63,67 +68,104 @@ Sets provide a powerful content creation experience with unparalleled flexibilit
 - `php please delete:bedrock-set` - removes a set from the Article and all associated files.
 - `php please rename:bedrock-set` - renames a set in the Article and optionally moves to another group.
 
+## Queues and Horizon
+
+Horizon runs the Redis queue. Statamic uses the queue for Git commits, static cache warming and search index updates.
+
+- **Local:** `composer run dev` starts `php artisan horizon:listen`, which restarts the workers when code changes. It uses the `chokidar` package for the file watcher.
+- **Unique `APP_NAME` per project:** Redis and Horizon key prefixes come from `APP_NAME`. Herd runs one Redis for all your local sites, so two projects with `APP_NAME=Bedrock` share one queue, and each project runs the other's jobs.
+- **Dashboard access:** in `local` everyone can open `/horizon`. In other environments, only Statamic super users can open it, or a request with the `HORIZON_TOKEN` bearer token (see [Horizon statistics in Ploi](#horizon-statistics-in-ploi)).
+- **Metrics:** `routes/console.php` schedules `horizon:snapshot` every five minutes. The metrics graphs stay empty if the server does not run the Laravel scheduler.
+- **Environments:** `config/horizon.php` starts workers only for the `APP_ENV` values it lists (`production`, `staging`, `local`). If you add an environment, add it there too. If you do not, Horizon starts but processes no jobs.
+- **Timeouts:** keep the job `timeout` less than the supervisor `timeout` (60s), and the supervisor `timeout` less than `REDIS_QUEUE_RETRY_AFTER` (90s). If you do not, Redis gives a job that is still running to a second worker.
+
+## Staging and production on the same server
+
+When staging and production use one Redis instance, each site must use its own Redis databases. If they share a database, staging Horizon can run production jobs with staging code and content (for example, a Statamic Git commit job), and `cache:clear` on one site deletes the cache of the other.
+
+| Variable | Production | Staging |
+| --- | --- | --- |
+| `REDIS_DB` (queue, Horizon) | `0` | `2` |
+| `REDIS_CACHE_DB` (cache, Stache) | `1` | `3` |
+| `CACHE_PREFIX` | `project_production_cache_` | `project_staging_cache_` |
+| `HORIZON_PREFIX` | `project_production_horizon:` | `project_staging_horizon:` |
+
+Know these rules before you change this:
+
+- **Prefixes are not isolation.** With the Redis cache store, `php artisan cache:clear` calls `flushdb()` and ignores every prefix. Only different database numbers keep the sites apart. The prefixes only make the keys easy to identify.
+- **Each site uses two of the 16 Redis databases (0–15).** A server can hold eight sites with the default Redis config. Give each site its own numbers.
+- **Never derive a Redis prefix from `base_path()`.** Ploi's zero-downtime releases live in timestamped folders, so the prefix changes on each deploy. The existing keys become orphans, and the web process and the queue workers stop sharing a cache.
+
 ## Production env file contents
 Dump your `.env` values here with sensitive data removed. The following is a production example that uses full static caching:
 
 ```env
-APP_NAME=Statamic
+APP_NAME=Bedrock
 APP_ENV=production
 APP_KEY=
 APP_DEBUG=false
 APP_URL=
 
+APP_LOCALE=en
+APP_FALLBACK_LOCALE=en
+
+LOG_CHANNEL=stack
+LOG_STACK=single
+LOG_DEPRECATIONS_CHANNEL=null
+LOG_LEVEL=error
+
+DB_CONNECTION=sqlite
+
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+SESSION_ENCRYPT=false
+SESSION_PATH=/
+SESSION_DOMAIN=null
+
+BROADCAST_CONNECTION=log
+FILESYSTEM_DISK=local
+QUEUE_CONNECTION=redis
+
+CACHE_STORE=redis
+CACHE_PREFIX=project_production_cache_
+
+REDIS_CLIENT=phpredis
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+REDIS_DB=0
+REDIS_CACHE_DB=1
+
+HORIZON_PREFIX=project_production_horizon:
+HORIZON_TOKEN=
+
+MAIL_MAILER=smtp
+MAIL_HOST=
+MAIL_PORT=587
+MAIL_USERNAME=
+MAIL_PASSWORD=
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS="hello@example.com"
+MAIL_FROM_NAME="${APP_NAME}"
+
 STATAMIC_LICENSE_KEY=
+STATAMIC_PRO_ENABLED=true
 STATAMIC_STACHE_WATCHER=false
 STATAMIC_STATIC_CACHING_STRATEGY=full
+STATAMIC_STATIC_WARM_INSECURE=true
+STATAMIC_TWO_FACTOR_ENABLED=true
 STATAMIC_REVISIONS_ENABLED=true
 STATAMIC_GRAPHQL_ENABLED=false
 STATAMIC_API_ENABLED=false
 STATAMIC_GIT_ENABLED=true
 STATAMIC_GIT_PUSH=true
 STATAMIC_GIT_DISPATCH_DELAY=1
-STATAMIC_THEME=business
-
-SAVE_CACHED_IMAGES=true
 
 STATAMIC_CUSTOM_CMS_NAME="${APP_NAME}"
-STATAMIC_CUSTOM_LOGO_URL='/assets/logos/logo-brand-fixed.svg'
+STATAMIC_CUSTOM_NAV_LOGO_URL='/assets/logos/logo-brand-fixed-white.svg'
+STATAMIC_CUSTOM_OUTSIDE_LOGO_URL='/assets/logos/logo-brand-fixed.svg'
 
-LOG_CHANNEL=stack
-LOG_DEPRECATIONS_CHANNEL=null
-LOG_LEVEL=debug
-
-BROADCAST_DRIVER=pusher
-CACHE_DRIVER=file
-FILESYSTEM_DISK=local
-QUEUE_CONNECTION=redis
-SESSION_DRIVER=file
-SESSION_LIFETIME=120
-
-MEMCACHED_HOST=127.0.0.1
-
-REDIS_HOST=127.0.0.1
-REDIS_PASSWORD=null
-REDIS_PORT=6379
-
-MAIL_MAILER=smtp
-MAIL_HOST=mailhog
-MAIL_PORT=1025
-MAIL_USERNAME=null
-MAIL_PASSWORD=null
-MAIL_ENCRYPTION=null
-MAIL_FROM_ADDRESS=null
-MAIL_FROM_NAME="${APP_NAME}"
-
-PUSHER_APP_ID=
-PUSHER_APP_KEY=
-PUSHER_APP_SECRET=
-PUSHER_APP_CLUSTER=mt1
-
-MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
-MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
-
-DEBUGBAR_ENABLED=false
+BEDROCK_CP_TOOLBAR_ENABLED=true
 ```
 
 ## NGINX config
@@ -146,41 +188,40 @@ map $sent_http_content_type $expires {
 }
 ```
 
-## Forge deploy script
+## Ploi deploy scripts (with zero-downtime enabled)
+
+Ploi does not install Bun by default. [Install Bun on your server](https://ploi.io/documentation/server/how-to-install-bun-package-manager) before the first deploy.
+
+### Horizon daemon
+
+Add a daemon in Ploi for each site that runs `php artisan horizon`. With zero-downtime deploys, set the daemon directory to the site's `current` symlink, not to a release folder. If you do not, the daemon runs the old release after each deploy. The post deploy script below calls `horizon:terminate`, and the daemon then starts Horizon again with the new code.
+
+### Scheduler
+
+Enable the Laravel scheduler (`php artisan schedule:run` every minute) for each site. Horizon metrics need it.
+
+### Horizon statistics in Ploi
+
+Ploi can show Horizon statistics on the site page. [Ploi's guide](https://ploi.io/documentation/domains/how-do-i-configure-laravel-horizon-statistics-in-ploi):
+
+1. Set `HORIZON_TOKEN` in the site's `.env` to a long random string.
+2. In Ploi, open the site, go to **Laravel → Settings**, and enter the endpoint and the token.
+
+`HorizonServiceProvider` already accepts this token as a bearer token.
+
+### Pre deploy script
 
 ```bash
-if [[ $FORGE_DEPLOY_MESSAGE =~ "[BOT]" ]]; then
-    echo "Auto-committed on production. Nothing to deploy."
-    exit 0
-fi
-
-cd $FORGE_SITE_PATH
-git pull origin $FORGE_SITE_BRANCH
-$FORGE_COMPOSER install --no-interaction --optimize-autoloader --no-dev
-
-bun install --frozen-lockfile
-bun run build
-$FORGE_PHP artisan cache:clear
-$FORGE_PHP artisan config:cache
-$FORGE_PHP artisan route:cache
-$FORGE_PHP artisan statamic:stache:warm
-$FORGE_PHP artisan queue:restart
-$FORGE_PHP artisan statamic:search:update --all
-$FORGE_PHP artisan statamic:static:clear
-$FORGE_PHP artisan statamic:static:warm --queue
-
-( flock -w 10 9 || exit 1
-    echo 'Restarting FPM...'; sudo -S service $FORGE_PHP_FPM reload ) 9>/tmp/fpmlock
+# Needed for Bun to work
+export PATH="$HOME/.bun/bin:$PATH"
 ```
-
-## Ploi deploy scripts (with zero-downtime enabled)
 
 ### Main deploy script
 
 ```bash
 # Early Exit Check
 if [[ {COMMIT_MESSAGE} =~ "[BOT]" ]]; then
-    echo "Auto-committed on staging. Nothing to deploy."
+    echo "Auto-committed on production. Nothing to deploy."
     {DO_NOT_NOTIFY}
     {CLEAR_NEW_RELEASE}
     exit 0
@@ -221,16 +262,17 @@ echo "⏳ Release prepared. Awaiting symlink switch…"
 # Statamic Stache
 {SITE_PHP} artisan statamic:stache:clear
 {SITE_PHP} artisan statamic:stache:warm
+{SITE_PHP} artisan statamic:stache:doctor
 
-# Restart Queue Workers
-{SITE_PHP} artisan queue:restart
+# Restart Horizon (the Ploi daemon starts it again with the new release)
+{SITE_PHP} artisan horizon:terminate
 
 # Update all search indexes
 {SITE_PHP} artisan statamic:search:update --all
 
 # Static Caching
 {SITE_PHP} artisan statamic:static:clear
-{SITE_PHP} artisan statamic:static:warm --queue --insecure
+{SITE_PHP} artisan statamic:static:warm --queue
 
 echo "🚀 Website deployed!"
 ```

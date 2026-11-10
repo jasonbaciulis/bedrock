@@ -33,7 +33,7 @@ fields:
         authority:
           display: Authority
           instructions: 'Testimonials, logos, ratings, press'
-          icon: favorite-award
+          icon: favorite-award-prize
           sets:
             testimonials:
               display: Testimonials
@@ -61,13 +61,13 @@ fields:
                   import: blog_excerpt
             blog_paginated:
               display: 'Blog Paginated'
-              icon: layout-grid-dots
+              icon: layout-grid
               fields:
                 -
                   import: blog_paginated
             faqs:
               display: FAQs
-              icon: alert-help-question
+              icon: support
               fields:
                 -
                   import: faqs
@@ -85,7 +85,7 @@ fields:
                   import: search_results
             team:
               display: Team
-              icon: user-multiple
+              icon: users
               fields:
                 -
                   import: team
@@ -102,7 +102,7 @@ fields:
                   import: contact
             newsletter:
               display: Newsletter
-              icon: social-mail-send-email-message
+              icon: mail
               fields:
                 -
                   import: newsletter
