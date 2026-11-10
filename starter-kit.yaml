@@ -7,6 +7,7 @@ export_paths:
   - app/Models/User.php
   - app/MutatorPlugins
   - app/Providers/AppServiceProvider.php
+  - config/bedrock.php
   - config/filesystems.php
   - config/essentials.php
   - config/statamic/mcp.php
