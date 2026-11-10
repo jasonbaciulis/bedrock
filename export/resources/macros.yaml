@@ -1,0 +1,3 @@
+to_js:
+  to_json: []
+  sanitize: [true]

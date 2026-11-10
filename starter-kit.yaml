@@ -29,6 +29,7 @@ export_paths:
   - resources/fonts
   - resources/forms
   - resources/js
+  - resources/macros.yaml
   - resources/svg/social
   - resources/views
   - routes/console.php
