@@ -21,6 +21,7 @@
         "@tailwindcss/typography": "^0.5.20",
         "@tailwindcss/vite": "^4.3.5",
         "alpinejs": "^3.17.5",
+        "chokidar": "^6.0.0",
         "concurrently": "^10.0.7",
         "embla-carousel": "^8.6.0",
         "eslint": "^10.14.0",

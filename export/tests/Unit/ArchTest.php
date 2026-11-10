@@ -3,7 +3,8 @@
 declare(strict_types=1);
 
 arch()->preset()->php();
-arch()->preset()->strict();
+// Laravel and package providers expose protected hooks to override, like Horizon's gate().
+arch()->preset()->strict()->ignoring('App\Providers');
 arch()->preset()->laravel();
 arch()->preset()->security()->ignoring([
     'assert',

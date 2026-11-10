@@ -265,7 +265,7 @@ final class StarterKitPostInstall
             ],
             'dev' => [
                 'Composer\\Config::disableProcessTimeout',
-                'bunx concurrently -c "#c4b5fd,#fb7185,#fdba74" "php artisan queue:listen --tries=1" "php artisan pail --timeout=0" "bun run dev" --names=queue,logs,vite',
+                'bunx concurrently -c "#c4b5fd,#fb7185,#fdba74" "php artisan horizon:listen" "php artisan pail --timeout=0" "bun run dev" --names=horizon,logs,vite --kill-others',
             ],
             'post-update-cmd' => [
                 '@php artisan vendor:publish --tag=laravel-assets --ansi --force',
