@@ -51,7 +51,7 @@ fields:
                   import: pull_quote
             table:
               display: Table
-              icon: layout-table-column-insert
+              icon: fieldtype-table
               fields:
                 -
                   import: table
@@ -62,13 +62,13 @@ fields:
           sets:
             picture:
               display: Picture
-              icon: media-image-picture-orientation
+              icon: orientation-image-picture-horizontal-landscape
               fields:
                 -
                   import: picture
             video:
               display: Video
-              icon: social-youtube
+              icon: movie-video-clip
               fields:
                 -
                   import: video
@@ -79,7 +79,7 @@ fields:
           sets:
             faqs:
               display: FAQs
-              icon: alert-help-question
+              icon: support
               fields:
                 -
                   import: faqs_set
