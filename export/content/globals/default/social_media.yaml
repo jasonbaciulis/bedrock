@@ -8,20 +8,20 @@ platforms:
   -
     id: 1pQqfxOP
     handle: in/jasonbaciulis/
-    prefix: 'https://www.linkedin.com/'
+    prefix: 'https://linkedin.com/'
     type: linkedin
     enabled: true
     url: in/jasonbaciulis
   -
     id: m32k08y1
     url: JasonBaciulis
-    prefix: 'https://www.github.com/'
+    prefix: 'https://github.com/'
     type: github
     enabled: true
   -
     id: m32k0hix
     url: statamic
-    prefix: 'https://www.youtube.com/'
+    prefix: 'https://youtube.com/'
     type: youtube
     enabled: true
   -
