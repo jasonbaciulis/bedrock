@@ -10,15 +10,16 @@
                 <s:partial:components.logo :logo="theme:logo" class="inline-flex h-8 w-40" />
             </div>
             <div class="-my-2 -mr-2 lg:hidden">
-                <button
-                    type="button"
-                    class="btn btn--ghost btn--square"
-                    :aria-expanded="mobileNavOpen"
-                    @click.prevent="mobileNavOpen = !mobileNavOpen"
-                    aria-label="Open menu"
+                <s:partial:components.ui.button
+                    as="button"
+                    variant="ghost"
+                    size="icon"
+                    aria_label="Open menu"
+                    x_aria_expanded="mobileNavOpen"
+                    x_click="mobileNavOpen = !mobileNavOpen"
                 >
                     <s:svg src="heroicons/outline/bars-3" class="size-5" />
-                </button>
+                </s:partial:components.ui.button>
             </div>
 
             <s:partial:partials.nav-header-desktop />

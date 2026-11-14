@@ -2,10 +2,15 @@
 class: ''
 ---
 
-<nav aria-label="breadcrumb" class="{{ view:class }} max-w-[calc(100vw-48px)] overflow-hidden">
+<nav
+    aria-label="breadcrumb"
+    class="{{ ['max-w-[calc(100vw-48px)] overflow-hidden', view:class] | classes | collapse_whitespace }}"
+>
     <ol class="text-muted-foreground flex gap-1.5 text-sm sm:gap-2.5">
         <s:nav:breadcrumbs>
-            <li class="{{ last ?= 'truncate' }} flex items-center gap-1.5">
+            <li
+                class="{{ ['flex items-center gap-1.5', 'truncate' => last] | classes | collapse_whitespace }}"
+            >
                 {{ unless last }}
                     <a href="{{ url }}" class="hover:text-foreground whitespace-nowrap">
                         <span>{{ title }}</span>

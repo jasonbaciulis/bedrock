@@ -1,14 +1,9 @@
-<s:nav
-    handle="header"
-    max_depth="2"
-    select="title|url|is_external|icon|badge|two_col_menu"
-    as="items"
->
-    {{# Mobile menu #}}
+<s:nav handle="header" max_depth="2" select="title|url|is_external" as="items">
     <div
         x-cloak
         x-show="mobileNavOpen"
         x-trap.noscroll="mobileNavOpen"
+        @keydown.escape="mobileNavOpen = false"
         class="lg:hidden"
         role="dialog"
         aria-modal="true"
@@ -16,40 +11,27 @@
         {{# Background backdrop #}}
         <div x-cloak x-show="mobileNavOpen" class="fixed inset-0 z-10"></div>
         <div
-            class="fixed inset-y-0 right-0 z-10 flex w-full flex-col justify-between overflow-y-auto bg-white sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+            class="sm:ring-foreground/10 fixed inset-y-0 right-0 z-10 flex w-full flex-col justify-between overflow-y-auto bg-white sm:max-w-sm sm:ring-1"
         >
             <div class="p-6">
                 <div class="flex items-center justify-between">
                     <s:partial:components.logo :logo="theme:logo" class="inline-flex h-8 w-40" />
-                    <button
-                        type="button"
-                        class="btn btn--ghost btn--square -my-2 -mr-2"
-                        @click="mobileNavOpen = false"
-                        aria-label="Close menu"
+                    <s:partial:components.ui.button
+                        as="button"
+                        variant="ghost"
+                        size="icon"
+                        class="-my-2 -mr-2"
+                        aria_label="Close menu"
+                        x_click="mobileNavOpen = false"
                     >
                         <s:svg src="heroicons/outline/x-mark" class="size-5" />
-                    </button>
+                    </s:partial:components.ui.button>
                 </div>
                 <div class="mt-6 flow-root">
-                    <div class="-my-6 divide-y divide-gray-500/10">
+                    <div class="divide-foreground/10 -my-6 divide-y">
                         <div class="space-y-2 py-6">
                             {{ items }}
-                                {{ if children && two_col_menu }}
-                                    {{ children scope="child" }}
-                                        <s:partial:partials.nav-header-item
-                                            :url="child:url"
-                                            :title="child:title"
-                                            :is_external="child:is_external"
-                                            :icon="child:icon"
-                                            :badge="child:badge"
-                                        />
-                                    {{ /children }}
-                                {{ /if }}
-                            {{ /items }}
-                        </div>
-                        <div class="space-y-2 py-6">
-                            {{ items }}
-                                {{ if children && !two_col_menu }}
+                                {{ if children }}
                                     {{ children scope="child" }}
                                         <s:partial:partials.nav-link
                                             :url="child:url"
@@ -58,7 +40,7 @@
                                             class="hover:bg-accent -mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-neutral-900"
                                         />
                                     {{ /children }}
-                                {{ elseif !children }}
+                                {{ else }}
                                     <s:partial:partials.nav-link
                                         :url="url"
                                         :title="title"

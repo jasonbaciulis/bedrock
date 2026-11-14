@@ -1,8 +1,8 @@
-<section id="{{ type | slugify }}" class="m-section container">
+<section id="{{ block_id }}" class="m-section container">
     <h2 class="h2 mb-28">Style guide</h2>
     <div class="space-y-28">
         <div>
-            <div class="mb-10 border-b border-gray-300">
+            <div class="border-border mb-10 border-b">
                 <h3 class="h3 pb-6">Site grid</h3>
             </div>
             <div
@@ -25,7 +25,7 @@
                     <div class="relative h-40 bg-pink-50">
                         {{ unless count == 12 }}
                             <span
-                                class="text-muted-foreground absolute top-1/2 left-full hidden -translate-y-1/2 border-b border-dashed border-gray-400 text-center font-mono text-[10px] sm:block"
+                                class="text-muted-foreground border-muted-foreground absolute top-1/2 left-full hidden -translate-y-1/2 border-b border-dashed text-center font-mono text-[10px] sm:block"
                                 :style="`width:${columnGap}px`"
                                 x-text="`${columnGap}px`"
                             ></span>
@@ -40,7 +40,7 @@
         </div>
 
         <div>
-            <div class="mb-10 border-b border-gray-300">
+            <div class="border-border mb-10 border-b">
                 <h3 class="h3 pb-6">Colors</h3>
             </div>
             <div class="space-y-10">
@@ -55,7 +55,30 @@
                     <s:partial:partials.style-guide.swatch color="bg-muted-foreground" />
                     <s:partial:partials.style-guide.swatch color="bg-accent" />
                     <s:partial:partials.style-guide.swatch color="bg-accent-foreground" />
-                    <s:partial:partials.style-guide.swatch color="bg-destructive" />
+                </div>
+                <div class="grid grid-cols-1 gap-x-2 gap-y-3 md:grid-cols-11">
+                    <s:partial:partials.style-guide.swatch color="bg-success-50" />
+                    <s:partial:partials.style-guide.swatch color="bg-success-200" />
+                    <s:partial:partials.style-guide.swatch color="bg-success" />
+                    <s:partial:partials.style-guide.swatch color="bg-success-900" />
+                </div>
+                <div class="grid grid-cols-1 gap-x-2 gap-y-3 md:grid-cols-11">
+                    <s:partial:partials.style-guide.swatch color="bg-info-50" />
+                    <s:partial:partials.style-guide.swatch color="bg-info-200" />
+                    <s:partial:partials.style-guide.swatch color="bg-info" />
+                    <s:partial:partials.style-guide.swatch color="bg-info-900" />
+                </div>
+                <div class="grid grid-cols-1 gap-x-2 gap-y-3 md:grid-cols-11">
+                    <s:partial:partials.style-guide.swatch color="bg-warning-50" />
+                    <s:partial:partials.style-guide.swatch color="bg-warning-200" />
+                    <s:partial:partials.style-guide.swatch color="bg-warning" />
+                    <s:partial:partials.style-guide.swatch color="bg-warning-900" />
+                </div>
+                <div class="grid grid-cols-1 gap-x-2 gap-y-3 md:grid-cols-11">
+                    <s:partial:partials.style-guide.swatch color="bg-danger-50" />
+                    <s:partial:partials.style-guide.swatch color="bg-danger-200" />
+                    <s:partial:partials.style-guide.swatch color="bg-danger" />
+                    <s:partial:partials.style-guide.swatch color="bg-danger-900" />
                 </div>
                 <div class="grid grid-cols-1 gap-x-2 gap-y-3 md:grid-cols-11">
                     <s:partial:partials.style-guide.swatch color="bg-neutral-50" />
@@ -74,14 +97,14 @@
         </div>
 
         <div>
-            <div class="mb-10 border-b border-gray-300">
+            <div class="border-border mb-10 border-b">
                 <h3 class="h3 pb-6">Buttons</h3>
             </div>
             <dl class="space-y-10">
                 <s:partial:partials.style-guide.button-row variant="primary" />
                 <s:partial:partials.style-guide.button-row variant="secondary" />
                 <s:partial:partials.style-guide.button-row variant="outline" />
-                <s:partial:partials.style-guide.button-row variant="destructive" />
+                <s:partial:partials.style-guide.button-row variant="danger" />
                 <s:partial:partials.style-guide.button-row variant="ghost" />
                 <div class="flex flex-col gap-y-6 md:flex-row md:items-end">
                     <dt
@@ -100,11 +123,58 @@
                         />
                     </dd>
                 </div>
+                <div class="flex flex-col gap-y-6 md:flex-row md:items-end">
+                    <dt
+                        class="content-sm text-muted-foreground shrink-0 font-mono leading-6 md:w-44"
+                    >
+                        btn--icon
+                    </dt>
+                    <dd
+                        class="flex flex-col items-start justify-start gap-6 md:flex-row md:items-end"
+                    >
+                        <s:partial:components.ui.button
+                            as="button"
+                            variant="outline"
+                            size="icon-sm"
+                            aria_label="Add item"
+                        >
+                            <s:svg src="heroicons/outline/plus" />
+                        </s:partial:components.ui.button>
+                        <s:partial:components.ui.button
+                            as="button"
+                            variant="outline"
+                            size="icon"
+                            aria_label="Add item"
+                        >
+                            <s:svg src="heroicons/outline/plus" />
+                        </s:partial:components.ui.button>
+                        <s:partial:components.ui.button
+                            as="button"
+                            variant="outline"
+                            size="icon-lg"
+                            aria_label="Add item"
+                        >
+                            <s:svg src="heroicons/outline/plus" />
+                        </s:partial:components.ui.button>
+                    </dd>
+                </div>
             </dl>
         </div>
 
         <div>
-            <div class="mb-10 border-b border-gray-300">
+            <div class="border-border mb-10 border-b">
+                <h3 class="h3 pb-6">Alerts</h3>
+            </div>
+            <dl class="space-y-10">
+                <s:partial:partials.style-guide.alert-row variant="success" />
+                <s:partial:partials.style-guide.alert-row variant="info" />
+                <s:partial:partials.style-guide.alert-row variant="warning" />
+                <s:partial:partials.style-guide.alert-row variant="error" />
+            </dl>
+        </div>
+
+        <div>
+            <div class="border-border mb-10 border-b">
                 <h3 class="h3 pb-6">Headings</h3>
             </div>
             <dl class="space-y-10">
@@ -118,7 +188,7 @@
         </div>
 
         <div>
-            <div class="mb-10 border-b border-gray-300">
+            <div class="border-border mb-10 border-b">
                 <h3 class="h3 pb-6">Typography</h3>
             </div>
             <dl class="space-y-10">
@@ -130,10 +200,10 @@
                         <s:partial:components.ui.badge variant="primary">
                             Primary
                         </s:partial:components.ui.badge>
-                        <a href="/" class="badge badge--secondary">
+                        <s:partial:components.ui.badge variant="secondary" href="/">
                             Secondary
                             <s:svg src="heroicons/outline/arrow-right" />
-                        </a>
+                        </s:partial:components.ui.badge>
                         <s:partial:components.ui.badge variant="outline">
                             Outline
                         </s:partial:components.ui.badge>

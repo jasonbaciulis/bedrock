@@ -1,5 +1,4 @@
 ---
-name: ''
 class: ''
 trigger_class: ''
 content_class: ''
@@ -15,18 +14,19 @@ content_class: ''
             this.open = false
         },
     }"
-    class="{{ view:class }} relative"
+    x-id="['collapsible']"
+    class="{{ ['relative', view:class] | classes | collapse_whitespace }}"
 >
     <dt>
         <button
             type="button"
-            aria-controls="collapsible-{{ view:name }}"
+            :aria-controls="$id('collapsible')"
             :aria-expanded="open"
             @click="toggle()"
             @keydown.enter.prevent="toggle()"
             @keydown.space.prevent="toggle()"
             @keydown.escape="close()"
-            class="{{ view:trigger_class }}"
+            {{ view:trigger_class | attribute:class }}
         >
             {{ slot:trigger }}
         </button>
@@ -35,10 +35,10 @@ content_class: ''
         x-cloak
         x-show="open"
         x-collapse
-        id="collapsible-{{ view:name }}"
+        :id="$id('collapsible')"
         role="region"
         :aria-hidden="!open"
-        class="{{ view:content_class }} relative"
+        class="{{ ['relative', view:content_class] | classes | collapse_whitespace }}"
     >
         {{ slot:content }}
     </dd>

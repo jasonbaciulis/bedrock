@@ -7,7 +7,7 @@ class: 'text-foreground'
 
 <label
     id="{{ view:id }}-label"
-    class="{{ view:class }} {{ view:hide_display ?= 'sr-only' }} block"
+    class="{{ ['block', 'sr-only' => view:hide_display, view:class] | classes | collapse_whitespace }}"
     for="{{ view:id }}"
 >
     {{ view:display }}

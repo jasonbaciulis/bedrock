@@ -4,5 +4,7 @@ page: ''
 ---
 
 <li>
-    <a href="{{ view:url }}" class="btn btn--ghost btn--square">{{ view:page }}</a>
+    <s:partial:components.ui.button :url="view:url" variant="ghost" size="icon">
+        {{ view:page }}
+    </s:partial:components.ui.button>
 </li>

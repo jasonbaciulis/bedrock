@@ -16,7 +16,7 @@ content_class: ''
     {{ /push:scripts }}
 {{ /once }}
 <div
-    class="{{ view:class }} relative outline-none"
+    class="{{ ['relative outline-none', view:class] | classes | collapse_whitespace }}"
     role="region"
     aria-roledescription="carousel"
     x-data="{
@@ -59,7 +59,7 @@ content_class: ''
 >
     <div x-ref="viewport" class="overflow-hidden">
         <div
-            class="{{ view:content_class }} flex"
+            class="{{ ['flex', view:content_class] | classes | collapse_whitespace }}"
             :class="{
                 '-ml-4': orientation === 'horizontal',
                 '-mt-4 flex-col': orientation === 'vertical',

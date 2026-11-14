@@ -25,7 +25,7 @@ fields_without_error:
 {{ else }}
     <template x-if="{{ show_field }}">
         <div
-            class="{{ ['md:col-span-3' => width == '25', 'md:col-span-4' => width == '33', 'md:col-span-6' => width == '50', 'md:col-span-8' => width == '66', 'md:col-span-9' => width == '75', 'md:col-span-12' => width == '100'] | classes }} grid content-start gap-3"
+            class="{{ ['grid content-start gap-3', 'md:col-span-3' => width == '25', 'md:col-span-4' => width == '33', 'md:col-span-6' => width == '50', 'md:col-span-8' => width == '66', 'md:col-span-9' => width == '75', 'md:col-span-12' => width == '100'] | classes | collapse_whitespace }}"
         >
             {{ unless view:fields_without_label | contains(type) }}
                 <s:partial:components.ui.form.label

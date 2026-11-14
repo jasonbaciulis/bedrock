@@ -1,6 +1,10 @@
-<section class="m-section">
+<section id="{{ block_id }}" class="m-section">
     <div class="container">
-        <s:partial:components.section-header :title="title" :text="text" />
+        <s:partial:components.section-header
+            :title="title"
+            :text="text"
+            :heading_level="first ? 'h1' : 'h2'"
+        />
 
         <div class="mx-auto max-w-xl">
             <s:partial:components.ui.form.create

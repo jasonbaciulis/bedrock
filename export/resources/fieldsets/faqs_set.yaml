@@ -19,15 +19,19 @@ fields:
                   field:
                     type: text
                     display: Title
+                    validate:
+                      - required
                 -
                   handle: text
                   field: common.text_basic
                   config:
+                    validate:
+                      - required
                     buttons:
                       - bold
                       - italic
-                      - underline
                       - unorderedlist
                       - orderedlist
+                      - removeformat
                       - anchor
                     display: Text

@@ -4,7 +4,12 @@ page: ''
 ---
 
 <li>
-    <a href="{{ view:url }}" class="btn btn--outline btn--square" aria-current="page">
+    <s:partial:components.ui.button
+        :url="view:url"
+        variant="outline"
+        size="icon"
+        aria_current="page"
+    >
         {{ view:page }}
-    </a>
+    </s:partial:components.ui.button>
 </li>

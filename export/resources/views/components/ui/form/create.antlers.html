@@ -26,6 +26,7 @@ submit_label: 'Submit'
         <template x-if="success">
             <s:partial:components.ui.alert
                 variant="success"
+                role="alert"
                 :title="view:success_message"
                 class="mb-8"
             />
@@ -41,7 +42,7 @@ submit_label: 'Submit'
 
         <s:partial:components.ui.form.error-summary />
 
-        <div class="space-y-12 divide-y divide-gray-300">
+        <div class="divide-border space-y-12 divide-y">
             {{ sections }}
                 <div {{ !last ?= 'class="pb-12"' }}>
                     {{ if display }}

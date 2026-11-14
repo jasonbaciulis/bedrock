@@ -147,9 +147,6 @@ fields:
         -
           key: outline
           value: Outline
-        -
-          key: destructive
-          value: Destructive
       type: button_group
       localizable: true
       default: primary

@@ -1,13 +1,22 @@
 ---
 title: ''
 text: ''
-margin: 'mb-20'
+heading_level: 'h2'
+heading_class: 'h2 text-pretty'
+margin_class: 'mb-20'
 class: ''
 ---
 
-<div class="{{ view:margin }} {{ view:class }} mx-auto max-w-xl text-center">
-    <h2 class="h2 text-pretty">{{ view:title }}</h2>
-    {{ if view:text }}
-        <p class="text-muted-foreground mt-6 text-lg text-pretty">{{ view:text }}</p>
-    {{ /if }}
-</div>
+{{ if view:title }}
+    <header
+        class="{{ ['mx-auto max-w-xl text-center', view:margin_class, view:class] | classes | collapse_whitespace }}"
+    >
+        <{{ view:heading_level }} class="{{ view:heading_class }}">
+            {{ view:title }}
+        </{{ view:heading_level }}>
+        {{ if view:text }}
+            <p class="prose text-muted-foreground mt-6 text-lg text-pretty">{{ view:text }}</p>
+        {{ /if }}
+        {{ slot }}
+    </header>
+{{ /if }}

@@ -4,7 +4,7 @@ class: ''
 ---
 
 <div
-    class="{{ view:class }} flex items-center gap-3"
+    class="{{ ['flex items-center gap-3', view:class] | classes | collapse_whitespace }}"
     x-data="{
         on: false,
         toggle() {

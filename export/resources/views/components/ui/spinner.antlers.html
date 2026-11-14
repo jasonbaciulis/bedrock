@@ -4,7 +4,7 @@ x_show: ''
 ---
 
 <svg
-    class="{{ view:class }} animate-spin"
+    class="{{ ['animate-spin', view:class] | classes | collapse_whitespace }}"
     x-cloak
     x-show="{{ view:x_show }}"
     fill="none"

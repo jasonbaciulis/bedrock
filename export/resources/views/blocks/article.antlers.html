@@ -1,6 +1,6 @@
-<div class="site-grid container">
+<div id="{{ block_id }}" class="site-grid container">
     <article
-        class="{{ partial:partials/prose-class }} col-span-full grid auto-cols-fr gap-y-8 md:col-span-10 md:col-start-2 xl:col-span-8 xl:col-start-3"
+        class="prose prose-h2:h2 prose-h3:h3 prose-h4:h4 col-span-full grid auto-cols-fr gap-y-8 md:col-span-10 md:col-start-2 xl:col-span-8 xl:col-start-3"
     >
         {{ article }}
             <s:partial src="sets.{type replace='_|-'}" />

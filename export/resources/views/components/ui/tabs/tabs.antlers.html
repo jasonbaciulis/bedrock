@@ -3,8 +3,11 @@ class: ''
 list_class: ''
 ---
 
-<div x-data="{ activeTab: 1 }" class="{{ view:class }} flex flex-col gap-2">
-    <div role="tablist" aria-orientation="horizontal" class="{{ view:list_class }}">
+<div
+    x-data="{ activeTab: 1 }"
+    class="{{ ['flex flex-col gap-2', view:class] | classes | collapse_whitespace }}"
+>
+    <div role="tablist" aria-orientation="horizontal" {{ view:list_class | attribute:class }}>
         {{ slot:list }}
     </div>
 

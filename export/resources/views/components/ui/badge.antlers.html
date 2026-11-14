@@ -1,11 +1,18 @@
 ---
 variant: 'primary'
 as: 'span'
+href: ''
 class: ''
+variants:
+  primary: 'bg-primary text-primary-foreground border-transparent [a&]:hover:bg-primary/90'
+  secondary: 'bg-secondary text-secondary-foreground border-transparent [a&]:hover:bg-secondary/90'
+  outline: 'bg-background text-foreground border-border [a&]:hover:bg-accent'
 ---
 
-<{{ view:as }}
-    class="{{ ['badge--primary' => view:variant == 'primary', 'badge--secondary' => view:variant == 'secondary', 'badge--outline' => view:variant == 'outline'] | classes }} badge {{ view:class }}"
+{{ badge_element = view:href ? 'a' : view:as }}
+<{{ badge_element }}
+    {{ view:href | attribute:href }}
+    class="{{ ['inline-flex shrink-0 items-center justify-center gap-1 rounded-full border px-2 py-0.5 text-xs font-medium [&>svg]:pointer-events-none [&>svg]:size-3', view:variants[view:variant], view:class] | classes | collapse_whitespace }}"
 >
     {{ slot }}
-</{{ view:as }}>
+</{{ badge_element }}>

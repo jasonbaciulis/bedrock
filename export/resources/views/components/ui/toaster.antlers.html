@@ -1,3 +1,15 @@
+---
+variants:
+  success:
+    icon: 'heroicons/outline/check-circle'
+  info:
+    icon: 'heroicons/outline/information-circle'
+  warning:
+    icon: 'heroicons/outline/exclamation-triangle'
+  error:
+    icon: 'heroicons/outline/x-circle'
+---
+
 {{ once }}
     {{ push:scripts }}
         <s:vite src="resources/js/components/toaster.js" />
@@ -19,25 +31,11 @@
                 class="border-border bg-background pointer-events-auto flex w-full max-w-sm translate-y-0 transform items-start gap-3 rounded-lg border p-4 opacity-100 shadow-[0_4px_12px_rgba(0,0,0,.1)] transition duration-300 ease-out sm:translate-x-0 starting:translate-y-4 starting:opacity-0 starting:sm:translate-x-4 starting:sm:translate-y-0"
                 role="status"
             >
-                <template x-if="toast.type === 'success'">
-                    <s:svg src="heroicons/outline/check-circle" class="mt-0.5 size-4 shrink-0" />
-                </template>
-                <template x-if="toast.type === 'warning'">
-                    <s:svg
-                        src="heroicons/outline/exclamation-triangle"
-                        class="mt-0.5 size-4 shrink-0"
-                    />
-                </template>
-                <template x-if="toast.type === 'error'">
-                    <s:svg src="heroicons/outline/x-circle" class="mt-0.5 size-4 shrink-0" />
-                </template>
-                <template x-if="toast.type === 'info'">
-                    <s:svg
-                        src="heroicons/outline/information-circle"
-                        class="mt-0.5 size-4 shrink-0"
-                    />
-                </template>
-
+                {{ foreach:view:variants as="type|variant_styles" }}
+                    <template x-if="toast.type === '{{ type }}'">
+                        <s:svg :src="variant_styles:icon" class="size-4 shrink-0 translate-y-0.5" />
+                    </template>
+                {{ /foreach:view:variants }}
                 <div class="flex flex-1 flex-col gap-0.5">
                     <p class="text-foreground text-sm font-medium" x-text="toast.message"></p>
                     <template x-if="toast.description">

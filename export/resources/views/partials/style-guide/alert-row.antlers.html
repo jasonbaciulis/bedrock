@@ -1,0 +1,16 @@
+---
+variant: 'success'
+---
+
+<div class="flex flex-col gap-y-6 md:flex-row md:items-start">
+    <dt class="content-sm text-muted-foreground shrink-0 font-mono leading-6 md:w-44">
+        {{ view:variant }}
+    </dt>
+    <dd class="w-full max-w-md">
+        <s:partial:components.ui.alert
+            :variant="view:variant"
+            title="The quick brown fox"
+            description="Jumps over the lazy dog."
+        />
+    </dd>
+</div>

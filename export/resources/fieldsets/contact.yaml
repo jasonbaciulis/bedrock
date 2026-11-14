@@ -7,9 +7,14 @@ fields:
       type: text
   -
     handle: text
-    field: common.text_plain
+    field: common.text_basic
     config:
       display: Text
+      inline: true
+      buttons:
+        - bold
+        - italic
+        - anchor
   -
     handle: form
     field:
