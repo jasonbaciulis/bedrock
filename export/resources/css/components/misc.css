@@ -1,8 +1,4 @@
 /* Used to hide alpine elements before being rendered. */
 [x-cloak] {
-    @apply !hidden;
-}
-
-.no-scroll {
-    @apply h-full overflow-hidden pr-[var(--scrollbar-width)];
+    @apply hidden!;
 }
