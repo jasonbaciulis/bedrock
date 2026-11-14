@@ -23,7 +23,7 @@ class: ''
 
 {{# Comment #}}
 
-<div {{ class | attribute:class }}>
+<div {{ view:class | attribute:class }}>
     <div class="{{ view:variant }}">
         {{ slot }}
     </div>
@@ -54,7 +54,7 @@ variants:
 class: ''
 ---
 
-<div {{ class | attribute:class }}>
+<div {{ view:class | attribute:class }}>
     ...
 </div>
 ```
@@ -102,7 +102,7 @@ Content editors should never be able to break the site.
 ## Reusing design system
 
 Always check if you can reuse UI components in `resources/views/components/` or partials/fragments in `resources/views/partials/`.
-Also, check `resources/css/components` for reusable CSS classes: the heading classes `.h1`–`.h6` in `headings.css`, the body text classes `.content-*` in `typography.css`, and the utilities in `resources/css/utilities`.
+Also, check `resources/css/components` for reusable CSS classes, such as the body text classes `.content-*` in `typography.css`, and `resources/css/utilities` for the utilities, such as the heading classes `.h1`–`.h6` in `headings.css`.
 
 ### Buttons
 
