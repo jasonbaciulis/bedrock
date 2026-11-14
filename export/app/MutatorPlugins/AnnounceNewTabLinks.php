@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\MutatorPlugins;
 
+use Illuminate\Support\Str;
 use JackSleight\StatamicBardMutator\Info;
 use JackSleight\StatamicBardMutator\Plugins\Plugin;
 use JackSleight\StatamicBardMutator\Support\Data;
@@ -30,7 +31,9 @@ final class AnnounceNewTabLinks extends Plugin
 
         $textNode = $textNodeInfo->item;
 
-        Data::morph($textNode, Data::html(e($textNode->text).$this->newTabLinkHint(), $textNode->marks));
+        [$leadingText, $lastWord] = $this->splitOffLastWord(e($textNode->text));
+
+        Data::morph($textNode, Data::html($leadingText.$this->newTabLinkHint($lastWord), $textNode->marks));
     }
 
     private function isLastTextOfNewTabLink(stdClass $link, Info $textNodeInfo): bool
@@ -46,8 +49,18 @@ final class AnnounceNewTabLinks extends Plugin
         return collect($nextNodeMarks)->doesntContain($link);
     }
 
-    private function newTabLinkHint(): string
+    /**
+     * @return array{string, string}
+     */
+    private function splitOffLastWord(string $text): array
     {
-        return once(fn (): string => mb_trim(view('partials.prose-new-tab-hint')->render()));
+        $lastWord = Str::match('/\S*\z/u', $text);
+
+        return [Str::replaceEnd($lastWord, '', $text), $lastWord];
+    }
+
+    private function newTabLinkHint(string $lastWord): string
+    {
+        return mb_trim(view('partials.prose-new-tab-hint', ['last_word' => $lastWord])->render());
     }
 }
