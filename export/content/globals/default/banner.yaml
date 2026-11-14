@@ -1,23 +1,2 @@
-show: true
+show: false
 dismissible: true
-text:
-  -
-    type: text
-    marks:
-      -
-        type: bold
-    text: 'Big news!'
-  -
-    type: text
-    text: " We're excited to announce a brand new product. "
-  -
-    type: text
-    marks:
-      -
-        type: link
-        attrs:
-          href: '#'
-          rel: noopener
-          target: null
-          title: null
-    text: 'Check it out →'

@@ -8,33 +8,91 @@ export_paths:
   - app/MutatorPlugins
   - app/Providers/AppServiceProvider.php
   - app/Providers/HorizonServiceProvider.php
+  - app/Tags
   - bootstrap/providers.php
   - config/bedrock.php
   - config/horizon.php
   - config/services.php
   - config/filesystems.php
   - config/essentials.php
-  - config/statamic/mcp.php
   - config/statamic/git.php
-  - config/statamic/search.php
   - config/statamic/seo-pro.php
   - config/statamic/static_caching.php
   - database/factories/UserFactory.php
-  - content
-  - public/assets
+  - content/assets/assets.yaml
+  - content/collections/pages.yaml
+  - content/globals/banner.yaml
+  - content/globals/newsletter.yaml
+  - content/globals/scripts.yaml
+  - content/globals/social_media.yaml
+  - content/globals/theme.yaml
+  - content/globals/default/newsletter.yaml
+  - content/globals/default/scripts.yaml
+  - content/navigation
+  - public/assets/logos
   - public/favicon
-  - resources/blueprints
+  - resources/blueprints/assets/assets.yaml
+  - resources/blueprints/collections/pages
+  - resources/blueprints/globals/banner.yaml
+  - resources/blueprints/globals/newsletter.yaml
+  - resources/blueprints/globals/scripts.yaml
+  - resources/blueprints/globals/social_media.yaml
+  - resources/blueprints/globals/theme.yaml
+  - resources/blueprints/user.yaml
   - resources/css
-  - resources/fieldsets
-  - resources/fonts
-  - resources/forms
-  - resources/js
+  - resources/fieldsets/article.yaml
+  - resources/fieldsets/button.yaml
+  - resources/fieldsets/buttons.yaml
+  - resources/fieldsets/common.yaml
+  - resources/fieldsets/contact.yaml
+  - resources/fieldsets/faqs.yaml
+  - resources/fieldsets/faqs_set.yaml
+  - resources/fieldsets/newsletter.yaml
+  - resources/fieldsets/picture.yaml
+  - resources/fieldsets/pull_quote.yaml
+  - resources/fieldsets/style_guide.yaml
+  - resources/fieldsets/table.yaml
+  - resources/fieldsets/video.yaml
+  - resources/js/components
+  - resources/js/lib
+  - resources/js/plugins
+  - resources/js/embla.js
+  - resources/js/lite-yt-embed.js
+  - resources/js/site.js
   - resources/macros.yaml
   - resources/svg/social
-  - resources/views
+  - resources/views/blocks/article.antlers.html
+  - resources/views/blocks/contact.antlers.html
+  - resources/views/blocks/faqs.antlers.html
+  - resources/views/blocks/newsletter.antlers.html
+  - resources/views/blocks/style-guide.antlers.html
+  - resources/views/components/banner.antlers.html
+  - resources/views/components/breadcrumbs.antlers.html
+  - resources/views/components/buttons.antlers.html
+  - resources/views/components/faqs-item.antlers.html
+  - resources/views/components/faqs.antlers.html
+  - resources/views/components/logo.antlers.html
+  - resources/views/components/section-header.antlers.html
+  - resources/views/components/ui
+  - resources/views/default.antlers.html
+  - resources/views/errors
+  - resources/views/layout.antlers.html
+  - resources/views/partials/browser-appearance.antlers.html
+  - resources/views/partials/cp-toolbar.antlers.html
+  - resources/views/partials/footer.antlers.html
+  - resources/views/partials/header.antlers.html
+  - resources/views/partials/nav-bottom-footer.antlers.html
+  - resources/views/partials/nav-footer.antlers.html
+  - resources/views/partials/nav-link.antlers.html
+  - resources/views/partials/nav-social.antlers.html
+  - resources/views/partials/prose-new-tab-hint.antlers.html
+  - resources/views/partials/skip-to-content.antlers.html
+  - resources/views/partials/style-guide
+  - resources/views/sets
   - routes/console.php
   - routes/web.php
   - tests
+  - .blade.format.json
   - .env.example
   - .gitignore
   - .prettierignore
@@ -47,9 +105,10 @@ export_paths:
   - pint.json
   - prettier.config.js
   - rector.php
+  - tailwind.config.js
   - vite.config.js
 dependencies:
   jacksleight/statamic-bard-mutator: ^3.0.6
-  laravel/horizon: ^5.50
+  laravel/horizon: ^5.51
   nunomaduro/essentials: ^1.2
   statamic/seo-pro: ^7.16.0
