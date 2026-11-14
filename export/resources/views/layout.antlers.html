@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ site:short_locale }}" class="motion-safe:scroll-smooth">
+<html lang="{{ site:short_locale }}" class="scrollbar-gutter-stable motion-safe:scroll-smooth">
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -13,17 +13,15 @@
         <s:vite src="resources/css/site.css" />
 
         {{#
-            Async-load fonts: 1) Preload fonts.css (rel="preload" as="style") so it starts downloading early
-            without applying. 2) Load again with media="print", then switch to media="all" onload to avoid
-            render blocking. With font-display: swap in fonts.css, fallback text paints immediately; the webfont
-            swaps in when ready.
+            Async-load fonts from Bunny Fonts: 1) Preload the stylesheet so it starts downloading early without
+            applying. 2) Load it again with media="print", then switch to media="all" onload to avoid render
+            blocking. With display=swap, fallback text paints immediately; the webfont swaps in when ready.
         #}}
-        <s:vite src="resources/css/fonts.css" attr:style:rel="preload" attr:style:as="style" />
-        <s:vite
-            src="resources/css/fonts.css"
-            attr:style:media="print"
-            attr:style:onload="this.media='all'"
-        />
+        {{ fonts_url = 'https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap' }}
+        <link rel="preconnect" href="https://fonts.bunny.net" />
+        <link rel="preconnect" href="https://fonts.bunny.net" crossorigin />
+        <link rel="preload" href="{{ fonts_url }}" as="style" />
+        <link rel="stylesheet" href="{{ fonts_url }}" media="print" onload="this.media = 'all'" />
 
         {{# Scripts global #}}
         {{ scripts:code_head }}
