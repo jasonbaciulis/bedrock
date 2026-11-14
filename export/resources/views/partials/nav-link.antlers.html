@@ -5,9 +5,13 @@ is_external: false
 class: ''
 ---
 
-<a href="{{ url }}" {{ class | attribute:class }} {{ is_external ?= 'target="_blank"' }}>
-    {{ title }}
-    {{ if is_external }}
+<a
+    href="{{ view:url }}"
+    {{ view:class | attribute:class }}
+    {{ view:is_external ?= 'target="_blank"' }}
+>
+    {{ view:title }}
+    {{ if view:is_external }}
         <s:partial:components.ui.new-tab-hint />
     {{ /if }}
 </a>

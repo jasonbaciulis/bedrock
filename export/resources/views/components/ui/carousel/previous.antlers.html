@@ -1,16 +1,18 @@
 ---
+variant: 'outline'
+size: 'icon'
 class: ''
 ---
 
-<button
-    class="btn {{ view:class }} absolute"
-    :class="{
-        'top-1/2 -left-12 -translate-y-1/2': orientation === 'horizontal',
-        '-top-12 left-1/2 -translate-x-1/2 rotate-90': orientation === 'vertical',
-    }"
-    :disabled="!canScrollPrev"
-    @click="scrollPrev()"
-    aria-label="Previous slide"
+<s:partial:components.ui.button
+    as="button"
+    :variant="view:variant"
+    :size="view:size"
+    class="{{ view:class }} absolute rounded-full"
+    aria_label="Previous slide"
+    x_class="orientation === 'horizontal' ? 'top-1/2 -left-12 -translate-y-1/2' : '-top-12 left-1/2 -translate-x-1/2 rotate-90'"
+    x_disabled="!canScrollPrev"
+    x_click="scrollPrev()"
 >
     <s:svg src="heroicons/outline/arrow-left" />
-</button>
+</s:partial:components.ui.button>

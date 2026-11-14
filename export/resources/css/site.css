@@ -29,17 +29,14 @@ CSS folder structure is based on ITCSS:
 @import './objects/layout.css';
 
 /* Components */
-@import './components/alert.css';
-@import './components/badge.css';
 @import './components/button.css';
 @import './components/card.css';
-@import './components/headings.css';
 @import './components/misc.css';
 @import './components/scrollbar.css';
-@import './components/tooltip.css';
 @import './components/typography.css';
 
 /* Utilities */
 @import './utilities/transition-collapsible.css';
 @import './utilities/container.css';
+@import './utilities/headings.css';
 @import './utilities/site-grid.css';

@@ -1,10 +1,14 @@
-<section id="{{ type | slugify }}" class="m-section">
+<section id="{{ block_id }}" class="m-section">
     <div class="container max-w-4xl">
-        <s:partial:components.section-header :title="title" :text="text" />
+        <s:partial:components.section-header
+            :title="title"
+            :text="text"
+            :heading_level="first ? 'h1' : 'h2'"
+        />
 
         <s:partial:components.faqs
             :items="items"
-            class="divide-y divide-gray-300 border-b border-gray-300"
+            class="divide-border border-border divide-y border-b"
         >
             {{ items }}
                 <s:partial:components.faqs-item :title="title" :text="text" />

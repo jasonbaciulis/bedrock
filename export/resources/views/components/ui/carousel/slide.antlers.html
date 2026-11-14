@@ -3,7 +3,7 @@ class: ''
 ---
 
 <div
-    class="{{ view:class }} min-w-0 shrink-0 grow-0 basis-full"
+    class="{{ ['min-w-0 shrink-0 grow-0 basis-full', view:class] | classes | collapse_whitespace }}"
     role="group"
     aria-roledescription="slide"
     :class="{

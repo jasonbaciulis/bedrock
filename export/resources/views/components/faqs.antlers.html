@@ -16,10 +16,10 @@ class: ''
                     {{ view:items }}
                         {
                             "@type": "Question",
-                            "name": "{{ title | add_slashes }}",
+                            "name": {{ title | decode | to_json }},
                             "acceptedAnswer": {
                                 "@type": "Answer",
-                                "text": "{{ text | add_slashes }}"
+                                "text": {{ text | strip_tags(['svg', 'path', 'span']) | to_json }}
                             }
                         }{{ unless last }},{{ /unless }}
                     {{ /view:items }}

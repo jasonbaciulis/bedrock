@@ -1,5 +1,5 @@
 <div class="not-prose overflow-x-auto">
-    <table class="min-w-full divide-y divide-gray-300 text-base">
+    <table class="min-w-full divide-y divide-border text-base">
         {{ table }}
             {{ if first && first_row_headers }}
                 <thead>
@@ -7,25 +7,25 @@
                         {{ cells }}
                             <th
                                 scope="col"
-                                class="px-3 py-3 text-left font-semibold text-neutral-900 sm:px-6 xl:px-8 {{ first ?= 'pl-0 sm:pl-0 xl:pl-0' }} {{ last ?= 'pr-0 sm:pr-0 xl:pr-0' }}"
+                                class="{{ ['px-3 py-3 text-left font-semibold text-neutral-900 sm:px-6 xl:px-8', 'pl-0 sm:pl-0 xl:pl-0' => first, 'pr-0 sm:pr-0 xl:pr-0' => last] | classes | collapse_whitespace }}"
                             >
                                 {{ value }}
                             </th>
                         {{ /cells }}
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-200">
+                <tbody class="divide-y divide-border">
             {{ /if }}
 
             {{ if (!first && first_row_headers) || !first_row_headers }}
-                {{ if first }}<tbody class="divide-y divide-gray-200">{{ /if }}
+                {{ if first }}<tbody class="divide-y divide-border">{{ /if }}
                 <tr>
                     {{ cells }}
                         {{ if first && first_column_headers }}
                             <th class="text-primary py-3 text-left">{{ value }}</th>
                         {{ else }}
                             <td
-                                class="px-3 py-3 sm:px-6 xl:px-8 {{ first ?= 'pl-0 sm:pl-0 xl:pl-0' }} {{ last ?= 'pr-0 sm:pr-0 xl:pr-0' }}"
+                                class="{{ ['px-3 py-3 sm:px-6 xl:px-8', 'pl-0 sm:pl-0 xl:pl-0' => first, 'pr-0 sm:pr-0 xl:pr-0' => last] | classes | collapse_whitespace }}"
                             >
                                 {{ value }}
                             </td>

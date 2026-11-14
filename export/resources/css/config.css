@@ -1,135 +1,84 @@
-@source '../../resources/views/**/*';
-@source '../../resources/js/**/*';
-@source '../../content/**/*.md';
+@source not '../../.claude';
 
 @plugin '@tailwindcss/forms';
 
-/*
-    Using inline theme to reference Tailwind color variables.
-    More info: https://tailwindcss.com/docs/theme#referencing-other-variables
-*/
+/* Tokens that reference other variables: https://tailwindcss.com/docs/theme#referencing-other-variables */
 @theme inline {
-    /* Gray */
-    --color-gray: var(--color-neutral-900);
-
-    /* Yellow (using amber) */
-    --color-yellow-50: var(--color-amber-50);
-    --color-yellow-100: var(--color-amber-100);
-    --color-yellow-200: var(--color-amber-200);
-    --color-yellow-300: var(--color-amber-300);
-    --color-yellow-400: var(--color-amber-400);
-    --color-yellow-500: var(--color-amber-500);
-    --color-yellow-600: var(--color-amber-600);
-    --color-yellow-700: var(--color-amber-700);
-    --color-yellow-800: var(--color-amber-800);
-    --color-yellow-900: var(--color-amber-900);
-    --color-yellow-950: var(--color-amber-950);
-    --color-yellow: var(--color-amber-500);
-
-    /* Green */
-    --color-green: var(--color-green-600);
-
-    /* Red */
-    --color-red: var(--color-red-600);
-
-    /*
-    Shadcn/ui colors
-    https://ui.shadcn.com/docs/theming#list-of-variables
-  */
-
+    /* Shadcn/ui style color tokens: https://ui.shadcn.com/docs/theming#list-of-variables */
     --color-background: var(--color-white);
     --color-foreground: var(--color-neutral-950);
-    --color-primary: oklch(0.205 0 0);
-    --color-primary-foreground: oklch(0.985 0 0);
-    --color-secondary: oklch(0.97 0 0);
-    --color-secondary-foreground: oklch(0.205 0 0);
-    --color-muted: oklch(0.97 0 0);
-    --color-muted-foreground: oklch(0.556 0 0);
-    --color-accent: oklch(0.97 0 0);
-    --color-accent-foreground: oklch(0.205 0 0);
-    --color-destructive: oklch(0.577 0.245 27.325);
-
-    --color-border: oklch(0.922 0 0);
-    --color-input: oklch(0.922 0 0);
-    --color-ring: oklch(0.708 0 0);
+    --color-primary: var(--color-neutral-900);
+    --color-primary-foreground: var(--color-neutral-50);
+    --color-secondary: var(--color-neutral-100);
+    --color-secondary-foreground: var(--color-neutral-900);
+    --color-muted: var(--color-neutral-100);
+    --color-muted-foreground: var(--color-neutral-500);
+    --color-accent: var(--color-neutral-100);
+    --color-accent-foreground: var(--color-neutral-900);
+    --color-border: var(--color-neutral-200);
+    --color-input: var(--color-neutral-200);
+    --color-ring: var(--color-neutral-400);
     --color-popover: var(--color-white);
     --color-popover-foreground: var(--color-neutral-950);
     --color-card: var(--color-white);
     --color-card-foreground: var(--color-neutral-950);
     --color-selection: var(--color-neutral-950);
     --color-selection-foreground: var(--color-white);
+
+    /* Status colours: only the shades in use. The name without a shade is the base colour and passes 4.5:1 on white. */
+    --color-success-50: var(--color-green-50);
+    --color-success-200: var(--color-green-200);
+    --color-success: var(--color-green-700);
+    --color-success-900: var(--color-green-900);
+
+    --color-info-50: var(--color-blue-50);
+    --color-info-200: var(--color-blue-200);
+    --color-info: var(--color-blue-600);
+    --color-info-900: var(--color-blue-900);
+
+    --color-warning-50: var(--color-amber-50);
+    --color-warning-200: var(--color-amber-200);
+    --color-warning: var(--color-amber-700);
+    --color-warning-900: var(--color-amber-900);
+
+    --color-danger-50: var(--color-red-50);
+    --color-danger-200: var(--color-red-200);
+    --color-danger: var(--color-red-600);
+    --color-danger-900: var(--color-red-900);
 }
 
 @theme {
-    --color-black: #000;
-    --color-white: #fff;
-
-    --color-current: currentColor;
-    --color-transparent: transparent;
-
     /* Font families */
-    --font-sans: 'Mona Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
 
     /* Font sizes */
-    --text-xs: 0.75rem;
+    --text-xs: 0.75rem; /* 12px */
     --text-xs--line-height: 1rem;
-    --text-sm: 0.875rem;
+    --text-sm: 0.875rem; /* 14px */
     --text-sm--line-height: 1.25rem;
-    --text-base: 1rem;
+    --text-base: 1rem; /* 16px */
     --text-base--line-height: 1.5rem;
-    --text-lg: 1.125rem;
+    --text-lg: 1.125rem; /* 18px */
     --text-lg--line-height: 1.75rem;
-    --text-xl: 1.25rem;
+    --text-xl: 1.25rem; /* 20px */
     --text-xl--line-height: 1.75rem;
-    --text-2xl: 1.5rem;
+    --text-2xl: 1.5rem; /* 24px */
     --text-2xl--line-height: 2rem;
-    --text-3xl: 1.875rem;
+    --text-3xl: 1.875rem; /* 30px */
     --text-3xl--line-height: 1.2;
-    --text-4xl: 2.25rem;
+    --text-4xl: 2.25rem; /* 36px */
     --text-4xl--line-height: 1.2;
-    --text-5xl: 3rem;
+    --text-5xl: 3rem; /* 48px */
     --text-5xl--line-height: 1.2;
-    --text-6xl: 3.75rem;
+    --text-6xl: 3.75rem; /* 60px */
     --text-6xl--line-height: 1.2;
-    --text-7xl: 4.5rem;
+    --text-7xl: 4.5rem; /* 72px */
     --text-7xl--line-height: 1;
-    --text-8xl: 6rem;
+    --text-8xl: 6rem; /* 96px */
     --text-8xl--line-height: 1;
-    --text-9xl: 8rem;
+    --text-9xl: 8rem; /* 128px */
     --text-9xl--line-height: 1;
-
-    /* Font weights */
-    --font-weight-normal: 400;
-    --font-weight-medium: 500;
-    --font-weight-semibold: 600;
-    --font-weight-bold: 700;
 
     /* Spacing */
     --spacing-em: 1em;
-
-    /* Transition properties */
-    --default-transition-duration: 150ms;
-    --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-
-    /* Animation */
-    --animate-shake: shake 0.2s ease-in-out 0s 2;
-
-    /* Z-index */
-    --z-index-behind: -1;
-
-    /* Ring color */
-    --ring-color: var(--color-primary);
-}
-
-@keyframes shake {
-    0%,
-    100% {
-        transform: translateX(0);
-    }
-    25% {
-        transform: translateX(0.5rem);
-    }
-    75% {
-        transform: translateX(-0.5rem);
-    }
 }

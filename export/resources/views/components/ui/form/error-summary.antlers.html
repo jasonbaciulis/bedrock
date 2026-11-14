@@ -5,13 +5,11 @@
     :hidden="!form.hasErrors && !submitFailure"
     x-ref="errorSummary"
     tabindex="-1"
-    class="alert alert--error mb-8 scroll-mt-8"
+    class="border-danger-200 bg-danger-50 text-danger-900 mb-8 flex scroll-mt-8 items-start gap-x-3 rounded-lg border px-4 py-3 text-sm"
 >
-    <div class="alert__icon">
-        <s:svg src="heroicons/outline/x-circle" />
-    </div>
-    <div role="alert" class="alert__content space-y-2">
-        <h2 class="font-medium tracking-tight">There is a problem</h2>
+    <s:svg src="heroicons/outline/x-circle" class="size-4 shrink-0 translate-y-0.5" />
+    <div role="alert" class="space-y-2">
+        <h2 class="font-medium">There is a problem</h2>
         <template x-if="submitFailure === 'expired'">
             <p>Your session has expired. Reload the page and send the form again.</p>
         </template>

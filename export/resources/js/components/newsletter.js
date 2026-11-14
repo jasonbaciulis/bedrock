@@ -1,8 +1,9 @@
 document.addEventListener('alpine:init', () => {
-    Alpine.data('Newsletter', ({ form, persistKey }) => ({
+    Alpine.data('Newsletter', ({ form, persistKey, fallbackErrorMessage }) => ({
         // component state
         success: false,
         error: false,
+        errorMessage: null,
         subscribed: Alpine.$persist(false).as(persistKey),
         form,
 
@@ -15,6 +16,10 @@ document.addEventListener('alpine:init', () => {
         },
 
         async submit() {
+            // Removing the alert first makes screen readers announce it again when the next attempt fails too.
+            this.error = false
+            this.errorMessage = null
+
             try {
                 // honeypot: pretend success (don’t surface errors to bots)
                 if (this.form.honeypot) {
@@ -34,11 +39,14 @@ document.addEventListener('alpine:init', () => {
                 } else {
                     this.success = false
                     this.error = true
+                    this.errorMessage = response?.data?.message ?? fallbackErrorMessage
                 }
             } catch (error) {
                 console.error(error)
                 this.success = false
                 this.error = true
+                // A network error or a non-JSON response has no message.
+                this.errorMessage = error?.data?.message ?? fallbackErrorMessage
 
                 // The error has no live region, so focus on the input makes screen readers read it through aria-describedby.
                 if (error?.errors) {

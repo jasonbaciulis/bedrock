@@ -90,6 +90,22 @@ return [
             'seo_pro_site_defaults' => [
                 'urls' => ['/*'],
             ],
+
+            // Navs and globals render in the layout, so a save makes every cached page stale.
+            // These saves are rare, so '/*' is safe here.
+            'navigation' => [
+                'header' => ['urls' => ['/*']],
+                'footer' => ['urls' => ['/*']],
+                'bottom_footer' => ['urls' => ['/*']],
+            ],
+            'globals' => [
+                'banner' => ['urls' => ['/*']],
+                'newsletter' => ['urls' => ['/*']],
+                'scripts' => ['urls' => ['/*']],
+                'social_media' => ['urls' => ['/*']],
+                'strings' => ['urls' => ['/*']],
+                'theme' => ['urls' => ['/*']],
+            ],
         ],
 
     ],

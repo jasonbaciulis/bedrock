@@ -42,14 +42,43 @@ resources/views/
 │       └── form/                # Statamic form (create), field wrapper and shared form parts (label, error, instructions, etc.)
 │           └── fields/          # Form field types (custom Statamic form fields will require a snake_case view file here)
 ├── partials/                    # Template partials and fragments (things that aren't really reusable go here)
-├── posts/                       # Posts collection templates
 ├── sets/                        # Content sets for Article Block
 └── errors/                      # Error page templates
 ```
 
+## Included blocks
+- **Article** - Rich text with sets (picture, pull quote, table, video, FAQs, buttons).
+- **FAQs** - Accordion with FAQ structured data.
+- **Contact** - Renders any Statamic form, with sections and conditional fields.
+- **Newsletter** - Email opt-in form. Connect an email service provider before you use it (see [Newsletter](#newsletter)).
+- **Style Guide** - Shows the site grid, colors, buttons, alerts, headings and typography in one place.
+
+The [live demo](https://bedrock.remarkable.dev) also shows a blog and search. They are demo only and are not included in the starter kit.
+
 ## Tailwind CSS config
 - `config.css` - site's config. This file would typically include custom config for the project.
 - `typography.css` - the Tailwind CSS typography config for customizing the prose class.
+
+## Fonts
+Bedrock loads [Inter](https://fonts.bunny.net/family/inter) from [Bunny Fonts](https://fonts.bunny.net), a privacy-friendly Google Fonts alternative.
+
+To change the font:
+1. Change `fonts_url` in `resources/views/layout.antlers.html` to the stylesheet URL of the new font. Load only the weights that the site uses (400, 500, 600 and 700 by default).
+2. Change `--font-sans` in `resources/css/config.css` to the new font family name.
+
+To self-host a font, put the font files in `resources/fonts`, add an `@font-face` rule to a CSS file, and include the font's license file (for example `OFL.txt`) next to the font files.
+
+## Newsletter
+The Newsletter block posts the email address to `/newsletter`. Bedrock does not choose an email service provider for you, so `app/Http/Controllers/SubscribeNewsletterController.php` validates the email address and then returns `503 Service Unavailable` with a `message`. The form shows that message. When a response has no `message` (for example, on a network error), the form shows the error message from the Newsletter global.
+
+Visitors see the `message` text. Until you connect a provider, they see the "not configured" message, so connect one before you put the Newsletter block on a live page.
+
+To connect a provider (for example Mailchimp, Kit or Buttondown):
+1. Add the API credentials to `.env` and read them in `config/services.php`. Do not commit credentials.
+2. In `SubscribeNewsletterController`, send the email address to the provider's API. Return `['success' => true]` when the provider accepts it. When it fails, return `['success' => false, 'message' => '…']` with an error status.
+3. Update `tests/Feature/NewsletterTest.php`, and fake the HTTP request with `Http::fake()`.
+
+Edit the title, text, button label, success message and error message in **Globals → Newsletter**.
 
 ## CLI commands
 There is a nice list of custom scripts available in the command line to make a developer's job easier and more enjoyable.

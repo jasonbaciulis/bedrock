@@ -1,0 +1,109 @@
+---
+video: ''
+file: ''
+thumbnail: ''
+ratio: '16x9'
+title: ''
+class: ''
+ratios:
+  16x9:
+    class: 'aspect-video'
+    w: 800
+    h: 450
+  4x3:
+    class: 'aspect-4/3'
+    w: 800
+    h: 600
+---
+
+{{#
+    Video with a click-to-play facade, so the player loads only when the visitor asks for it. Pass
+    `video` (a video field) or `file` (a video asset). YouTube uses lite-youtube. Others show the
+    thumbnail, or the player directly when no thumbnail is set.
+#}}
+{{ selected_ratio = view:ratios[view:ratio] }}
+{{ if view:file || view:video:embed_url }}
+    {{ if view:video:provider == 'youtube' && view:video:id }}
+        {{ once }}
+            {{ push:scripts }}
+                <s:vite src="resources/css/lite-yt-embed.css" />
+                <s:vite src="resources/js/lite-yt-embed.js" />
+                <s:vite src="resources/js/components/youtube-poster.js" />
+            {{ /push:scripts }}
+        {{ /once }}
+        {{# lite-youtube sets a 16:9 height with `::after` padding, so `after:hidden!` lets the aspect class work. `contain-none!` stops it clipping the focus outline. #}}
+        {{# The script loads its own poster as a background image when the inline style does not set one. #}}
+        <lite-youtube
+            videoid="{{ view:video:id }}"
+            style="background-image: none"
+            class="{{ selected_ratio:class }} {{ view:class }} max-w-none! contain-none! after:hidden!"
+        >
+            <div class="absolute inset-0">
+                {{ if view:thumbnail }}
+                    <s:partial:components.ui.picture
+                        :image="view:thumbnail"
+                        :w="selected_ratio:w"
+                        :h="selected_ratio:h"
+                        cover="true"
+                    />
+                {{ else }}
+                    <img
+                        x-data="YoutubePoster('https://i.ytimg.com/vi_webp/{{ view:video:id }}/hqdefault.webp')"
+                        src="https://i.ytimg.com/vi_webp/{{ view:video:id }}/maxresdefault.webp"
+                        alt="YouTube video thumbnail"
+                        width="{{ selected_ratio:w }}"
+                        height="{{ selected_ratio:h }}"
+                        loading="lazy"
+                        class="size-full object-cover"
+                        @load="useFallbackForPlaceholder"
+                        @error="useFallbackForPlaceholder"
+                    />
+                {{ /if }}
+            </div>
+            {{# lite-youtube draws its icon as a filtered background, so `bg-none!` and `filter-none!` remove it for the icon below. #}}
+            <a
+                href="{{ view:video }}"
+                class="lyt-playbtn group focus-visible:outline-foreground bg-none! filter-none! focus-visible:outline-3 focus-visible:outline-offset-2"
+            >
+                <s:partial:components.ui.video.play-button :title="view:title" />
+            </a>
+        </lite-youtube>
+    {{ elseif view:thumbnail }}
+        <div
+            x-data="{ playing: false }"
+            class="{{ selected_ratio:class }} {{ view:class }} relative"
+        >
+            <template x-if="playing">
+                <s:partial:components.ui.video.player
+                    :video="view:video"
+                    :file="view:file"
+                    :title="view:title"
+                    autoplay="true"
+                    class="absolute inset-0 size-full"
+                />
+            </template>
+            <div x-show="!playing" class="absolute inset-0">
+                <s:partial:components.ui.picture
+                    :image="view:thumbnail"
+                    :w="selected_ratio:w"
+                    :h="selected_ratio:h"
+                    cover="true"
+                />
+                <button
+                    type="button"
+                    class="group focus-visible:outline-foreground absolute inset-0 cursor-pointer focus-visible:outline-3 focus-visible:outline-offset-2"
+                    @click="playing = true"
+                >
+                    <s:partial:components.ui.video.play-button :title="view:title" />
+                </button>
+            </div>
+        </div>
+    {{ else }}
+        <s:partial:components.ui.video.player
+            :video="view:video"
+            :file="view:file"
+            :title="view:title"
+            class="{{ selected_ratio:class }} {{ view:class }}"
+        />
+    {{ /if }}
+{{ /if }}

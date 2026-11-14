@@ -21,7 +21,7 @@ fetchpriority: ''
             {{ if extension == 'svg' or extension == 'gif' }}
                 <img
                     {{ if view:cover }}
-                        class="size-full object-cover {{ view:class }}"
+                        class="{{ ['size-full object-cover', view:class] | classes | collapse_whitespace }}"
                         style="object-position: {{ focus | background_position }}"
                     {{ else }}
                         {{ view:class | attribute:class }}
@@ -45,7 +45,7 @@ fetchpriority: ''
                 />
                 <img
                     {{ if view:cover }}
-                        class="size-full object-cover {{ view:class }}"
+                        class="{{ ['size-full object-cover', view:class] | classes | collapse_whitespace }}"
                         style="object-position: {{ focus | background_position }}"
                     {{ else }}
                         {{ view:class | attribute:class }}

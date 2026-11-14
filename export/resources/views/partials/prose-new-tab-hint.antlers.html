@@ -1,4 +1,5 @@
+{{# Browsers allow a line break before an inline SVG, so the icon shares a nowrap span with the last word. #}}
 {{# Whitespace between the tags would render as an underlined space inside the link. #}}
 {{# format-ignore-start #}}
-<s:svg src="heroicons/outline/arrow-top-right-on-square" class="size-em ml-[0.25em] inline align-[-0.1em]" /><s:partial:components.ui.new-tab-hint />
+<span class="whitespace-nowrap">{{ last_word }}<s:svg src="heroicons/outline/arrow-top-right-on-square" class="size-em ml-[0.25em] inline align-[-0.1em]" /></span><s:partial:components.ui.new-tab-hint />
 {{# format-ignore-end #}}

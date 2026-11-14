@@ -5,7 +5,7 @@
         "dev": "vite",
         "build": "bun run icons && vite build",
         "icons": "bun run icons:heroicons",
-        "icons:heroicons": "rm -rf resources/svg/heroicons && mkdir -p resources/svg/heroicons && cp -R node_modules/heroicons/24/outline resources/svg/heroicons/outline && cp -R node_modules/heroicons/24/solid resources/svg/heroicons/solid && cp -R node_modules/heroicons/20/solid resources/svg/heroicons/mini",
+        "icons:heroicons": "rm -rf resources/svg/heroicons && mkdir -p resources/svg/heroicons && cp -R node_modules/heroicons/24/outline resources/svg/heroicons/outline && cp -R node_modules/heroicons/24/solid resources/svg/heroicons/solid",
         "lint": "prettier \"resources/**/*.{js,css,scss,html,antlers.html,blade.php}\" --write && eslint \"resources/js\" --fix",
         "test:lint": "prettier \"resources/**/*.{js,css,scss,html,antlers.html,blade.php}\" --check && eslint \"resources/js\" --max-warnings=0"
     },
@@ -24,19 +24,19 @@
         "chokidar": "^6.0.0",
         "concurrently": "^10.0.7",
         "embla-carousel": "^8.6.0",
-        "eslint": "^10.14.0",
+        "eslint": "^10.15.0",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-unicorn": "^79.0.0",
         "globals": "^17.14.0",
         "heroicons": "^2.2.0",
         "laravel-vite-plugin": "^3.2.1",
         "lite-youtube-embed": "^0.3.4",
-        "playwright": "^1.65.0",
-        "prettier": "^3.9.10",
+        "playwright": "^1.65.1",
+        "prettier": "^3.10.1",
         "prettier-plugin-antlers": "^2.0.8",
         "prettier-plugin-blade": "^3.3.3",
         "prettier-plugin-tailwindcss": "^0.8.1",
         "tailwindcss": "^4.3.5",
-        "vite": "^8.3.6"
+        "vite": "^8.3.8"
     }
 }

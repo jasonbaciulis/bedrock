@@ -6,7 +6,7 @@
     input,
     textarea,
     select {
-        @apply placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground focus-visible:border-ring focus-visible:ring-ring/50 border-input aria-invalid:ring-destructive/20 aria-invalid:border-destructive focus:border-ring focus:ring-ring/50 rounded-md border outline-none focus:outline-none focus-visible:ring-3;
+        @apply placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground focus-visible:border-ring focus-visible:ring-ring/50 border-input aria-invalid:ring-danger/20 aria-invalid:border-danger focus:border-ring focus:ring-ring/50 rounded-md border outline-none focus:outline-none focus-visible:ring-3;
     }
 
     textarea,
@@ -16,8 +16,21 @@
     [type='email'],
     [type='password'],
     [type='tel'],
+    [type='date'],
     [type='file'] {
         @apply flex h-9 w-full min-w-0 bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm;
+    }
+
+    /* In a flex date input, Chrome puts the calendar icon next to the date instead of at the right edge. */
+    [type='date'] {
+        @apply block;
+    }
+
+    /* The 24px button meets the target size (WCAG 2.5.8), and the mask keeps the icon at 16px. */
+    [type='search']::-webkit-search-cancel-button {
+        @apply size-6 cursor-pointer appearance-none bg-current;
+
+        mask: url('../../svg/heroicons/outline/x-mark.svg') center / 1rem no-repeat;
     }
 
     [type='file'] {

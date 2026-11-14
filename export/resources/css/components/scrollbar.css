@@ -1,8 +1,6 @@
 @layer components {
+    /* Do not add scrollbar-width or scrollbar-color, because Chrome ignores ::-webkit-scrollbar when one of them is set. */
     .scrollbar {
-        scrollbar-width: thin;
-        scrollbar-color: theme('colors.gray.400') transparent;
-
         &::-webkit-scrollbar {
             @apply w-1 pr-1;
         }
@@ -12,7 +10,7 @@
         }
 
         &::-webkit-scrollbar-thumb {
-            @apply rounded-full bg-gray-400;
+            @apply bg-muted-foreground rounded-full;
         }
     }
 }

@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="26"><svg width="64" height="26" viewBox="0 0 64 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="8" width="48" height="6" rx="3" fill="#0a0a0a"></rect>
-<rect y="14" width="64" height="12" rx="6" fill="#0a0a0a"></rect>
-</svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
-@media (prefers-color-scheme: dark) { :root { filter: invert(100%); } }
-</style></svg>
+<svg viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg">
+<style>rect { fill: #0a0a0a; } @media (prefers-color-scheme: dark) { rect { fill: #fafafa; } }</style>
+<rect width="11" height="10" rx="1.5"/>
+<rect x="15" width="11" height="10" rx="1.5"/>
+<rect y="14" width="26" height="12" rx="2"/>
+</svg>

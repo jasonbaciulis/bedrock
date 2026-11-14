@@ -9,17 +9,6 @@ tabs:
             field: common.image
             config:
               display: Logo
-      -
-        display: Search
-        fields:
-          -
-            handle: search_results
-            field: common.entry
-            config:
-              display: 'Search results'
-              instructions: 'Used inside the search form to point to a page that contains the "Search results" Block.'
-              collections:
-                - pages
   header:
     display: Header
     sections:

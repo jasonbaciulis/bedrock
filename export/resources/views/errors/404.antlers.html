@@ -4,7 +4,9 @@
             <h1 class="h1">404 Error</h1>
             <p class="content-xl mt-3">The page you're looking for does not exist.</p>
             <div class="mt-8">
-                <a href="{{ site:url }}" class="btn btn--primary btn--lg">Go to homepage</a>
+                <s:partial:components.ui.button :url="site:url" size="lg">
+                    Go to homepage
+                </s:partial:components.ui.button>
             </div>
         </div>
     </div>

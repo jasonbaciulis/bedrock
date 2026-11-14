@@ -19,7 +19,7 @@ class: ''
     x-model="{{ view:model }}"
     @keydown.escape.stop.prevent="closeListbox()"
     @change="form.validate('{{ handle }}')"
-    class="{{ view:class }} relative"
+    class="{{ ['relative', view:class] | classes | collapse_whitespace }}"
 >
     <input type="hidden" name="{{ handle }}" x-model="value" />
 

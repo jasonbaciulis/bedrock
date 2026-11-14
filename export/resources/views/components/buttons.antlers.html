@@ -5,7 +5,7 @@ container_class: ''
 
 {{ if buttons }}
     <div
-        class="{{ view:container_class }} {{ ['flex flex-wrap gap-4' => (buttons | count) > 1] | classes }}"
+        class="{{ ['flex flex-wrap gap-4' => (buttons | count) > 1, view:container_class] | classes | collapse_whitespace }}"
     >
         {{ buttons }}
             <s:partial:components.ui.button

@@ -15,32 +15,17 @@ fields:
           display: Hero
           instructions: 'Above-the-fold intro blocks'
           icon: align-object-top
-          sets:
-            hero_demo:
-              display: 'Hero Demo'
-              icon: align-object-top
-              fields:
-                -
-                  import: hero_demo
+          sets: {}
         messaging:
           display: Messaging
           instructions: 'Features, benefits, how it works'
           icon: share-mega-phone
-          sets:
-            new_set:
-              display: 'New Set'
-              fields: {  }
+          sets: {}
         authority:
           display: Authority
           instructions: 'Testimonials, logos, ratings, press'
           icon: favorite-award-prize
-          sets:
-            testimonials:
-              display: Testimonials
-              icon: text-formatting-quotation
-              fields:
-                -
-                  import: testimonials
+          sets: {}
         content:
           display: Content
           instructions: 'Article, Collections, FAQs, search'
@@ -53,42 +38,12 @@ fields:
               fields:
                 -
                   import: article
-            blog_excerpt:
-              display: 'Blog Excerpt'
-              icon: layout-three-columns
-              fields:
-                -
-                  import: blog_excerpt
-            blog_paginated:
-              display: 'Blog Paginated'
-              icon: layout-grid
-              fields:
-                -
-                  import: blog_paginated
             faqs:
               display: FAQs
               icon: support
               fields:
                 -
                   import: faqs
-            search_form:
-              display: 'Search Form'
-              icon: search-magnifying-glass
-              fields:
-                -
-                  import: search_form
-            search_results:
-              display: 'Search Results'
-              icon: text-formatting-image-bottom
-              fields:
-                -
-                  import: search_results
-            team:
-              display: Team
-              icon: users
-              fields:
-                -
-                  import: team
         conversion:
           display: Conversion
           instructions: 'CTAs & forms that capture leads'

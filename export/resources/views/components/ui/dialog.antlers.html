@@ -3,6 +3,7 @@ name: 'dialog'
 size: 'md'
 class: ''
 trigger_class: ''
+trigger_label: ''
 content_class: ''
 ---
 
@@ -10,26 +11,19 @@ content_class: ''
     x-data="{
         id: $id('{{ view:name }}'),
         open: false,
-        scrollbarWidth: 0,
-        init() {
-            this.scrollbarWidth =
-                window.innerWidth - document.documentElement.clientWidth
-        },
         toggle() {
             if (this.open) {
                 return this.close()
             }
             this.open = true
-            this.preventBodyScroll()
         },
         close(focusAfter) {
             if (! this.open) return
             this.open = false
 
-            // Wait for the close transition to complete before restoring scroll and setting focus
+            // Wait for the close transition to complete before setting focus
             // The leave transition is 150ms (duration-150)
             setTimeout(() => {
-                this.restoreBodyScroll()
                 if (! focusAfter) {
                     this.focusTrigger()
                 } else {
@@ -43,29 +37,20 @@ content_class: ''
                 trigger.focus()
             }
         },
-        preventBodyScroll() {
-            document.documentElement.style.setProperty(
-                '--scrollbar-width',
-                this.scrollbarWidth + 'px',
-            )
-            document.body.classList.add('no-scroll')
-        },
-        restoreBodyScroll() {
-            document.body.classList.remove('no-scroll')
-        },
     }"
     @keydown.escape.prevent.stop="close($refs.button)"
     {{ view:class | attribute:class }}
 >
     {{ if slot:trigger }}
+        {{# Pass trigger_label only for an icon-only trigger, because aria-label replaces visible text for screen readers. #}}
         <button
             x-ref="button"
             type="button"
             @click="toggle()"
             :aria-expanded="open"
             :aria-controls="id"
-            aria-label="Open dialog"
-            class="btn {{ view:trigger_class }}"
+            {{ view:trigger_label | attribute:aria-label }}
+            class="{{ ['btn', view:trigger_class] | classes | collapse_whitespace }}"
         >
             {{ slot:trigger }}
         </button>
@@ -107,7 +92,7 @@ content_class: ''
                         x-cloak
                         x-ref="panel"
                         x-show="open"
-                        x-trap.inert="open"
+                        x-trap.inert.noscroll="open"
                         x-transition:enter="ease duration-200"
                         x-transition:enter-start="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95"
                         x-transition:enter-end="translate-y-0 opacity-100 sm:scale-100"
@@ -116,7 +101,7 @@ content_class: ''
                         x-transition:leave-end="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95"
                         @click.outside="close($refs.button)"
                         :id="id"
-                        class="bg-background {{ ['px-4 pt-5 pb-4 sm:max-w-md sm:p-6' => view:size == 'sm', 'px-4 pt-5 pb-4 sm:max-w-xl sm:p-6' => view:size == 'md', 'px-4 pt-5 pb-4 sm:max-w-(--breakpoint-xl) sm:p-6 md:p-12 xl:px-16 xl:py-20' => view:size == 'xl'] | classes }} {{ view:content_class }} relative transform overflow-hidden rounded-[0.625rem] border text-left shadow-lg transition-all sm:my-8 sm:w-full"
+                        class="{{ ['bg-background relative transform overflow-hidden rounded-[0.625rem] border text-left shadow-lg transition-all sm:my-8 sm:w-full', 'px-4 pt-5 pb-4 sm:max-w-md sm:p-6' => view:size == 'sm', 'px-4 pt-5 pb-4 sm:max-w-xl sm:p-6' => view:size == 'md', 'px-4 pt-5 pb-4 sm:max-w-(--breakpoint-xl) sm:p-6 md:p-12 xl:px-16 xl:py-20' => view:size == 'xl', view:content_class] | classes | collapse_whitespace }}"
                     >
                         {{ slot:content }}
                         <button

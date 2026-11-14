@@ -9,12 +9,15 @@ variants:
   secondary: 'btn--secondary'
   outline: 'btn--outline'
   ghost: 'btn--ghost'
-  destructive: 'btn--destructive'
+  danger: 'btn--danger'
   link: 'btn--link'
 sizes:
   sm: 'btn--sm'
   lg: 'btn--lg'
   xl: 'btn--xl'
+  icon: 'btn--icon'
+  icon-sm: 'btn--icon-sm'
+  icon-lg: 'btn--icon-lg'
 link_type: 'url'
 url: ''
 entry: ''
@@ -23,9 +26,12 @@ phone: ''
 asset: ''
 code: ''
 target_blank: false
+disabled: false
 class: ''
 aria_label: ''
 aria_controls: ''
+aria_current: false
+tabindex: ''
 x_ref: ''
 x_aria_controls: ''
 x_aria_label: ''
@@ -56,6 +62,8 @@ type: 'button'
         {{ view:x_ref | attribute:x-ref }}
         {{ view:aria_label | attribute:aria-label }}
         {{ view:aria_controls | attribute:aria-controls }}
+        {{ view:aria_current | attribute:aria-current }}
+        {{ view:tabindex | attribute:tabindex }}
         {{ view:x_aria_controls | attribute::aria-controls }}
         {{ view:x_aria_label | attribute::aria-label }}
         {{ view:x_aria_expanded | attribute::aria-expanded }}
@@ -63,7 +71,7 @@ type: 'button'
         {{ view:x_disabled | attribute::disabled }}
         {{ view:x_click | attribute:@click }}
         {{ view:x_class | attribute::class }}
-        class="{{ view:base }} {{ view:variants[view:variant] }} {{ view:sizes[view:size] }} {{ view:class }}"
+        class="{{ [view:base, view:variants[view:variant], view:sizes[view:size], view:class] | classes | collapse_whitespace }}"
     >
         {{ view:label }}
         {{ slot }}

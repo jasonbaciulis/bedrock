@@ -1,0 +1,13 @@
+---
+title: ''
+---
+
+<s:partial:components.ui.button
+    as="span"
+    variant="primary"
+    size="icon-lg"
+    class="group-hover:bg-primary/90 absolute top-1/2 left-1/2 size-16 -translate-1/2 rounded-full"
+>
+    <s:svg src="heroicons/solid/play" class="size-8 translate-x-0.5" />
+</s:partial:components.ui.button>
+<span class="sr-only">Play video{{ view:title ? ': {view:title}' : '' }}</span>

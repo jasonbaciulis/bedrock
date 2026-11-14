@@ -6,13 +6,16 @@ class: ''
 {{ if paginate:total_pages > 1 }}
     <div {{ view:class | attribute:class }}>
         <nav class="flex items-center justify-center gap-1 md:items-start">
-            <a
-                href="{{ paginate:prev_page ?? 'javascript:void(0)' }}"
-                class="btn btn--ghost {{ paginate:prev_page ? '' : 'pointer-events-none opacity-50' }} shrink-0"
+            <s:partial:components.ui.button
+                :as="paginate:prev_page ? 'a' : 'button'"
+                :url="paginate:prev_page"
+                :disabled="!paginate:prev_page"
+                variant="ghost"
+                class="shrink-0"
             >
                 <s:svg src="heroicons/outline/chevron-left" class="size-4" />
                 <span class="sr-only md:not-sr-only">Previous</span>
-            </a>
+            </s:partial:components.ui.button>
 
             <ul class="hidden flex-wrap gap-1 md:flex">
                 {{ paginate:links:segments:first }}
@@ -49,13 +52,16 @@ class: ''
                 of {{ paginate:total_pages }}
             </p>
 
-            <a
-                href="{{ paginate:next_page ?? 'javascript:void(0)' }}"
-                class="btn btn--ghost {{ paginate:next_page ? '' : 'pointer-events-none opacity-50' }} shrink-0"
+            <s:partial:components.ui.button
+                :as="paginate:next_page ? 'a' : 'button'"
+                :url="paginate:next_page"
+                :disabled="!paginate:next_page"
+                variant="ghost"
+                class="shrink-0"
             >
                 <span class="sr-only md:not-sr-only">Next</span>
                 <s:svg src="heroicons/outline/chevron-right" class="size-4" />
-            </a>
+            </s:partial:components.ui.button>
         </nav>
     </div>
 {{ /if }}

@@ -1,4 +1,7 @@
-Commit the working changes, push the current branch and create a pull request to main.
+---
+description: Commit the working changes, push the current branch and create a pull request to main.
+disable-model-invocation: true
+---
 
 Running this command is my explicit request to stage, commit and push.
 

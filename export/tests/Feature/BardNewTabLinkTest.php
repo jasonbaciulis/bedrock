@@ -32,9 +32,9 @@ test('a link that opens in a new tab gets an icon and a screen reader hint', fun
     $html = renderBardParagraph([['type' => 'text', 'text' => 'Business plan', 'marks' => [linkMark('_blank')]]]);
 
     expect($html)
-        ->toStartWith('<p><a rel="noopener noreferrer" target="_blank" href="/assets/files/plan.pdf">Business plan<svg')
+        ->toStartWith('<p><a rel="noopener noreferrer" target="_blank" href="/assets/files/plan.pdf">Business <span class="whitespace-nowrap">plan<svg')
         ->toContain('aria-hidden="true"')
-        ->toEndWith('</svg><span class="sr-only">&#32;(opens in a new tab)</span></a></p>');
+        ->toEndWith('</svg></span><span class="sr-only">&#32;(opens in a new tab)</span></a></p>');
 });
 
 test('a new tab link with mixed formatting gets the icon and the hint once at its end', function (): void {
@@ -44,8 +44,8 @@ test('a new tab link with mixed formatting gets the icon and the hint once at it
     ]);
 
     expect($html)
-        ->toStartWith('<p><a rel="noopener noreferrer" target="_blank" href="/assets/files/plan.pdf">Business <strong>plan<svg')
-        ->toEndWith('</svg><span class="sr-only">&#32;(opens in a new tab)</span></strong></a></p>')
+        ->toStartWith('<p><a rel="noopener noreferrer" target="_blank" href="/assets/files/plan.pdf">Business <strong><span class="whitespace-nowrap">plan<svg')
+        ->toEndWith('</svg></span><span class="sr-only">&#32;(opens in a new tab)</span></strong></a></p>')
         ->and(mb_substr_count($html, '<svg'))->toBe(1);
 });
 
