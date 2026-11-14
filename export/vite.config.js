@@ -9,17 +9,16 @@ export default defineConfig(({ mode }) => {
             laravel({
                 input: [
                     'resources/css/site.css',
-                    'resources/css/fonts.css',
                     'resources/js/site.js',
                     'resources/js/embla.js',
                     'resources/js/lite-yt-embed.js',
                     'resources/css/lite-yt-embed.css',
-                    'resources/js/fetch-entries.js',
                     'resources/js/components/newsletter.js',
                     'resources/js/components/combobox.js',
                     'resources/js/components/stepper.js',
                     'resources/js/components/toaster.js',
                     'resources/js/components/statamic-form.js',
+                    'resources/js/components/youtube-poster.js',
                 ],
                 refresh: true,
             }),

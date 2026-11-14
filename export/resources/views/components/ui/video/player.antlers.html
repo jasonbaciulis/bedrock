@@ -1,0 +1,36 @@
+---
+video: ''
+file: ''
+title: ''
+autoplay: false
+class: ''
+---
+
+{{ if view:file || view:video:provider == 'file' }}
+    <video
+        src="{{ view:file:url ?? view:video:url }}"
+        controls
+        playsinline
+        preload="metadata"
+        {{ if view:autoplay }}
+            autoplay
+            x-init="$el.focus()"
+        {{ /if }}
+        class="{{ view:class }} w-full bg-black"
+    ></video>
+{{ else }}
+    {{ autoplay_value = view:video:provider == 'cloudflare' ? 'true' : '1' }}
+    {{# With autoplay, the player replaces the play button, so focus moves into it to keep the keyboard position. #}}
+    <iframe
+        src="{{ view:autoplay ? (view:video:embed_url | add_query_param('autoplay', autoplay_value)) : view:video:embed_url }}"
+        title="{{ view:title ?: 'Video' }}"
+        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+        allowfullscreen
+        {{ if view:autoplay }}
+            x-init="$el.focus()"
+        {{ else }}
+            loading="lazy"
+        {{ /if }}
+        class="{{ view:class }} w-full"
+    ></iframe>
+{{ /if }}

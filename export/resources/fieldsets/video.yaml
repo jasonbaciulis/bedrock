@@ -1,11 +1,64 @@
 title: Video
 fields:
   -
+    handle: source
+    field:
+      type: button_group
+      display: Source
+      options:
+        -
+          key: url
+          value: URL
+        -
+          key: file
+          value: File
+      default: url
+      validate:
+        - required
+  -
     handle: video
     field:
-      display: 'YouTube URL'
+      display: 'Video URL'
+      instructions: 'YouTube, Vimeo, Cloudflare Stream or video file URL.'
       type: video
       always_save: false
+      validate:
+        - 'required_if:{this}.source,url'
+      if:
+        source: 'equals url'
+  -
+    handle: video_file
+    field:
+      display: 'Video file'
+      instructions: 'MP4 or WebM file.'
+      type: assets
+      container: assets
+      max_files: 1
+      mode: list
+      validate:
+        - 'required_if:{this}.source,file'
+        - 'mimes:mp4,webm'
+      if:
+        source: 'equals file'
+  -
+    handle: thumbnail
+    field: common.image
+    config:
+      display: Thumbnail
+      instructions: 'Optional. Replaces the thumbnail of the video provider.'
+  -
+    handle: aspect_ratio
+    field:
+      type: button_group
+      display: 'Aspect ratio'
+      options:
+        -
+          key: 16x9
+          value: '16:9'
+        -
+          key: 4x3
+          value: '4:3'
+      default: 16x9
       validate:
         - required
   -
