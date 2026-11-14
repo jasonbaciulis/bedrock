@@ -3,3 +3,4 @@ text: 'This is where you make your best pitch on why anyone should subscribe.'
 input_placeholder: 'Enter your email'
 button_label: Subscribe
 success_message: "Congrats, you're in!"
+error_message: 'We could not subscribe you. Please try again later.'

@@ -1,6 +1,6 @@
 {{#
-    Configure newsletter content inside Control Panel in /cp/globals/newsletter Configure email service
-    provider logic inside app/Http/Controllers/NewsletterController.php
+    Configure newsletter content inside Control Panel in /cp/globals/newsletter. Connect an email
+    service provider inside app/Http/Controllers/SubscribeNewsletterController.php
 #}}
 
 {{ once }}
@@ -8,7 +8,9 @@
         <s:vite src="resources/js/components/newsletter.js" />
     {{ /push:scripts }}
 {{ /once }}
-<div
+{{ newsletter_id = {block_id} }}
+<section
+    id="{{ newsletter_id }}"
     x-cloak
     x-show="!isSubscribed"
     x-data="Newsletter({
@@ -17,6 +19,7 @@
                     honeypot: '',
                 }),
                 persistKey: '{{ site:name | snake }}_newsletter_subscribed',
+                fallbackErrorMessage: {{ newsletter:error_message | macro('to_js') }},
             })"
     class="m-section"
 >
@@ -24,7 +27,8 @@
         <s:partial:components.section-header
             :title="newsletter:title"
             :text="newsletter:text"
-            margin="mb-10"
+            :heading_level="first ? 'h1' : 'h2'"
+            margin_class="mb-10"
         />
 
         <form
@@ -37,17 +41,17 @@
                 <s:partial:components.ui.form.honeypot
                     model="form.honeypot"
                     handle="fax_number"
-                    :form_handle="type"
+                    :form_handle="newsletter_id"
                 />
                 <input type="hidden" name="_token" value="{{ csrf_token }}" />
 
                 <s:partial:components.ui.form.label
-                    id="{type}-email"
+                    id="{newsletter_id}-email"
                     display="Email"
                     hide_display="true"
                 />
                 <s:partial:components.ui.form.fields.text
-                    id="{type}-email"
+                    id="{newsletter_id}-email"
                     model="form.email"
                     handle="email"
                     input_type="email"
@@ -63,15 +67,26 @@
                 />
             </div>
 
-            <s:partial:components.ui.form.error handle="email" id="{type}-email" />
+            <s:partial:components.ui.form.error handle="email" id="{newsletter_id}-email" />
         </form>
 
         <template x-if="success">
             <s:partial:components.ui.alert
                 variant="success"
+                role="alert"
                 class="mx-auto mt-10 max-w-md"
                 :title="newsletter:success_message"
             />
         </template>
+
+        <template x-if="error && !form.hasErrors">
+            <s:partial:components.ui.alert
+                variant="error"
+                role="alert"
+                class="mx-auto mt-6 max-w-md"
+            >
+                <span x-text="errorMessage"></span>
+            </s:partial:components.ui.alert>
+        </template>
     </div>
-</div>
+</section>
