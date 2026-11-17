@@ -1,0 +1,63 @@
+name: Dependabot Auto-Merge
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+
+permissions:
+  actions: write
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge:
+    if: >
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.actor.login == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+      HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+      HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+
+    steps:
+      - name: Get PR number
+        id: pr
+        run: |
+          PR_NUMBER=$(gh pr list --head "$HEAD_BRANCH" --json number --jq '.[0].number')
+          echo "number=$PR_NUMBER" >> "$GITHUB_OUTPUT"
+
+      # dependabot/fetch-metadata needs a pull_request payload. workflow_run events do not have one.
+      # Dependabot closes a PR when a newer update replaces it, so the PR number can be empty.
+      - name: Read update types from Dependabot's commit
+        id: metadata
+        if: steps.pr.outputs.number != ''
+        run: |
+          gh api "repos/$GH_REPO/commits/$HEAD_SHA" > "$RUNNER_TEMP/commit.json"
+          jq -r '.commit.message' "$RUNNER_TEMP/commit.json" > "$RUNNER_TEMP/message.txt"
+
+          IS_VERIFIED_DEPENDABOT_COMMIT=$(jq -r \
+            '.author.login == "dependabot[bot]" and .commit.verification.verified' \
+            "$RUNNER_TEMP/commit.json")
+          DEPENDENCY_COUNT=$(grep -c '^- dependency-name: ' "$RUNNER_TEMP/message.txt" || true)
+          UPDATE_TYPE_COUNT=$(grep -c '^  update-type: ' "$RUNNER_TEMP/message.txt" || true)
+          MAJOR_UPDATE_COUNT=$(grep -c 'version-update:semver-major' "$RUNNER_TEMP/message.txt" || true)
+
+          # Leave the PR open for review when an update has no known type. Treat it like a major update.
+          if [ "$IS_VERIFIED_DEPENDABOT_COMMIT" = "true" ] \
+            && [ "$DEPENDENCY_COUNT" -gt 0 ] \
+            && [ "$DEPENDENCY_COUNT" -eq "$UPDATE_TYPE_COUNT" ] \
+            && [ "$MAJOR_UPDATE_COUNT" -eq 0 ]; then
+            echo "only_patch_or_minor=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # GitHub does not start workflows for a push made with GITHUB_TOKEN. If a workflow runs on push to main, start it with `gh workflow run` after the merge.
+      - name: Approve and merge patch/minor updates
+        if: steps.metadata.outputs.only_patch_or_minor == 'true'
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        run: |
+          gh pr review "$PR_NUMBER" --approve
+          gh pr merge "$PR_NUMBER" --squash --match-head-commit "$HEAD_SHA"

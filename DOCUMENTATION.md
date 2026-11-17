@@ -102,6 +102,18 @@ Sets provide a powerful content creation experience with unparalleled flexibilit
 - `php please delete:bedrock-set` - removes a set from the Article and all associated files.
 - `php please rename:bedrock-set` - renames a set in the Article and optionally moves to another group.
 
+## Dependency updates
+Dependabot opens pull requests each Monday for Composer, Bun and GitHub Actions updates. It groups the minor and patch updates of each ecosystem into one pull request.
+
+When CI passes on a Dependabot pull request that has only minor and patch updates, `.github/workflows/dependabot-auto-merge.yml` approves it and squash merges it. Major updates stay open for your review.
+
+To make this work:
+1. In **Settings → Actions → General**, enable **Allow GitHub Actions to create and approve pull requests**.
+2. Open `https://github.com/<owner>/<repo>/settings/security_analysis` (the gear **Settings** tab, then **Advanced Security** in the sidebar). Enable **Dependency graph**, **Dependabot alerts** and **Dependabot security updates**, in this order. Each one needs the one before it, and some can already be on.
+3. A merge made with `GITHUB_TOKEN` does not start other workflows. If a workflow runs on push to `main` (for example, a deploy), add a `gh workflow run <file> --ref main` step after the merge step.
+
+Security updates do not wait for Monday. When GitHub publishes an advisory for a locked Composer package or a GitHub Action, Dependabot opens a pull request immediately. The auto-merge workflow merges it when CI passes and it is a minor or patch update. Dependabot does not make security updates for Bun packages, so Bun packages get fixes only from the weekly version updates.
+
 ## Queues and Horizon
 
 Horizon runs the Redis queue. Statamic uses the queue for Git commits, static cache warming and search index updates.

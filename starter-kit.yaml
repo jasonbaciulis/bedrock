@@ -1,7 +1,9 @@
 export_paths:
   - .ai
   - .claude
+  - .github/dependabot.yml
   - .github/workflows/ci.yml
+  - .github/workflows/dependabot-auto-merge.yml
   - app/Fieldtypes
   - app/Http
   - app/Models/User.php
