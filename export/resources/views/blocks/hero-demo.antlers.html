@@ -49,7 +49,12 @@
 <section id="{{ block_id }}" class="py-8 md:py-16 lg:py-20">
     <div class="container flex flex-col items-center gap-4 text-center xl:gap-6">
         <h1 class="h1 text-balance">{{ title }}</h1>
-        <p class="content-lg text-muted-foreground max-w-3xl text-balance">{{ text }}</p>
+        <s:partial:components.ui.text
+            size="lg"
+            class="prose text-muted-foreground max-w-3xl text-balance"
+        >
+            {{ text }}
+        </s:partial:components.ui.text>
         <s:partial:components.buttons :buttons="buttons" class="gap-x-3" size="xl" />
     </div>
 
@@ -60,215 +65,193 @@
         <div class="col-span-full grid grid-cols-1 gap-4 md:grid-cols-2 xl:col-span-6">
             <div class="space-y-4">
                 {{# Contact Form #}}
-                <div x-data="heroDemoContact()" class="col-span-full md:col-span-6 lg:col-span-3">
-                    <div class="card shadow-none">
-                        <div class="card__header">
-                            <p class="leading-none font-semibold">Contact us</p>
-                            <p class="text-muted-foreground text-sm">
-                                Get in touch and we'll respond within 24 hours.
-                            </p>
+                <div x-data="heroDemoContact()" class="card">
+                    <div class="card__header">
+                        <p class="card__title">Contact us</p>
+                        <p class="card__description">
+                            Get in touch and we'll respond within 24 hours.
+                        </p>
+                    </div>
+                    <div class="card__content">
+                        <div class="grid gap-3">
+                            <s:partial:components.ui.form.label id="contact_name" display="Name" />
+                            <s:partial:components.ui.form.fields.text
+                                model="form.name"
+                                handle="contact_name"
+                                id="contact_name"
+                                placeholder="Your full name"
+                            />
                         </div>
-                        <div class="flex flex-1 flex-col gap-4">
-                            <div class="grid gap-3">
-                                <s:partial:components.ui.form.label
-                                    id="contact_name"
-                                    display="Name"
-                                />
-                                <s:partial:components.ui.form.fields.text
-                                    model="form.name"
-                                    handle="contact_name"
-                                    id="contact_name"
-                                    placeholder="Your full name"
-                                />
-                            </div>
-                            <div class="grid gap-3">
-                                <s:partial:components.ui.form.label
-                                    id="contact_email"
-                                    display="Email"
-                                />
-                                <s:partial:components.ui.form.fields.text
-                                    model="form.email"
-                                    handle="contact_email"
-                                    id="contact_email"
-                                    autocomplete="email"
-                                    placeholder="your@email.com"
-                                />
-                            </div>
-                            <div class="grid gap-3">
-                                <s:partial:components.ui.form.label
-                                    id="contact_message"
-                                    display="Message"
-                                />
-                                <s:partial:components.ui.form.fields.textarea
-                                    model="form.message"
-                                    handle="contact_message"
-                                    id="contact_message"
-                                    class="min-h-24"
-                                    placeholder="Tell us about your project…"
-                                />
-                            </div>
-                            <div class="flex justify-end">
-                                <s:partial:components.ui.button as="button" type="button">
-                                    Submit
-                                </s:partial:components.ui.button>
-                            </div>
+                        <div class="grid gap-3">
+                            <s:partial:components.ui.form.label
+                                id="contact_email"
+                                display="Email"
+                            />
+                            <s:partial:components.ui.form.fields.text
+                                model="form.email"
+                                handle="contact_email"
+                                id="contact_email"
+                                autocomplete="email"
+                                placeholder="your@email.com"
+                            />
                         </div>
+                        <div class="grid gap-3">
+                            <s:partial:components.ui.form.label
+                                id="contact_message"
+                                display="Message"
+                            />
+                            <s:partial:components.ui.form.fields.textarea
+                                model="form.message"
+                                handle="contact_message"
+                                id="contact_message"
+                                class="min-h-24"
+                                placeholder="Tell us about your project…"
+                            />
+                        </div>
+                    </div>
+                    <div class="card__footer justify-end">
+                        <s:partial:components.ui.button as="button" type="button">
+                            Submit
+                        </s:partial:components.ui.button>
                     </div>
                 </div>
 
                 {{# Newsletter Form #}}
-                <div
-                    x-data="heroDemoNewsletter()"
-                    class="col-span-full md:col-span-6 lg:col-span-3"
-                >
-                    <div class="card shadow-none">
-                        <div class="card__header">
-                            <p class="leading-none font-semibold">Newsletter</p>
-                            <p class="text-muted-foreground text-sm">
-                                Stay updated with our latest insights and tips.
-                            </p>
+                <div x-data="heroDemoNewsletter()" class="card">
+                    <div class="card__header">
+                        <p class="card__title">Newsletter</p>
+                        <p class="card__description">
+                            Stay updated with our latest insights and tips.
+                        </p>
+                    </div>
+                    <div class="card__content">
+                        <div class="grid gap-3">
+                            <s:partial:components.ui.form.label
+                                id="newsletter_email"
+                                display="Email Address"
+                            />
+                            <s:partial:components.ui.form.fields.text
+                                model="form.email"
+                                handle="email"
+                                id="newsletter_email"
+                                autocomplete="email"
+                                placeholder="your@email.com"
+                            />
                         </div>
-                        <div class="flex flex-1 flex-col gap-4">
-                            <div class="grid gap-3">
-                                <s:partial:components.ui.form.label
-                                    id="newsletter_email"
-                                    display="Email Address"
-                                />
-                                <s:partial:components.ui.form.fields.text
-                                    model="form.email"
-                                    handle="email"
-                                    id="newsletter_email"
-                                    autocomplete="email"
-                                    placeholder="your@email.com"
-                                />
-                            </div>
-                            <div class="grid gap-3">
-                                <s:partial:components.ui.form.label
-                                    id="frequency"
-                                    display="Frequency"
-                                />
-                                {{ frequency_options = ['daily' => 'Daily updates', 'weekly' => 'Weekly digest', 'monthly' => 'Monthly newsletter'] }}
-                                <s:partial:components.ui.form.fields.select
-                                    model="form.frequency"
-                                    handle="frequency"
-                                    id="frequency"
-                                    :options="frequency_options"
-                                />
-                            </div>
-                            <div class="grid gap-3">
-                                {{ topics_options = ['design' => 'Design tips', 'development' => 'Development news', 'marketing' => 'Marketing insights'] }}
-                                <s:partial:components.ui.form.fields.checkboxes
-                                    model="form.topics"
-                                    handle="topics"
-                                    id="topics"
-                                    display="Topics"
-                                    :options="topics_options"
-                                />
-                            </div>
-                            <div class="flex justify-end">
-                                <s:partial:components.ui.button as="button" type="button">
-                                    Subscribe
-                                </s:partial:components.ui.button>
-                            </div>
+                        <div class="grid gap-3">
+                            <s:partial:components.ui.form.label
+                                id="frequency"
+                                display="Frequency"
+                            />
+                            {{ frequency_options = ['daily' => 'Daily updates', 'weekly' => 'Weekly digest', 'monthly' => 'Monthly newsletter'] }}
+                            <s:partial:components.ui.form.fields.select
+                                model="form.frequency"
+                                handle="frequency"
+                                id="frequency"
+                                :options="frequency_options"
+                            />
                         </div>
+                        <div class="grid gap-3">
+                            {{ topics_options = ['design' => 'Design tips', 'development' => 'Development news', 'marketing' => 'Marketing insights'] }}
+                            <s:partial:components.ui.form.fields.checkboxes
+                                model="form.topics"
+                                handle="topics"
+                                id="topics"
+                                display="Topics"
+                                :options="topics_options"
+                            />
+                        </div>
+                    </div>
+                    <div class="card__footer justify-end">
+                        <s:partial:components.ui.button as="button" type="button">
+                            Subscribe
+                        </s:partial:components.ui.button>
                     </div>
                 </div>
             </div>
 
             <div class="space-y-4">
                 {{# Carousel #}}
-                <div class="col-span-full md:col-span-6 lg:col-span-3">
-                    <div class="card shadow-none">
-                        <div class="card__header">
-                            <p class="leading-none font-semibold">Featured posts</p>
-                            <p class="text-muted-foreground text-sm">
-                                Browse our most popular posts.
-                            </p>
-                        </div>
+                <div class="card">
+                    <div class="card__header">
+                        <p class="card__title">Featured posts</p>
+                        <p class="card__description">Browse our most popular posts.</p>
+                    </div>
 
-                        <div class="flex flex-1 items-center px-8">
-                            <s:partial:components.ui.carousel.carousel
-                                class="w-full max-w-full"
-                                opts="loop: true, align: 'center'"
-                            >
-                                {{ slot:content }}
-                                    {{ loop times="5" }}
-                                        <s:partial:components.ui.carousel.slide>
-                                            <div class="p-1">
-                                                <div
-                                                    class="card aspect-square items-center justify-center lg:aspect-3/2 xl:aspect-square"
-                                                >
-                                                    <span class="text-4xl font-semibold">
-                                                        {{ count }}
-                                                    </span>
-                                                </div>
+                    <div class="card__content justify-center px-8">
+                        <s:partial:components.ui.carousel.carousel
+                            class="w-full max-w-full"
+                            opts="loop: true, align: 'center'"
+                        >
+                            {{ slot:content }}
+                                {{ loop times="5" }}
+                                    <s:partial:components.ui.carousel.slide>
+                                        <div class="p-1">
+                                            <div
+                                                class="card aspect-square items-center justify-center shadow-sm lg:aspect-3/2 xl:aspect-square"
+                                            >
+                                                <span class="text-4xl font-semibold">
+                                                    {{ count }}
+                                                </span>
                                             </div>
-                                        </s:partial:components.ui.carousel.slide>
-                                    {{ /loop }}
-                                {{ /slot:content }}
-                                {{ slot:nav }}
-                                    <s:partial:components.ui.carousel.previous />
-                                    <s:partial:components.ui.carousel.next />
-                                {{ /slot:nav }}
-                            </s:partial:components.ui.carousel.carousel>
-                        </div>
+                                        </div>
+                                    </s:partial:components.ui.carousel.slide>
+                                {{ /loop }}
+                            {{ /slot:content }}
+                            {{ slot:nav }}
+                                <s:partial:components.ui.carousel.previous />
+                                <s:partial:components.ui.carousel.next />
+                            {{ /slot:nav }}
+                        </s:partial:components.ui.carousel.carousel>
                     </div>
                 </div>
 
                 {{# Preferences Form #}}
-                <div
-                    x-data="heroDemoPreferences()"
-                    class="col-span-full md:col-span-6 lg:col-span-3"
-                >
-                    <div class="card shadow-none">
-                        <div class="card__header">
-                            <p class="leading-none font-semibold">Preferences</p>
-                            <p class="text-muted-foreground text-sm">Customize your experience.</p>
+                <div x-data="heroDemoPreferences()" class="card">
+                    <div class="card__header">
+                        <p class="card__title">Preferences</p>
+                        <p class="card__description">Customize your experience.</p>
+                    </div>
+                    <div class="card__content">
+                        <div class="grid gap-3">
+                            {{ theme_options = ['light' => 'Light mode', 'dark' => 'Dark mode', 'system' => 'System default'] }}
+                            <s:partial:components.ui.form.fields.radio
+                                id="theme"
+                                handle="theme"
+                                model="form.theme"
+                                display="Theme"
+                                :options="theme_options"
+                            />
                         </div>
-                        <div class="flex flex-1 flex-col gap-6">
-                            <div class="grid gap-6">
-                                <div class="grid gap-3">
-                                    {{ theme_options = ['light' => 'Light mode', 'dark' => 'Dark mode', 'system' => 'System default'] }}
-                                    <s:partial:components.ui.form.fields.radio
-                                        id="theme"
-                                        handle="theme"
-                                        model="form.theme"
-                                        display="Theme"
-                                        :options="theme_options"
-                                    />
-                                </div>
-                                <div class="grid gap-3">
-                                    <s:partial:components.ui.form.label
-                                        id="language"
-                                        display="Language"
-                                    />
-                                    {{ languages = ['en' => 'English', 'es' => 'Spanish', 'fr' => 'French', 'de' => 'German', 'it' => 'Italian', 'pt' => 'Portuguese', 'ru' => 'Russian', 'zh' => 'Chinese', 'ja' => 'Japanese', 'ko' => 'Korean', 'ar' => 'Arabic'] }}
-                                    <s:partial:components.ui.form.combobox
-                                        id="language"
-                                        handle="language"
-                                        model="form.language"
-                                        placeholder="Select language…"
-                                        :options="languages"
-                                    />
-                                </div>
-                                <div class="grid gap-3">
-                                    <s:partial:components.ui.form.fields.toggle
-                                        model="form.notifications"
-                                        handle="notifications"
-                                        id="notifications"
-                                        inline_label="Notifications"
-                                    />
-                                </div>
-                            </div>
-                            <s:partial:components.ui.button
-                                class="w-full"
-                                variant="outline"
-                                type="button"
-                                as="button"
-                            >
-                                Save preferences
-                            </s:partial:components.ui.button>
+                        <div class="grid gap-3">
+                            <s:partial:components.ui.form.label id="language" display="Language" />
+                            {{ languages = ['en' => 'English', 'es' => 'Spanish', 'fr' => 'French', 'de' => 'German', 'it' => 'Italian', 'pt' => 'Portuguese', 'ru' => 'Russian', 'zh' => 'Chinese', 'ja' => 'Japanese', 'ko' => 'Korean', 'ar' => 'Arabic'] }}
+                            <s:partial:components.ui.form.combobox
+                                id="language"
+                                handle="language"
+                                model="form.language"
+                                placeholder="Select language…"
+                                :options="languages"
+                            />
                         </div>
+                        <div class="grid gap-3">
+                            <s:partial:components.ui.form.fields.toggle
+                                model="form.notifications"
+                                handle="notifications"
+                                id="notifications"
+                                inline_label="Notifications"
+                            />
+                        </div>
+                    </div>
+                    <div class="card__footer">
+                        <s:partial:components.ui.button
+                            class="w-full"
+                            variant="outline"
+                            type="button"
+                            as="button"
+                        >
+                            Save preferences
+                        </s:partial:components.ui.button>
                     </div>
                 </div>
             </div>
@@ -294,10 +277,7 @@
                     {{ /slot:list }}
                     {{ slot:panels }}
                         {{ services_tabs }}
-                            <s:partial:components.ui.tabs.panel
-                                :name="count"
-                                class="card h-full justify-between shadow-none"
-                            >
+                            <s:partial:components.ui.tabs.panel :name="count" class="card h-full">
                                 <div class="card__content">
                                     <p class="text-sm">{{ description }}</p>
                                     <ul class="list-inside list-disc space-y-1 text-sm">
@@ -320,51 +300,47 @@
                         {{ /services_tabs }}
                     {{ /slot:panels }}
                 </s:partial:components.ui.tabs.tabs>
-                <div x-data="heroDemoSteps()">
-                    <div class="card shadow-none">
-                        <div class="card__header">
-                            <p class="leading-none font-semibold">Move goal</p>
-                            <p class="text-muted-foreground text-sm">
-                                Set your daily activity goal.
-                            </p>
-                        </div>
-                        <div class="flex flex-1 flex-col items-center gap-4">
-                            <s:partial:components.ui.form.fields.stepper
-                                model="form.steps"
-                                handle="steps"
-                                id="steps"
-                                display="Steps"
-                                :hide_display="true"
-                                :show_input="false"
-                                :step="100"
-                                :max="30000"
-                                class="flex flex-col px-4 text-4xl font-bold tracking-tighter"
+                <div x-data="heroDemoSteps()" class="card">
+                    <div class="card__header">
+                        <p class="card__title">Move goal</p>
+                        <p class="card__description">Set your daily activity goal.</p>
+                    </div>
+                    <div class="card__content items-center">
+                        <s:partial:components.ui.form.fields.stepper
+                            model="form.steps"
+                            handle="steps"
+                            id="steps"
+                            display="Steps"
+                            :hide_display="true"
+                            :show_input="false"
+                            :step="100"
+                            :max="30000"
+                            class="flex flex-col px-4 text-4xl font-bold tracking-tighter"
+                        >
+                            <label
+                                for="steps"
+                                class="text-muted-foreground text-xs font-normal tracking-normal uppercase"
                             >
-                                <label
-                                    for="steps"
-                                    class="text-muted-foreground text-xs font-normal tracking-normal uppercase"
-                                >
-                                    Steps/day
-                                </label>
-                            </s:partial:components.ui.form.fields.stepper>
+                                Steps/day
+                            </label>
+                        </s:partial:components.ui.form.fields.stepper>
 
-                            <div class="flex w-full items-end gap-2">
-                                {{ bar_heights = ['h-16', 'h-12', 'h-8', 'h-6', 'h-4', 'h-8', 'h-10', 'h-12', 'h-14', 'h-16'] }}
-                                {{ bar_heights }}
-                                    <div class="bg-foreground {{ value }} flex-1 rounded-md"></div>
-                                {{ /bar_heights }}
-                            </div>
+                        <div class="flex w-full items-end gap-2">
+                            {{ bar_heights = ['h-16', 'h-12', 'h-8', 'h-6', 'h-4', 'h-8', 'h-10', 'h-12', 'h-14', 'h-16'] }}
+                            {{ bar_heights }}
+                                <div class="bg-foreground {{ value }} flex-1 rounded-md"></div>
+                            {{ /bar_heights }}
                         </div>
-                        <div>
-                            <s:partial:components.ui.button
-                                variant="secondary"
-                                type="button"
-                                as="button"
-                                class="w-full"
-                            >
-                                Set Goal
-                            </s:partial:components.ui.button>
-                        </div>
+                    </div>
+                    <div class="card__footer">
+                        <s:partial:components.ui.button
+                            variant="secondary"
+                            type="button"
+                            as="button"
+                            class="w-full"
+                        >
+                            Set Goal
+                        </s:partial:components.ui.button>
                     </div>
                 </div>
             </div>
@@ -372,16 +348,16 @@
             {{# Interactive Components and FAQs #}}
             <div class="space-y-4 xl:col-span-full">
                 {{# Collapsible FAQ #}}
-                <div class="card shadow-none">
+                <div class="card">
                     <div class="card__header">
-                        <p class="text-xl font-semibold">FAQs</p>
-                        <p class="text-muted-foreground text-sm">
+                        <p class="card__title text-xl">FAQs</p>
+                        <p class="card__description">
                             Here are some of the most frequently asked questions.
                         </p>
                     </div>
 
                     {{ demo_faqs = [['title' => 'How long does a project take?', 'text' => 'Project timelines vary based on complexity, but most websites take 4-8 weeks from start to finish.'], ['title' => 'Do you offer maintenance?', 'text' => 'Yes, we provide ongoing maintenance and support packages to keep your website running smoothly.'], ['title' => 'How do I get started?', 'text' => 'Contact us to discuss your project and we’ll provide a free consultation to help you get started.']] }}
-                    <dl class="space-y-2">
+                    <dl class="card__content gap-2">
                         {{ demo_faqs }}
                             <s:partial:components.ui.collapsible
                                 trigger_class="flex w-full items-center justify-between py-2 text-left text-sm font-medium"
@@ -405,10 +381,10 @@
                 </div>
 
                 {{# Dialog and Dropdown #}}
-                <div class="card shadow-none">
+                <div class="card">
                     <div class="card__header">
-                        <p class="leading-none font-semibold">Interactive elements</p>
-                        <p class="text-muted-foreground text-sm">Explore our components.</p>
+                        <p class="card__title">Interactive elements</p>
+                        <p class="card__description">Explore our components.</p>
                     </div>
 
                     {{# Dialog #}}
@@ -430,7 +406,7 @@
                                 <div class="flex flex-col gap-4">
                                     <div class="flex flex-col gap-2 text-center sm:text-left">
                                         <p
-                                            class="text-lg leading-none font-semibold text-neutral-800"
+                                            class="text-foreground text-lg leading-none font-semibold"
                                         >
                                             Share link
                                         </p>
@@ -524,7 +500,7 @@
                 </div>
 
                 {{# Mock pagination #}}
-                <div class="card shadow-none">
+                <div class="card">
                     <nav class="flex items-center justify-center gap-1">
                         <s:partial:components.ui.button
                             as="button"
@@ -576,13 +552,13 @@
                     </nav>
                 </div>
 
-                <div class="card flex flex-row items-center justify-between shadow-none">
+                <div class="card flex-row items-center justify-between">
                     <div class="card__header">
-                        <p class="leading-none font-semibold">Toaster</p>
-                        <p class="text-muted-foreground text-sm">A toaster component.</p>
+                        <p class="card__title">Toaster</p>
+                        <p class="card__description">A toaster component.</p>
                     </div>
 
-                    <div class="flex flex-wrap gap-3" x-data>
+                    <div class="card__footer flex-wrap gap-3" x-data>
                         <s:partial:components.ui.button
                             as="button"
                             variant="outline"

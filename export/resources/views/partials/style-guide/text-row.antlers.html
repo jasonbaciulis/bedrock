@@ -1,0 +1,12 @@
+---
+size: 'base'
+---
+
+<div class="flex items-center">
+    <dt class="text-muted-foreground w-32 shrink-0 font-mono text-sm leading-6 sm:text-base">
+        {{ view:size }}
+    </dt>
+    <s:partial:components.ui.text as="dd" :size="view:size" class="truncate">
+        The quick brown fox jumps over the lazy dog.
+    </s:partial:components.ui.text>
+</div>

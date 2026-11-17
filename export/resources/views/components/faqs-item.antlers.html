@@ -10,15 +10,21 @@ class: ''
     content_class="-top-2 pr-12"
 >
     {{ slot:trigger }}
-        <span class="content-lg font-medium text-neutral-900">{{ view:title }}</span>
-        <span class="size-6 flex-none text-neutral-800/70" aria-hidden="true">
+        <s:partial:components.ui.text as="span" size="lg" class="text-foreground font-medium">
+            {{ view:title }}
+        </s:partial:components.ui.text>
+        <span class="text-muted-foreground size-6 flex-none" aria-hidden="true">
             <s:svg src="heroicons/outline/plus" x-show="!open" />
             <s:svg src="heroicons/outline/minus" x-show="open" />
         </span>
     {{ /slot:trigger }}
     {{ slot:content }}
-        <div class="prose text-muted-foreground max-w-none pb-4 text-sm text-pretty sm:text-base">
+        <s:partial:components.ui.text
+            as="div"
+            size="sm"
+            class="prose text-muted-foreground pb-4 text-pretty"
+        >
             {{ view:text }}
-        </div>
+        </s:partial:components.ui.text>
     {{ /slot:content }}
 </s:partial:components.ui.collapsible>

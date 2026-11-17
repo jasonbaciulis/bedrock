@@ -22,18 +22,10 @@ tabs:
                 show: 'equals true'
           -
             handle: text
-            field: common.text_basic
+            field: common.text_inline
             config:
-              buttons:
-                - bold
-                - italic
-                - underline
-                - removeformat
-                - anchor
               display: Text
               validate:
                 - 'required_if:show,true'
               if:
                 show: 'equals true'
-              fullscreen: false
-              inline: true
