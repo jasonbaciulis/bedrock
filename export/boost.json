@@ -7,7 +7,8 @@
     "mcp": true,
     "nightwatch": false,
     "packages": [
-        "statamic/cms"
+        "statamic/cms",
+        "barryvdh/laravel-debugbar"
     ],
     "sail": false,
     "skills": [
@@ -15,6 +16,7 @@
         "laravel-best-practices",
         "testing-best-practices",
         "configuring-horizon",
-        "tailwindcss-development"
+        "tailwindcss-development",
+        "debug-using-debugbar"
     ]
 }
