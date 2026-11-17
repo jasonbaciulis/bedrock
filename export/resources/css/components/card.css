@@ -1,10 +1,18 @@
 @layer components {
     .card {
-        @apply bg-card text-card-foreground flex flex-col gap-5 rounded-xl border p-6 shadow-sm;
+        @apply bg-card text-card-foreground flex flex-col gap-5 rounded-xl border p-6;
     }
 
     .card__header {
         @apply flex flex-col gap-1.5;
+    }
+
+    .card__title {
+        @apply leading-none font-semibold;
+    }
+
+    .card__description {
+        @apply text-muted-foreground text-sm;
     }
 
     .card__content {
