@@ -19,12 +19,14 @@ final class StarterKitPostInstall
     /**
      * The Statamic skeleton ships these, and `export_paths` can only overwrite files,
      * never delete them. The kit's home page uses the default template, so no view
-     * renders `home`. `CreatesApplication` is orphaned by the kit's own TestCase,
-     * and both example tests fail `composer run test`.
+     * renders `home`. `CreatesApplication` is orphaned by the kit's own TestCase.
+     * No kit controller extends the abstract `Controller`, and it fails the strict
+     * arch preset, as do both example tests.
      *
      * @var list<string>
      */
     public const array SKELETON_FILES = [
+        'app/Http/Controllers/Controller.php',
         'resources/views/home.antlers.html',
         'tests/CreatesApplication.php',
         'tests/Feature/ExampleTest.php',
