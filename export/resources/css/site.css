@@ -1,5 +1,5 @@
 /*
-Instead of rellying 100% on TailwindCSS utility classes,
+Instead of relying 100% on TailwindCSS utility classes,
 for highly reusable UI elements we create BEM CSS components.
 We think this approach is faster and more maintainable and eliminates the
 need to create/import a bunch of tiny Blade components with a single HTML tag.
@@ -15,7 +15,6 @@ CSS folder structure is based on ITCSS:
 /* Configs */
 @import 'tailwindcss';
 @import './config.css';
-@import './typography.css';
 
 /* Elements */
 @import './elements/borders.css';
