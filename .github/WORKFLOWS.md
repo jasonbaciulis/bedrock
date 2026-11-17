@@ -1,42 +1,48 @@
 # GitHub Workflows Documentation
 
-This repository includes comprehensive GitHub Actions workflows to ensure the Bedrock Statamic starter kit works reliably for all users.
+This repository includes a GitHub Actions workflow that installs the Bedrock Statamic starter kit and tests the installed site.
 
 ## Workflows Overview
 
-### 1. Test Live Installation (`test-live-installation.yml`)
+### 1. Test Installation (`test-installation.yml`)
 
 **Triggers:**
+- Pull requests to `main`
 - New releases are published
 - Weekly schedule (Mondays at 2 AM)
 - Manual workflow dispatch
 
-**Purpose:** Tests the actual published starter kit using the real `statamic new` command.
+**Purpose:** Installs the starter kit with the real `statamic new` command. A pull request installs its own kit files from a local path repository (`--local`). All other triggers install the published kit.
 
 **What it tests:**
-- Live installation: `statamic new bedrock-test jasonbaciulis/bedrock`
-- Complete dependency installation
-- Asset compilation in installed project
-- Application serving and basic functionality
-- Post-install script execution
+- Installation: `statamic new bedrock-test jasonbaciulis/bedrock`
+- The post-install hook and the dev dependencies that it installs
+- Complete dependency installation and asset compilation
+- The control panel loads without logged PHP errors
+- The unit and feature tests of the installed kit, including a 200 response for every published page and the latest post
+- The browser tests of the installed kit, including no JavaScript errors and no accessibility issues on every published page and the latest post
 
 ## Usage Guide
 
 ### For Development
 
-1. **Make changes** in the `export/` directory
-2. **Update `starter-kit.yaml`** if adding/removing files
-3. **Create pull request** - CI will automatically test your changes
-4. **Review CI results** and fix any issues
+Do not edit this repository by hand. The kit is exported from the [Bedrock demo project](https://github.com/jasonbaciulis/bedrock-demo).
+
+1. **Make changes** in the demo project
+2. **Update `package/starter-kit.yaml`** in the demo project if you add or remove files
+3. **Run `php artisan bedrock:export-starter-kit`** in the demo project. It exports the kit into this repository and checks that every kit file is in `export_paths` and that every partial and fieldset was exported.
+4. **Create pull request** in this repository - CI installs the kit of the pull request and tests it
+5. **Review CI results** and fix any issues in the demo project, then export again
 
 ### Manual Testing
 
-You can manually trigger any workflow using GitHub's workflow dispatch feature:
+You can manually trigger the workflow using GitHub's workflow dispatch feature:
 
 1. Go to **Actions** tab in GitHub
-2. Select the workflow you want to run
+2. Select **Test Installation**
 3. Click **Run workflow**
-4. Fill in any required parameters
+
+A manual run installs the published kit.
 
 ## Monitoring
 
@@ -49,21 +55,7 @@ You can manually trigger any workflow using GitHub's workflow dispatch feature:
 
 ### Common Issues
 
-1. **Export path missing:** Add the file/directory to `export/` or remove from `starter-kit.yaml`
-2. **PHP syntax errors:** Check and fix PHP files in the export directory
-3. **Dependency issues:** Verify composer dependencies are available and versions are correct
-4. **Asset build failures:** Check Node.js dependencies and build configuration
-
-## Security
-
-- All workflows use pinned action versions (e.g., `@v4`)
-- No secrets are exposed in logs
-- Limited GitHub token permissions
-- Dependency validation prevents malicious packages
-
-## Performance
-
-- Workflows use caching where possible (Composer, npm)
-- Parallel job execution reduces total runtime
-- Efficient file operations and validation checks
-- Minimal resource usage for regular validation
+1. **Export command fails:** Add the missing files to `export_paths` in `package/starter-kit.yaml`, or fix the partial or fieldset that the command names
+2. **Installation fails:** Verify composer dependencies are available and versions are correct
+3. **Asset build failures:** Check the Bun dependencies and the Vite configuration
+4. **Tests fail:** A failed browser test uploads its screenshots as the `browser-screenshots` artifact of the workflow run
