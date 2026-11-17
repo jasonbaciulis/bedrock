@@ -1,17 +1,23 @@
-name: Test Live Installation
+name: Test Installation
 
 on:
-  # Run on releases to test the actual published starter kit
+  # Install the kit of the pull request, before it is released
+  pull_request:
+    branches: [main]
+  # Install the published kit, as users do
   release:
     types: [published]
-  # Allow manual testing
   workflow_dispatch:
-  # Run weekly to catch issues
+  # Catch problems from new versions of the dependencies
   schedule:
     - cron: '0 2 * * 1'  # Monday at 2 AM
 
+concurrency:
+  group: test-installation-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  test-live-installation:
+  test-installation:
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
@@ -32,19 +38,23 @@ jobs:
       - name: Add Composer global bin to PATH
         run: echo "$HOME/.composer/vendor/bin" >> $GITHUB_PATH
 
-      - name: Test live starter kit installation
+      - name: Checkout the kit of the pull request
+        if: github.event_name == 'pull_request'
+        uses: actions/checkout@v6
+        with:
+          path: kit
+
+      # `statamic new --local` installs the kit from this path repository, not from Packagist.
+      - name: Register the kit of the pull request as a local repository
+        if: github.event_name == 'pull_request'
+        run: composer config --global repositories.bedrock path "$GITHUB_WORKSPACE/kit"
+
+      - name: Install the starter kit
         run: |
-          # Create a test directory
           mkdir test-installation
           cd test-installation
 
-          # Test the actual installation command that users will run
-          echo "Testing: statamic new bedrock-test jasonbaciulis/bedrock"
-
-          # Use --no-interaction to avoid CLI prompts
-          statamic new bedrock-test jasonbaciulis/bedrock --no-interaction
-
-          echo "✓ Starter kit installation completed"
+          statamic new bedrock-test jasonbaciulis/bedrock --no-interaction ${{ github.event_name == 'pull_request' && '--local' || '' }}
 
       - name: Run deferred post-install hook
         run: |
@@ -132,6 +142,13 @@ jobs:
             exit 1
           fi
 
+      # Includes tests/Feature/EntriesTest.php, which renders every published page and the latest post.
+      - name: Run unit and feature tests
+        run: |
+          cd test-installation/bedrock-test
+
+          vendor/bin/pest --exclude-testsuite=Browser
+
       - name: Install Playwright browsers
         run: |
           cd test-installation/bedrock-test
@@ -150,28 +167,3 @@ jobs:
         with:
           name: browser-screenshots
           path: test-installation/bedrock-test/tests/Browser/Screenshots
-
-      - name: Test post-install script
-        run: |
-          cd test-installation/bedrock-test
-
-          # Check if post-install script was executed
-          # The script should have prompted about starring the repo
-          echo "✓ Installation process completed successfully"
-
-          # Verify starter kit specific files
-          if [ -f "StarterKitPostInstall.php" ]; then
-            echo "⚠️  Warning: StarterKitPostInstall.php should not be in the final installation"
-          fi
-
-      - name: Summary
-        run: |
-          echo ""
-          echo "🎉 Live installation test completed successfully!"
-          echo ""
-          echo "Tested command: statamic new bedrock-test jasonbaciulis/bedrock"
-          echo ""
-          echo "✅ Installation works correctly"
-          echo "✅ Dependencies install properly"
-          echo "✅ Assets build successfully"
-          echo "✅ Homepage passes the browser smoke test"

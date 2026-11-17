@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-test('homepage loads without javascript errors', function (): void {
-    $homepage = visit(['/']);
+test('every published page and the latest post load without javascript errors', function (): void {
+    $pages = visit(smokeTestUrls());
 
-    $homepage->assertNoJavaScriptErrors();
+    $pages->assertNoJavaScriptErrors();
 });
 
-test('homepage has no accessibility issues', function (): void {
-    $homepage = visit(['/']);
+test('every published page and the latest post have no accessibility issues', function (): void {
+    $pages = visit(smokeTestUrls());
 
-    $homepage->assertNoAccessibilityIssues();
+    $pages->assertNoAccessibilityIssues();
 });

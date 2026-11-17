@@ -1,0 +1,14 @@
+<section id="{{ block_id }}" class="m-section">
+    <div class="container">
+        <s:partial:components.section-header
+            :title="title"
+            :text="text"
+            :heading_level="first ? 'h1' : 'h2'"
+            margin_class="mb-10"
+        />
+
+        <div class="mx-auto max-w-xl">
+            <s:partial:components.search-form :action="results_page:url" />
+        </div>
+    </div>
+</section>

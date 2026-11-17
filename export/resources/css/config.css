@@ -1,6 +1,8 @@
 @source not '../../.claude';
 
 @plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+@config '../../tailwind.config.js';
 
 /* Tokens that reference other variables: https://tailwindcss.com/docs/theme#referencing-other-variables */
 @theme inline {

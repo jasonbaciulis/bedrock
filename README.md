@@ -2,7 +2,7 @@
 
 ## The Foundation for your Statamic projects.
 
-Features shadcn/ui style Alpine.js components that you can customize, extend, and build on. Plus a block-based page builder, CLI tools, and a strict, fully automated code quality setup.
+Years of Statamic best practices, page-builder patterns, and pre-built Alpine.js components rolled into one starter kit. Your project starts on a solid foundation, so you skip the plumbing and ship faster.
 
 ## Features
 - **shadcn/ui style Alpine.js components**. 10+ beautifully-designed, accessible components for rapid development.

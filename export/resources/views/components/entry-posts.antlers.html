@@ -1,0 +1,24 @@
+---
+class: ''
+---
+
+<article {{ view:class | attribute:class }}>
+    <div
+        class="bg-muted ring-foreground/10 aspect-video rounded-2xl ring-1 ring-inset lg:aspect-3/2"
+    >
+        <s:partial:components.ui.picture
+            :image="image"
+            w="672"
+            h="378"
+            cover="true"
+            class="rounded-2xl"
+        />
+    </div>
+
+    <s:partial:components.entry-meta :date="date" :category="categories:title" class="mt-8" />
+
+    <a href="{{ url }}" class="group mt-3 block">
+        <h3 class="h5 text-pretty underline-offset-4 group-hover:underline">{{ title }}</h3>
+        <p class="text-muted-foreground mt-5 line-clamp-3 text-sm/6">{{ excerpt }}</p>
+    </a>
+</article>

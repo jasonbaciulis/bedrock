@@ -1,3 +1,4 @@
+order: 1
 title: Page
 tabs:
   main:
@@ -26,3 +27,26 @@ tabs:
               localizable: true
               validate: 'max:200'
               show_regenerate: true
+  'SEO Meta':
+    sections:
+      -
+        fields:
+          -
+            handle: seo
+            field:
+              type: seo_pro
+              listable: false
+              display: SEO
+  'SEO Previews':
+    sections:
+      -
+        fields:
+          -
+            handle: seo_previews
+            field:
+              type: seo_pro_previews
+              listable: false
+              display: 'SEO Previews'
+              localizable: false
+              hide_display: true
+              if: 'custom showSeoProPreviews'

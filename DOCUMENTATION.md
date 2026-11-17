@@ -48,16 +48,21 @@ resources/views/
 
 ## Included blocks
 - **Article** - Rich text with sets (picture, pull quote, table, video, FAQs, buttons).
+- **Blog Excerpt** - The latest, featured or selected posts in a grid.
 - **FAQs** - Accordion with FAQ structured data.
 - **Contact** - Renders any Statamic form, with sections and conditional fields.
 - **Newsletter** - Email opt-in form. Connect an email service provider before you use it (see [Newsletter](#newsletter)).
+- **Hero Demo** - A hero that shows the UI components: form fields, tabs, dialog, dropdown, carousel and collapsible.
+- **Search Form** - A search field that sends the query to the page that you select in "Results page".
+- **Search Results** - Results from the `blog` search index (`config/statamic/search.php`) in a grid, with pagination.
 - **Style Guide** - Shows the site grid, colors, buttons, alerts, headings and typography in one place.
 
-The [live demo](https://bedrock.remarkable.dev) also shows a blog and search. They are demo only and are not included in the starter kit.
+## Blog
+The Posts collection is mounted on the Blog page. The Blog page uses the Index blueprint and the `posts/index` template, which shows the page title, the text and all posts in a grid with pagination. The Limit field sets the number of posts per page. Posts use the `posts/show` template at `/posts/{slug}`.
 
 ## Tailwind CSS config
-- `config.css` - site's config. This file would typically include custom config for the project.
-- `typography.css` - the Tailwind CSS typography config for customizing the prose class.
+- `resources/css/config.css` - The theme tokens (colors, fonts and other `@theme` values), the Tailwind CSS plugins and the `@config` that loads `tailwind.config.js`. Put the project's design tokens here.
+- `tailwind.config.js` - The `prose` styles. The typography plugin is easier to configure in JS: it excludes `not-prose` content from these styles, which CSS overrides must do by hand.
 
 ## Fonts
 Bedrock loads [Inter](https://fonts.bunny.net/family/inter) from [Bunny Fonts](https://fonts.bunny.net), a privacy-friendly Google Fonts alternative.

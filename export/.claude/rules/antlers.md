@@ -109,3 +109,4 @@ Also, check `resources/css/components` for reusable CSS classes, such as the bod
 - Render every button and button-styled link with `components.ui.button`. Do not write raw `btn btn--*` classes in templates.
 - Pass extra icons or `sr-only` text in the slot. Pass Alpine bindings with the `x_*` props (`x_click`, `x_aria_expanded`, `x_ref`, …) and other attributes with `{{ slot:attributes }}`.
 - Write raw `.btn` classes only when the component cannot output the element. Tell the user in your report when you do this.
+- Exception: an element that uses only the base `.btn` class, with no variant or size, can be a plain `<button>` or `<a>`. The component adds no styling to it.

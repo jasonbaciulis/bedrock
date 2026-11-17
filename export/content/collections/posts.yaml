@@ -1,0 +1,19 @@
+title: Posts
+icon: collections
+template: posts/show
+layout: layout
+mount: 506c8e50-bc23-4c16-b691-c8aca71c1258
+taxonomies:
+  - categories
+revisions: false
+route: '/posts/{slug}'
+date: true
+sort_dir: desc
+date_behavior:
+  past: public
+  future: private
+preview_targets:
+  -
+    label: Entry
+    url: '{permalink}'
+    refresh: true

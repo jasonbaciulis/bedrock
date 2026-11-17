@@ -1,0 +1,70 @@
+---
+class: ''
+---
+
+<ul
+    class="{{ ['-ml-2 flex items-center gap-1', view:class] | classes | collapse_whitespace }}"
+    x-data="{
+        copied: false,
+        shareUrl: {{ current_url | to_json | sanitize }},
+        popupWindow(url, windowName, width = 611, height = 435) {
+            const top = window.top.outerHeight / 2 + window.top.screenY - height / 2;
+            const left = window.top.outerWidth / 2 + window.top.screenX - width / 2;
+            return window.open(url, windowName, `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no, copyhistory=no, width=${width}, height=${height}, top=${top}, left=${left}`);
+        },
+        copyToClipboard(text) {
+            navigator.clipboard.writeText(text);
+            this.copied = true;
+            setTimeout(() => {
+                this.copied = false;
+            }, 2000);
+        }
+    }"
+>
+    <li>
+        <s:partial:components.ui.button
+            as="button"
+            variant="ghost"
+            size="icon"
+            aria_label="Share on X"
+            x_click="popupWindow('https://x.com/intent/post?url={current_url | urlencode}&text={title | urlencode}', 'X')"
+        >
+            <s:svg src="social/x" class="size-5" />
+        </s:partial:components.ui.button>
+    </li>
+    <li>
+        <s:partial:components.ui.button
+            as="button"
+            variant="ghost"
+            size="icon"
+            aria_label="Share on Facebook"
+            x_click="popupWindow('https://www.facebook.com/sharer.php?u={current_url | urlencode}', 'Facebook')"
+        >
+            <s:svg src="social/facebook" class="size-5" />
+        </s:partial:components.ui.button>
+    </li>
+    <li>
+        <s:partial:components.ui.button
+            as="button"
+            variant="ghost"
+            size="icon"
+            aria_label="Share on LinkedIn"
+            x_click="popupWindow('https://www.linkedin.com/sharing/share-offsite/?url={current_url | urlencode}', 'LinkedIn')"
+        >
+            <s:svg src="social/linkedin" class="size-5" />
+        </s:partial:components.ui.button>
+    </li>
+    <li>
+        <s:partial:components.ui.button
+            as="button"
+            variant="ghost"
+            size="icon"
+            aria_label="Copy link"
+            x_click="copyToClipboard(shareUrl)"
+        >
+            <s:svg src="heroicons/outline/link" class="size-5" x-show="!copied" />
+            <s:svg src="heroicons/outline/check" class="size-5" x-show="copied" x-cloak="true" />
+        </s:partial:components.ui.button>
+        <span class="sr-only" role="status" x-text="copied ? 'Link copied' : ''"></span>
+    </li>
+</ul>
