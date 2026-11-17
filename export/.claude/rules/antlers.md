@@ -101,8 +101,8 @@ Content editors should never be able to break the site.
 
 ## Reusing design system
 
-Always check if you can reuse UI components in `resources/views/components/` or partials/fragments in `resources/views/partials/`.
-Also, check `resources/css/components` for reusable CSS classes, such as the body text classes `.content-*` in `typography.css`, and `resources/css/utilities` for the utilities, such as the heading classes `.h1`–`.h6` in `headings.css`.
+Always check if you can reuse UI components in `resources/views/components/`, such as `components.ui.text` for body text sizes, or partials/fragments in `resources/views/partials/`.
+Also, check `resources/css/components` for reusable CSS classes, and `resources/css/utilities` for the utilities, such as the heading classes `.h1`–`.h6` in `headings.css`.
 
 ### Buttons
 

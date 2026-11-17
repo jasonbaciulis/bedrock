@@ -1,0 +1,14 @@
+---
+as: 'p'
+size: 'base'
+class: ''
+sizes:
+  sm: 'text-sm sm:text-base'
+  base: 'text-base sm:text-lg'
+  lg: 'text-lg sm:text-xl/8'
+  xl: 'text-xl sm:text-2xl'
+---
+
+<{{ view:as }} class="{{ [view:sizes[view:size], view:class] | classes | collapse_whitespace }}">
+    {{ slot }}
+</{{ view:as }}>

@@ -47,10 +47,13 @@ class: ''
                 {{ /paginate:links:segments:last }}
             </ul>
 
-            <p class="content-sm shrink-0 leading-none font-semibold md:hidden">
+            <s:partial:components.ui.text
+                size="sm"
+                class="shrink-0 leading-none font-semibold md:hidden"
+            >
                 {{ paginate:current_page }}
                 of {{ paginate:total_pages }}
-            </p>
+            </s:partial:components.ui.text>
 
             <s:partial:components.ui.button
                 :as="paginate:next_page ? 'a' : 'button'"
