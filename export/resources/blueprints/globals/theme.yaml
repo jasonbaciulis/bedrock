@@ -24,7 +24,7 @@ tabs:
         fields:
           -
             handle: about
-            field: common.text_plain
+            field: common.text_inline
             config:
               display: About
           -

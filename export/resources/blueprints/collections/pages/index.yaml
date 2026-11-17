@@ -15,7 +15,7 @@ tabs:
                 - required
           -
             handle: text
-            field: common.text_plain
+            field: common.text_inline
             config:
               display: Text
   sidebar:

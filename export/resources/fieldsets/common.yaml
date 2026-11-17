@@ -61,6 +61,23 @@ fields:
       remove_empty_nodes: trim
       smart_typography: true
   -
+    handle: text_inline
+    field:
+      buttons:
+        - bold
+        - anchor
+      link_noopener: true
+      container: assets
+      type: bard
+      replicator_preview: false
+      localizable: true
+      display: 'Text inline'
+      always_save: false
+      remove_empty_nodes: trim
+      smart_typography: true
+      fullscreen: false
+      inline: true
+  -
     handle: text_plain
     field:
       type: textarea

@@ -7,7 +7,7 @@ fields:
       display: Title
   -
     handle: no_results_text
-    field: common.text_plain
+    field: common.text_inline
     config:
       display: 'No results text'
   -
