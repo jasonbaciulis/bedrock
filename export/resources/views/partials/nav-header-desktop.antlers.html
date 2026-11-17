@@ -1,5 +1,9 @@
 <nav class="hidden space-x-10 lg:flex">
-    <s:nav handle="header" max_depth="2" select="title|url|is_external">
+    <s:nav
+        handle="header"
+        max_depth="2"
+        select="title|url|is_external|icon|description|badge|two_col_menu"
+    >
         {{ if children }}
             <div
                 class="relative"
@@ -7,15 +11,14 @@
                 x-id="['header-subnav']"
                 @keydown.escape="subnavOpen = false; $refs.trigger.focus()"
             >
-                <s:partial:components.ui.button
-                    as="button"
-                    variant=""
-                    class="gap-x-1 text-neutral-900"
-                    x_ref="trigger"
-                    x_aria_controls="$id('header-subnav')"
-                    x_aria_expanded="subnavOpen"
-                    x_class="subnavOpen ? 'opacity-75' : ''"
-                    x_click="subnavOpen = !subnavOpen"
+                <button
+                    type="button"
+                    class="btn gap-x-1 text-neutral-900"
+                    x-ref="trigger"
+                    :class="{ 'opacity-75': subnavOpen }"
+                    :aria-controls="$id('header-subnav')"
+                    :aria-expanded="subnavOpen"
+                    @click="subnavOpen = !subnavOpen"
                 >
                     <span>{{ title }}</span>
                     <span
@@ -24,7 +27,7 @@
                     >
                         <s:svg src="heroicons/outline/chevron-down" class="size-4 opacity-50" />
                     </span>
-                </s:partial:components.ui.button>
+                </button>
 
                 <div
                     x-cloak
@@ -37,22 +40,35 @@
                     x-transition:leave-end="translate-y-1 opacity-0"
                     @click.outside="subnavOpen = false"
                     :id="$id('header-subnav')"
-                    class="absolute left-1/2 z-10 mt-5 w-screen max-w-xs -translate-x-1/2 transform px-2"
+                    class="{{ ['left-1/2 flex max-w-max -translate-x-1/2 px-4' => two_col_menu, 'left-1/2 max-w-xs -translate-x-1/2 px-2' => !two_col_menu] | classes }} absolute z-10 mt-5 w-screen transform"
                 >
-                    <div class="overflow-hidden rounded-lg border bg-white p-3 text-sm/6 shadow">
-                        {{ children scope="child" }}
-                            <s:partial:partials.nav-link
-                                :url="child:url"
-                                :title="child:title"
-                                :is_external="child:is_external"
-                                class="hover:bg-accent text-foreground block rounded-lg p-3 font-medium transition-colors"
-                            />
-                        {{ /children }}
+                    <div
+                        class="flex-auto overflow-hidden rounded-lg border bg-white text-sm/6 shadow lg:max-w-3xl"
+                    >
+                        <div
+                            class="{{ ['relative grid grid-cols-1 gap-x-5 gap-y-1 p-3', 'lg:grid-cols-2' => two_col_menu] | classes | collapse_whitespace }}"
+                        >
+                            {{ children scope="child" }}
+                                <s:partial:partials.nav-header-item
+                                    :url="child:url"
+                                    :title="child:title"
+                                    :is_external="child:is_external"
+                                    :icon="child:icon"
+                                    :description="child:description"
+                                    :badge="child:badge"
+                                />
+                            {{ /children }}
+                        </div>
                     </div>
                 </div>
             </div>
         {{ else }}
-            <s:partial:partials.nav-link :url="url" :title="title" :is_external="is_external" class="btn" />
+            <s:partial:partials.nav-link
+                :url="url"
+                :title="title"
+                :is_external="is_external"
+                class="btn"
+            />
         {{ /if }}
     </s:nav>
 </nav>

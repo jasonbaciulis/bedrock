@@ -1,4 +1,10 @@
-<s:nav handle="header" max_depth="2" select="title|url|is_external" as="items">
+<s:nav
+    handle="header"
+    max_depth="2"
+    select="title|url|is_external|icon|badge|two_col_menu"
+    as="items"
+>
+    {{# Mobile menu #}}
     <div
         x-cloak
         x-show="mobileNavOpen"
@@ -31,7 +37,22 @@
                     <div class="divide-foreground/10 -my-6 divide-y">
                         <div class="space-y-2 py-6">
                             {{ items }}
-                                {{ if children }}
+                                {{ if children && two_col_menu }}
+                                    {{ children scope="child" }}
+                                        <s:partial:partials.nav-header-item
+                                            :url="child:url"
+                                            :title="child:title"
+                                            :is_external="child:is_external"
+                                            :icon="child:icon"
+                                            :badge="child:badge"
+                                        />
+                                    {{ /children }}
+                                {{ /if }}
+                            {{ /items }}
+                        </div>
+                        <div class="space-y-2 py-6">
+                            {{ items }}
+                                {{ if children && !two_col_menu }}
                                     {{ children scope="child" }}
                                         <s:partial:partials.nav-link
                                             :url="child:url"
@@ -40,7 +61,7 @@
                                             class="hover:bg-accent -mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-neutral-900"
                                         />
                                     {{ /children }}
-                                {{ else }}
+                                {{ elseif !children }}
                                     <s:partial:partials.nav-link
                                         :url="url"
                                         :title="title"
