@@ -1,0 +1,16 @@
+---
+date: ''
+category: ''
+class: ''
+---
+
+<div class="{{ ['flex items-center gap-4', view:class] | classes | collapse_whitespace }}">
+    <time datetime="{{ view:date | format('c') }}" class="text-muted-foreground text-xs">
+        {{ view:date | format('M j, Y') }}
+    </time>
+    {{ if view:category }}
+        <s:partial:components.ui.badge variant="outline">
+            {{ view:category }}
+        </s:partial:components.ui.badge>
+    {{ /if }}
+</div>

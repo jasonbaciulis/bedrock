@@ -1,0 +1,21 @@
+title: 'Search results'
+fields:
+  -
+    handle: title
+    field:
+      type: text
+      display: Title
+  -
+    handle: no_results_text
+    field: common.text_plain
+    config:
+      display: 'No results text'
+  -
+    handle: limit
+    field:
+      default: 6
+      display: Limit
+      type: integer
+      instructions: 'Entries per page'
+      width: 50
+      always_save: false
