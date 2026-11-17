@@ -94,94 +94,88 @@ You follow these principles when interacting:
 
 === .ai/statamic-mcp rules ===
 
-# Statamic MCP Guidelines (v2.0)
+# Statamic MCP Guidelines (v3)
 
-This file provides AI assistants with comprehensive understanding of the Statamic MCP Server v2.0 capabilities.
-Requires Statamic v6+ and laravel/mcp v0.6+.
+This file tells AI assistants how to use the Statamic MCP Server v3 (`cboxdk/statamic-mcp`).
+Requires Statamic v6.6+ and laravel/mcp v1.0+.
 
 ## MCP Server Overview
 
-The Statamic MCP Server uses a router-based architecture with 11 tools:
+The server has 11 tools. Each tool takes an `action` parameter that selects the operation.
 
-### Router Architecture (9 + 2 Tools)
+### Tool Catalog
 
-**Domain Routers** (9 core tools consolidating 140+ operations):
-- **statamic-entries**: Manage entries across all collections (CRUD, publish/unpublish)
-- **statamic-terms**: Manage taxonomy terms (CRUD operations)
-- **statamic-globals**: Manage global set values (list, get, update)
-- **statamic-structures**: Structural elements (collections, taxonomies, navigations, sites - 26+ ops)
-- **statamic-assets**: Complete asset management (containers, files, metadata - 20+ ops)
-- **statamic-users**: User and permission management (users, roles, groups - 24+ ops)
-- **statamic-system**: System operations (cache, health, config, info - 15+ ops)
-- **statamic-blueprints**: Schema management (CRUD, scanning, type generation - 10+ ops)
+When a client connects, the server lists only 3 tools directly:
+- **statamic-entries**: Entry CRUD, publish/unpublish, localize and revisions across all collections
+- **statamic-blueprints**: Blueprint CRUD, scan, validate and type generation
+- **statamic-system-discover**: Finds the correct tool for an intent and tells you how to call it
 
-**Agent Education Tools** (2 specialized tools):
-- **statamic-discovery**: Intent-based tool discovery and recommendations
-- **statamic-schema**: Detailed tool schema inspection and documentation
+Get the other 8 tools with the laravel/mcp built-in tools:
+- **search_tools**: Describe what you need. It returns the matching tools and their schemas.
+- **execute_tools**: Runs one or more of those tools by name.
 
-Use `statamic-discovery` to find the right tool for your intent and `statamic-schema` for detailed documentation.
+The hidden tools have the same token scopes, permissions, resource policies and confirmation gate as the listed tools.
+Set `STATAMIC_MCP_SEARCHABLE_CATALOG=false` to list all 11 tools directly.
+
+### Tools Reached Through `search_tools`
+
+- **statamic-terms**: Taxonomy term CRUD
+- **statamic-globals**: Global set values (list, get, update)
+- **statamic-structures**: Collections, taxonomies, navigations, sites and global sets. Requires `resource_type` (`collection`, `taxonomy`, `navigation`, `site`, `globalset`).
+- **statamic-assets**: Asset containers and files. Requires `resource_type` (`container`, `asset`).
+- **statamic-users**: Users, roles and groups. Requires `resource_type` (`user`, `role`, `group`).
+- **statamic-system**: `info`, `health`, `cache_status`, `cache_clear`, `cache_warm`, `config_get`, `config_set`
+- **statamic-content-facade**: `content_audit`, `content_validate` (finds content that does not match its blueprint), `cross_reference`
+- **statamic-system-schema**: Full parameter documentation for one tool (`tool_name`)
 
 ## Authentication
 
-### Scoped API Tokens
+### Local CLI
 
-Web MCP endpoints use scoped API tokens for fine-grained access control:
-- Tokens are managed via the Statamic CP dashboard (Tools → MCP)
-- Each token has specific scopes (e.g., content:read, content:write, system:read)
-- Use Bearer token authentication: `Authorization: Bearer <token>`
-- CLI mode (php artisan mcp:start) runs with full permissions
+`.mcp.json` starts the server with `php artisan mcp:start statamic`. CLI mode runs with full permissions and has no user, so entry writes do not record an author.
+
+### Scoped API Tokens (web endpoint)
+
+- The web endpoint is `/mcp/statamic`. Authenticate with `Authorization: Bearer <token>` or OAuth 2.1.
+- Manage tokens in the Control Panel: **Tools → MCP**.
+- Each call is also limited by the Statamic permissions of the token owner.
+- A user can only get the scopes that their permissions allow (`STATAMIC_MCP_SCOPES_FOLLOW_PERMISSIONS`).
 
 ### Available Scopes
 
-- `content:read` / `content:write` - Entry and term operations
-- `structures:read` / `structures:write` - Collection and taxonomy management
-- `assets:read` / `assets:write` - Asset operations
-- `users:read` / `users:write` - User management
-- `globals:read` / `globals:write` - Global set operations
-- `blueprints:read` / `blueprints:write` - Blueprint management
-- `system:read` / `system:write` - System operations
-- `structures:read` / `structures:write` - Navigation management
-- `*` - Wildcard (all permissions)
+Each domain has a `:read` and a `:write` scope:
+- `entries`, `terms`, `globals`, `content` (entries and terms together)
+- `blueprints`, `structures`, `assets`, `users`, `system`, `content-facade`
+- `*`: all scopes (super admins only)
 
 ## Usage Patterns
 
 ### Discovery Phase
 
-Always start development sessions with:
-1. `statamic-discovery` - Find the right tool for your intent
-2. `statamic-system` (action: "info") - Understand the installation
-3. `statamic-schema` - Get detailed tool documentation when needed
-4. `statamic-structures` (action: "list", type: "collections") - Map content structure
+At the start of a session:
+1. `statamic-system-discover` with `intent`: find the correct tool and how to call it
+2. `statamic-system` (action: "info"): learn about the installation
+3. `statamic-structures` (action: "list", resource_type: "collection"): map the content structure
+4. `statamic-system-schema` with `tool_name`: read the full parameters of a tool when you need them
 
-### Development Phase
+Read the blueprint (`statamic-blueprints`, action: "get") before you write an entry.
 
-For content work:
-- Use `statamic-entries` for entry CRUD and publishing across collections
-- Use `statamic-terms` for taxonomy term management
-- Use `statamic-globals` for global set value management
-- Use `statamic-structures` for collections, taxonomies, navigations
-- Use `statamic-blueprints` for schema management and type generation
-
-For system operations:
-- Use `statamic-system` for cache management, health checks, configuration
-- Use `statamic-assets` for file and media management
-- Use `statamic-users` for user, role, and permission management
-
-### Content Architecture
-
-Create structures with appropriate router tools:
+### Content Architecture Examples
 
 **Creating a Collection:**
-Use `statamic-structures` with `{"action": "create", "type": "collection", "handle": "blog"}`
+Use `statamic-structures` with `{"action": "create", "resource_type": "collection", "handle": "blog"}`
 
-**Creating Blueprints:**
-Use `statamic-blueprints` with `{"action": "create", "handle": "article", "fields": [...]}`
+**Reading a Collection Blueprint:**
+Use `statamic-blueprints` with `{"action": "get", "namespace": "collections", "collection_handle": "blog", "handle": "article"}`
 
 **Managing Entries:**
 Use `statamic-entries` with `{"action": "create", "collection": "blog", "data": {...}}`
 
+**Updating One Page Builder Set:**
+Use `statamic-entries` with `{"action": "update", "collection": "pages", "id": "...", "merge_sets": true, "data": {...}}`. Each set that you send must have an `id`.
+
 **Managing Terms:**
-Use `statamic-terms` with `{"action": "create", "taxonomy": "categories", "data": {...}}`
+Use `statamic-terms` with `{"action": "create", "taxonomy": "categories", "slug": "news", "data": {...}}`
 
 **Global Settings:**
 Use `statamic-globals` with `{"action": "update", "handle": "site_settings", "data": {...}}`
@@ -230,21 +224,14 @@ Use `statamic-globals` with `{"action": "update", "handle": "site_settings", "da
 - `grid` - Tabular data
 - `group` - Field grouping
 
-## AI Assistant Integration
-
-1. **Start with discovery** - Use `statamic-discovery` to find the right tool
-2. **Use router tools** - Each domain router handles multiple operations efficiently
-3. **Check schemas** - Use `statamic-schema` for detailed parameter documentation
-4. **Respect scopes** - Ensure your token has required scopes for the operations
-5. **Follow router patterns** - Always use action-based syntax for consistent behavior
-
 ## Error Handling
 
-All router tools provide consistent error responses. When tools return errors:
-- Use `statamic-discovery` to find the correct tool and action
-- Use `statamic-schema` to verify parameter requirements
-- Check token scopes if you receive permission errors
-- Validate project state with appropriate router tools
+All tools return the same envelope: `{"success": bool, "data": {...}, "meta": {...}}`. An error also has `error` (message) and `code`.
+When a tool returns an error:
+- Use `statamic-system-discover` to find the correct tool and action
+- Use `statamic-system-schema` to check the required parameters
+- Check the token scopes and the user permissions when you get a permission error
+- Writes with keys that are not fields inside a replicator set, grid row, bard set or group are refused (`security.reject_unknown_fields`)
 
 === foundation rules ===
 
@@ -350,16 +337,6 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 - The application is served by Laravel Herd at `https?://[kebab-case-project-dir].test`. Use the `get-absolute-url` tool to generate valid URLs. Never run commands to serve the site. It is always available.
 - Use the `herd` CLI to manage services, PHP versions, and sites (e.g. `herd sites`, `herd services:start <service>`, `herd php:list`). Run `herd list` to discover all available commands.
-
-=== tests rules ===
-
-# Test Enforcement
-
-- Add or update tests for behavior and logic changes when a test provides meaningful regression coverage.
-- Pure copy, styling, and layout-only changes do not require new or updated tests.
-- When test coverage applies, run the affected tests and ensure they pass.
-- Test the changed behavior and its important failure modes, but do not add tests beyond them.
-- Read the `testing-best-practices` skill before writing tests.
 
 === inertia-laravel/core rules ===
 
